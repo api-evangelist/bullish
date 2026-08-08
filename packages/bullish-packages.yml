@@ -1,0 +1,90 @@
+generated: '2026-08-08'
+method: searched
+source: https://github.com/bullish-exchange
+notes: >-
+  Bullish does not ship a full-surface REST client SDK in any language. What it
+  publishes first-party are per-language SIGNER libraries — the hard part of the
+  Bullish auth model is producing an ECDSA R1 (prime256v1) signature over the
+  login/order payload, and Bullish open-sources that primitive for JavaScript,
+  Python, Java and C++. Only the JavaScript signer is published to a package
+  registry (npm `js-signer`); the rest are consumed from source on GitHub. A
+  first-party Python REST client (`python-bullish-client`) and a first-party
+  ccxt exchange module (`ccxt-bullish-python`) also exist on the org, but neither
+  is published to PyPI — PyPI `bullish`, `bullish-api` and `bullish-sdk` all
+  return 404.
+packages:
+  - language: javascript
+    registry: npm
+    name: js-signer
+    version: 2.0.6
+    url: https://www.npmjs.com/package/js-signer
+    repository: https://github.com/bullish-exchange/js-signer
+    install: npm install js-signer
+    license: MIT
+    official: true
+    role: signer
+    description: >-
+      Library to sign an arbitrary message with a Bullish R1 key and produce a
+      Bullish signature.
+  - language: python
+    registry: github
+    name: python-signer
+    url: https://github.com/bullish-exchange/python-signer
+    install: git clone https://github.com/bullish-exchange/python-signer
+    official: true
+    role: signer
+    registry_published: false
+  - language: java
+    registry: github
+    name: java-signer
+    url: https://github.com/bullish-exchange/java-signer
+    install: git clone https://github.com/bullish-exchange/java-signer
+    official: true
+    role: signer
+    registry_published: false
+  - language: cpp
+    registry: github
+    name: cpp-signer
+    url: https://github.com/bullish-exchange/cpp-signer
+    install: git clone https://github.com/bullish-exchange/cpp-signer
+    license: MIT
+    official: true
+    role: signer
+    registry_published: false
+    description: >-
+      C++ library and examples for signing messages or digests using R1 keys.
+      Includes end-to-end C++ examples for sending an order via the Order Entry
+      API and a Custody transaction via the Custody API.
+  - language: python
+    registry: github
+    name: python-bullish-client
+    url: https://github.com/bullish-exchange/python-bullish-client
+    install: git clone https://github.com/bullish-exchange/python-bullish-client
+    official: true
+    role: client
+    registry_published: false
+  - language: python
+    registry: github
+    name: ccxt-bullish-python
+    url: https://github.com/bullish-exchange/ccxt-bullish-python
+    install: git clone https://github.com/bullish-exchange/ccxt-bullish-python
+    official: true
+    role: ccxt-module
+    registry_published: false
+    description: ccxt exchange module for Bullish.
+examples:
+  - name: api-examples
+    url: https://github.com/bullish-exchange/api-examples
+    language: python
+    official: true
+    description: End-to-end Bullish API usage examples.
+registries_probed:
+  - registry: npm
+    result: hit
+    detail: js-signer (bullish-exchange/js-signer)
+  - registry: pypi
+    result: miss
+    detail: 'bullish 404, bullish-api 404, bullish-sdk 404'
+  - registry: github
+    result: hit
+    detail: 'org bullish-exchange, 9 public repositories'

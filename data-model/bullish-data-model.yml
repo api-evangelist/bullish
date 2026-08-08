@@ -1,0 +1,119 @@
+generated: '2026-08-08'
+method: derived
+source: openapi/bullish-trading-api-openapi.yml
+summary: >-
+  Entity-relationship graph derived from the 211 component schemas and the
+  id-reference fields of the Bullish Trading API. Bullish models relationships by
+  FOREIGN-KEY ID FIELD rather than by nested $ref — almost every entity carries a
+  flat tradingAccountId / assetId / marketId / orderId string instead of embedding
+  the related object, which is why a $ref-only crawl of this spec finds almost
+  nothing. The graph below follows the id fields, which are the real edges.
+root: TradingAccount
+entities:
+  - name: TradingAccount
+    schema: TradingAccountResponse
+    id_field: tradingAccountId
+    id_convention: A valid trading account ID begins with 111 (per OTC error 9010).
+    operations: [getTradingAccounts, getTradingAccountById]
+    note: >-
+      The tenancy root. Orders, trades, asset accounts, derivatives positions, AMM
+      instructions, OTC trades and transfers all hang off a trading account.
+  - name: Asset
+    schema: Asset
+    id_field: assetId
+    natural_key: symbol
+    operations: [getAssets, getAssetBySymbol]
+  - name: AssetAccount
+    schema: AssetAccount
+    id_fields: [assetId, tradingAccountId]
+    operations: [getAssetAccounts, getAssetAccountBySymbol]
+  - name: Market
+    schema: Market
+    id_field: marketId
+    natural_key: symbol
+    operations: [getMarkets, getMarketBySymbol, getHistoricalMarkets, getHistoricalMarketBySymbol]
+  - name: Order
+    schema: Order
+    id_field: orderId
+    client_key: clientOrderId
+    operations: [getOrdersV2, createOrderV2, getOrderByIdV2, trade-get-order-by-client-order-id-v2, getOrdersHistoryV2]
+  - name: Trade
+    schema: Trade
+    id_field: tradeId
+    operations: [getTrades, getTradeById, trade-get-trade-by-client-order-id, getTradesHistory]
+  - name: AMMInstruction
+    schema: AMMInstruction
+    id_field: instructionId
+    operations: [getAmmInstructions, createAmmInstruction, getAmmInstructionByIdV2]
+  - name: OtcTrade
+    schema: OtcTradeView
+    id_field: otcTradeId
+    client_key: clientOtcTradeId
+    operations: [createOtcTrade, getOtcTrades, getOtcTradeById, getUnconfirmedOtcTrade]
+  - name: IdbOtcTrade
+    schema: IdbOtcTradeView
+    id_field: otcTradeId
+    operations: [idb-otc-create-trade, idb-otc-get-trades]
+  - name: DerivativesPosition
+    schema: DerivativesPositionResponse
+    id_field: tradingAccountId
+    operations: [getDerivativesPositions]
+  - name: Auction
+    schema: Auction
+    id_field: auctionId
+    operations: [getAuctionBySymbol, getAuctionNoii, getHistoricalAuctionResults]
+  - name: CustodyTransaction
+    schema: CustodyHistory
+    id_field: custodyTransactionId
+    operations: [getCustodyTransactionHistory]
+  - name: WithdrawalDestination
+    schema: CustodyCryptoWithdrawalInstructions
+    id_field: destinationId
+    operations: [getCryptoWithdrawalInstructions, getFiatWithdrawalInstructions, custody-delete-withdrawal-instructions, createCustodyWithdrawal]
+  - name: MmpConfiguration
+    schema: MmpConfiguration
+    scoped_to: tradingAccountId
+    operations: [getMmpConfiguration, setMmpConfiguration]
+relationships:
+  - {from: TradingAccount, to: AssetAccount, kind: has_many, via: tradingAccountId}
+  - {from: TradingAccount, to: Order, kind: has_many, via: tradingAccountId}
+  - {from: TradingAccount, to: Trade, kind: has_many, via: tradingAccountId}
+  - {from: TradingAccount, to: AMMInstruction, kind: has_many, via: tradingAccountId}
+  - {from: TradingAccount, to: OtcTrade, kind: has_many, via: tradingAccountId}
+  - {from: TradingAccount, to: DerivativesPosition, kind: has_many, via: tradingAccountId}
+  - {from: TradingAccount, to: MmpConfiguration, kind: has_one, via: tradingAccountId}
+  - {from: AssetAccount, to: Asset, kind: belongs_to, via: assetId}
+  - {from: Market, to: Asset, kind: belongs_to, via: baseAssetId, role: base}
+  - {from: Market, to: Asset, kind: belongs_to, via: quoteAssetId, role: quote}
+  - {from: Market, to: TradeFeeRate, kind: belongs_to, via: feeGroupId}
+  - {from: Order, to: Market, kind: belongs_to, via: symbol}
+  - {from: Order, to: Trade, kind: has_many, via: orderId}
+  - {from: Trade, to: Order, kind: belongs_to, via: orderId}
+  - {from: Trade, to: OtcTrade, kind: belongs_to, via: otcTradeId, optional: true}
+  - {from: Trade, to: Auction, kind: belongs_to, via: auctionId, optional: true}
+  - {from: OtcTrade, to: OtcTradeLegView, kind: has_many, via: trades}
+  - {from: OtcTrade, to: IdbOtcTrade, kind: has_one, via: brokeredBy, optional: true}
+  - {from: IdbOtcTrade, to: IdbOtcTradeLegView, kind: has_many, via: trades}
+  - {from: AMMInstruction, to: Market, kind: belongs_to, via: symbol}
+  - {from: AMMInstruction, to: TradeFeeRate, kind: belongs_to, via: feeTierId}
+  - {from: Auction, to: Market, kind: belongs_to, via: symbol}
+  - {from: Auction, to: AuctionNoii, kind: has_one, via: auctionId}
+  - {from: Auction, to: AuctionResult, kind: has_many, via: auctionId}
+  - {from: CustodyTransaction, to: Asset, kind: belongs_to, via: symbol}
+  - {from: WithdrawalDestination, to: Asset, kind: belongs_to, via: symbol}
+  - {from: SubAccountTransfer, to: TradingAccount, kind: belongs_to, via: fromTradingAccountId, role: source}
+  - {from: SubAccountTransfer, to: TradingAccount, kind: belongs_to, via: toTradingAccountId, role: destination}
+  - {from: DerivativesPosition, to: Market, kind: belongs_to, via: symbol}
+  - {from: BorrowInterest, to: Asset, kind: belongs_to, via: assetId}
+coverage:
+  component_schemas: 211
+  entities_modelled: 14
+  relationships: 30
+  ref_based_edges: 12
+  id_based_edges: 18
+note: >-
+  The dominant join keys are tradingAccountId (tenancy), assetId/symbol (instrument
+  reference) and orderId/tradeId (execution chain). clientOrderId and
+  clientOtcTradeId are CLIENT-supplied alternate keys with dedicated lookup
+  operations, and are the only recovery path after a 5xx given there is no
+  idempotency key — see conventions/bullish-conventions.yml.

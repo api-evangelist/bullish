@@ -1,0 +1,78 @@
+generated: '2026-08-08'
+method: searched
+source: https://docs.exchange.bullish.com/rest/test-instruments
+summary: >-
+  Bullish operates a real non-production environment — SIMNEXT — and it is visible
+  in the published OpenAPI servers[] block rather than in the docs prose. Three
+  simulation hosts sit alongside the three production hosts in every spec, plus a
+  dedicated bug-bounty host. What Bullish does NOT publish is self-service access:
+  there is no "get a test key" flow, no published test credentials, and no
+  documented sandbox onboarding. Access to SIMNEXT and to the co-located and direct
+  connectivity options goes through a sales representative. This is a genuine
+  sandbox behind a sales conversation, not an absent sandbox.
+environments:
+  - id: production
+    hosts:
+      - https://api.exchange.bullish.com/trading-api
+      - https://registered.api.exchange.bullish.com/trading-api
+      - https://prod.access.bullish.com/trading-api
+    source: openapi/bullish-trading-api-openapi.yml servers[]
+  - id: simnext
+    label: SIMNEXT simulation environment
+    hosts:
+      - https://api.simnext.bullish-test.com/trading-api
+      - https://registered.api.simnext.bullish-test.com/trading-api
+      - https://simnext.access.bullish.com/trading-api
+    source: openapi/bullish-trading-api-openapi.yml servers[]
+    self_service: false
+    access: Contact your Bullish sales representative.
+  - id: bugbounty
+    label: Bug bounty target environment
+    hosts:
+      - https://api.bugbounty.bullish.com/trading-api
+    source: openapi/bullish-trading-api-openapi.yml servers[]
+    note: >-
+      A dedicated non-production target for Bugcrowd researchers — see
+      security/bullish-vulnerability-disclosure.yml.
+websocket_environments:
+  source: asyncapi/*.yml servers block
+  servers:
+    - prod-public
+    - prod-registered
+    - prod-direct
+    - simnext-public
+    - simnext-registered
+    - simnext-direct
+  note: >-
+    Every one of the six AsyncAPI documents declares the same six named servers, so
+    the SIMNEXT split is modelled consistently across REST and WebSocket.
+test_instruments:
+  docs: https://docs.exchange.bullish.com/rest/test-instruments
+  published_values:
+    - kind: market
+      value: DEMOONEDEMOTWO
+    - kind: asset
+      value: DEMOONE
+    - kind: asset
+      value: DEMOTWO
+  caveat: >-
+    Bullish states these test instruments exist "for internal testing" and that
+    "clients can ignore these test instruments" — they are published so integrators
+    can FILTER them out of market listings, not so integrators can trade against
+    them. Recorded verbatim; do not present them as client-usable test fixtures.
+test_credentials:
+  published: false
+  detail: No test API keys, magic values or hosted test tokens are published.
+key_prefixes:
+  published: false
+  detail: >-
+    No test-vs-live key prefix convention is documented. Environment separation is
+    by hostname (simnext.bullish-test.com), not by credential prefix.
+time_simulation:
+  supported: false
+connectivity:
+  docs: https://docs.exchange.bullish.com/rest/general/connectivity-options
+  detail: >-
+    Optimal GCP connectivity is the asia-southeast1-a availability zone (subject to
+    change without warning within asia-southeast1). AWS and GCP direct-connectivity
+    details are only available from a sales representative.

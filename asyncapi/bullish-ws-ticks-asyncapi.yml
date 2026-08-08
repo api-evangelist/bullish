@@ -1,0 +1,387 @@
+asyncapi: 3.0.0
+info:
+  title: Anonymous Ticks
+  version: 1.0.0
+  description: |
+    This allows simultaneous tick subscriptions to multiple markets.
+
+    Upon subscribing to a market, the client will first receive a snapshot of latest ticker, followed by updates.
+    See the data model: [Get Market Tick](/rest/api/get-market-tick)
+
+    Either it can be subscribed from a single symbol (by reaching to this endpoint)
+
+    ```
+    /trading-api/v1/market-data/tick/{symbol}
+    ```
+
+    Or tick of different markets can be subscribed to, and controlled by parameters in the subscription message listed below
+
+    ```
+    /trading-api/v1/market-data/tick
+    ```
+servers:
+  prod-public:
+    host: api.exchange.bullish.com
+    protocol: wss
+    description: Production / Public
+  prod-registered:
+    host: registered.api.exchange.bullish.com
+    protocol: wss
+    description: Production / Registered
+  prod-direct:
+    host: prod.access.bullish.com
+    protocol: wss
+    description: Production / Direct Connect
+  simnext-public:
+    host: api.simnext.bullish-test.com
+    protocol: wss
+    description: SimNext / Public
+  simnext-registered:
+    host: registered.api.simnext.bullish-test.com
+    protocol: wss
+    description: SimNext / Registered
+  simnext-direct:
+    host: simnext.access.bullish.com
+    protocol: wss
+    description: SimNext / Direct Connect
+
+channels:
+  data:
+    address: /trading-api/v1/market-data/tick
+    messages:
+      subscribe:
+        title: Subscription
+        summary: Let you subscribe to a given topic
+        payload:
+          type: object
+          required:
+            - id
+            - method
+            - params
+          properties:
+            method:
+              type: string
+              description: '"subscribe"'
+              example: subscribe
+            id:
+              $ref: "#/components/schemas/MarketDataTicksJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/MarketDataTicksJsonRpcVersion"
+            type:
+              $ref: "#/components/schemas/MarketDataTicksJsonRpcCommandType"
+            params:
+              type: object
+              required:
+                - topic
+                - symbol
+              properties:
+                topic:
+                  type: string
+                  description: '"tick"'
+                  example: tick
+                symbol:
+                  type: string
+                  description: Market symbol, such as BTCUSD or ETHUSDC
+                  example: BTCUSD
+      subscribe-ack:
+        title: Acknowledgment
+        summary: Confirm the topic being subscribed
+        payload:
+          type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/MarketDataTicksJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/MarketDataTicksJsonRpcVersion"
+            result:
+              type: object
+              properties:
+                responseCodeName:
+                  type: string
+                  description: '"OK"'
+                  example: OK
+                responseCode:
+                  type: string
+                  description: "200"
+                  example: "200"
+                message:
+                  type: string
+                  description: Confirmation of what has been subscribed
+                  example: Successfully subscribed
+      subscribe-msg-0:
+        title: Snapshot
+        summary: Snapshot to the subscribed tick data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"snapshot"'
+              example: snapshot
+            dataType:
+              type: string
+              description: '"V1TATickerResponse"'
+              example: V1TATickerResponse
+            data:
+              type: object
+              properties:
+                askVolume:
+                  type: string
+                  description: Current best ask (sell) quantity (may be missing or undefined), see [asset value](/rest/general/price-quantity-precision) format
+                  example: "3.56000000"
+                average:
+                  type: string
+                  description: Average price, `(last + open) / 2`, see [asset value](/rest/general/price-quantity-precision) format
+                  example: "5200.0400"
+                baseVolume:
+                  type: string
+                  description: volume of base asset traded for last 24 hours, see [asset value](/rest/general/price-quantity-precision) format
+                  example: "1.00000000"
+                bestAsk:
+                  type: string
+                  description: Current best ask (sell) price, see [asset value](/rest/general/price-quantity-precision) format
+                  example: "6543.0000"
+                bestBid:
+                  type: string
+                  description: Current best bid (buy) price, see [asset value](/rest/general/price-quantity-precision) format
+                  example: "2345.0000"
+                bidVolume:
+                  type: string
+                  description: current best bid (buy) quantity (may be missing or undefined), see [asset value](/rest/general/price-quantity-precision) format
+                  example: "2.00000000"
+                change:
+                  type: string
+                  description: Absolute change, `last - open`, see [asset value](/rest/general/price-quantity-precision) format
+                  example: "0.0000"
+                close:
+                  type: string
+                  description: Price of last trade (closing price for current period), see [asset value](/rest/general/price-quantity-precision) format
+                  example: "5200.0400"
+                createdAtTimestamp:
+                  type: string
+                  description: Denotes the time of the current tick on the exchange, ISO 8601 with millisecond as string
+                  example: "1591058897000"
+                publishedAtTimestamp:
+                  type: string
+                  description: date and time of the candle getting published, ISO 8601 with millisecond as string
+                  example: "1591058898000"
+                high:
+                  type: string
+                  description: Highest price, see [asset value](/rest/general/price-quantity-precision) format
+                  example: "5200.0400"
+                last:
+                  type: string
+                  description: Price of last trade (closing price for current period), see [asset value](/rest/general/price-quantity-precision) format
+                  example: "5200.0400"
+                lastTradeDatetime:
+                  type: string
+                  description: Time of the last trade on this symbol
+                  example: "2020-06-02T00:40:39.500Z"
+                lastTradeSize:
+                  type: string
+                  description: Quantity of the last trade on this symbol, see [asset value](/rest/general/price-quantity-precision) format
+                  example: "1.00000000"
+                low:
+                  type: string
+                  description: Lowest price, see [asset value](/rest/general/price-quantity-precision) format
+                  example: "5200.0400"
+                open:
+                  type: string
+                  description: Opening price, see [asset value](/rest/general/price-quantity-precision) format
+                  example: "5200.0400"
+                percentage:
+                  type: string
+                  description: Relative change, `(change/open) * 100`, see [asset value](/rest/general/price-quantity-precision) format
+                  example: "0.00"
+                quoteVolume:
+                  type: string
+                  description: Volume of quote asset traded for last 24 hours, see [asset value](/rest/general/price-quantity-precision) format
+                  example: "5200.0400"
+                symbol:
+                  type: string
+                  description: Market symbol
+                  example: BTC-USDC-PERP
+                vwap:
+                  type: string
+                  description: Volume weighed average price, see [asset value](/rest/general/price-quantity-precision) format
+                  example: "5200.0400"
+                currentPrice:
+                  type: string
+                  description: Current price
+                  example: "0.0007"
+                ammData:
+                  description: AMM data of all available fee tiers. Not applicable for `Option` markets
+                  type: array
+                  items:
+                    type: object
+                    properties:
+                      feeTierId:
+                        type: string
+                        description: Id
+                        example: "0.00040000"
+                      bidSpreadFee:
+                        type: string
+                        description: Bid spread fee
+                        example: "0.00040000"
+                      askSpreadFee:
+                        type: string
+                        description: Ask spread fee
+                        example: "0.00040000"
+                      currentPrice:
+                        type: string
+                        description: Current AMM price
+                        example: "16856.0000"
+                  example:
+                    - feeTierId: "1"
+                      currentPrice: "0.0007"
+                      bidSpreadFee: "0.00000005"
+                      askSpreadFee: "0.00000006"
+                    - feeTierId: "2"
+                      currentPrice: "0.0017"
+                      bidSpreadFee: "0.00000015"
+                      askSpreadFee: "0.00000016"
+                createdAtDatetime:
+                  type: string
+                  description: Date and time, ISO 8601 with millisecond as string
+                  example: "2020-06-02T00:48:17.000Z"
+                markPrice:
+                  type: string
+                  description: Mark price represents the fair value of a contract at the current time.
+                  example: "26000.0000"
+                fundingRate:
+                  type: string
+                  description: Funding rate is used to calculate funding, which measures the relative difference between the index price and mark price.
+                  example: "0.114100"
+                openInterest:
+                  type: string
+                  description: Open interest is the total quantity of open long positions and short positions, see [asset value](/rest/general/price-quantity-precision) format (only applies to derivatives market)
+                  example: "9.00000000"
+      subscribe-nack:
+        title: Rejection
+        summary: Explain why the topic could not be subscribed
+        payload:
+          type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/MarketDataTicksJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/MarketDataTicksJsonRpcVersion"
+            error:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: a high-level code for the error
+                  example: "-32602"
+                errorCode:
+                  type: string
+                  description: a precise typed error code
+                  example: "29013"
+                errorCodeName:
+                  type: string
+                  description: An explanation of which value was invalid
+                  example: "'abcde' is not a valid topic"
+      keepalive-ping:
+        title: Keepalive Ping
+        payload:
+          type: object
+          required:
+            - id
+            - method
+            - params
+          properties:
+            method:
+              type: string
+              description: '"keepalivePing"'
+              example: keepalivePing
+            params:
+              type: object
+            id:
+              $ref: "#/components/schemas/MarketDataTicksJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/MarketDataTicksJsonRpcVersion"
+            type:
+              $ref: "#/components/schemas/MarketDataTicksJsonRpcCommandType"
+      keepalive-pong:
+        title: Keepalive Pong
+        payload:
+          type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/MarketDataTicksJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/MarketDataTicksJsonRpcVersion"
+            result:
+              type: object
+              properties:
+                responseCodeName:
+                  type: string
+                  description: '"OK"'
+                  example: OK
+                responseCode:
+                  type: integer
+                  description: "200"
+                  example: 200
+                message:
+                  type: string
+                  description: '"Keep alive pong"'
+                  example: Keep alive pong
+operations:
+  subscribe:
+    action: send
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Subscribe
+      Multiple subscriptions could be opened within the same websocket.
+
+      The index price of different ticks to be subscribed are controlled by the parameters in the subscription message listed below.
+    messages:
+      - $ref: "#/channels/data/messages/subscribe"
+  subscribe-ack:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      After subscribing, the server sends :
+      - an acknowledgement
+      - followed by a snapshot
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-ack"
+      - $ref: "#/channels/data/messages/subscribe-msg-0"
+  subscribe-nack:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: In case of *invalid* subscription message, an error rejection would be sent.
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-nack"
+  keepalive-ping:
+    action: send
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Keepalive
+      In case nothing is subscribed to, keep the websocket connection alive.
+    messages:
+      - $ref: "#/channels/data/messages/keepalive-ping"
+  keepalive-pong:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      Acknowledgement returned by the server in response to a keepalive-ping.
+    messages:
+      - $ref: "#/channels/data/messages/keepalive-pong"
+components:
+  schemas:
+    MarketDataTicksJsonRpcRequestId:
+      type: string
+      description: ID returned by server in the acknowledgement
+      example: "1611082473000"
+    MarketDataTicksJsonRpcVersion:
+      description: Version of the Json RPC protocol
+      example: "2.0"
+    MarketDataTicksJsonRpcCommandType:
+      description: '"command"'
+      example: command

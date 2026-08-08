@@ -1,0 +1,107 @@
+generated: '2026-08-08'
+method: searched
+source: https://docs.exchange.bullish.com/rest/authentication
+docs:
+  rest: https://docs.exchange.bullish.com/rest/authentication
+  websocket: https://docs.exchange.bullish.com/websocket/protocol/authentication
+  fix: https://docs.exchange.bullish.com/fix/session-management
+derived_from:
+  - openapi/bullish-trading-api-openapi.yml
+  - openapi/bullish-deprecated-api-openapi.yml
+summary:
+  types:
+  - http
+  - custom-signed-login
+  oauth2: false
+  openid_connect: false
+  api_key_in: []
+  note: >-
+    The OpenAPI declares exactly one security scheme — an http bearer JWT — which
+    understates the model. The JWT is not issued by an OAuth authorization server;
+    it is minted by exchanging a request that the CLIENT signs with its own key.
+    Two credential classes exist and they are NOT equivalent in what they can reach.
+schemes:
+- name: jwtTokenAuth
+  type: http
+  scheme: bearer
+  bearerFormat: JWT
+  header: 'Authorization: Bearer <JWT_TOKEN>'
+  lifetime: 24 hours
+  sources:
+  - openapi/bullish-trading-api-openapi.yml
+  - openapi/bullish-deprecated-api-openapi.yml
+credentials:
+- id: ecdsa-api-key
+  label: ECDSA API Key
+  algorithm: ECDSA R1 (prime256v1 / secp256r1 / P-256)
+  hash: SHA256
+  public_key_format: X.509 SubjectPublicKeyInfo, PEM encoded
+  login_operation: loginUserV2
+  login: POST /trading-api/v2/users/login
+  scope_of_access:
+  - trading
+  - custody
+  note: >-
+    The only credential class that can reach the custody surface. Public-key
+    metadata carries the userId, base64-encoded.
+- id: hmac-api-key
+  label: HMAC API Key
+  algorithm: HMAC shared secret
+  login_operation: loginUserHmac
+  login: GET /trading-api/v1/users/hmac/login
+  scope_of_access:
+  - trading
+  note: >-
+    JWTs minted from an HMAC key are valid for TRADING endpoints only. Calling a
+    custody operation with an HMAC-derived token returns 403.
+- id: bullish-api-key
+  label: Bullish API Key
+  deprecated: true
+  deprecated_on: '2024-06-28'
+  note: Legacy credential type, no longer usable.
+signing_headers:
+- name: BX-TIMESTAMP
+  description: Milliseconds since EPOCH.
+  missing_error: 9013
+- name: BX-NONCE
+  description: 64-bit unsigned integer, unique and increasing.
+  missing_error: 9012
+- name: BX-PUBLIC-KEY
+  description: The API public key.
+- name: BX-SIGNATURE
+  description: Signature over the canonical message.
+  missing_error: 9011
+- name: BX-NONCE-WINDOW-ENABLED
+  description: >-
+    String boolean. Relaxes strict nonce ordering to uniqueness within a window of
+    100 from the highest nonce used, permitting out-of-order submission.
+- name: BX-REFERRER
+  description: Identifies EMS / broker executions.
+- name: BX-RATELIMIT-TOKEN
+  description: Selects a higher rate-limit tier, obtained from Get Trading Accounts.
+session_management:
+  nonce_endpoint: GET /trading-api/v1/nonce
+  nonce_operation: getNonce
+  logout: GET /trading-api/v1/users/logout
+  logout_operation: logoutUser
+  exchange_time: GET /trading-api/v1/time
+anonymous_surface:
+  description: >-
+    Market data, assets, index prices, option ladders, expiry prices, auctions and
+    the Aggregator API are all callable without credentials.
+  examples:
+  - GET /trading-api/v1/markets
+  - GET /trading-api/v1/assets
+  - GET /trading-api/v1/index-prices
+  - GET /trading-api/v1/nonce
+signer_libraries:
+  note: >-
+    Bullish open-sources the signing primitive rather than a full SDK — see
+    packages/bullish-packages.yml for the JavaScript, Python, Java and C++ signers.
+oauth_discovery:
+  probed: true
+  result: none
+  detail: >-
+    /.well-known/openid-configuration and /.well-known/oauth-authorization-server
+    return 404 on every Bullish host. There is no OAuth authorization server and
+    therefore no scope surface — scopes/ is intentionally absent for this provider.

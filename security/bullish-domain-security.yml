@@ -1,0 +1,28 @@
+generated: '2026-08-08'
+method: probed
+source: live DNS/TLS/HTTP probes of apis.yml + OpenAPI hosts
+hosts:
+- host: www.bullish.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 13 16:16:26 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+- host: docs.exchange.bullish.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct 12 04:57:20 2026 GMT
+  hsts: true
+  hsts_max_age: 31536000
+- host: api.exchange.bullish.com
+  https: true
+  tls_version: TLSv1.3
+  cert_expires: Oct  8 03:34:09 2026 GMT
+  hsts: null
+domains:
+- domain: bullish.com
+  dnssec: true
+  caa: []
+  spf: true
+  dmarc: true
+  dmarc_policy: reject

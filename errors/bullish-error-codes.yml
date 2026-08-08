@@ -1,0 +1,394 @@
+generated: '2026-08-08'
+method: searched
+source: https://github.com/bullish-exchange/api-docs/wiki/Error-&-Rejection-Codes
+docs:
+- https://docs.exchange.bullish.com/rest/general/error-rejection-codes
+- https://github.com/bullish-exchange/api-docs/wiki/Error-&-Rejection-Codes
+summary: Bullish publishes a complete numeric reason-code registry covering order processing, custody,
+  OTC and market-maker protection, shared across the REST and FIX surfaces. On REST the code and text
+  arrive as statusReasonCode and statusReason; on FIX as OrdRejReason (tag 103) and Text (tag 58). Note
+  that the 6xxx block is a lifecycle-state registry as much as an error registry — 6001 Open / 6014 Order
+  accepted / 6015 Filled are successful terminal states carried on the same field.
+envelope:
+  rest:
+    code_field: statusReasonCode
+    text_field: statusReason
+    media_type: application/json
+  fix:
+    code_field: OrdRejReason (103)
+    text_field: Text (58)
+groups:
+- group: Order processing
+  surface:
+  - REST
+  - FIX
+  field: statusReasonCode
+  codes:
+  - code: 1001
+    meaning: Ok
+  - code: 1002
+    meaning: Unable to place request
+  - code: 2001
+    meaning: Bad incoming request
+  - code: 2002
+    meaning: Invalid user's client id
+  - code: 2003
+    meaning: Invalid handle
+  - code: 2004
+    meaning: Invalid quantity
+  - code: 2005
+    meaning: Unknown error
+  - code: 2006
+    meaning: Invalid account type, account must be spot
+  - code: 2007
+    meaning: Account already exist
+  - code: 2008
+    meaning: Invalid side, side must me from buy or sell
+  - code: 2009
+    meaning: Invalid market
+  - code: 2010
+    meaning: Account doesn't exist
+  - code: 2011
+    meaning: Account types are different
+  - code: 2012
+    meaning: Invalid price
+  - code: 2013
+    meaning: Invalid order type, type must be from limit, market, stop-limit
+  - code: 2015
+    meaning: Exceeded maximum amount of allowed open margin orders
+  - code: 2016
+    meaning: Unknown request type
+  - code: 2017
+    meaning: Invalid order id
+  - code: 2018
+    meaning: Unknown time in force option
+  - code: 2020
+    meaning: Margin trading is not allowed
+  - code: 2021
+    meaning: Exceeded maximum amount of allowed open spot orders
+  - code: 2029
+    meaning: Invalid request id
+  - code: 2035
+    meaning: Invalid nonce
+  - code: 2106
+    meaning: Action Temporarily Rejected. Please retry
+  - code: 2115
+    meaning: Invalid auction
+  - code: 3001
+    meaning: Account doesn't have sufficient balance
+  - code: 3002
+    meaning: Order is not found
+  - code: 3003
+    meaning: Borrowing is unavailable
+  - code: 3004
+    meaning: Unable to adjust balance
+  - code: 3005
+    meaning: Insufficient balance
+  - code: 3006
+    meaning: Insufficient collateral
+  - code: 3007
+    meaning: Duplicated order id
+  - code: 3020
+    meaning: Unsolicited cancel
+  - code: 3021
+    meaning: Forced cancel
+  - code: 3023
+    meaning: Duplicated order handle
+  - code: 3031
+    meaning: Price is out of range
+  - code: 3032
+    meaning: Order is either closed or rejected
+  - code: 3047
+    meaning: Leverage increase not permitted
+  - code: 3048
+    meaning: Reached max borrowing
+  - code: 3049
+    meaning: Mo more open loans available
+  - code: 3051
+    meaning: Insufficient iou balance
+  - code: 3052
+    meaning: Insufficient uoi balance
+  - code: 3059
+    meaning: Reached minimum collateral requirement
+  - code: 3060
+    meaning: Reached minimum collateral requirement
+  - code: 3061
+    meaning: Insufficient insurance owed balance
+  - code: 3062
+    meaning: Reached risk limit
+  - code: 3063
+    meaning: Missing request id
+  - code: 3064
+    meaning: Incoming order failed to make or take
+  - code: 3065
+    meaning: Market open interest limit exceeded
+  - code: 3066
+    meaning: Account concentration limit exceeded
+  - code: 3067
+    meaning: Market is expiring or expired
+  - code: 3073
+    meaning: Cannot place new MMP order during MMP frozen period
+  - code: 3077
+    meaning: Credit settlement check failed on line of credit
+  - code: 3078
+    meaning: Credit settlement check failed on deferred settlement
+  - code: 3082
+    meaning: No active auction for this market
+  - code: 3083
+    meaning: Auction order creation is disabled in the current phase
+  - code: 3084
+    meaning: Auction order amendment is disabled in the current phase
+  - code: 3085
+    meaning: Auction order cancellation is disabled in the current phase
+  - code: 3086
+    meaning: GTX order is missing auction ID
+  - code: 3087
+    meaning: Auction ID is not allowed on non-GTX orders
+  - code: 3090
+    meaning: Auction orders only support MARKET and LIMIT order types
+  - code: 6001
+    meaning: Open
+  - code: 6002
+    meaning: Executed
+  - code: 6003
+    meaning: Matured
+  - code: 6004
+    meaning: Expired
+  - code: 6005
+    meaning: User cancelled
+  - code: 6007
+    meaning: Self cross prevention
+  - code: 6011
+    meaning: Self cross prevention amend
+  - code: 6012
+    meaning: Stop limit amend
+  - code: 6013
+    meaning: Partially filled
+  - code: 6014
+    meaning: Order accepted
+  - code: 6015
+    meaning: Filled
+  - code: 6018
+    meaning: Price must be of tick size
+  - code: 6019
+    meaning: MMP cancelled
+  - code: 6021
+    meaning: Auction order unfilled at cross
+  - code: 6022
+    meaning: Auction order excluded by price collar
+  - code: 6023
+    meaning: Auction order cancelled due to insufficient margin
+  - code: 6024
+    meaning: Auction order cancelled due to bulk cancel
+  - code: 6026
+    meaning: Order GUID does not belong to the supplied auctionId
+  - code: 6041
+    meaning: Transfers are disabled for this market
+  - code: 6042
+    meaning: Amends are disabled for this market
+  - code: 6043
+    meaning: Cancels are disabled for this market
+  - code: 6044
+    meaning: Orders are disabled for this market
+  - code: 6045
+    meaning: Margin orders are disabled for this market
+  - code: 6046
+    meaning: Spot orders are disabled for this market
+  - code: 6050
+    meaning: The exchange is undergoing maintenance
+  note: The 6xxx range doubles as the order lifecycle-state registry, not only rejections.
+- group: Custody
+  surface:
+  - REST
+  field: statusReasonCode
+  codes:
+  - code: 8301
+    meaning: Unexpected Error
+  - code: 8305
+    meaning: Withdraw assertion failed
+  - code: 8306
+    meaning: Custody bad user
+  - code: 8307
+    meaning: Unexpected withdraw exception
+  - code: 8310
+    meaning: Cannot find withdrawal destination
+  - code: 8311
+    meaning: Missing fields in withdraw
+  - code: 8313
+    meaning: Unsupported coin
+  - code: 8315
+    meaning: Crypto deposit not found
+  - code: 8316
+    meaning: Unable to allocate deposit address
+  - code: 8317
+    meaning: Swift code is on the restricted list
+  - code: 8318
+    meaning: Unsupported operation
+  - code: 8319
+    meaning: Custody operation has been disabled
+  - code: 8320
+    meaning: Address failed validation
+  - code: 8322
+    meaning: Bad withdrawal amount
+  - code: 8327
+    meaning: Invalid Login
+  - code: 8329
+    meaning: Unexpected destination exception
+  - code: 8331
+    meaning: Invalid Destination
+  - code: 8332
+    meaning: Bad network specified
+  - code: 8333
+    meaning: Bad symbol specified
+  - code: 8334
+    meaning: Bad authentication type
+  - code: 8335
+    meaning: Withdrawal destination does not belong to user
+  - code: 8336
+    meaning: Withdrawal destination not whitelisted
+  - code: 8399
+    meaning: Unknown error
+  - code: 8401
+    meaning: INSUFFICIENT_BALANCE (on transfer history)
+  - code: 8402
+    meaning: FAILED_CREDIT_CHECK_LOC (on transfer history)
+  - code: 8403
+    meaning: FAILED_CREDIT_CHECK_DEFERRED_SETTLEMENT (on transfer history)
+  - code: 8499
+    meaning: INTERNAL_ERROR (on transfer history)
+- group: OTC trades
+  surface:
+  - REST
+  field: statusReasonCode
+  codes:
+  - code: 9001
+    meaning: Missing required fields
+  - code: 9002
+    meaning: sharedMatchKey must consist of alpha-numeric characters and have length between 12 and 64
+      inclusive
+  - code: 9003
+    meaning: Invalid side, side must be BUY or SELL
+  - code: 9004
+    meaning: clientOtcTradeId must be numeric and should not start with 0
+  - code: 9005
+    meaning: A single OTC trade cannot have more than 25 trade legs
+  - code: 9006
+    meaning: quantity must be positive with the same precision as the base asset
+  - code: 9007
+    meaning: price must be positive with the same precision as the quote asset
+  - code: 9008
+    meaning: otcTradeId must be numeric and should not start with 0
+  - code: 9009
+    meaning: Invalid symbol
+  - code: 9010
+    meaning: Invalid trading account ID. A valid trading account ID begins with 111
+  - code: 9011
+    meaning: Missing BX-SIGNATURE header
+  - code: 9012
+    meaning: Missing BX-NONCE header
+  - code: 9013
+    meaning: Missing BX-TIMESTAMP header
+  - code: 9014
+    meaning: BX-TIMESTAMP header cannot be parsed as a long integer or is outside of the valid range
+  - code: 9015
+    meaning: BX-NONCE header cannot be parsed as a long integer, is outside valid range or is not greater
+      than last nonce
+  - code: 9016
+    meaning: BX-REFERRER header cannot be parsed as a long integer or is outside valid range
+  - code: 9017
+    meaning: 'Invalid market type. Supported market types are: PERPETUAL, DATED_FUTURE, OPTION'
+  - code: 9018
+    meaning: Unauthorized to trade OTC
+  - code: 9019
+    meaning: Remarks cannot exceed 255 characters long
+  - code: 9020
+    meaning: Incoming request requires either otcTradeId or clientOtcTradeId
+  - code: 9021
+    meaning: Cannot submit multiple trade legs for the same market in a single OTC transaction
+  - code: 9022
+    meaning: OTC trade not found
+  - code: 9023
+    meaning: Trade booking rejected
+  - code: 9024
+    meaning: OTC trade already exists
+  - code: 9025
+    meaning: Shared match key is not unique
+  - code: 9026
+    meaning: Not distinct maker/taker role with counterparty
+  - code: 9027
+    meaning: Counterparty trade inputs mismatch
+  - code: 9028
+    meaning: OTC trade has expired
+  - code: 9029
+    meaning: Invalid command type
+  - code: 9030
+    meaning: The OTC trade is no longer eligible for acceptance
+  - code: 9031
+    meaning: Cannot match OTC Trade on the same account
+  - code: 9032
+    meaning: OTC Trade has expired or no longer valid for matching
+  - code: 9033
+    meaning: Reached max leverage on this account
+  - code: 9034
+    meaning: Fee borrowing is unavailable on this account
+  - code: 9035
+    meaning: Borrowing is unavailable on this account, Account has open loans
+  - code: 9036
+    meaning: OTC trade cannot be processed due to an issue with your counterparty. Contact Bullish Support
+  - code: 9037
+    meaning: Cancelled by user
+  - code: 9038
+    meaning: Cancelled by counterparty
+  - code: 9039
+    meaning: Cancelled by broker
+  - code: 9040
+    meaning: Interdealer broker cannot match OTC Trade within the same institution
+  - code: 9999
+    meaning: Something went wrong
+- group: Market-maker protection and other commands
+  surface:
+  - REST
+  field: statusReasonCode
+  codes:
+  - code: 2104
+    meaning: Invalid MMP config request
+  - code: 2105
+    meaning: Invalid MMP config reset request
+  - code: 2108
+    meaning: Cannot reset MMP configuration as there are open MMP orders
+- group: FIX-only OrdRejReason values
+  surface:
+  - FIX
+  field: OrdRejReason (103)
+  codes:
+  - code: 1
+    meaning: Unknown symbol
+  - code: 5
+    meaning: Unknown order
+  - code: 6
+    meaning: Duplicate order
+  - code: 13
+    meaning: Incorrect quantity
+  - code: 15
+    meaning: Invalid account
+  - code: 18
+    meaning: Invalid price
+  note: Standard FIX OrdRejReason values that have no REST statusReasonCode equivalent.
+- group: Rate limiting
+  surface:
+  - REST
+  - FIX
+  field: statusReasonCode
+  codes:
+  - code: 3034
+    meaning: Account specific rate limit exceeded
+  - code: 3035
+    meaning: Global rate limit exceeded
+  - code: 96000
+    meaning: RATE_LIMIT_EXCEEDED
+  - code: 96001
+    meaning: GLOBAL_RATE_LIMIT_EXCEEDED
+  note: REST 96000/96001 arrive with HTTP 429; FIX 3034/3035 are the session equivalents.
+coverage:
+  codes_total: 167
+  groups: 6

@@ -1,0 +1,69 @@
+generated: '2026-08-08'
+method: searched
+probe: true
+url: https://www.bullish.com/us/trust
+source: https://www.bullish.com/us/trust
+summary: >-
+  Bullish publishes a first-party Trust and Transparency page rather than a hosted
+  third-party trust portal — trust.bullish.com does not resolve. The page carries
+  named SOC attestations, Deloitte-audited financial statements, and a full list of
+  the regulators Bullish is licensed or registered with across the US, Gibraltar,
+  Germany/EU and Hong Kong. Bullish is a public company (NYSE: BLSH), so the
+  SEC filing chain is part of the disclosure surface.
+certifications:
+  - SOC 1 Type 1
+  - SOC 2 Type 1
+attestations:
+  - name: SOC 1 Type 1
+    auditor: Deloitte & Touche LLP
+    entities: Gibraltar and Europe entities
+  - name: SOC 2 Type 1
+    auditor: Deloitte
+    scope: Custody services
+    entities: Gibraltar and Europe entities
+  - name: Annual financial statement audit (IFRS)
+    auditor: Deloitte
+    years: [2021, 2022, 2023]
+regulatory:
+  - jurisdiction: United States
+    items:
+      - FinCEN Money Services Business registration
+      - New York State virtual currency business license (NYDFS)
+      - Bullish US Operations LLC — licensed money transmitter in select states
+    filings:
+      - name: Form F-1 (filed 2025-07-18)
+        url: https://www.sec.gov/Archives/edgar/data/1872195/000110465925069070/tm2421409-15_f1.htm
+  - jurisdiction: Gibraltar
+    regulator: Gibraltar Financial Services Commission (GFSC)
+    items:
+      - Distributed Ledger Technology (DLT) provider licence
+    register: https://www.fsc.gi/regulated-entity/bullish-gi-ltd-27248
+    entity: Bullish (GI) Limited
+  - jurisdiction: Germany / European Union
+    regulator: BaFin
+    regulator_id: '10162355'
+    items:
+      - Qualified Crypto Custodian licence
+      - Payment institution licence
+      - MiCA Crypto-Asset Service Provider authorisation
+  - jurisdiction: Hong Kong
+    regulator: Securities and Futures Commission (SFC)
+    regulator_id: CE No BUQ956
+    items:
+      - Type 1 licence
+      - Type 7 licence
+      - Virtual Asset Trading Platform licence
+    register: https://www.sfc.hk/en/Welcome-to-the-Fintech-Contact-Point/Virtual-assets/Virtual-asset-trading-platforms-operators/Lists-of-virtual-asset-trading-platforms
+public_audit_reports:
+  repository: https://github.com/bullish-exchange/security-audit
+  covers: [tokenization]
+investor_relations: https://investors.bullish.com/
+evidence:
+  - source: https://www.bullish.com/us/trust
+    http_status: 200
+    keywords: [soc 1 type 1, soc 2 type 1, deloitte, gfsc, bafin, mica, nydfs, sfc]
+  - source: https://trust.bullish.com/
+    http_status: 000
+    note: Does not resolve — Bullish uses a first-party page, not a hosted trust portal.
+x-evidence:
+  fetched: '2026-08-08'

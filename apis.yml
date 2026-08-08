@@ -1,23 +1,304 @@
 aid: bullish
 name: Bullish
-description: 'Bullish is a company surfaced via the API Evangelist harvest backlog (source: secondary-market)
-  and added to the network as a stub for full-pipeline profiling.'
+description: >-
+  Bullish is an institutional digital-asset exchange and custodian operating a
+  regulated spot, perpetual, dated-futures and options venue with an integrated
+  automated market maker, deterministic central limit order book matching, and
+  qualified custody. It publishes a genuinely machine-readable API estate: a
+  79-operation OpenAPI 3.0.3 Trading API covering markets, orders, trades, AMM
+  instructions, derivatives positions, portfolio-margin simulation, OTC and
+  inter-dealer-broker booking, custody deposits and withdrawals, and history;
+  six AsyncAPI 3.0.0 WebSocket documents for order book, trades, ticks, auction,
+  index and private account data; and a FIX 4.2/5.0 order-entry and drop-copy
+  surface. Authentication is JWT bearer minted from a client-signed ECDSA R1 or
+  HMAC login rather than OAuth. Bullish is licensed or registered with the
+  Gibraltar Financial Services Commission, BaFin (MiCA CASP and qualified crypto
+  custodian), the Hong Kong SFC, FinCEN and NYDFS, and lists on the NYSE as BLSH.
 url: https://raw.githubusercontent.com/api-evangelist/bullish/refs/heads/main/apis.yml
+image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 x-type: company
 x-source: harvest:secondary-market
-x-tier: stub
-x-tier-reason: harvest
 specificationVersion: '0.20'
 created: '2026-08-08'
 modified: '2026-08-08'
 tags:
-- Company
-apis: []
+- Digital Assets
+- Cryptocurrency
+- Exchange
+- Trading
+- Derivatives
+- Custody
+- Market Data
+- Financial Services
+- Institutional
+- FIX
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com
 - FN: APIs.json
   email: info@apis.io
+apis:
+- aid: bullish:trading-api
+  name: Bullish Trading API
+  description: >-
+    The core Bullish REST API — 79 operations across markets, assets, index prices,
+    option ladders and expiry prices, order creation and amendment, trades, AMM
+    instructions, market-maker protection, derivatives positions, portfolio-margin
+    simulation, OTC and inter-dealer-broker trade booking, custody deposit and
+    withdrawal instructions, and account/trade/transfer history. Public market data
+    is anonymous; everything else is JWT bearer.
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - Trading
+  - Market Data
+  - Custody
+  - Derivatives
+  - OTC
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-trading-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:deprecated-api
+  name: Bullish Deprecated Features and APIs
+  description: >-
+    A separately published OpenAPI document carrying the 15 operations Bullish has
+    deprecated or decommissioned — the v1 order create/cancel/get surface, v1 AMM
+    instructions, v1 spot account reads and the v1 asset-transfer command — tagged
+    "deprecated - q3 2024", "deprecated" and "decommissioned" so integrators can
+    see exactly what is on the way out.
+  humanURL: https://docs.exchange.bullish.com/rest/deprecated/bullish-deprecated-features-apis
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - Deprecated
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-deprecated-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/deprecated/bullish-deprecated-features-apis
+- aid: bullish:ws-orderbook
+  name: Bullish WebSocket Multi-Order Book API
+  description: >-
+    AsyncAPI 3.0.0 document for simultaneous subscriptions to multiple L1 and L2
+    order books across different Bullish markets over WebSocket.
+  humanURL: https://docs.exchange.bullish.com/websocket/public/market-data/orderbook
+  baseURL: wss://api.exchange.bullish.com
+  tags:
+  - Market Data
+  - WebSocket
+  properties:
+  - type: AsyncAPI
+    url: asyncapi/bullish-ws-orderbook-asyncapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/websocket/public/market-data/orderbook
+- aid: bullish:ws-trades
+  name: Bullish WebSocket Anonymous Trades API
+  description: >-
+    AsyncAPI 3.0.0 document for batched anonymous trade subscriptions across
+    multiple Bullish markets over WebSocket.
+  humanURL: https://docs.exchange.bullish.com/websocket/public/market-data/trades
+  baseURL: wss://api.exchange.bullish.com
+  tags:
+  - Market Data
+  - WebSocket
+  properties:
+  - type: AsyncAPI
+    url: asyncapi/bullish-ws-trades-asyncapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/websocket/public/market-data/trades
+- aid: bullish:ws-ticks
+  name: Bullish WebSocket Anonymous Ticks API
+  description: >-
+    AsyncAPI 3.0.0 document for simultaneous tick subscriptions across multiple
+    Bullish markets over WebSocket.
+  humanURL: https://docs.exchange.bullish.com/websocket/public/market-data/ticks
+  baseURL: wss://api.exchange.bullish.com
+  tags:
+  - Market Data
+  - WebSocket
+  properties:
+  - type: AsyncAPI
+    url: asyncapi/bullish-ws-ticks-asyncapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/websocket/public/market-data/ticks
+- aid: bullish:ws-auction
+  name: Bullish WebSocket Auction Feed API
+  description: >-
+    AsyncAPI 3.0.0 document for the real-time auction feed, delivering phase and
+    order-imbalance data for Bullish markets with auctions enabled.
+  humanURL: https://docs.exchange.bullish.com/websocket/public/market-data/auction
+  baseURL: wss://api.exchange.bullish.com
+  tags:
+  - Market Data
+  - Auction
+  - WebSocket
+  properties:
+  - type: AsyncAPI
+    url: asyncapi/bullish-ws-auction-asyncapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/websocket/public/market-data/auction
+- aid: bullish:ws-index-data
+  name: Bullish WebSocket Index Data API
+  description: >-
+    AsyncAPI 3.0.0 document for streaming Bullish index prices, with the subscribed
+    asset set controlled by subscription-message parameters.
+  humanURL: https://docs.exchange.bullish.com/websocket/public/index-data
+  baseURL: wss://api.exchange.bullish.com
+  tags:
+  - Market Data
+  - Index
+  - WebSocket
+  properties:
+  - type: AsyncAPI
+    url: asyncapi/bullish-ws-index-data-asyncapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/websocket/public/index-data
+- aid: bullish:ws-private-data
+  name: Bullish WebSocket Private Data API
+  description: >-
+    AsyncAPI 3.0.0 document for the authenticated private stream — real-time orders,
+    trades, asset accounts, trading accounts, derivatives positions, AMM
+    instructions and market-maker-protection triggers.
+  humanURL: https://docs.exchange.bullish.com/websocket/private/private-data
+  baseURL: wss://api.exchange.bullish.com
+  tags:
+  - Trading
+  - Account
+  - WebSocket
+  properties:
+  - type: AsyncAPI
+    url: asyncapi/bullish-ws-private-data-asyncapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/websocket/private/private-data
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/websocket/protocol/authentication
+- aid: bullish:fix-api
+  name: Bullish FIX API
+  description: >-
+    The Bullish FIX order-entry, drop-copy, reference-data and trading-status
+    surface for institutional and high-frequency clients, with session management
+    and component definitions documented. Rejections carry OrdRejReason (tag 103)
+    and Text (tag 58) using the same numeric registry as REST.
+  humanURL: https://docs.exchange.bullish.com/fix/introduction
+  baseURL: https://api.exchange.bullish.com
+  tags:
+  - FIX
+  - Trading
+  - Institutional
+  properties:
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/fix/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/fix/component-definitions
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/fix/session-management
+  - type: ErrorCodes
+    url: errors/bullish-error-codes.yml
+- aid: bullish:aggregator-api
+  name: Bullish Aggregator API
+  description: >-
+    A small non-authenticated REST surface publishing aggregated public market data
+    — tickers with 24-hour rolling statistics, order books, and the last 100 trades,
+    each optionally filtered by market type. Intended for data aggregators and
+    market-data consumers rather than for trading.
+  humanURL: https://docs.exchange.bullish.com/aggregator/bullish-aggregator-api
+  baseURL: https://api.exchange.bullish.com
+  tags:
+  - Market Data
+  - Public Data
+  properties:
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/aggregator/bullish-aggregator-api
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/aggregator/get-tickers
 common:
+- type: AgenticAccess
+  url: agentic-access/bullish-agentic-access.yml
+- type: DomainSecurity
+  url: security/bullish-domain-security.yml
 - type: Website
-  url: https://forgeglobal.com/bullish_stock/
+  url: https://www.bullish.com/us/
+- type: DeveloperPortal
+  url: https://docs.exchange.bullish.com/
+- type: Documentation
+  url: https://docs.exchange.bullish.com/rest/introduction
+- type: APIReference
+  url: https://docs.exchange.bullish.com/rest/api/get-markets
+- type: GettingStarted
+  url: https://docs.exchange.bullish.com/rest/introduction
+- type: Authentication
+  url: authentication/bullish-authentication.yml
+- type: OpenAPI
+  url: openapi/bullish-trading-api-openapi.yml
+- type: AsyncAPI
+  url: asyncapi/bullish-ws-private-data-asyncapi.yml
+- type: ChangeLog
+  url: changelog/bullish-changelog.yml
+- type: Lifecycle
+  url: lifecycle/bullish-lifecycle.yml
+- type: StatusPage
+  url: https://status.bullish.com/
+- type: Deprecation
+  url: https://docs.exchange.bullish.com/rest/deprecated/bullish-deprecated-features-apis
+- type: ErrorCatalog
+  url: errors/bullish-error-codes.yml
+- type: RateLimits
+  url: rate-limits/bullish-rate-limits.yml
+- type: Conventions
+  url: conventions/bullish-conventions.yml
+- type: Packages
+  url: packages/bullish-packages.yml
+- type: SDKs
+  url: packages/bullish-packages.yml
+- type: GitHubOrganization
+  url: https://github.com/bullish-exchange
+- type: Support
+  url: https://support.exchange.bullish.com/servicedesk/customer/portals
+- type: HelpCenter
+  url: https://support.bullish.com
+- type: Pricing
+  url: https://support.exchange.bullish.com/servicedesk/customer/portal/1/article/9373547
+- type: SignUp
+  url: https://exchange.bullish.com/register/sign-up
+- type: Login
+  url: https://exchange.bullish.com/login
+- type: TermsOfService
+  url: https://www.bullish.com/us/site-terms-of-use
+- type: PrivacyPolicy
+  url: https://www.bullish.com/us/legal-us
+- type: Blog
+  url: https://www.bullish.com/us/news-insights
+- type: Security
+  url: https://www.bullish.com/us/bug-bounty-program
+- type: TrustCenter
+  url: https://www.bullish.com/us/trust
+- type: Compliance
+  url: https://www.bullish.com/us/trust
+- type: VulnerabilityDisclosure
+  url: security/bullish-vulnerability-disclosure.yml
+- type: Conformance
+  url: conformance/bullish-conformance.yml
+- type: Sandbox
+  url: sandbox/bullish-sandbox.yml
+- type: DataModel
+  url: data-model/bullish-data-model.yml
+- type: LLMsTxt
+  url: llms/bullish-llms.txt
+- type: Overlay
+  url: overlays/bullish-trading-api-overlay.yaml
+- type: AgentSkill
+  url: skills/_index.yml
+x-enrichment:
+  date: '2026-08-08'
+  status: enriched
+  artifacts_added: 33
+  pass: local-v1

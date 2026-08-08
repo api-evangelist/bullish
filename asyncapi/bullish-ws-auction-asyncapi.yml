@@ -1,0 +1,520 @@
+asyncapi: 3.0.0
+info:
+  title: Auction Feed
+  version: 1.0.0
+  description: |
+    The Auction Feed provides real-time auction data for markets with auctions enabled.
+
+    Two topics are available:
+
+    - `noii` - Net Order Imbalance Indicator (NOII) updates. Available during the Lockdown phase only, providing periodic snapshots of indicative clearing price, imbalance direction/quantity, and matched volume. A final `CROSS` event is sent when the auction cross completes.
+    - `phase` - Auction phase transition notifications. Sends events when the auction starts (`AUCTION_STARTED`), enters lockdown (`AUCTION_LOCKDOWN`), is postponed (`AUCTION_CROSS_POSTPONED`), or completes (`AUCTION_CROSS_COMPLETED`).
+
+    ```
+    /trading-api/v1/market-data/auction
+    ```
+servers:
+  prod-public:
+    host: api.exchange.bullish.com
+    protocol: wss
+    description: Production / Public
+  prod-registered:
+    host: registered.api.exchange.bullish.com
+    protocol: wss
+    description: Production / Registered
+  prod-direct:
+    host: prod.access.bullish.com
+    protocol: wss
+    description: Production / Direct Connect
+  simnext-public:
+    host: api.simnext.bullish-test.com
+    protocol: wss
+    description: SimNext / Public
+  simnext-registered:
+    host: registered.api.simnext.bullish-test.com
+    protocol: wss
+    description: SimNext / Registered
+  simnext-direct:
+    host: simnext.access.bullish.com
+    protocol: wss
+    description: SimNext / Direct Connect
+
+channels:
+  data:
+    address: /trading-api/v1/market-data/auction
+    messages:
+      subscribe:
+        title: Subscription
+        summary: Let you subscribe to a given topic
+        payload:
+          type: object
+          required:
+            - jsonrpc
+            - type
+            - method
+            - params
+            - id
+          properties:
+            method:
+              type: string
+              description: '"subscribe"'
+              example: subscribe
+            jsonrpc:
+              $ref: "#/components/schemas/AuctionJsonRpcVersion"
+            id:
+              $ref: "#/components/schemas/AuctionJsonRpcRequestId"
+            type:
+              $ref: "#/components/schemas/AuctionJsonRpcCommandType"
+            params:
+              type: object
+              required:
+                - topic
+                - symbol
+              properties:
+                topic:
+                  type: string
+                  description: '"noii" or "phase"'
+                  example: noii
+                symbol:
+                  type: string
+                  description: Market symbol, such as BTCUSDC
+                  example: BTCUSDC
+      subscribe-ack:
+        title: Acknowledgment
+        summary: Confirm the topic being subscribed
+        payload:
+          type: object
+          properties:
+            jsonrpc:
+              $ref: "#/components/schemas/AuctionJsonRpcVersion"
+            id:
+              $ref: "#/components/schemas/AuctionJsonRpcRequestId"
+            result:
+              type: object
+              properties:
+                responseCodeName:
+                  type: string
+                  description: '"OK"'
+                  example: OK
+                responseCode:
+                  type: string
+                  description: "200"
+                  example: "200"
+                message:
+                  type: string
+                  description: Confirmation of what has been subscribed
+                  example: Successfully subscribed (noii BTCUSDC)
+      subscribe-msg-0-noii:
+        title: NOII Snapshot
+        summary: Initial NOII state on subscribe
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"snapshot"'
+              example: snapshot
+            dataType:
+              type: string
+              description: '"V1TANoii"'
+              example: V1TANoii
+            data:
+              type: array
+              description: List of NOII entries
+              items:
+                $ref: "#/components/schemas/AuctionNoii"
+      subscribe-msg-1-noii:
+        title: NOII Update
+        summary: Net Order Imbalance Indicator update during lockdown or cross result
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"update"'
+              example: update
+            dataType:
+              type: string
+              description: '"V1TANoii"'
+              example: V1TANoii
+            data:
+              description: A single NOII entry
+              type: object
+              properties:
+                auctionId:
+                  type: string
+                  description: Auction identifier
+                eventType:
+                  type: string
+                  description: UPDATE (periodic NOII during lockdown) or CROSS (auction cross completed)
+                  enum:
+                    - UPDATE
+                    - CROSS
+                  example: UPDATE
+                symbol:
+                  type: string
+                  description: Market symbol
+                  example: BTCUSDC
+                timestamp:
+                  type: string
+                  description: Event timestamp, ISO 8601 with millisecond as string
+                clearingPrice:
+                  type: string
+                  description: Final clearing price (applicable for CROSS eventType)
+                farPrice:
+                  type: string
+                  description: Indicative clearing price from auction orders (applicable for UPDATE eventType)
+                referencePrice:
+                  type: string
+                  description: Last Trade Price on Regular Continuous Orderbook; if not available, then Index Price
+                imbalanceDirection:
+                  type: string
+                  description: BUY, SELL, or NONE
+                  enum:
+                    - BUY
+                    - SELL
+                    - NONE
+                  example: BUY
+                imbalanceQuantity:
+                  type: string
+                  description: Imbalance quantity
+                pairedQuantity:
+                  type: string
+                  description: Matched volume
+      subscribe-msg-0-phase:
+        title: Phase Snapshot
+        summary: Initial auction phase state on subscribe
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"snapshot"'
+              example: snapshot
+            dataType:
+              type: string
+              description: '"V1TAAuctionPhase"'
+              example: V1TAAuctionPhase
+            data:
+              type: array
+              description: Current auction phase
+              items:
+                $ref: "#/components/schemas/AuctionPhase"
+      subscribe-msg-1-phase:
+        title: Phase Update
+        summary: Auction phase transition notification
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"update"'
+              example: update
+            dataType:
+              type: string
+              description: '"V1TAAuctionPhase"'
+              example: V1TAAuctionPhase
+            data:
+              description: A single phase update
+              type: object
+              properties:
+                auctionId:
+                  type: string
+                  description: Auction identifier
+                eventType:
+                  type: string
+                  description: AUCTION_STARTED, AUCTION_LOCKDOWN, AUCTION_CROSS_POSTPONED, or AUCTION_CROSS_COMPLETED
+                  enum:
+                    - AUCTION_STARTED
+                    - AUCTION_LOCKDOWN
+                    - AUCTION_CROSS_POSTPONED
+                    - AUCTION_CROSS_COMPLETED
+                  example: AUCTION_STARTED
+                phase:
+                  type: string
+                  description: Current auction phase
+                  enum:
+                    - ACCUMULATION
+                    - LOCKDOWN
+                    - CROSS
+                    - COOLING
+                  example: ACCUMULATION
+                symbol:
+                  type: string
+                  description: Market symbol
+                  example: BTCUSDC
+                timestamp:
+                  type: string
+                  description: Event timestamp, ISO 8601 with millisecond as string
+                startTime:
+                  type: string
+                  description: Accumulation start time, ISO 8601 with millisecond as string
+                lockdownTime:
+                  type: string
+                  description: Lockdown start time, ISO 8601 with millisecond as string
+                scheduledCrossTime:
+                  type: string
+                  description: Scheduled cross time, ISO 8601 with millisecond as string
+                createAuctionOrderEnabled:
+                  type: boolean
+                  description: Whether new auction orders can be placed in the current phase
+                amendAuctionOrderEnabled:
+                  type: boolean
+                  description: Whether existing auction orders can be amended in the current phase
+                cancelAuctionOrderEnabled:
+                  type: boolean
+                  description: Whether existing auction orders can be cancelled in the current phase
+                message:
+                  type: string
+                  description: Optional message (e.g. reason for postponement)
+                createdAt:
+                  type: string
+                  description: denotes the time the phase event was created, ISO 8601 with millisecond as string
+                updatedAt:
+                  type: string
+                  description: denotes the time the phase event was last updated, ISO 8601 with millisecond as string
+      subscribe-nack:
+        title: Rejection
+        summary: Explain why the topic could not be subscribed
+        payload:
+          type: object
+          properties:
+            jsonrpc:
+              $ref: "#/components/schemas/AuctionJsonRpcVersion"
+            id:
+              $ref: "#/components/schemas/AuctionJsonRpcRequestId"
+            error:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: a high-level code for the error
+                  example: "-32602"
+                errorCode:
+                  type: string
+                  description: a precise typed error code
+                  example: "29013"
+                errorCodeName:
+                  type: string
+                  description: An explanation of which value was invalid
+                  example: "'abcde' is not a valid topic"
+      keepalive-ping:
+        title: Keepalive Ping
+        payload:
+          type: object
+          required:
+            - jsonrpc
+            - type
+            - method
+            - params
+            - id
+          properties:
+            method:
+              type: string
+              description: '"keepalivePing"'
+              example: keepalivePing
+            params:
+              type: object
+            jsonrpc:
+              $ref: "#/components/schemas/AuctionJsonRpcVersion"
+            id:
+              $ref: "#/components/schemas/AuctionJsonRpcRequestId"
+            type:
+              $ref: "#/components/schemas/AuctionJsonRpcCommandType"
+      keepalive-pong:
+        title: Keepalive Pong
+        payload:
+          type: object
+          properties:
+            jsonrpc:
+              $ref: "#/components/schemas/AuctionJsonRpcVersion"
+            id:
+              $ref: "#/components/schemas/AuctionJsonRpcRequestId"
+            result:
+              type: object
+              properties:
+                responseCodeName:
+                  type: string
+                  description: '"OK"'
+                  example: OK
+                responseCode:
+                  type: integer
+                  description: "200"
+                  example: 200
+                message:
+                  type: string
+                  description: '"Keep alive pong"'
+                  example: Keep alive pong
+operations:
+  subscribe:
+    action: send
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Subscribe
+      Multiple subscriptions could be opened within the same websocket.
+
+      The auction data of different markets to be subscribed are controlled by the parameters in
+      the subscription message listed below.
+
+      Two topics are available:
+      - `noii` — Net Order Imbalance Indicator updates (available during Lockdown phase only)
+      - `phase` — Auction phase transition notifications
+    messages:
+      - $ref: "#/channels/data/messages/subscribe"
+  receive-noii:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Receive NOII
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-msg-0-noii"
+      - $ref: "#/channels/data/messages/subscribe-msg-1-noii"
+  receive-phase:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Receive Phase
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-msg-0-phase"
+      - $ref: "#/channels/data/messages/subscribe-msg-1-phase"
+  subscribe-nack:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: In case of *invalid* subscription message, an error rejection would be sent.
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-nack"
+  keepalive-ping:
+    action: send
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Keepalive
+      In case nothing is subscribed to, keep the websocket connection alive.
+    messages:
+      - $ref: "#/channels/data/messages/keepalive-ping"
+  keepalive-pong:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      Acknowledgement returned by the server in response to a keepalive-ping.
+    messages:
+      - $ref: "#/channels/data/messages/keepalive-pong"
+components:
+  schemas:
+    AuctionNoii:
+      type: object
+      properties:
+        auctionId:
+          type: string
+          description: Auction identifier
+        eventType:
+          type: string
+          description: UPDATE (periodic NOII during lockdown) or CROSS (auction cross completed)
+          enum:
+            - UPDATE
+            - CROSS
+          example: UPDATE
+        symbol:
+          type: string
+          description: Market symbol
+          example: BTCUSDC
+        timestamp:
+          type: string
+          description: Event timestamp, ISO 8601 with millisecond as string
+        clearingPrice:
+          type: string
+          description: Final clearing price (applicable for CROSS eventType)
+        farPrice:
+          type: string
+          description: Indicative clearing price from auction orders (applicable for UPDATE eventType)
+        referencePrice:
+          type: string
+          description: Last Trade Price on Regular Continuous Orderbook; if not available, then Index Price
+        imbalanceDirection:
+          type: string
+          description: BUY, SELL, or NONE
+          enum:
+            - BUY
+            - SELL
+            - NONE
+          example: BUY
+        imbalanceQuantity:
+          type: string
+          description: Imbalance quantity
+        pairedQuantity:
+          type: string
+          description: Matched volume
+    AuctionPhase:
+      type: object
+      properties:
+        auctionId:
+          type: string
+          description: Auction identifier
+        eventType:
+          type: string
+          description: AUCTION_STARTED, AUCTION_LOCKDOWN, AUCTION_CROSS_POSTPONED, or AUCTION_CROSS_COMPLETED
+          enum:
+            - AUCTION_STARTED
+            - AUCTION_LOCKDOWN
+            - AUCTION_CROSS_POSTPONED
+            - AUCTION_CROSS_COMPLETED
+          example: AUCTION_STARTED
+        phase:
+          type: string
+          description: Current auction phase
+          enum:
+            - ACCUMULATION
+            - LOCKDOWN
+            - CROSS
+            - COOLING
+          example: ACCUMULATION
+        symbol:
+          type: string
+          description: Market symbol
+          example: BTCUSDC
+        timestamp:
+          type: string
+          description: Event timestamp, ISO 8601 with millisecond as string
+        startTime:
+          type: string
+          description: Accumulation start time, ISO 8601 with millisecond as string
+        lockdownTime:
+          type: string
+          description: Lockdown start time, ISO 8601 with millisecond as string
+        scheduledCrossTime:
+          type: string
+          description: Scheduled cross time, ISO 8601 with millisecond as string
+        createAuctionOrderEnabled:
+          type: boolean
+          description: Whether new auction orders can be placed in the current phase
+        amendAuctionOrderEnabled:
+          type: boolean
+          description: Whether existing auction orders can be amended in the current phase
+        cancelAuctionOrderEnabled:
+          type: boolean
+          description: Whether existing auction orders can be cancelled in the current phase
+        message:
+          type: string
+          description: Optional message (e.g. reason for postponement)
+        createdAt:
+          type: string
+          description: denotes the time the phase event was created, ISO 8601 with millisecond as string
+        updatedAt:
+          type: string
+          description: denotes the time the phase event was last updated, ISO 8601 with millisecond as string
+    AuctionJsonRpcRequestId:
+      type: string
+      description: Request identifier
+      example: "1"
+    AuctionJsonRpcVersion:
+      type: string
+      description: '"2.0"'
+      example: "2.0"
+    AuctionJsonRpcCommandType:
+      description: '"command"'
+      example: command

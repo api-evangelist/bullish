@@ -1,0 +1,2246 @@
+asyncapi: 3.0.0
+info:
+  title: Private Data
+  version: 1.0.0
+  description: |
+    All private data updates are realtime.
+    Multiple topics and multiple accounts can be subscribed to within a single connection.
+
+    A default subscribed trading account can be pre-specified by using this endpoint.
+
+    ```
+    /trading-api/v1/private-data?tradingAccountId={id}
+    ```
+
+    Otherwise controlled by parameters in the subscription message listed below
+
+    ```
+    /trading-api/v1/private-data
+    ```
+
+    Please note that [authentication is mandatory](/websocket/protocol/authentication)
+servers:
+  prod-public:
+    host: api.exchange.bullish.com
+    protocol: wss
+    description: Production / Public
+  prod-registered:
+    host: registered.api.exchange.bullish.com
+    protocol: wss
+    description: Production / Registered
+  prod-direct:
+    host: prod.access.bullish.com
+    protocol: wss
+    description: Production / Direct Connect
+  simnext-public:
+    host: api.simnext.bullish-test.com
+    protocol: wss
+    description: SimNext / Public
+  simnext-registered:
+    host: registered.api.simnext.bullish-test.com
+    protocol: wss
+    description: SimNext / Registered
+  simnext-direct:
+    host: simnext.access.bullish.com
+    protocol: wss
+    description: SimNext / Direct Connect
+
+channels:
+  data:
+    address: /trading-api/v1/private-data
+    messages:
+      subscribe:
+        title: Subscription
+        summary: Let you subscribe to a given topic
+        payload:
+          type: object
+          required:
+            - id
+            - method
+            - params
+          properties:
+            method:
+              type: string
+              description: '"subscribe"'
+              example: subscribe
+            id:
+              $ref: "#/components/schemas/PrivateDataJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/PrivateDataJsonRpcVersion"
+            type:
+              $ref: "#/components/schemas/PrivateDataJsonRpcCommandType"
+            params:
+              type: object
+              required:
+                - topic
+                - tradingAccountId
+              properties:
+                topic:
+                  type: string
+                  description: |
+                    Topic selected among
+                    - [orders](/websocket/private/private-data#operation-receive-orders)
+                    - [trades](/websocket/private/private-data#operation-receive-trades)
+                    - ~~[spotAccounts](/websocket/private/private-data#operation-receive-spotAccounts)~~ `Deprecated`
+                    - [assetAccounts](/websocket/private/private-data#operation-receive-assetAccounts)
+                    - [tradingAccounts](/websocket/private/private-data#operation-receive-tradingAccounts)
+                    - ~~[derivativesPositions](/websocket/private/private-data#operation-receive-derivativesPositions)~~ `Deprecated`
+                    - [derivativesPositionsV2](/websocket/private/private-data#operation-receive-derivativesPositionsV2)
+                    - [ammInstructions](/websocket/private/private-data#operation-receive-ammInstructions)
+                    - [mmpTrigger](/websocket/private/private-data#operation-receive-mmpTrigger)
+                    - [mmpRequest](/websocket/private/private-data#operation-receive-mmpRequest)
+                  example: orders
+                tradingAccountId:
+                  type: string
+                  description: Trading account Id to be subscribed to
+                  example: "1111"
+      subscribe-ack:
+        title: Acknowledgment
+        summary: Confirm the subscription was opened
+        payload:
+          type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/PrivateDataJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/PrivateDataJsonRpcVersion"
+            result:
+              type: object
+              properties:
+                responseCodeName:
+                  type: string
+                  description: '"OK"'
+                  example: OK
+                responseCode:
+                  type: string
+                  description: "200"
+                  example: "200"
+                message:
+                  type: string
+                  description: Confirmation that the subscription was opened
+                  example: Successfully subscribed
+      subscribe-msg-0-orders:
+        title: Snapshot
+        summary: Initial full state of the subscribed order data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"snapshot"'
+              example: snapshot
+            dataType:
+              type: string
+              description: '"V1TAOrder"'
+              example: V1TAOrder
+            data:
+              type: array
+              description: List of orders
+              items:
+                type: object
+                properties:
+                  handle:
+                    type: string
+                    description: |
+                      unique numeric (i64) identifier generated on the client side expressed as a string value
+
+                      Deprecated; scheduled for removal.
+                      Replaced by: clientOrderId
+                    example: null
+                  clientOrderId:
+                    type: string
+                    description: unique numeric (i64) identifier generated on the client side expressed as a string value
+                    example: null
+                  orderId:
+                    type: string
+                    description: unique order id
+                    example: "392883006043848705"
+                  symbol:
+                    type: string
+                    description: market symbol
+                    example: BTCUSD
+                  price:
+                    type: string
+                    description: price, see asset value format
+                    example: "66858.2000"
+                  averageFillPrice:
+                    type: string
+                    description: average fill price, see asset value format
+                    example: "66858.2000"
+                  stopPrice:
+                    type: string
+                    description: stop price, see asset value format
+                    example: null
+                  margin:
+                    type: boolean
+                    description: |
+                      indicates if the order was allowed to borrow (does not indicate that borrowing occurred)
+
+                      Deprecated; scheduled for removal.
+                      Replaced by: allowBorrow
+                    example: false
+                  allowBorrow:
+                    type: boolean
+                    description: indicates if the order was allowed to borrow (does not indicate that borrowing occurred)
+                    example: false
+                  quantity:
+                    type: string
+                    description: quantity, see asset value format
+                    example: "2.00000000"
+                  quantityFilled:
+                    type: string
+                    description: quantity filled, see asset value format
+                    example: "2.00000000"
+                  quoteAmount:
+                    type: string
+                    description: quote quantity deducted from asset account, see asset value format
+                    example: "23000.0000"
+                  baseFee:
+                    type: string
+                    description: base fee rate that will be charged upon trade execution, see asset value format
+                    example: "0.00000000"
+                  quoteFee:
+                    type: string
+                    description: quote fee rate that will be charged upon trade execution, see asset value format
+                    example: "0.0005"
+                  side:
+                    type: string
+                    description: order side
+                    example: BUY
+                  borrowedQuantity:
+                    type: string
+                    description: |
+                      quantity borrowed, see asset value format - BUY order borrows quote, SELL order borrows base
+
+                      Deprecated; scheduled for removal.
+                      Replaced by: borrowedBaseQuantity and borrowedQuoteQuantity
+                    example: "0.0010"
+                  isLiquidation:
+                    type: string
+                    description: indicates if the order was executed as a liquidation order
+                    example: false
+                  type:
+                    type: string
+                    description: order type
+                    example: LMT
+                  timeInForce:
+                    type: string
+                    description: time in force
+                    example: GTC
+                  status:
+                    type: string
+                    description: order status
+                    example: CLOSED
+                  statusReason:
+                    type: string
+                    description: status reason code, see details
+                    example: Executed
+                  statusReasonCode:
+                    type: string
+                    description: status reason code, see details
+                    example: 6002
+                  createdAtDatetime:
+                    type: string
+                    description: denotes the time the order was ACK'd by the exchange, ISO 8601 with millisecond as string
+                    example: "2021-12-30T07:36:35.918Z"
+                  createdAtTimestamp:
+                    type: string
+                    description: denotes the time the order was ACK'd by the exchange
+                    example: "1640849795918"
+                  publishedAtTimestamp:
+                    type: string
+                    description: denotes the time the update was broadcasted to connected WebSockets
+                    example: "1640849795920"
+              example:
+                - handle: null
+                  orderId: "392883006043848705"
+                  symbol: BTCUSD
+                  price: "66858.2000"
+                  averageFillPrice: "66858.2000"
+                  stopPrice: null
+                  margin: false
+                  quantity: "2.00000000"
+                  quantityFilled: "2.00000000"
+                  quoteAmount: "23000.0000"
+                  baseFee: "0.00000000"
+                  quoteFee: "0.0005"
+                  side: BUY
+                  borrowedQuantity: "0.0010"
+                  isLiquidation: false
+                  type: LMT
+                  timeInForce: GTC
+                  status: CLOSED
+                  statusReason: Executed
+                  statusReasonCode: 6002
+                  createdAtDatetime: "2021-12-30T07:36:35.918Z"
+                  createdAtTimestamp: "1640849795918"
+                  publishedAtTimestamp: "1640849795920"
+      subscribe-msg-1-orders:
+        title: Update
+        summary: Incremental update to the subscribed order data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"update"'
+              example: update
+            dataType:
+              type: string
+              description: '"V1TAOrder"'
+              example: V1TAOrder
+            data:
+              description: An order
+              type: object
+              properties:
+                handle:
+                  type: string
+                  description: |
+                    unique numeric (i64) identifier generated on the client side expressed as a string value
+
+                    Deprecated; scheduled for removal.
+                    Replaced by: clientOrderId
+                  example: null
+                clientOrderId:
+                  type: string
+                  description: unique numeric (i64) identifier generated on the client side expressed as a string value
+                  example: null
+                orderId:
+                  type: string
+                  description: unique order id
+                  example: "392883006043848705"
+                symbol:
+                  type: string
+                  description: market symbol
+                  example: BTCUSD
+                price:
+                  type: string
+                  description: price, see asset value format
+                  example: "66858.2000"
+                averageFillPrice:
+                  type: string
+                  description: average fill price, see asset value format
+                  example: "66858.2000"
+                stopPrice:
+                  type: string
+                  description: stop price, see asset value format
+                  example: null
+                margin:
+                  type: boolean
+                  description: |
+                    indicates if the order was allowed to borrow (does not indicate that borrowing occurred)
+
+                    Deprecated; scheduled for removal.
+                    Replaced by: allowBorrow
+                  example: false
+                allowBorrow:
+                  type: boolean
+                  description: indicates if the order was allowed to borrow (does not indicate that borrowing occurred)
+                  example: false
+                quantity:
+                  type: string
+                  description: quantity, see asset value format
+                  example: "2.00000000"
+                quantityFilled:
+                  type: string
+                  description: quantity filled, see asset value format
+                  example: "2.00000000"
+                quoteAmount:
+                  type: string
+                  description: quote quantity deducted from asset account, see asset value format
+                  example: "23000.0000"
+                baseFee:
+                  type: string
+                  description: base fee rate that will be charged upon trade execution, see asset value format
+                  example: "0.00000000"
+                quoteFee:
+                  type: string
+                  description: quote fee rate that will be charged upon trade execution, see asset value format
+                  example: "0.0005"
+                side:
+                  type: string
+                  description: order side
+                  example: BUY
+                borrowedQuantity:
+                  type: string
+                  description: |
+                    quantity borrowed, see asset value format - BUY order borrows quote, SELL order borrows base
+
+                    Deprecated; scheduled for removal.
+                    Replaced by: borrowedBaseQuantity and borrowedQuoteQuantity
+                  example: "0.0010"
+                isLiquidation:
+                  type: string
+                  description: indicates if the order was executed as a liquidation order
+                  example: false
+                type:
+                  type: string
+                  description: order type
+                  example: LMT
+                timeInForce:
+                  type: string
+                  description: time in force
+                  example: GTC
+                status:
+                  type: string
+                  description: order status
+                  example: CLOSED
+                statusReason:
+                  type: string
+                  description: status reason code, see details
+                  example: Executed
+                statusReasonCode:
+                  type: string
+                  description: status reason code, see details
+                  example: 6002
+                createdAtDatetime:
+                  type: string
+                  description: denotes the time the order was ACK'd by the exchange, ISO 8601 with millisecond as string
+                  example: "2021-12-30T07:36:35.918Z"
+                createdAtTimestamp:
+                  type: string
+                  description: denotes the time the order was ACK'd by the exchange
+                  example: "1640849795918"
+                publishedAtTimestamp:
+                  type: string
+                  description: denotes the time the update was broadcasted to connected WebSockets
+                  example: "1640849795920"
+              example:
+                handle: null
+                orderId: "392883006043848705"
+                symbol: BTCUSD
+                price: "66858.2000"
+                averageFillPrice: "66858.2000"
+                stopPrice: null
+                margin: false
+                quantity: "2.00000000"
+                quantityFilled: "2.00000000"
+                quoteAmount: "23000.0000"
+                baseFee: "0.00000000"
+                quoteFee: "0.0005"
+                side: BUY
+                borrowedQuantity: "0.0010"
+                isLiquidation: false
+                type: LMT
+                timeInForce: GTC
+                status: CLOSED
+                statusReason: Executed
+                statusReasonCode: 6002
+                createdAtDatetime: "2021-12-30T07:36:35.918Z"
+                createdAtTimestamp: "1640849795918"
+                publishedAtTimestamp: "1640849795920"
+      subscribe-msg-0-trades:
+        title: Snapshot
+        summary: Initial full state of the subscribed trade data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"snapshot"'
+              example: snapshot
+            dataType:
+              type: string
+              description: '"V1TATrade"'
+              example: V1TATrade
+            data:
+              type: array
+              description: List of trades
+              items:
+                type: object
+                properties:
+                  tradeId:
+                    type: string
+                    description: unique trade id
+                  orderId:
+                    type: string
+                    description: unique order id
+                  handle:
+                    type: string
+                    description: unique numeric identifier (i64) generated on the client side expressed as a string value
+                  symbol:
+                    type: string
+                    description: market symbol
+                  price:
+                    type: string
+                    description: price, see asset value format
+                  quantity:
+                    type: string
+                    description: quantity, see asset value format
+                  quoteAmount:
+                    type: string
+                    description: quote quantity deducted from asset account, see asset value format
+                  baseFee:
+                    type: string
+                    description: base fee, see asset value format
+                  quoteFee:
+                    type: string
+                    description: quote fee, see asset value format
+                  side:
+                    type: string
+                    description: order side
+                  tradeRebateAmount:
+                    type: string
+                    description: amount of rebate that is credited to the user as part of the trade
+                  tradeRebateAssetSymbol:
+                    type: string
+                    description: symbol of the asset in which the rebate is paid
+                  isTaker:
+                    type: boolean
+                    description: denotes whether this is a taker's trade
+                  otcMatchId:
+                    type: string
+                    description: unique OTC match id
+                  otcTradeId:
+                    type: string
+                    description: unique Bullish OTC trade id
+                  clientOtcTradeId:
+                    type: string
+                    description: unique client OTC trade id
+                  createdAtDatetime:
+                    type: string
+                    description: denotes the time the trade was executed by the exchange, ISO 8601 with millisecond as string
+                  createdAtTimestamp:
+                    type: string
+                    description: denotes the time the trade was executed by the exchange
+                  publishedAtTimestamp:
+                    type: string
+                    description: denotes the time the update was broadcasted to connected WebSockets
+                  auctionId:
+                    type: string
+                    description: unique Bullish auction identifier. Present only for auction trades
+              example:
+                - tradeId: "100014000000000118"
+                  orderId: "392883006043848705"
+                  handle: "123456"
+                  symbol: BTCUSD
+                  price: "66858.2000"
+                  quantity: "2.00000000"
+                  quoteAmount: "23000.0000"
+                  baseFee: "0.00000000"
+                  quoteFee: "66.8582"
+                  side: BUY
+                  isTaker: false
+                  tradeRebateAmount: "3.0000"
+                  tradeRebateAssetSymbol: USDC
+                  otcMatchId: "15"
+                  otcTradeId: "200014000000000118"
+                  clientOtcTradeId: "300014000000000118"
+                  createdAtDatetime: "2021-12-30T07:36:35.918Z"
+                  createdAtTimestamp: "1640849795918"
+                  publishedAtTimestamp: "1640849795920"
+      subscribe-msg-1-trades:
+        title: Update
+        summary: Incremental update to the subscribed trade data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"update"'
+              example: update
+            dataType:
+              type: string
+              description: '"V1TATrade"'
+              example: V1TATrade
+            data:
+              description: A trade
+              type: object
+              properties:
+                tradeId:
+                  type: string
+                  description: unique trade id
+                orderId:
+                  type: string
+                  description: unique order id
+                handle:
+                  type: string
+                  description: unique numeric identifier (i64) generated on the client side expressed as a string value
+                symbol:
+                  type: string
+                  description: market symbol
+                price:
+                  type: string
+                  description: price, see asset value format
+                quantity:
+                  type: string
+                  description: quantity, see asset value format
+                quoteAmount:
+                  type: string
+                  description: quote quantity deducted from asset account, see asset value format
+                baseFee:
+                  type: string
+                  description: base fee, see asset value format
+                quoteFee:
+                  type: string
+                  description: quote fee, see asset value format
+                side:
+                  type: string
+                  description: order side
+                tradeRebateAmount:
+                  type: string
+                  description: amount of rebate that is credited to the user as part of the trade
+                tradeRebateAssetSymbol:
+                  type: string
+                  description: symbol of the asset in which the rebate is paid
+                isTaker:
+                  type: boolean
+                  description: denotes whether this is a taker's trade
+                otcMatchId:
+                  type: string
+                  description: unique OTC match id
+                otcTradeId:
+                  type: string
+                  description: unique Bullish OTC trade id
+                clientOtcTradeId:
+                  type: string
+                  description: unique client OTC trade id
+                createdAtDatetime:
+                  type: string
+                  description: denotes the time the trade was executed by the exchange, ISO 8601 with millisecond as string
+                createdAtTimestamp:
+                  type: string
+                  description: denotes the time the trade was executed by the exchange
+                publishedAtTimestamp:
+                  type: string
+                  description: denotes the time the update was broadcasted to connected WebSockets
+                auctionId:
+                  type: string
+                  description: unique Bullish auction identifier. Present only for auction trades
+              example:
+                tradeId: "100014000000000118"
+                orderId: "392883006043848705"
+                handle: "123456"
+                symbol: BTCUSD
+                price: "66858.2000"
+                quantity: "2.00000000"
+                quoteAmount: "23000.0000"
+                baseFee: "0.00000000"
+                quoteFee: "66.8582"
+                side: BUY
+                isTaker: false
+                tradeRebateAmount: "3.0000"
+                tradeRebateAssetSymbol: USDC
+                otcMatchId: "15"
+                otcTradeId: "200014000000000118"
+                clientOtcTradeId: "300014000000000118"
+                createdAtDatetime: "2021-12-30T07:36:35.918Z"
+                createdAtTimestamp: "1640849795918"
+                publishedAtTimestamp: "1640849795920"
+      subscribe-msg-0-spotAccounts:
+        title: Snapshot
+        summary: Initial full state of the subscribed spot accounts data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"snapshot"'
+              example: snapshot
+            dataType:
+              type: string
+              description: '"V1TASpotAccount"'
+              example: V1TASpotAccount
+            data:
+              type: array
+              description: List of spot accounts
+              items:
+                type: object
+              example:
+                - {}
+      subscribe-msg-1-spotAccounts:
+        title: Update
+        summary: Incremental update to the subscribed spot accounts data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"update"'
+              example: update
+            dataType:
+              type: string
+              description: '"V1TASpotAccount"'
+              example: V1TASpotAccount
+            data:
+              description: A spot account
+              type: object
+              example: {}
+      subscribe-msg-0-assetAccounts:
+        title: Snapshot
+        summary: Initial full state of the subscribed asset accounts data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"snapshot"'
+              example: snapshot
+            dataType:
+              type: string
+              description: '"V1TAAssetAccount"'
+              example: V1TAAssetAccount
+            data:
+              type: array
+              description: List of asset accounts
+              items:
+                type: object
+                properties:
+                  tradingAccountId:
+                    type: string
+                    description: id of the trading account
+                  assetId:
+                    type: string
+                    description: asset id
+                  assetSymbol:
+                    type: string
+                    description: asset symbol
+                  availableQuantity:
+                    type: string
+                    description: the assets that are available to use on the account, see asset value format
+                  borrowedQuantity:
+                    type: string
+                    description: the assets on the account that are borrowed, see asset value format
+                  lockedQuantity:
+                    type: string
+                    description: the assets on the account that are locked in orders, loans, and AMM instructions, see asset value format
+                  loanedQuantity:
+                    type: string
+                    description: the assets on the account that are being loaned, see asset value format
+                  updatedAtDatetime:
+                    type: string
+                    description: denotes the time the asset account was updated by the exchange, ISO 8601 with millisecond as string
+                  updatedAtTimestamp:
+                    type: string
+                    description: denotes the time the asset account was updated by the exchange
+                  publishedAtTimestamp:
+                    type: string
+                    description: denotes the time the update was broadcasted to connected WebSockets
+              example:
+                - tradingAccountId: "1111"
+                  assetId: "1"
+                  assetSymbol: BTC
+                  availableQuantity: "4.00000000"
+                  borrowedQuantity: "20.00000000"
+                  lockedQuantity: "0.00000000"
+                  loanedQuantity: "10.00000000"
+                  updatedAtDatetime: "2021-12-30T07:36:35.918Z"
+                  updatedAtTimestamp: "1640849795918"
+                  publishedAtTimestamp: "1640849795920"
+      subscribe-msg-1-assetAccounts:
+        title: Update
+        summary: Incremental update to the subscribed asset accounts data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"update"'
+              example: update
+            dataType:
+              type: string
+              description: '"V1TAAssetAccount"'
+              example: V1TAAssetAccount
+            data:
+              description: An asset accounts
+              type: object
+              properties:
+                tradingAccountId:
+                  type: string
+                  description: id of the trading account
+                assetId:
+                  type: string
+                  description: asset id
+                assetSymbol:
+                  type: string
+                  description: asset symbol
+                availableQuantity:
+                  type: string
+                  description: the assets that are available to use on the account, see asset value format
+                borrowedQuantity:
+                  type: string
+                  description: the assets on the account that are borrowed, see asset value format
+                lockedQuantity:
+                  type: string
+                  description: the assets on the account that are locked in orders, loans, and AMM instructions, see asset value format
+                loanedQuantity:
+                  type: string
+                  description: the assets on the account that are being loaned, see asset value format
+                updatedAtDatetime:
+                  type: string
+                  description: denotes the time the asset account was updated by the exchange, ISO 8601 with millisecond as string
+                updatedAtTimestamp:
+                  type: string
+                  description: denotes the time the asset account was updated by the exchange
+                publishedAtTimestamp:
+                  type: string
+                  description: denotes the time the update was broadcasted to connected WebSockets
+              example:
+                tradingAccountId: "1111"
+                assetId: "1"
+                assetSymbol: BTC
+                availableQuantity: "4.00000000"
+                borrowedQuantity: "20.00000000"
+                lockedQuantity: "0.00000000"
+                loanedQuantity: "10.00000000"
+                updatedAtDatetime: "2021-12-30T07:36:35.918Z"
+                updatedAtTimestamp: "1640849795918"
+                publishedAtTimestamp: "1640849795920"
+      subscribe-msg-0-tradingAccounts:
+        title: Snapshot
+        summary: Initial full state of the subscribed trading accounts data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"snapshot"'
+              example: snapshot
+            dataType:
+              type: string
+              description: '"V1TATradingAccount"'
+              example: V1TATradingAccount
+            data:
+              type: array
+              description: List of trading accounts
+              items:
+                type: object
+                properties:
+                  tradingAccountId:
+                    type: string
+                    description: id of the trading account
+                  totalBorrowedQuantity:
+                    type: string
+                    description: total borrowed across all assets in this trading account displayed in the reference asset
+                  totalCollateralQuantity:
+                    type: string
+                    description: total collateral across all assets in this trading account displayed in the reference asset
+                  totalBorrowedUSD:
+                    type: string
+                    description: total borrowed across all assets in this trading account displayed in USD
+                  totalCollateralUSD:
+                    type: string
+                    description: total collateral across all assets in this trading account displayed in USD
+                  initialMarginUSD:
+                    type: string
+                    description: The minimum margin one must maintain in order to be able to purposefully increase risk
+                  warningMarginUSD:
+                    type: string
+                    description: The minimum margin when the customer will receive warning via email/notifications over UI
+                  liquidationMarginUSD:
+                    type: string
+                    description: The minimum value of margin one must maintain in order to avoid liquidation
+                  fullLiquidationMarginUSD:
+                    type: string
+                    description: The value of margin when full liquidation occurs
+                  endCustomerId:
+                    type: string
+                    description: The end customer id used for self trade prevention (default is institution id, max 32 characters)
+                  defaultedMarginUSD:
+                    type: string
+                    description: The value of margin when this trading account will be moved into a Defaulted state
+                  riskLimitUSD:
+                    type: string
+                    description: The maximum allowed borrowing for this trading account displayed in USD
+                  totalLiabilitiesUSD:
+                    type: string
+                    description: The total liabilities for this trading account displayed in USD
+                  maxInitialLeverage:
+                    type: string
+                    description: The maximum initial leverage
+                  isPrimaryAccount:
+                    type: string
+                    description: Whether this trading account is the primary account
+                  isBorrowing:
+                    type: string
+                    description: Whether this trading account is borrowing any asset
+                  isLending:
+                    type: string
+                    description: Whether this trading account has any open loan offers
+                  isDefaulted:
+                    type: string
+                    description: Whether this trading account is in a defaulted state
+                  takerFee:
+                    type: string
+                    description: Deprecated and no longer accurate. See tradeFeeRate at Get Trading Account instead
+                  makerFee:
+                    type: string
+                    description: Deprecated and no longer accurate. See tradeFeeRate at Get Trading Account instead
+                  referenceAssetSymbol:
+                    type: string
+                    description: asset symbol
+                  liquidityAddonUSD:
+                    type: string
+                    description: Expected market impact of unwinding the portfolio in the case of a liquidation event
+                  marketRiskUSD:
+                    type: string
+                    description: The worst possible loss on the portfolio based on scenario analysis
+                  marginProfile:
+                    type: object
+                    description: Contains the market risk multipliers applied to a trading account to derive the five individual Margin Requirement values
+                  initialMarketRiskMultiplierPct:
+                    type: string
+                    description: Market risk multiplier used to calculate initial margin requirement of the account
+                  warningMarketRiskMultiplierPct:
+                    type: string
+                    description: Market risk multiplier used to calculate warning margin requirement of the account
+                  liquidationMarketRiskMultiplierPct:
+                    type: string
+                    description: Market risk multiplier used to calculate liquidation margin requirement of the account
+                  fullLiquidationMarketRiskMultiplierPct:
+                    type: string
+                    description: Market risk multiplier used to calculate full liquidation margin requirement of the account
+                  defaultedMarketRiskMultiplierPct:
+                    type: string
+                    description: Market risk multiplier used to calculate defaulted margin requirement of the account
+                  updatedAtDatetime:
+                    type: string
+                    description: denotes the time the trading account was updated by the exchange, ISO 8601 with millisecond as string
+                  updatedAtTimestamp:
+                    type: string
+                    description: denotes the time the trading account was updated by the exchange
+                  publishedAtTimestamp:
+                    type: string
+                    description: denotes the time the update was broadcasted to connected WebSockets
+              example:
+                - tradingAccountId: "1111"
+                  totalBorrowedQuantity: "12000.0000"
+                  totalCollateralQuantity: "13000.0000"
+                  totalBorrowedUSD: "12000.0000"
+                  totalCollateralUSD: "13000.0000"
+                  referenceAssetSymbol: USD
+                  initialMarginUSD: "900000.0000"
+                  warningMarginUSD: "700000.0000"
+                  liquidationMarginUSD: "600000.0000"
+                  fullLiquidationMarginUSD: "500000.0000"
+                  endCustomerId: PrimeBroker
+                  defaultedMarginUSD: "300000.0000"
+                  riskLimitUSD: "1000000.0000"
+                  totalLiabilitiesUSD: "13000.0000"
+                  maxInitialLeverage: "3"
+                  isPrimaryAccount: true
+                  isBorrowing: true
+                  isLending: false
+                  isDefaulted: false
+                  takerFee: null
+                  makerFee: null
+                  liquidityAddonUSD: "100.0000"
+                  marketRiskUSD: "200.0000"
+                  marginProfile:
+                    initialMarketRiskMultiplierPct: "200.00"
+                    warningMarketRiskMultiplierPct: "150.00"
+                    liquidationMarketRiskMultiplierPct: "100.00"
+                    fullLiquidationMarketRiskMultiplierPct: "75.00"
+                    defaultedMarketRiskMultiplierPct: "50.00"
+                  updatedAtDatetime: "2021-12-30T07:36:35.918Z"
+                  updatedAtTimestamp: "1640849795918"
+                  publishedAtTimestamp: "1640849795920"
+      subscribe-msg-1-tradingAccounts:
+        title: Update
+        summary: Incremental update to the subscribed trading accounts data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"update"'
+              example: update
+            dataType:
+              type: string
+              description: '"V1TATradingAccount"'
+              example: V1TATradingAccount
+            data:
+              description: A trading account
+              type: object
+              properties:
+                tradingAccountId:
+                  type: string
+                  description: id of the trading account
+                totalBorrowedQuantity:
+                  type: string
+                  description: total borrowed across all assets in this trading account displayed in the reference asset
+                totalCollateralQuantity:
+                  type: string
+                  description: total collateral across all assets in this trading account displayed in the reference asset
+                totalBorrowedUSD:
+                  type: string
+                  description: total borrowed across all assets in this trading account displayed in USD
+                totalCollateralUSD:
+                  type: string
+                  description: total collateral across all assets in this trading account displayed in USD
+                initialMarginUSD:
+                  type: string
+                  description: The minimum margin one must maintain in order to be able to purposefully increase risk
+                warningMarginUSD:
+                  type: string
+                  description: The minimum margin when the customer will receive warning via email/notifications over UI
+                liquidationMarginUSD:
+                  type: string
+                  description: The minimum value of margin one must maintain in order to avoid liquidation
+                fullLiquidationMarginUSD:
+                  type: string
+                  description: The value of margin when full liquidation occurs
+                endCustomerId:
+                  type: string
+                  description: The end customer id used for self trade prevention (default is institution id, max 32 characters)
+                defaultedMarginUSD:
+                  type: string
+                  description: The value of margin when this trading account will be moved into a Defaulted state
+                riskLimitUSD:
+                  type: string
+                  description: The maximum allowed borrowing for this trading account displayed in USD
+                totalLiabilitiesUSD:
+                  type: string
+                  description: The total liabilities for this trading account displayed in USD
+                maxInitialLeverage:
+                  type: string
+                  description: The maximum initial leverage
+                isPrimaryAccount:
+                  type: string
+                  description: Whether this trading account is the primary account
+                isBorrowing:
+                  type: string
+                  description: Whether this trading account is borrowing any asset
+                isLending:
+                  type: string
+                  description: Whether this trading account has any open loan offers
+                isDefaulted:
+                  type: string
+                  description: Whether this trading account is in a defaulted state
+                takerFee:
+                  type: string
+                  description: Deprecated and no longer accurate. See tradeFeeRate at Get Trading Account instead
+                makerFee:
+                  type: string
+                  description: Deprecated and no longer accurate. See tradeFeeRate at Get Trading Account instead
+                referenceAssetSymbol:
+                  type: string
+                  description: asset symbol
+                liquidityAddonUSD:
+                  type: string
+                  description: Expected market impact of unwinding the portfolio in the case of a liquidation event
+                marketRiskUSD:
+                  type: string
+                  description: The worst possible loss on the portfolio based on scenario analysis
+                marginProfile:
+                  type: object
+                  description: Contains the market risk multipliers applied to a trading account to derive the five individual Margin Requirement values
+                initialMarketRiskMultiplierPct:
+                  type: string
+                  description: Market risk multiplier used to calculate initial margin requirement of the account
+                warningMarketRiskMultiplierPct:
+                  type: string
+                  description: Market risk multiplier used to calculate warning margin requirement of the account
+                liquidationMarketRiskMultiplierPct:
+                  type: string
+                  description: Market risk multiplier used to calculate liquidation margin requirement of the account
+                fullLiquidationMarketRiskMultiplierPct:
+                  type: string
+                  description: Market risk multiplier used to calculate full liquidation margin requirement of the account
+                defaultedMarketRiskMultiplierPct:
+                  type: string
+                  description: Market risk multiplier used to calculate defaulted margin requirement of the account
+                updatedAtDatetime:
+                  type: string
+                  description: denotes the time the trading account was updated by the exchange, ISO 8601 with millisecond as string
+                updatedAtTimestamp:
+                  type: string
+                  description: denotes the time the trading account was updated by the exchange
+                publishedAtTimestamp:
+                  type: string
+                  description: denotes the time the update was broadcasted to connected WebSockets
+              example:
+                tradingAccountId: "1111"
+                totalBorrowedQuantity: "12000.0000"
+                totalCollateralQuantity: "13000.0000"
+                totalBorrowedUSD: "12000.0000"
+                totalCollateralUSD: "13000.0000"
+                referenceAssetSymbol: USD
+                initialMarginUSD: "900000.0000"
+                warningMarginUSD: "700000.0000"
+                liquidationMarginUSD: "600000.0000"
+                fullLiquidationMarginUSD: "500000.0000"
+                endCustomerId: PrimeBroker
+                defaultedMarginUSD: "300000.0000"
+                riskLimitUSD: "1000000.0000"
+                totalLiabilitiesUSD: "13000.0000"
+                maxInitialLeverage: "3"
+                isPrimaryAccount: true
+                isBorrowing: true
+                isLending: false
+                isDefaulted: false
+                takerFee: null
+                makerFee: null
+                liquidityAddonUSD: "100.0000"
+                marketRiskUSD: "200.0000"
+                marginProfile:
+                  initialMarketRiskMultiplierPct: "200.00"
+                  warningMarketRiskMultiplierPct: "150.00"
+                  liquidationMarketRiskMultiplierPct: "100.00"
+                  fullLiquidationMarketRiskMultiplierPct: "75.00"
+                  defaultedMarketRiskMultiplierPct: "50.00"
+                updatedAtDatetime: "2021-12-30T07:36:35.918Z"
+                updatedAtTimestamp: "1640849795918"
+                publishedAtTimestamp: "1640849795920"
+      subscribe-msg-0-derivativesPositions:
+        title: Snapshot
+        summary: Initial full state of the subscribed derivatives positions data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"snapshot"'
+              example: snapshot
+            dataType:
+              type: string
+              description: '"V1TAPerpetualPosition"'
+              example: V1TAPerpetualPosition
+            data:
+              type: array
+              description: List of derivatives positions
+              items:
+                type: object
+                properties:
+                  tradingAccountId:
+                    type: string
+                    description: id of the trading account
+                  symbol:
+                    type: string
+                    description: Market symbol, e.g. BTC-USDC-PERP
+                  side:
+                    type: string
+                    description: Side of the position
+                  quantity:
+                    type: string
+                    description: Current size of the position asset value format
+                  notional:
+                    type: string
+                    description: Notional value of the current position, calculated using the mark price
+                  entryNotional:
+                    type: string
+                    description: Notional value of the position, using the average entry price
+                  mtmPnl:
+                    type: string
+                    description: Sum of all mark-to-market profits and losses plus profits and losses realized from trading, accumulated since the last settlement
+                  reportedMtmPnl:
+                    type: string
+                    description: The profit/losses from the net price change since the last time the absolute quantity decreased. It is updated with every mark to market and is not updated during settlement or a position size increase
+                  reportedFundingPnl:
+                    type: string
+                    description: Sum of all funding payments received since the position was opened. This is updated every time funding is paid.
+                  realizedPnl:
+                    type: string
+                    description: Total profits realized since the trading account first opened this position. This is only updated every time a position's absolute quantity (aka size) is reduced.
+                  createdAtDatetime:
+                    type: string
+                    description: denotes the time the position was created by the exchange, ISO 8601 with millisecond as string
+                  createdAtTimestamp:
+                    type: string
+                    description: denotes the time the position was created by the exchange, number of milliseconds since EPOCH
+                  updatedAtDatetime:
+                    type: string
+                    description: denotes the time the position was updated by the exchange, ISO 8601 with millisecond as string
+                  updatedAtTimestamp:
+                    type: string
+                    description: denotes the time the position was updated by the exchange number of milliseconds since EPOCH
+                  publishedAtTimestamp:
+                    type: string
+                    description: denotes the time the update was broadcasted to connected WebSockets
+              example:
+                - tradingAccountId: "111234567890"
+                  symbol: BTC-USDC-PERP
+                  side: BUY
+                  quantity: "1.00000000"
+                  notional: "30000.0000"
+                  entryNotional: "30000.0000"
+                  mtmPnl: "110.0000"
+                  reportedMtmPnl: "120.0000"
+                  reportedFundingPnl: "130.0000"
+                  realizedPnl: "140.0000"
+                  createdAtDatetime: "2020-01-01T00:00:00.000Z"
+                  createdAtTimestamp: "1577836800000"
+                  updatedAtDatetime: "2020-01-02T00:00:00.000Z"
+                  updatedAtTimestamp: "1577923200000"
+                  publishedAtTimestamp: "1577923300000"
+      subscribe-msg-1-derivativesPositions:
+        title: Update
+        summary: Incremental update to the subscribed derivatives positions data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"update"'
+              example: update
+            dataType:
+              type: string
+              description: '"V1TAPerpetualPosition"'
+              example: V1TAPerpetualPosition
+            data:
+              description: A derivatives position
+              type: object
+              properties:
+                tradingAccountId:
+                  type: string
+                  description: id of the trading account
+                symbol:
+                  type: string
+                  description: Market symbol, e.g. BTC-USDC-PERP
+                side:
+                  type: string
+                  description: Side of the position
+                quantity:
+                  type: string
+                  description: Current size of the position asset value format
+                notional:
+                  type: string
+                  description: Notional value of the current position, calculated using the mark price
+                entryNotional:
+                  type: string
+                  description: Notional value of the position, using the average entry price
+                mtmPnl:
+                  type: string
+                  description: Sum of all mark-to-market profits and losses plus profits and losses realized from trading, accumulated since the last settlement
+                reportedMtmPnl:
+                  type: string
+                  description: The profit/losses from the net price change since the last time the absolute quantity decreased. It is updated with every mark to market and is not updated during settlement or a position size increase
+                reportedFundingPnl:
+                  type: string
+                  description: Sum of all funding payments received since the position was opened. This is updated every time funding is paid.
+                realizedPnl:
+                  type: string
+                  description: Total profits realized since the trading account first opened this position. This is only updated every time a position's absolute quantity (aka size) is reduced.
+                createdAtDatetime:
+                  type: string
+                  description: denotes the time the position was created by the exchange, ISO 8601 with millisecond as string
+                createdAtTimestamp:
+                  type: string
+                  description: denotes the time the position was created by the exchange, number of milliseconds since EPOCH
+                updatedAtDatetime:
+                  type: string
+                  description: denotes the time the position was updated by the exchange, ISO 8601 with millisecond as string
+                updatedAtTimestamp:
+                  type: string
+                  description: denotes the time the position was updated by the exchange number of milliseconds since EPOCH
+                publishedAtTimestamp:
+                  type: string
+                  description: denotes the time the update was broadcasted to connected WebSockets
+              example:
+                tradingAccountId: "111234567890"
+                symbol: BTC-USDC-PERP
+                side: BUY
+                quantity: "1.00000000"
+                notional: "30000.0000"
+                entryNotional: "30000.0000"
+                mtmPnl: "110.0000"
+                reportedMtmPnl: "120.0000"
+                reportedFundingPnl: "130.0000"
+                realizedPnl: "140.0000"
+                createdAtDatetime: "2020-01-01T00:00:00.000Z"
+                createdAtTimestamp: "1577836800000"
+                updatedAtDatetime: "2020-01-02T00:00:00.000Z"
+                updatedAtTimestamp: "1577923200000"
+                publishedAtTimestamp: "1577923300000"
+      subscribe-msg-0-derivativesPositionsV2:
+        title: Snapshot
+        summary: Initial full state of the subscribed derivatives positions (V2) data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"snapshot"'
+              example: snapshot
+            dataType:
+              type: string
+              description: '"V1TADerivativesPosition"'
+              example: V1TADerivativesPosition
+            data:
+              type: array
+              description: List of derivatives positions (V2)
+              items:
+                type: object
+                properties:
+                  tradingAccountId:
+                    type: string
+                    description: id of the trading account
+                  symbol:
+                    type: string
+                    description: Market symbol, e.g. BTC-USDC-PERP
+                  side:
+                    type: string
+                    description: Side of the position
+                  quantity:
+                    type: string
+                    description: Current size of the position asset value format
+                  notional:
+                    type: string
+                    description: Notional value of the current position, calculated using the mark price
+                  entryNotional:
+                    type: string
+                    description: Notional value of the position, using the average entry price
+                  mtmPnl:
+                    type: string
+                    description: Sum of all mark-to-market profits and losses plus profits and losses realized from trading, accumulated since the last settlement
+                  reportedMtmPnl:
+                    type: string
+                    description: The profit/losses from the net price change since the last time the absolute quantity decreased. It is updated with every mark to market and is not updated during settlement or a position size increase
+                  reportedFundingPnl:
+                    type: string
+                    description: Sum of all funding payments received since the position was opened. This is updated every time funding is paid.
+                  realizedPnl:
+                    type: string
+                    description: Total profits realized since the trading account first opened this position. This is only updated every time a position's absolute quantity (aka size) is reduced.
+                  settlementAssetSymbol:
+                    type: string
+                    description: Settlement asset symbol
+                  eventType:
+                    type: string
+                    description: Derivatives position update event types
+                  createdAtDatetime:
+                    type: string
+                    description: denotes the time the position was created by the exchange, ISO 8601 with millisecond as string
+                  createdAtTimestamp:
+                    type: string
+                    description: denotes the time the position was created by the exchange, number of milliseconds since EPOCH
+                  updatedAtDatetime:
+                    type: string
+                    description: denotes the time the position was updated by the exchange, ISO 8601 with millisecond as string
+                  updatedAtTimestamp:
+                    type: string
+                    description: denotes the time the position was updated by the exchange number of milliseconds since EPOCH
+                  publishedAtTimestamp:
+                    type: string
+                    description: denotes the time the update was broadcasted to connected WebSockets
+              example:
+                - tradingAccountId: "111234567890"
+                  symbol: BTC-USDC-PERP
+                  side: BUY
+                  quantity: "1.00000000"
+                  notional: "30000.0000"
+                  entryNotional: "30000.0000"
+                  mtmPnl: "110.0000"
+                  reportedMtmPnl: "120.0000"
+                  reportedFundingPnl: "130.0000"
+                  realizedPnl: "140.0000"
+                  settlementAssetSymbol: USDC
+                  eventType: settlementUpdate
+                  createdAtDatetime: "2020-01-01T00:00:00.000Z"
+                  createdAtTimestamp: "1577836800000"
+                  updatedAtDatetime: "2020-01-02T00:00:00.000Z"
+                  updatedAtTimestamp: "1577923200000"
+                  publishedAtTimestamp: "1577923300000"
+      subscribe-msg-1-derivativesPositionsV2:
+        title: Update
+        summary: Incremental update to the subscribed derivatives positions (V2) data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"update"'
+              example: update
+            dataType:
+              type: string
+              description: '"V1TADerivativesPosition"'
+              example: V1TADerivativesPosition
+            data:
+              description: A derivatives position (V2)
+              type: object
+              properties:
+                tradingAccountId:
+                  type: string
+                  description: id of the trading account
+                symbol:
+                  type: string
+                  description: Market symbol, e.g. BTC-USDC-PERP
+                side:
+                  type: string
+                  description: Side of the position
+                quantity:
+                  type: string
+                  description: Current size of the position asset value format
+                notional:
+                  type: string
+                  description: Notional value of the current position, calculated using the mark price
+                entryNotional:
+                  type: string
+                  description: Notional value of the position, using the average entry price
+                mtmPnl:
+                  type: string
+                  description: Sum of all mark-to-market profits and losses plus profits and losses realized from trading, accumulated since the last settlement
+                reportedMtmPnl:
+                  type: string
+                  description: The profit/losses from the net price change since the last time the absolute quantity decreased. It is updated with every mark to market and is not updated during settlement or a position size increase
+                reportedFundingPnl:
+                  type: string
+                  description: Sum of all funding payments received since the position was opened. This is updated every time funding is paid.
+                realizedPnl:
+                  type: string
+                  description: Total profits realized since the trading account first opened this position. This is only updated every time a position's absolute quantity (aka size) is reduced.
+                settlementAssetSymbol:
+                  type: string
+                  description: Settlement asset symbol
+                eventType:
+                  type: string
+                  description: Derivatives position update event types
+                createdAtDatetime:
+                  type: string
+                  description: denotes the time the position was created by the exchange, ISO 8601 with millisecond as string
+                createdAtTimestamp:
+                  type: string
+                  description: denotes the time the position was created by the exchange, number of milliseconds since EPOCH
+                updatedAtDatetime:
+                  type: string
+                  description: denotes the time the position was updated by the exchange, ISO 8601 with millisecond as string
+                updatedAtTimestamp:
+                  type: string
+                  description: denotes the time the position was updated by the exchange number of milliseconds since EPOCH
+                publishedAtTimestamp:
+                  type: string
+                  description: denotes the time the update was broadcasted to connected WebSockets
+              example:
+                tradingAccountId: "111234567890"
+                symbol: BTC-USDC-PERP
+                side: BUY
+                quantity: "1.00000000"
+                notional: "30000.0000"
+                entryNotional: "30000.0000"
+                mtmPnl: "110.0000"
+                reportedMtmPnl: "120.0000"
+                reportedFundingPnl: "130.0000"
+                realizedPnl: "140.0000"
+                settlementAssetSymbol: USDC
+                eventType: settlementUpdate
+                createdAtDatetime: "2020-01-01T00:00:00.000Z"
+                createdAtTimestamp: "1577836800000"
+                updatedAtDatetime: "2020-01-02T00:00:00.000Z"
+                updatedAtTimestamp: "1577923200000"
+                publishedAtTimestamp: "1577923300000"
+      subscribe-msg-0-ammInstructions:
+        title: Snapshot
+        summary: Initial full state of the subscribed AMM instructions data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"snapshot"'
+              example: snapshot
+            dataType:
+              type: string
+              description: '"V1TAAmmInstruction"'
+              example: V1TAAmmInstruction
+            data:
+              type: array
+              description: List of AMM instructions
+              items:
+                type: object
+                properties:
+                  tradingAccountId:
+                    type: string
+                    description: id of the trading account
+                  instructionId:
+                    type: string
+                    description: unique AMM instruction id
+                  symbol:
+                    type: string
+                    description: market symbol
+                  baseFee:
+                    type: string
+                    description: base fee, see asset value format
+                  quoteFee:
+                    type: string
+                    description: quote fee, see asset value format
+                  status:
+                    type: string
+                    description: order status
+                  statusReason:
+                    type: string
+                    description: status reason, describes why the order is in a specific state
+                  statusReasonCode:
+                    type: string
+                    description: status reason code, see details
+                  createdAtDatetime:
+                    type: string
+                    description: denotes the time the order was ACK'd by the exchange, ISO 8601 with millisecond as string
+                  createdAtTimestamp:
+                    type: string
+                    description: denotes the time the order was ACK'd by the exchange
+                  baseCurrentQuantity:
+                    type: string
+                    description: amount of base asset this AMM instruction currently holds, only for AMM instruction with OPEN status
+                  baseInvestQuantity:
+                    type: string
+                    description: initial base investment
+                  basePrice:
+                    type: string
+                    description: current price of base asset
+                  baseWithdrawQuantity:
+                    type: string
+                    description: amount of base asset returned when AMM instruction is terminated
+                  currentValue:
+                    type: string
+                    description: value of assets (base and quote) in USD amount that this AMM instruction currently holds
+                  feeTierId:
+                    type: string
+                    description: unique fee tier id, see Get Market By Symbol
+                  finalValue:
+                    type: string
+                    description: value of assets (base and quote) in USD amount when AMM instruction was terminated, only for AMM instruction with CLOSED status
+                  impermanentLoss:
+                    type: string
+                    description: impermanent loss
+                  liquidity:
+                    type: string
+                    description: liquidity amount
+                  lastDistributedPrice:
+                    type: string
+                    description: (Perpetual market only) The price used at the time of settlement for AMM Instructions that can be used to determine mtmPnl and the actual Pnl
+                  lowerBound:
+                    type: string
+                    description: lower bound of price range, in quote currency
+                  price:
+                    type: string
+                    description: current price of AMM, see Get Tick By Symbol
+                  quoteCurrentQuantity:
+                    type: string
+                    description: amount of quote asset this AMM instruction currently holds, only for AMM instruction with OPEN status
+                  quoteInvestQuantity:
+                    type: string
+                    description: initial quote investment
+                  quotePrice:
+                    type: string
+                    description: current price of quote asset
+                  quoteWithdrawQuantity:
+                    type: string
+                    description: amount of quote asset returned when AMM instruction is terminated
+                  requestID:
+                    type: string
+                    description: unique request id
+                  updatedAtDatetime:
+                    type: string
+                    description: denotes the time the AMM instruction was updated by the exchange, ISO 8601 with millisecond as string
+                  updatedAtTimestamp:
+                    type: string
+                    description: denotes the time the AMM instruction was updated by the exchange
+                  upperBound:
+                    type: string
+                    description: upper bound of price range, in quote currency
+              example:
+                - instructionId: "100"
+                  symbol: BTCUSDC
+                  baseFee: "1.00000000"
+                  quoteFee: "1.0000"
+                  status: OPEN
+                  statusReason: Ok
+                  statusReasonCode: "1001"
+                  createdAtDatetime: "2021-05-20T01:01:01.000Z"
+                  createdAtTimestamp: "1621490985000"
+                  baseCurrentQuantity: "0.00000000"
+                  baseInvestQuantity: "0.00000008"
+                  basePrice: "345.67000000"
+                  baseWithdrawQuantity: "0.00000010"
+                  currentValue: "0.0000"
+                  feeTierId: "1"
+                  finalValue: "0.0001"
+                  impermanentLoss: "0.0000"
+                  liquidity: "0.0001"
+                  lowerBound: "0.0013"
+                  price: "456.7800"
+                  quoteCurrentQuantity: "0.0000"
+                  quoteInvestQuantity: "0.0009"
+                  quotePrice: "1.0000"
+                  quoteWithdrawQuantity: "0.0011"
+                  lastDistributedPrice: null
+                  requestId: "197735387747975680"
+                  updatedAtDatetime: "2021-05-20T01:01:01.000Z"
+                  updatedAtTimestamp: "1621490985000"
+                  upperBound: "14000.0000"
+      subscribe-msg-1-ammInstructions:
+        title: Update
+        summary: Incremental update to the subscribed AMM instructions data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"update"'
+              example: update
+            dataType:
+              type: string
+              description: '"V1TAAmmInstruction"'
+              example: V1TAAmmInstruction
+            data:
+              description: An AMM instruction
+              type: object
+              properties:
+                tradingAccountId:
+                  type: string
+                  description: id of the trading account
+                instructionId:
+                  type: string
+                  description: unique AMM instruction id
+                symbol:
+                  type: string
+                  description: market symbol
+                baseFee:
+                  type: string
+                  description: base fee, see asset value format
+                quoteFee:
+                  type: string
+                  description: quote fee, see asset value format
+                status:
+                  type: string
+                  description: order status
+                statusReason:
+                  type: string
+                  description: status reason, describes why the order is in a specific state
+                statusReasonCode:
+                  type: string
+                  description: status reason code, see details
+                createdAtDatetime:
+                  type: string
+                  description: denotes the time the order was ACK'd by the exchange, ISO 8601 with millisecond as string
+                createdAtTimestamp:
+                  type: string
+                  description: denotes the time the order was ACK'd by the exchange
+                baseCurrentQuantity:
+                  type: string
+                  description: amount of base asset this AMM instruction currently holds, only for AMM instruction with OPEN status
+                baseInvestQuantity:
+                  type: string
+                  description: initial base investment
+                basePrice:
+                  type: string
+                  description: current price of base asset
+                baseWithdrawQuantity:
+                  type: string
+                  description: amount of base asset returned when AMM instruction is terminated
+                currentValue:
+                  type: string
+                  description: value of assets (base and quote) in USD amount that this AMM instruction currently holds
+                feeTierId:
+                  type: string
+                  description: unique fee tier id, see Get Market By Symbol
+                finalValue:
+                  type: string
+                  description: value of assets (base and quote) in USD amount when AMM instruction was terminated, only for AMM instruction with CLOSED status
+                impermanentLoss:
+                  type: string
+                  description: impermanent loss
+                liquidity:
+                  type: string
+                  description: liquidity amount
+                lastDistributedPrice:
+                  type: string
+                  description: (Perpetual market only) The price used at the time of settlement for AMM Instructions that can be used to determine mtmPnl and the actual Pnl
+                lowerBound:
+                  type: string
+                  description: lower bound of price range, in quote currency
+                price:
+                  type: string
+                  description: current price of AMM, see Get Tick By Symbol
+                quoteCurrentQuantity:
+                  type: string
+                  description: amount of quote asset this AMM instruction currently holds, only for AMM instruction with OPEN status
+                quoteInvestQuantity:
+                  type: string
+                  description: initial quote investment
+                quotePrice:
+                  type: string
+                  description: current price of quote asset
+                quoteWithdrawQuantity:
+                  type: string
+                  description: amount of quote asset returned when AMM instruction is terminated
+                requestID:
+                  type: string
+                  description: unique request id
+                updatedAtDatetime:
+                  type: string
+                  description: denotes the time the AMM instruction was updated by the exchange, ISO 8601 with millisecond as string
+                updatedAtTimestamp:
+                  type: string
+                  description: denotes the time the AMM instruction was updated by the exchange
+                upperBound:
+                  type: string
+                  description: upper bound of price range, in quote currency
+              example:
+                instructionId: "100"
+                symbol: BTCUSDC
+                baseFee: "1.00000000"
+                quoteFee: "1.0000"
+                status: OPEN
+                statusReason: Ok
+                statusReasonCode: "1001"
+                createdAtDatetime: "2021-05-20T01:01:01.000Z"
+                createdAtTimestamp: "1621490985000"
+                baseCurrentQuantity: "0.00000000"
+                baseInvestQuantity: "0.00000008"
+                basePrice: "345.67000000"
+                baseWithdrawQuantity: "0.00000010"
+                currentValue: "0.0000"
+                feeTierId: "1"
+                finalValue: "0.0001"
+                impermanentLoss: "0.0000"
+                liquidity: "0.0001"
+                lowerBound: "0.0013"
+                price: "456.7800"
+                quoteCurrentQuantity: "0.0000"
+                quoteInvestQuantity: "0.0009"
+                quotePrice: "1.0000"
+                quoteWithdrawQuantity: "0.0011"
+                lastDistributedPrice: null
+                requestId: "197735387747975680"
+                updatedAtDatetime: "2021-05-20T01:01:01.000Z"
+                updatedAtTimestamp: "1621490985000"
+                upperBound: "14000.0000"
+      subscribe-msg-0-mmpTrigger:
+        title: Snapshot
+        summary: Initial full state of the subscribed MMP trigger data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"snapshot"'
+              example: snapshot
+            dataType:
+              type: string
+              description: '"V1TAMMPTrigger"'
+              example: V1TAMMPTrigger
+            data:
+              type: array
+              description: List of MMP triggers
+              items:
+                type: object
+                properties:
+                  tradingAccountId:
+                    type: string
+                    description: id of the trading account
+                  mmpTriggerId:
+                    type: string
+                    description: unique MMP trigger id
+                  underlyingAssetSymbol:
+                    type: string
+                    description: underlying asset symbol
+                  triggeredBy:
+                    type: string
+                    description: trigger reason
+                  frozenTimeInSecond:
+                    type: string
+                    description: duration for which a market maker's trading activity is temporarily halted after a protective measure is triggered
+                  frozenStartTime:
+                    type: string
+                    description: start time of the MMP trigger in epoch milliseconds
+                  frozenUntil:
+                    type: string
+                    description: end time of the MMP trigger in epoch milliseconds
+              example:
+                - mmpTriggerId: "100000000000000"
+                  tradingAccountId: "111000000000000"
+                  underlyingAssetSymbol: BTC
+                  triggeredBy: Delta Limit
+                  frozenTimeInSecond: "10"
+                  frozenStartTime: "1611082473000"
+                  frozenUntil: "1611082483000"
+      subscribe-msg-1-mmpTrigger:
+        title: Update
+        summary: Incremental update to the subscribed MMP trigger data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"update"'
+              example: update
+            dataType:
+              type: string
+              description: '"V1TAMMPTrigger"'
+              example: V1TAMMPTrigger
+            data:
+              description: A MMP trigger
+              type: object
+              properties:
+                tradingAccountId:
+                  type: string
+                  description: id of the trading account
+                mmpTriggerId:
+                  type: string
+                  description: unique MMP trigger id
+                underlyingAssetSymbol:
+                  type: string
+                  description: underlying asset symbol
+                triggeredBy:
+                  type: string
+                  description: trigger reason
+                frozenTimeInSecond:
+                  type: string
+                  description: duration for which a market maker's trading activity is temporarily halted after a protective measure is triggered
+                frozenStartTime:
+                  type: string
+                  description: start time of the MMP trigger in epoch milliseconds
+                frozenUntil:
+                  type: string
+                  description: end time of the MMP trigger in epoch milliseconds
+              example:
+                mmpTriggerId: "100000000000000"
+                tradingAccountId: "111000000000000"
+                underlyingAssetSymbol: BTC
+                triggeredBy: Delta Limit
+                frozenTimeInSecond: "10"
+                frozenStartTime: "1611082473000"
+                frozenUntil: "1611082483000"
+      subscribe-msg-0-mmpRequest:
+        title: Snapshot
+        summary: Initial full state of the subscribed trade data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"snapshot"'
+              example: snapshot
+            dataType:
+              type: string
+              description: '"V1TAMMPConfigRequest"'
+              example: V1TAMMPConfigRequest
+            data:
+              type: array
+              description: List of orders
+              items:
+                type: object
+                properties:
+                  tradingAccountId:
+                    type: string
+                    description: id of the trading account
+                  requestId:
+                    type: string
+                    description: id of the request
+                  assetSymbol:
+                    type: string
+                    description: underlying asset symbol
+                  windowTimeInSecond:
+                    type: string
+                    description: time window during which the MMP checks are conducted
+                  frozenTimeInSecond:
+                    type: string
+                    description: duration for which a market maker's trading activity is temporarily halted after a protective measure is triggered
+                  quantityLimit:
+                    type: string
+                    description: cap on the total number of contracts that a market maker can trade within windowTimeInSeconds
+                  deltaLimit:
+                    type: string
+                    description: net delta exposure that a market maker can accumulate within windowTimeInSeconds
+                  status:
+                    type: string
+                    description: status of the request
+                  statusReason:
+                    type: string
+                    description: status reason, describes why the request is in a specific state
+                  isReset:
+                    type: string
+                    description: boolean value that indicates if it was a set or reset MMP configuration request
+                  createdAt:
+                    type: string
+                    description: denotes the time the request was ACK'd by the exchange
+              example:
+                - requestId: "1"
+                  tradingAccountId: "111000000000000"
+                  assetSymbol: BTC
+                  windowTimeInSecond: "10"
+                  frozenTimeInSecond: "10"
+                  quantityLimit: "1000"
+                  deltaLimit: "500"
+                  status: CLOSED
+                  statusReason: Ok
+                  isReset: "false"
+                  createdAt: "1611082473000"
+      subscribe-msg-1-mmpRequest:
+        title: Update
+        summary: Incremental update to the subscribed order data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"update"'
+              example: update
+            dataType:
+              type: string
+              description: '"V1TAMMPConfigRequest"'
+              example: V1TAMMPConfigRequest
+            data:
+              description: An order
+              type: object
+              properties:
+                tradingAccountId:
+                  type: string
+                  description: id of the trading account
+                requestId:
+                  type: string
+                  description: id of the request
+                assetSymbol:
+                  type: string
+                  description: underlying asset symbol
+                windowTimeInSecond:
+                  type: string
+                  description: time window during which the MMP checks are conducted
+                frozenTimeInSecond:
+                  type: string
+                  description: duration for which a market maker's trading activity is temporarily halted after a protective measure is triggered
+                quantityLimit:
+                  type: string
+                  description: cap on the total number of contracts that a market maker can trade within windowTimeInSeconds
+                deltaLimit:
+                  type: string
+                  description: net delta exposure that a market maker can accumulate within windowTimeInSeconds
+                status:
+                  type: string
+                  description: status of the request
+                statusReason:
+                  type: string
+                  description: status reason, describes why the request is in a specific state
+                isReset:
+                  type: string
+                  description: boolean value that indicates if it was a set or reset MMP configuration request
+                createdAt:
+                  type: string
+                  description: denotes the time the request was ACK'd by the exchange
+              example:
+                requestId: "1"
+                tradingAccountId: "111000000000000"
+                assetSymbol: BTC
+                windowTimeInSecond: "10"
+                frozenTimeInSecond: "10"
+                quantityLimit: "1000"
+                deltaLimit: "500"
+                status: CLOSED
+                statusReason: Ok
+                isReset: "false"
+                createdAt: "1611082473000"
+      subscribe-nack:
+        title: Rejection
+        summary: Explain why the topic could not be subscribed
+        payload:
+          $ref: "#/components/schemas/PrivateDataRejectionPayload"
+      keepalive-ping:
+        title: Keepalive Ping
+        payload:
+          type: object
+          required:
+            - id
+            - method
+            - params
+          properties:
+            method:
+              type: string
+              description: '"keepalivePing"'
+              example: keepalivePing
+            params:
+              type: object
+            id:
+              $ref: "#/components/schemas/PrivateDataJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/PrivateDataJsonRpcVersion"
+            type:
+              $ref: "#/components/schemas/PrivateDataJsonRpcCommandType"
+      keepalive-pong:
+        title: Keepalive Pong
+        payload:
+          type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/PrivateDataJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/PrivateDataJsonRpcVersion"
+            result:
+              type: object
+              properties:
+                responseCodeName:
+                  type: string
+                  description: '"OK"'
+                  example: OK
+                responseCode:
+                  type: integer
+                  description: "200"
+                  example: 200
+                message:
+                  type: string
+                  description: '"Keep alive pong"'
+                  example: Keep alive pong
+      unsubscribe:
+        title: Unsubscription
+        summary: Let you unsubscribe from an opened subscription
+        payload:
+          type: object
+          required:
+            - id
+            - method
+            - params
+          properties:
+            method:
+              type: string
+              description: '"unsubscribe"'
+              example: unsubscribe
+            id:
+              $ref: "#/components/schemas/PrivateDataJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/PrivateDataJsonRpcVersion"
+            type:
+              $ref: "#/components/schemas/PrivateDataJsonRpcCommandType"
+            params:
+              type: object
+              required:
+                - subscriptionId
+              properties:
+                subscriptionId:
+                  type: string
+                  description: ID returned by the server when the subscription was opened
+                  example: "1611082473000"
+      unsubscribe-ack:
+        title: Acknowledgment
+        summary: Confirm the subscription was closed
+        payload:
+          type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/PrivateDataJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/PrivateDataJsonRpcVersion"
+            result:
+              type: object
+              properties:
+                responseCodeName:
+                  type: string
+                  description: '"OK"'
+                  example: OK
+                responseCode:
+                  type: string
+                  description: "200"
+                  example: "200"
+                message:
+                  type: string
+                  description: Confirmation that the subscription was closed
+                  example: Successfully unsubscribed
+      unsubscribe-nack:
+        title: Rejection
+        summary: Explain why the topic could not be unsubscribed
+        payload:
+          $ref: "#/components/schemas/PrivateDataRejectionPayload"
+operations:
+  subscribe:
+    action: send
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Subscribe
+      Multiple subscriptions could be opened within the same websocket.
+
+      The topics & accounts to be subscribed are controlled by the parameters in
+      the subscription message listed below.
+
+      After subscribing, the server sends :
+      - an acknowledgement
+      - then an initial snapshot
+      - followed by incremental updates.
+    messages:
+      - $ref: "#/channels/data/messages/subscribe"
+  subscribe-nack:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      In case of *invalid* subscription message, an error rejection would be sent.
+
+      This also includes trading account [access rejections](/websocket/protocol/authentication#websocket-subscription)
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-nack"
+  receive-orders:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Receive Orders
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-ack"
+      - $ref: "#/channels/data/messages/subscribe-msg-0-orders"
+      - $ref: "#/channels/data/messages/subscribe-msg-1-orders"
+  receive-trades:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Receive Trades
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-ack"
+      - $ref: "#/channels/data/messages/subscribe-msg-0-trades"
+      - $ref: "#/channels/data/messages/subscribe-msg-1-trades"
+  receive-spotAccounts:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Receive Spot Accounts
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-ack"
+      - $ref: "#/channels/data/messages/subscribe-msg-0-spotAccounts"
+      - $ref: "#/channels/data/messages/subscribe-msg-1-spotAccounts"
+    x-deprecated: true
+  receive-assetAccounts:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Receive Asset Accounts
+      **V1TAAssetAccount** provides a more granular view of the assets in your trading account compared to **V1TASpotAccount**.
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-ack"
+      - $ref: "#/channels/data/messages/subscribe-msg-0-assetAccounts"
+      - $ref: "#/channels/data/messages/subscribe-msg-1-assetAccounts"
+  receive-tradingAccounts:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Receive Trading Accounts
+      - Provides a summary of the total borrowed and total collateral values on the specific trading account id.
+      **totalBorrowedQuantity** and **totalCollateralQuantity** do not represent the absolute quantity of the borrowed assets
+      and are notional values represented in the reference asset.
+      - **Snapshot** contains a list with a single entry corresponding to the trading account id specified in
+      the **tradingAccountId** query parameter when opening the WebSocket connection.
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-ack"
+      - $ref: "#/channels/data/messages/subscribe-msg-0-tradingAccounts"
+      - $ref: "#/channels/data/messages/subscribe-msg-1-tradingAccounts"
+  receive-derivativesPositions:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Receive Derivatives Positions
+      *Topic **derivativesPosition** is being replaced by **derivativesPositionV2**.*
+
+      - Provide a detail view of the derivative position of each market.
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-ack"
+      - $ref: "#/channels/data/messages/subscribe-msg-0-derivativesPositions"
+      - $ref: "#/channels/data/messages/subscribe-msg-1-derivativesPositions"
+    x-deprecated: true
+  receive-derivativesPositionsV2:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Receive Derivatives Positions (V2)
+      Provide a detail view of the derivative position of each market.
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-ack"
+      - $ref: "#/channels/data/messages/subscribe-msg-0-derivativesPositionsV2"
+      - $ref: "#/channels/data/messages/subscribe-msg-1-derivativesPositionsV2"
+  receive-ammInstructions:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Receive AMM Instructions
+      - Provides updates of the active AMM instructions on the specific trading account id.
+      - This topic *does not* provide snapshot
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-ack"
+      - $ref: "#/channels/data/messages/subscribe-msg-1-ammInstructions"
+  receive-mmpTrigger:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Receive MMP Triggers
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-ack"
+      - $ref: "#/channels/data/messages/subscribe-msg-0-mmpTrigger"
+      - $ref: "#/channels/data/messages/subscribe-msg-1-mmpTrigger"
+  receive-mmpRequest:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Receive MMP Requests
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-ack"
+      - $ref: "#/channels/data/messages/subscribe-msg-0-mmpRequest"
+      - $ref: "#/channels/data/messages/subscribe-msg-1-mmpRequest"
+  keepalive-ping:
+    action: send
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Keepalive
+      In case nothing is subscribed to, keep the websocket connection alive.
+    messages:
+      - $ref: "#/channels/data/messages/keepalive-ping"
+  keepalive-pong:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      Acknowledgement returned by the server in response to a keepalive-ping.
+    messages:
+      - $ref: "#/channels/data/messages/keepalive-pong"
+  unsubscribe:
+    action: send
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Unsubscribe
+      Let you unsubscribe a specific topic while keeping your websocket opened.
+    messages:
+      - $ref: "#/channels/data/messages/unsubscribe"
+  unsubscribe-ack:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: After unsubscribing, the server sends an acknowledgement.
+    messages:
+      - $ref: "#/channels/data/messages/unsubscribe-ack"
+  unsubscribe-nack:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: In case of *invalid* unsubscription message, an error rejection would be sent.
+    messages:
+      - $ref: "#/channels/data/messages/unsubscribe-nack"
+components:
+  schemas:
+    PrivateDataJsonRpcRequestId:
+      type: string
+      description: ID returned by server in the acknowledgement
+      example: "1611082473000"
+    PrivateDataJsonRpcVersion:
+      description: Version of the Json RPC protocol
+      example: "2.0"
+    PrivateDataJsonRpcCommandType:
+      description: '"command"'
+      example: command
+    PrivateDataRejectionPayload:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/PrivateDataJsonRpcRequestId"
+        jsonrpc:
+          $ref: "#/components/schemas/PrivateDataJsonRpcVersion"
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: a high-level code for the error
+              example: "-32602"
+            errorCode:
+              type: string
+              description: a precise typed error code
+              example: "29013"
+            errorCodeName:
+              type: string
+              description: An explanation of which value was invalid
+              example: "'abcde' is not a valid topic"

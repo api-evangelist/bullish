@@ -1,0 +1,456 @@
+asyncapi: 3.0.0
+info:
+  title: Anonymous Trades
+  version: 1.0.0
+  description: |
+    This allows simultaneous trade subscriptions to multiple markets. Additionally, instead of sending trades one by one, trades are sent in batches.
+
+    Upon subscribing to a market, the client will first receive a snapshot of the latest 100 trades, followed by batches of trade updates.
+
+    Anonymous trades from different markets to be subscribed to are controlled by the parameters in the subscription message listed below.
+
+    ```
+    /trading-api/v1/market-data/trades
+    ```
+servers:
+  prod-public:
+    host: api.exchange.bullish.com
+    protocol: wss
+    description: Production / Public
+  prod-registered:
+    host: registered.api.exchange.bullish.com
+    protocol: wss
+    description: Production / Registered
+  prod-direct:
+    host: prod.access.bullish.com
+    protocol: wss
+    description: Production / Direct Connect
+  simnext-public:
+    host: api.simnext.bullish-test.com
+    protocol: wss
+    description: SimNext / Public
+  simnext-registered:
+    host: registered.api.simnext.bullish-test.com
+    protocol: wss
+    description: SimNext / Registered
+  simnext-direct:
+    host: simnext.access.bullish.com
+    protocol: wss
+    description: SimNext / Direct Connect
+
+channels:
+  data:
+    address: /trading-api/v1/market-data/trades
+    messages:
+      subscribe:
+        title: Subscription
+        summary: Let you subscribe to a given topic
+        payload:
+          type: object
+          required:
+            - id
+            - method
+            - params
+          properties:
+            method:
+              type: string
+              description: '"subscribe"'
+              example: subscribe
+            id:
+              $ref: "#/components/schemas/MarketDataTradesJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/MarketDataTradesJsonRpcVersion"
+            type:
+              $ref: "#/components/schemas/MarketDataTradesJsonRpcCommandType"
+            params:
+              $ref: "#/components/schemas/MarketDataTradesTopicSubscriptionParams"
+      subscribe-ack:
+        title: Acknowledgment
+        summary: Confirm the topic being subscribed
+        payload:
+          type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/MarketDataTradesJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/MarketDataTradesJsonRpcVersion"
+            result:
+              type: object
+              properties:
+                responseCodeName:
+                  type: string
+                  description: '"OK"'
+                  example: OK
+                responseCode:
+                  type: string
+                  description: "200"
+                  example: "200"
+                message:
+                  type: string
+                  description: Confirmation of what has been subscribed
+                  example: Successfully subscribed (anonymousTrades BTCUSD)
+      subscribe-msg-0:
+        title: Snapshot
+        summary: Initial full state of the subscribed trade data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"snapshot"'
+              example: snapshot
+            dataType:
+              type: string
+              description: '"V1TAAnonymousTradeUpdate"'
+              example: V1TAAnonymousTradeUpdate
+            data:
+              type: object
+              properties:
+                symbol:
+                  type: string
+                  description: Market symbol
+                createdAtDatetime:
+                  type: string
+                  description: Denotes the time the latest order was ACK'd by the exchange, ISO 8601 with millisecond as string
+                publishedAtTimestamp:
+                  type: string
+                  description: Denotes the time the update was broadcasted to connected WebSockets
+                trades:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/MarketDataTradesAnonymousTrade"
+                  description: List of trades
+                  example:
+                    - tradeId: "100069000000063765"
+                      isTaker: true
+                      price: "23404.8636"
+                      createdAtTimestamp: "1721879160353"
+                      quantity: "0.00029411"
+                      publishedAtTimestamp: "1721879162124"
+                      side: SELL
+                      createdAtDatetime: "2024-07-25T03:46:00.353Z"
+                      symbol: BTCUSDC
+                      otcMatchId: "1"
+                      otcTradeId: "200069000000063765"
+                      clientOtcTradeId: "300069000000063765"
+                    - tradeId: "100069000000063764"
+                      isTaker: false
+                      price: "23104.8636"
+                      createdAtTimestamp: "1721879160355"
+                      quantity: "0.00029412"
+                      publishedAtTimestamp: "1721879162125"
+                      side: BUY
+                      createdAtDatetime: "2024-07-25T03:46:00.355Z"
+                      symbol: ETHUSDC
+                      otcMatchId: "2"
+                      otcTradeId: "200069000000063766"
+                      clientOtcTradeId: "300069000000063766"
+      subscribe-msg-1:
+        title: Update
+        summary: Incremental update to the subscribed trade data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"update"'
+              example: update
+            dataType:
+              type: string
+              description: '"V1TAAnonymousTradeUpdate"'
+              example: V1TAAnonymousTradeUpdate
+            data:
+              type: object
+              properties:
+                symbol:
+                  type: string
+                  description: Market symbol
+                createdAtDatetime:
+                  type: string
+                  description: Denotes the time the latest order was ACK'd by the exchange, ISO 8601 with millisecond as string
+                publishedAtTimestamp:
+                  type: string
+                  description: Denotes the time the update was broadcasted to connected WebSockets
+                trades:
+                  type: array
+                  items:
+                    $ref: "#/components/schemas/MarketDataTradesAnonymousTrade"
+                  description: Singleton-List of trades
+                  example:
+                    - tradeId: "100069000000063765"
+                      isTaker: true
+                      price: "23404.8636"
+                      createdAtTimestamp: "1721879160353"
+                      quantity: "0.00029411"
+                      publishedAtTimestamp: "1721879162124"
+                      side: SELL
+                      createdAtDatetime: "2024-07-25T03:46:00.353Z"
+                      symbol: BTCUSDC
+                      otcMatchId: "1"
+                      otcTradeId: "200069000000063765"
+                      clientOtcTradeId: "300069000000063765"
+      subscribe-nack:
+        title: Rejection
+        summary: Explain why the topic could not be subscribed
+        payload:
+          $ref: "#/components/schemas/MarketDataTradesRejectionPayload"
+      keepalive-ping:
+        title: Keepalive Ping
+        payload:
+          type: object
+          required:
+            - id
+            - method
+            - params
+          properties:
+            method:
+              type: string
+              description: '"keepalivePing"'
+              example: keepalivePing
+            params:
+              type: object
+            id:
+              $ref: "#/components/schemas/MarketDataTradesJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/MarketDataTradesJsonRpcVersion"
+            type:
+              $ref: "#/components/schemas/MarketDataTradesJsonRpcCommandType"
+      keepalive-pong:
+        title: Keepalive Pong
+        payload:
+          type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/MarketDataTradesJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/MarketDataTradesJsonRpcVersion"
+            result:
+              type: object
+              properties:
+                responseCodeName:
+                  type: string
+                  description: '"OK"'
+                  example: OK
+                responseCode:
+                  type: integer
+                  description: "200"
+                  example: 200
+                message:
+                  type: string
+                  description: '"Keep alive pong"'
+                  example: Keep alive pong
+      unsubscribe:
+        title: Unsubscription
+        summary: Let you unsubscribe to a given index
+        payload:
+          type: object
+          required:
+            - id
+            - method
+            - params
+          properties:
+            method:
+              type: string
+              description: '"unsubscribe"'
+              example: unsubscribe
+            id:
+              $ref: "#/components/schemas/MarketDataTradesJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/MarketDataTradesJsonRpcVersion"
+            type:
+              $ref: "#/components/schemas/MarketDataTradesJsonRpcCommandType"
+            params:
+              $ref: "#/components/schemas/MarketDataTradesTopicSubscriptionParams"
+      unsubscribe-ack:
+        title: Acknowledgment
+        summary: Confirm the topic being unsubscribed
+        payload:
+          type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/MarketDataTradesJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/MarketDataTradesJsonRpcVersion"
+            result:
+              type: object
+              properties:
+                responseCodeName:
+                  type: string
+                  description: '"OK"'
+                  example: OK
+                responseCode:
+                  type: string
+                  description: "200"
+                  example: "200"
+                message:
+                  type: string
+                  description: Confirmation of what has been unsubscribed
+                  example: Successfully unsubscribed (anonymousTrades BTCUSD)
+      unsubscribe-nack:
+        title: Rejection
+        summary: Explain why the topic could not be unsubscribed
+        payload:
+          $ref: "#/components/schemas/MarketDataTradesRejectionPayload"
+operations:
+  subscribe:
+    action: send
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Subscribe
+      Multiple subscriptions could be opened within the same websocket.
+
+      The trades of different markets to be subscribed are controlled by the parameters in
+      the subscription message listed below.
+    messages:
+      - $ref: "#/channels/data/messages/subscribe"
+  subscribe-ack:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      After subscribing, the server sends :
+      - an acknowledgement
+      - then an initial snapshot with the latest 100 trades upon subscription.
+      - followed by incremental updates.
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-ack"
+      - $ref: "#/channels/data/messages/subscribe-msg-0"
+      - $ref: "#/channels/data/messages/subscribe-msg-1"
+  subscribe-nack:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: In case of *invalid* subscription message, an error rejection would be sent.
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-nack"
+  keepalive-ping:
+    action: send
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Keepalive
+      In case nothing is subscribed to, keep the websocket connection alive.
+    messages:
+      - $ref: "#/channels/data/messages/keepalive-ping"
+  keepalive-pong:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      Acknowledgement returned by the server in response to a keepalive-ping.
+    messages:
+      - $ref: "#/channels/data/messages/keepalive-pong"
+  unsubscribe:
+    action: send
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Unsubscribe
+      Let you unsubscribe a specific topic while keeping your websocket opened.
+    messages:
+      - $ref: "#/channels/data/messages/unsubscribe"
+  unsubscribe-ack:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: After unsubscribing, the server sends an acknowledgement.
+    messages:
+      - $ref: "#/channels/data/messages/unsubscribe-ack"
+  unsubscribe-nack:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: In case of *invalid* unsubscription message, an error rejection would be sent.
+    messages:
+      - $ref: "#/channels/data/messages/unsubscribe-nack"
+components:
+  schemas:
+    MarketDataTradesJsonRpcRequestId:
+      type: string
+      description: ID returned by server in the acknowledgement
+      example: "1611082473000"
+    MarketDataTradesJsonRpcVersion:
+      description: Version of the Json RPC protocol
+      example: "2.0"
+    MarketDataTradesJsonRpcCommandType:
+      description: '"command"'
+      example: command
+    MarketDataTradesAnonymousTrade:
+      type: object
+      properties:
+        tradeId:
+          type: string
+          description: Unique trade id
+        symbol:
+          type: string
+          description: Market symbol
+        price:
+          type: string
+          description: Price, see asset value format
+        quantity:
+          type: string
+          description: Quantity, see asset value format
+        side:
+          type: string
+          description: Order side
+        isTaker:
+          type: boolean
+          description: Denotes whether this is a taker's trade
+        otcMatchId:
+          type: string
+          description: Unique OTC match id
+        otcTradeId:
+          type: string
+          description: Unique Bullish OTC trade id
+        clientOtcTradeId:
+          type: string
+          description: Unique client OTC trade id
+        createdAtTimestamp:
+          type: string
+          description: Denotes the time the order was ACK'd by the exchange
+        createdAtDatetime:
+          type: string
+          description: Denotes the time the order was ACK'd by the exchange, ISO 8601 with millisecond as string
+        publishedAtTimestamp:
+          type: string
+          description: Denotes the time the update was broadcasted to connected WebSockets
+        auctionId:
+          type: string
+          description: Unique Bullish auction identifier. Present only for auction trades
+    MarketDataTradesRejectionPayload:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/MarketDataTradesJsonRpcRequestId"
+        jsonrpc:
+          $ref: "#/components/schemas/MarketDataTradesJsonRpcVersion"
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: a high-level code for the error
+              example: "-32602"
+            errorCode:
+              type: string
+              description: a precise typed error code
+              example: "29013"
+            errorCodeName:
+              type: string
+              description: An explanation of which value was invalid
+              example: "'abcde' is not a valid topic"
+    MarketDataTradesTopicSubscriptionParams:
+      type: object
+      required:
+        - topic
+        - symbol
+      properties:
+        topic:
+          type: string
+          description: '"anonymousTrades"'
+          example: anonymousTrades
+        symbol:
+          type: string
+          description: Market symbol, such as BTCUSD or ETHUSDC
+          example: BTCUSD

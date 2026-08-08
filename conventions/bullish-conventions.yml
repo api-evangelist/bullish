@@ -1,0 +1,169 @@
+generated: '2026-08-08'
+method: searched
+source: https://docs.exchange.bullish.com/rest/introduction
+docs:
+  - https://docs.exchange.bullish.com/rest/introduction
+  - https://docs.exchange.bullish.com/rest/authentication
+  - https://docs.exchange.bullish.com/rest/general/pagination
+  - https://docs.exchange.bullish.com/rest/general/filtering
+  - https://docs.exchange.bullish.com/rest/general/rate-limits
+  - https://docs.exchange.bullish.com/rest/order-processing-create-cancel-request-mechanism
+  - https://docs.exchange.bullish.com/rest/general/price-quantity-precision
+  - https://docs.exchange.bullish.com/rest/general/numeric-identifier-constraints
+
+authentication:
+  style: bearer-jwt-over-signed-login
+  summary: >-
+    Public market-data endpoints are anonymous. Everything private is JWT bearer.
+    The JWT is not issued by an OAuth authorization server — the client signs a
+    login payload with its own key and exchanges it for a token.
+  credential_types:
+    - id: hmac-api-key
+      description: Shared-secret HMAC key. JWTs minted from it are valid for TRADING endpoints only.
+      login: GET /trading-api/v1/users/hmac/login
+    - id: ecdsa-api-key
+      description: >-
+        ECDSA R1 (prime256v1 / secp256r1 / P-256) key pair, SHA256, public key in
+        X.509 SubjectPublicKeyInfo PEM. Covers trading AND custody.
+      login: POST /trading-api/v2/users/login
+    - id: bullish-api-key
+      description: Legacy Bullish API Key.
+      deprecated: '2024-06-28'
+  request_headers:
+    - name: Authorization
+      value: 'Bearer <JWT_TOKEN>'
+      required: on authenticated endpoints
+    - name: BX-TIMESTAMP
+      description: Milliseconds since EPOCH.
+    - name: BX-NONCE
+      description: 64-bit unsigned integer, unique and increasing.
+    - name: BX-PUBLIC-KEY
+      description: The API public key (HMAC public key on the HMAC path).
+    - name: BX-SIGNATURE
+      description: Signature over the canonical message.
+    - name: BX-NONCE-WINDOW-ENABLED
+      description: >-
+        String boolean. Relaxes strict nonce ordering to "unique within a window
+        of 100 from the highest nonce used", allowing out-of-order submission.
+    - name: BX-REFERRER
+      description: Identifies EMS / broker executions. Does not affect dedupe.
+    - name: BX-RATELIMIT-TOKEN
+      description: >-
+        Selects a higher rate-limit tier than the 50 msgs/sec default. Token is
+        obtained from the Get Trading Accounts endpoint.
+  token_lifetime: 24 hours
+  logout: GET /trading-api/v1/users/logout
+  see_also: authentication/bullish-authentication.yml
+
+idempotency:
+  supported: false
+  key_header: null
+  finding: >-
+    Bullish publishes NO idempotency-key contract. There is no Idempotency-Key
+    header, no documented safe-retry semantics, and no replay-of-original-response
+    behaviour anywhere in the REST docs or in the 79-operation OpenAPI (the string
+    "idempot" does not appear in the spec at all).
+  what_exists_instead:
+    - mechanism: strictly-increasing nonce
+      detail: >-
+        BX-NONCE must be a unique increasing integer. The exchange validates each
+        request against the highest nonce it has seen and REJECTS anything lower.
+        This is replay PREVENTION, and it makes a naive retry fail rather than
+        succeed idempotently. BX-NONCE-WINDOW-ENABLED relaxes ordering to
+        uniqueness within a window of 100, but uniqueness still forbids replay.
+    - mechanism: client-supplied order identity
+      detail: >-
+        clientOrderId / order handle are deduplicated server-side, surfacing as
+        statusReasonCode 3007 "Duplicated order id" and 3023 "Duplicated order
+        handle". This gives at-most-once order creation, but the duplicate is
+        REJECTED rather than answered with the original result, so it is not an
+        idempotent retry contract.
+    - mechanism: acknowledged-then-poll ordering
+      detail: >-
+        Clients are instructed to wait for the acknowledgement carrying the
+        server-generated orderId before sending the next request; firing without
+        waiting risks out-of-order processing and silent failure.
+  note: >-
+    Deliberately NOT wired as a `type: Idempotency` pointer in apis.yml. Nonce
+    replay-prevention and duplicate-ID rejection are real engineering, but they
+    are the opposite of a retry-safe idempotency key, and crediting them as one
+    would misreport this API's agent-safety posture.
+
+pagination:
+  style: cursor
+  request_params:
+    - name: _pageSize
+      values: [5, 25, 50, 100]
+      default: 25
+    - name: _metaData
+      type: boolean
+      default: false
+      description: Set true so the response carries navigation links.
+    - name: _nextPage
+      description: Opaque cursor for the following page.
+    - name: _previousPage
+      description: Opaque cursor for the preceding page.
+  response_shape:
+    data: array of records
+    links:
+      next: full URL with the forward cursor (only when _metaData=true)
+      previous: full URL with the backward cursor (only when _metaData=true)
+  docs: https://docs.exchange.bullish.com/rest/general/pagination
+
+filtering:
+  docs: https://docs.exchange.bullish.com/rest/general/filtering
+
+versioning:
+  scheme: uri-path
+  versions_live: [v1, v2]
+  detail: >-
+    Version is carried in the path under /trading-api (e.g. /trading-api/v1/markets,
+    /trading-api/v2/orders). v1 and v2 coexist; the newer order, AMM, OTC and
+    command surfaces are v2 while market/asset/custody/history remain v1.
+  forward_compatibility: >-
+    Bullish states it "may add new fields to existing response payloads" and asks
+    clients not to use strict deserialization.
+  see_also: lifecycle/bullish-lifecycle.yml
+
+error_envelope:
+  http_codes_used: [200, 400, 401, 403, 404, 429, 500]
+  media_type: application/json
+  problem_json: false
+  rfc9457: false
+  fields:
+    - name: statusReasonCode
+      description: Numeric Bullish reason code (see errors/bullish-error-codes.yml).
+    - name: statusReason
+      description: Human-readable text for the reason code.
+  fix_equivalent:
+    OrdRejReason: tag 103
+    Text: tag 58
+  see_also: errors/bullish-error-codes.yml
+
+rate_limit_signaling:
+  response_headers:
+    - x-ratelimit-limit
+    - x-ratelimit-remaining
+    - x-ratelimit-reset
+    - x-ratelimit-global-breach
+  breach_status: 429
+  breach_codes:
+    - {code: 96000, name: RATE_LIMIT_EXCEEDED}
+    - {code: 96001, name: GLOBAL_RATE_LIMIT_EXCEEDED}
+  ip_penalty: 60-second IP block after 500 requests per 10 seconds
+  see_also: rate-limits/bullish-rate-limits.yml
+
+request_tracing:
+  request_id_header: null
+  detail: >-
+    No documented request-id / correlation header. The closest correlation
+    primitives are the client-supplied clientOrderId and the BX-NONCE sequence.
+
+precision_and_identifiers:
+  price_quantity_precision: https://docs.exchange.bullish.com/rest/general/price-quantity-precision
+  numeric_identifier_constraints: https://docs.exchange.bullish.com/rest/general/numeric-identifier-constraints
+  trading_account_id: A valid trading account ID begins with 111 (per OTC error 9010).
+
+exchange_time:
+  endpoint: GET /trading-api/v1/time
+  docs: https://docs.exchange.bullish.com/rest/general/exchange-time

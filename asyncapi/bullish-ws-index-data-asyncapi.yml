@@ -1,0 +1,261 @@
+asyncapi: 3.0.0
+info:
+  title: Index Data
+  version: 1.0.0
+  description: |
+    The index price of different assets to be subscribed are controlled by the parameters in the subscription message listed below.
+
+    ```
+    /trading-api/v1/index-data
+    ```
+servers:
+  prod-public:
+    host: api.exchange.bullish.com
+    protocol: wss
+    description: Production / Public
+  prod-registered:
+    host: registered.api.exchange.bullish.com
+    protocol: wss
+    description: Production / Registered
+  prod-direct:
+    host: prod.access.bullish.com
+    protocol: wss
+    description: Production / Direct Connect
+  simnext-public:
+    host: api.simnext.bullish-test.com
+    protocol: wss
+    description: SimNext / Public
+  simnext-registered:
+    host: registered.api.simnext.bullish-test.com
+    protocol: wss
+    description: SimNext / Registered
+  simnext-direct:
+    host: simnext.access.bullish.com
+    protocol: wss
+    description: SimNext / Direct Connect
+
+channels:
+  data:
+    address: /trading-api/v1/index-data
+    messages:
+      subscribe:
+        title: Subscription
+        summary: Let you subscribe to a given topic
+        payload:
+          type: object
+          required:
+            - id
+            - method
+            - params
+          properties:
+            method:
+              type: string
+              description: '"subscribe"'
+              example: subscribe
+            id:
+              $ref: "#/components/schemas/IndexDataJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/IndexDataJsonRpcVersion"
+            type:
+              $ref: "#/components/schemas/IndexDataJsonRpcCommandType"
+            params:
+              type: object
+              required:
+                - topic
+                - assetSymbol
+              properties:
+                topic:
+                  type: string
+                  description: '"indexPrice"'
+                  example: indexPrice
+                assetSymbol:
+                  type: string
+                  description: Asset symbol, such as BTC or USDC
+                  example: USDC
+      subscribe-ack:
+        title: Acknowledgment
+        summary: Confirm the topic being subscribed
+        payload:
+          type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/IndexDataJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/IndexDataJsonRpcVersion"
+            result:
+              type: object
+              properties:
+                responseCodeName:
+                  type: string
+                  description: '"OK"'
+                  example: OK
+                responseCode:
+                  type: string
+                  description: "200"
+                  example: "200"
+                message:
+                  type: string
+                  description: Confirmation of what has been subscribed
+                  example: Successfully subscribed
+      subscribe-msg-0:
+        title: Update
+        summary: Incremental update to the subscribed index data
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"update"'
+              example: update
+            dataType:
+              type: string
+              description: '"V1TAIndexPrice"'
+              example: V1TAIndexPrice
+            data:
+              type: object
+              properties:
+                assetSymbol:
+                  type: string
+                  description: Asset symbol
+                  example: USDC
+                price:
+                  type: string
+                  description: Price in USD, see asset value format
+                  example: "1.0000"
+                updatedAtDatetime:
+                  type: string
+                  description: Denotes the time the index price was updated by the exchange, in ISO 8601 format
+                  example: "2024-06-29T06:29:50.500Z"
+                updatedAtTimestamp:
+                  type: string
+                  description: Denotes the epoch millisecond time the index price was updated by the exchange
+                  example: "1719642590000"
+      subscribe-nack:
+        title: Rejection
+        summary: Explain why the topic could not be subscribed
+        payload:
+          type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/IndexDataJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/IndexDataJsonRpcVersion"
+            error:
+              type: object
+              properties:
+                code:
+                  type: string
+                  description: a high-level code for the error
+                  example: "-32602"
+                errorCode:
+                  type: string
+                  description: a precise typed error code
+                  example: "29013"
+                errorCodeName:
+                  type: string
+                  description: An explanation of which value was invalid
+                  example: "'abcde' is not a valid topic"
+      keepalive-ping:
+        title: Keepalive Ping
+        payload:
+          type: object
+          required:
+            - id
+            - method
+            - params
+          properties:
+            method:
+              type: string
+              description: '"keepalivePing"'
+              example: keepalivePing
+            params:
+              type: object
+            id:
+              $ref: "#/components/schemas/IndexDataJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/IndexDataJsonRpcVersion"
+            type:
+              $ref: "#/components/schemas/IndexDataJsonRpcCommandType"
+      keepalive-pong:
+        title: Keepalive Pong
+        payload:
+          type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/IndexDataJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/IndexDataJsonRpcVersion"
+            result:
+              type: object
+              properties:
+                responseCodeName:
+                  type: string
+                  description: '"OK"'
+                  example: OK
+                responseCode:
+                  type: integer
+                  description: "200"
+                  example: 200
+                message:
+                  type: string
+                  description: '"Keep alive pong"'
+                  example: Keep alive pong
+operations:
+  subscribe:
+    action: send
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Subscribe
+      Multiple subscriptions could be opened within the same websocket.
+
+      The index price of different assets to be subscribed are controlled by the parameters in the subscription message listed below.
+    messages:
+      - $ref: "#/channels/data/messages/subscribe"
+  subscribe-ack:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      After subscribing, the server sends :
+      - an acknowledgement
+      - followed by incremental updates.
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-ack"
+      - $ref: "#/channels/data/messages/subscribe-msg-0"
+  subscribe-nack:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: In case of *invalid* subscription message, an error rejection would be sent.
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-nack"
+  keepalive-ping:
+    action: send
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Keepalive
+      In case nothing is subscribed to, keep the websocket connection alive.
+    messages:
+      - $ref: "#/channels/data/messages/keepalive-ping"
+  keepalive-pong:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      Acknowledgement returned by the server in response to a keepalive-ping.
+    messages:
+      - $ref: "#/channels/data/messages/keepalive-pong"
+components:
+  schemas:
+    IndexDataJsonRpcRequestId:
+      type: string
+      description: ID returned by server in the acknowledgement
+      example: "1611082473000"
+    IndexDataJsonRpcVersion:
+      description: Version of the Json RPC protocol
+      example: "2.0"
+    IndexDataJsonRpcCommandType:
+      description: '"command"'
+      example: command

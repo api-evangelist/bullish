@@ -1,0 +1,83 @@
+generated: '2026-08-08'
+method: generated
+source: openapi/bullish-trading-api-openapi.yml
+note: >-
+  Bullish publishes no AGENTS.md or first-party agent skills (github.com/bullish-exchange
+  has 9 repos, none of them skills). These are API Evangelist-authored operating
+  instructions, every step grounded in an operationId verified verbatim against
+  openapi/bullish-trading-api-openapi.yml.
+skills:
+  - file: bullish-authenticate-and-session.md
+    name: Authenticate to the Bullish Trading API and hold a session
+    api: openapi/bullish-trading-api-openapi.yml
+    operations: [getNonce, loginUserV2, loginUserHmac, logoutUser, getExchangeTime, getTradingAccounts]
+  - file: bullish-place-and-reconcile-order.md
+    name: Place, amend, cancel and reconcile a Bullish order
+    api: openapi/bullish-trading-api-openapi.yml
+    operations:
+      - getMarkets
+      - getMarketBySymbol
+      - getMarketOrderBook
+      - getMarketTick
+      - createOrderV2
+      - getOrdersV2
+      - getOrderByIdV2
+      - trade-get-order-by-client-order-id-v2
+      - submitAmendmentCommand
+      - submitCancellationCommands
+      - getTrades
+  - file: bullish-custody-deposit-and-withdraw.md
+    name: Deposit to and withdraw from Bullish custody
+    api: openapi/bullish-trading-api-openapi.yml
+    operations:
+      - getCryptoDepositInstructions
+      - getFiatDepositInstructions
+      - getCryptoWithdrawalInstructions
+      - getFiatWithdrawalInstructions
+      - getCustodyWithdrawalLimits
+      - createCustodyWithdrawal
+      - custody-delete-withdrawal-instructions
+      - getCustodyTransactionHistory
+      - custody-initiate-self-hosted-verification
+      - custody-get-self-hosted-verifications
+  - file: bullish-book-otc-trade.md
+    name: Book and settle a Bullish OTC trade
+    api: openapi/bullish-trading-api-openapi.yml
+    operations:
+      - createOtcTrade
+      - getOtcTrades
+      - getOtcTradeById
+      - getUnconfirmedOtcTrade
+      - otc-command-approve
+      - otc-command-cancel
+      - otc-get-delegated-accounts
+      - idb-otc-create-trade
+      - idb-otc-get-trades
+      - idb-otc-command-cancel
+      - idb-otc-command-update-remarks
+      - idb-otc-get-delegated-accounts
+  - file: bullish-market-data-and-streams.md
+    name: Pull Bullish market data and subscribe to the live streams
+    api: openapi/bullish-trading-api-openapi.yml
+    operations:
+      - getMarkets
+      - getMarketBySymbol
+      - getMarketOrderBook
+      - getMarketTick
+      - getMarketCandles
+      - getLatestMarketTrades
+      - getAssets
+      - getAssetBySymbol
+      - getIndexPrices
+      - getIndexPriceBySymbol
+      - getOptionLadder
+      - getOptionLadderBySymbol
+      - getVolGrids
+      - getVolGridByAsset
+      - getFundingRateHistory
+      - getHistoricalMarketTrades
+      - getHistoricalOptionTrades
+      - getAuctionBySymbol
+      - getAuctionNoii
+      - getHistoricalAuctionResults
+      - getExchangeTime

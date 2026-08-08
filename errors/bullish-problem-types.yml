@@ -1,0 +1,78 @@
+generated: '2026-08-08'
+method: derived
+source: openapi/bullish-trading-api-openapi.yml
+format: bullish-status-reason
+rfc9457: false
+note: >-
+  Bullish does NOT use RFC 9457 problem+json. Every response body — success and
+  error alike — is application/json, and errors carry a numeric `statusReasonCode`
+  plus a `statusReason` string. This file derives the HTTP-level problem surface
+  from the 79-operation OpenAPI; the full numeric reason-code registry is captured
+  separately in errors/bullish-error-codes.yml.
+envelope:
+  media_type: application/json
+  fields:
+    - statusReasonCode
+    - statusReason
+problems:
+  - status: 400
+    title: Bad Request
+    operations_declaring: 34
+    examples_from_spec:
+      - Invalid asset symbol
+      - For example, sending a request with an invalid trading account
+      - For example, querying a closed OTC trade
+      - Expiry price for market is not (yet) available
+    remediation: >-
+      Validate symbols, trading account IDs (a valid trading account ID begins
+      with 111) and numeric precision against the market metadata before sending.
+  - status: 401
+    title: Unauthorized
+    operations_declaring: 41
+    examples_from_spec:
+      - Unauthorized. Either API details are missing or invalid
+      - Not Authenticated
+    remediation: >-
+      Mint a fresh JWT via POST /trading-api/v2/users/login (ECDSA) or
+      GET /trading-api/v1/users/hmac/login (HMAC); tokens expire after 24 hours.
+  - status: 403
+    title: Forbidden
+    operations_declaring: 41
+    examples_from_spec:
+      - Access Forbidden
+      - Forbidden - You do not have access to the requested resource
+      - Access Forbidden. Returned when an inter-dealer broker calls this client-only endpoint
+    remediation: >-
+      Check the credential class. HMAC-minted JWTs are valid for trading endpoints
+      ONLY — custody requires an ECDSA key. IDB and client endpoints are mutually
+      exclusive by account role.
+  - status: 404
+    title: Not Found
+    operations_declaring: 27
+    examples_from_spec:
+      - Order not found (clientOrder ID is invalid)
+      - Symbol not found or auction not available
+      - Option Market Not Found
+      - A wallet destination is not found for the specified destinationId
+    remediation: Confirm the identifier exists and belongs to the calling trading account.
+  - status: 429
+    title: Too Many Requests
+    operations_declaring: 60
+    reason_codes: [96000, 96001]
+    headers: [x-ratelimit-limit, x-ratelimit-remaining, x-ratelimit-reset, x-ratelimit-global-breach]
+    remediation: >-
+      Back off using x-ratelimit-reset. A per-IP breach (500 req / 10 s) blocks the
+      IP for 60 seconds. Request a higher tier via BX-RATELIMIT-TOKEN.
+    see_also: rate-limits/bullish-rate-limits.yml
+  - status: 500
+    title: Internal Server Error
+    operations_declaring: 78
+    remediation: >-
+      Retry is NOT automatically safe — there is no idempotency key. Re-query the
+      order by clientOrderId (GET /trading-api/v2/orders/client-order-id/{clientOrderId})
+      to establish whether the original request landed before resubmitting.
+coverage:
+  operations_total: 79
+  operations_with_4xx: 41
+  operations_with_5xx: 78
+  distinct_error_statuses: 6

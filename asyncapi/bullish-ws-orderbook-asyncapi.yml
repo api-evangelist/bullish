@@ -1,0 +1,425 @@
+asyncapi: 3.0.0
+info:
+  title: Multi-Order Book
+  version: 1.0.0
+  description: |
+    This allows simultaneous subscriptions to multiple L1 and L2 order books of different markets.
+
+    The order books of different markets to be subscribed are controlled by the parameters in the subscription message listed below.
+
+    ```
+    /trading-api/v1/market-data/orderbook
+    ```
+servers:
+  prod-public:
+    host: api.exchange.bullish.com
+    protocol: wss
+    description: Production / Public
+  prod-registered:
+    host: registered.api.exchange.bullish.com
+    protocol: wss
+    description: Production / Registered
+  prod-direct:
+    host: prod.access.bullish.com
+    protocol: wss
+    description: Production / Direct Connect
+  simnext-public:
+    host: api.simnext.bullish-test.com
+    protocol: wss
+    description: SimNext / Public
+  simnext-registered:
+    host: registered.api.simnext.bullish-test.com
+    protocol: wss
+    description: SimNext / Registered
+  simnext-direct:
+    host: simnext.access.bullish.com
+    protocol: wss
+    description: SimNext / Direct Connect
+
+channels:
+  data:
+    address: /trading-api/v1/market-data/orderbook
+    messages:
+      subscribe:
+        title: Subscription
+        summary: Let you subscribe to a given topic
+        payload:
+          type: object
+          required:
+            - id
+            - method
+            - params
+          properties:
+            method:
+              type: string
+              description: '"subscribe"'
+              example: subscribe
+            id:
+              $ref: "#/components/schemas/MarketDataOrderbookJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/MarketDataOrderbookJsonRpcVersion"
+            type:
+              $ref: "#/components/schemas/MarketDataOrderbookJsonRpcCommandType"
+            params:
+              $ref: "#/components/schemas/MarketDataOrderbookTopicSubscriptionParams"
+      subscribe-ack:
+        title: Acknowledgment
+        summary: Confirm the topic being subscribed
+        payload:
+          type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/MarketDataOrderbookJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/MarketDataOrderbookJsonRpcVersion"
+            result:
+              type: object
+              properties:
+                responseCodeName:
+                  type: string
+                  description: '"OK"'
+                  example: OK
+                responseCode:
+                  type: string
+                  description: "200"
+                  example: "200"
+                message:
+                  type: string
+                  description: "Confirmation of what has been subscribed. The trailing numeric field identifies the order book topic: 1 for `l1Orderbook` and 2 for `l2Orderbook`."
+                  example: Successfully subscribed ( BTCUSD 1)
+      subscribe-msg-0:
+        title: Snapshot/Update for L1
+        summary: Latest update for L1
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"update"'
+              example: update
+            dataType:
+              type: string
+              description: '"V1TALevel1"'
+              example: V1TALevel1
+            data:
+              type: object
+              properties:
+                sequenceNumber:
+                  type: string
+                  description: incrementing, unique, unsigned integer that identifies a state of the L1 order book
+                  example: "8"
+                symbol:
+                  type: string
+                  description: Market symbol
+                  example: BTCUSD
+                timestamp:
+                  type: string
+                  description: Denotes the epoch millisecond time the datum was updated by the exchange
+                  example: "1719642590000"
+                bid:
+                  type: array
+                  description: Nested array containing price and quantity of highest bid
+                  items:
+                    type: string
+                  example:
+                    - "5199.5000"
+                    - "61.95995262"
+                ask:
+                  type: array
+                  items:
+                    type: string
+                  description: Nested array containing price and quantity of lowest ask
+                  example:
+                    - "5199.6000"
+                    - "96.59626782"
+      subscribe-msg-1:
+        title: Snapshot/Update for L2
+        summary: Latest update for L2
+        payload:
+          type: object
+          properties:
+            type:
+              type: string
+              description: '"snapshot"'
+              example: snapshot
+            dataType:
+              type: string
+              description: '"V1TALevel2"'
+              example: V1TALevel2
+            data:
+              type: object
+              properties:
+                symbol:
+                  type: string
+                  description: Market symbol
+                  example: BTCUSD
+                bids:
+                  type: array
+                  description: Array of size 200 where even indices denote price, odd indices denote absolute quantities
+                  items:
+                    type: string
+                  example:
+                    - "5199.5000"
+                    - "61.95995262"
+                    - "5199.4000"
+                    - "20.92470365"
+                asks:
+                  type: array
+                  items:
+                    type: string
+                  description: Array of size 200 where even indices denote price, odd indices denote absolute quantities
+                  example:
+                    - "5199.6000"
+                    - "96.59626782"
+                    - "5199.7000"
+                    - "0.92465082"
+                sequenceNumberRange:
+                  type: array
+                  items:
+                    type: integer
+                  description: |
+                    Array of size 2 where first element denotes lower bound, second element denotes upper bound of sequence numbers
+                    . Lower and upper bound are equal for initial snapshot; this may differ for subsequent snapshots
+                  example:
+                    - 1370055970
+                    - 1370055970
+                datetime:
+                  type: string
+                  description: Denotes the time the update was created by the engine, ISO 8601 with millisecond as string
+                  example: "2024-06-29T06:29:50.500Z"
+                timestamp:
+                  type: string
+                  description: Denotes the epoch millisecond time the datum was created by the exchange
+                  example: "1719642590000"
+                publishedAtTimestamp:
+                  type: string
+                  description: Denotes the epoch millisecond time the datum was updated by the exchange
+                  example: "1719642590000"
+      subscribe-nack:
+        title: Rejection
+        summary: Explain why the topic could not be subscribed
+        payload:
+          $ref: "#/components/schemas/MarketDataOrderbookRejectionPayload"
+      keepalive-ping:
+        title: Keepalive Ping
+        payload:
+          type: object
+          required:
+            - id
+            - method
+            - params
+          properties:
+            method:
+              type: string
+              description: '"keepalivePing"'
+              example: keepalivePing
+            params:
+              type: object
+            id:
+              $ref: "#/components/schemas/MarketDataOrderbookJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/MarketDataOrderbookJsonRpcVersion"
+            type:
+              $ref: "#/components/schemas/MarketDataOrderbookJsonRpcCommandType"
+      keepalive-pong:
+        title: Keepalive Pong
+        payload:
+          type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/MarketDataOrderbookJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/MarketDataOrderbookJsonRpcVersion"
+            result:
+              type: object
+              properties:
+                responseCodeName:
+                  type: string
+                  description: '"OK"'
+                  example: OK
+                responseCode:
+                  type: integer
+                  description: "200"
+                  example: 200
+                message:
+                  type: string
+                  description: '"Keep alive pong"'
+                  example: Keep alive pong
+      unsubscribe:
+        title: Unsubscription
+        summary: Let you unsubscribe to a given index
+        payload:
+          type: object
+          required:
+            - id
+            - method
+            - params
+          properties:
+            method:
+              type: string
+              description: '"unsubscribe"'
+              example: unsubscribe
+            id:
+              $ref: "#/components/schemas/MarketDataOrderbookJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/MarketDataOrderbookJsonRpcVersion"
+            type:
+              $ref: "#/components/schemas/MarketDataOrderbookJsonRpcCommandType"
+            params:
+              $ref: "#/components/schemas/MarketDataOrderbookTopicSubscriptionParams"
+      unsubscribe-ack:
+        title: Acknowledgment
+        summary: Confirm the topic being unsubscribed
+        payload:
+          type: object
+          properties:
+            id:
+              $ref: "#/components/schemas/MarketDataOrderbookJsonRpcRequestId"
+            jsonrpc:
+              $ref: "#/components/schemas/MarketDataOrderbookJsonRpcVersion"
+            result:
+              type: object
+              properties:
+                responseCodeName:
+                  type: string
+                  description: '"OK"'
+                  example: OK
+                responseCode:
+                  type: string
+                  description: "200"
+                  example: "200"
+                message:
+                  type: string
+                  description: "Confirmation of what has been unsubscribed. The trailing numeric field identifies the order book topic: 1 for `l1Orderbook` and 2 for `l2Orderbook`."
+                  example: Successfully unsubscribed ( BTCUSD 1)
+      unsubscribe-nack:
+        title: Rejection
+        summary: Explain why the topic could not be unsubscribed
+        payload:
+          $ref: "#/components/schemas/MarketDataOrderbookRejectionPayload"
+operations:
+  subscribe:
+    action: send
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Subscribe
+      Multiple subscriptions could be opened within the same websocket.
+
+      The order book of different markets to be subscribed are controlled by the parameters in the subscription message listed below.
+
+      See [connect to multi-order book WebSocket](https://github.com/bullish-exchange/api-examples/blob/master/websocket/multi_orderbook_web_socket.py) for a sample Python script.
+    messages:
+      - $ref: "#/channels/data/messages/subscribe"
+  subscribe-ack:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      After subscribing, the server sends :
+      - an acknowledgement
+
+      Then (L1 / L2 depending on your topic):
+      - an initial snapshot
+      - followed by incremental updates
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-ack"
+      - $ref: "#/channels/data/messages/subscribe-msg-0"
+      - $ref: "#/channels/data/messages/subscribe-msg-1"
+  subscribe-nack:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: In case of *invalid* subscription message, an error rejection would be sent.
+    messages:
+      - $ref: "#/channels/data/messages/subscribe-nack"
+  keepalive-ping:
+    action: send
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Keepalive
+      In case nothing is subscribed to, keep the websocket connection alive.
+    messages:
+      - $ref: "#/channels/data/messages/keepalive-ping"
+  keepalive-pong:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      Acknowledgement returned by the server in response to a keepalive-ping.
+    messages:
+      - $ref: "#/channels/data/messages/keepalive-pong"
+  unsubscribe:
+    action: send
+    channel:
+      $ref: "#/channels/data"
+    description: |
+      ## Unsubscribe
+      Let you unsubscribe a specific topic while keeping your websocket opened.
+    messages:
+      - $ref: "#/channels/data/messages/unsubscribe"
+  unsubscribe-ack:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: After unsubscribing, the server sends an acknowledgement.
+    messages:
+      - $ref: "#/channels/data/messages/unsubscribe-ack"
+  unsubscribe-nack:
+    action: receive
+    channel:
+      $ref: "#/channels/data"
+    description: In case of *invalid* unsubscription message, an error rejection would be sent.
+    messages:
+      - $ref: "#/channels/data/messages/unsubscribe-nack"
+components:
+  schemas:
+    MarketDataOrderbookJsonRpcRequestId:
+      type: string
+      description: ID returned by server in the acknowledgement
+      example: "1611082473000"
+    MarketDataOrderbookJsonRpcVersion:
+      description: Version of the Json RPC protocol
+      example: "2.0"
+    MarketDataOrderbookJsonRpcCommandType:
+      description: '"command"'
+      example: command
+    MarketDataOrderbookRejectionPayload:
+      type: object
+      properties:
+        id:
+          $ref: "#/components/schemas/MarketDataOrderbookJsonRpcRequestId"
+        jsonrpc:
+          $ref: "#/components/schemas/MarketDataOrderbookJsonRpcVersion"
+        error:
+          type: object
+          properties:
+            code:
+              type: string
+              description: a high-level code for the error
+              example: "-32602"
+            errorCode:
+              type: string
+              description: a precise typed error code
+              example: "29013"
+            errorCodeName:
+              type: string
+              description: An explanation of which value was invalid
+              example: "'abcde' is not a valid topic"
+    MarketDataOrderbookTopicSubscriptionParams:
+      type: object
+      required:
+        - topic
+        - symbol
+      properties:
+        topic:
+          type: string
+          description: |
+            - l1Orderbook (l1 order book)
+            - l2Orderbook (l2 order book)
+          example: l1Orderbook
+        symbol:
+          type: string
+          description: Market symbol, such as BTCUSD or ETHUSDC
+          example: BTCUSD

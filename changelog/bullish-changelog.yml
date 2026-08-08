@@ -1,0 +1,99 @@
+generated: '2026-08-08'
+method: searched
+source: https://docs.exchange.bullish.com/rest/changelog
+docs:
+  rest: https://docs.exchange.bullish.com/rest/changelog
+  websocket: https://docs.exchange.bullish.com/websocket/ws-api-change-log
+scheme: dated-monthly
+current_version: v2
+summary: >-
+  Bullish keeps two dated changelogs — one for REST and one for the WebSocket API —
+  organised by year-month rather than by semantic version. Additions and breaking
+  removals are both called out. Recent window captured below; the live changelog is
+  the source of truth.
+window:
+  from: '2025-11'
+  to: '2026-07'
+entries:
+  - date: '2026-07'
+    type: addition
+    highlight: >-
+      New REST API — Get Delegated Trading Accounts, for listing trading accounts
+      delegated to inter-dealer brokers.
+    breaking: false
+  - date: '2026-07'
+    type: update
+    highlight: >-
+      Crypto withdrawal instructions enhanced with a `locked` parameter and related
+      response fields.
+    breaking: false
+  - date: '2026-06'
+    type: addition
+    highlight: >-
+      Portfolio margin simulation supports `priceVolOffsetParams` for adjustments.
+    breaking: false
+  - date: '2026-06'
+    type: addition
+    highlight: >-
+      New endpoint — Simulate Portfolio Margin in Bulk, for running multiple
+      portfolio margin simulations in one call.
+    breaking: false
+  - date: '2026-06'
+    type: addition
+    highlight: >-
+      Three new auction endpoints — Get Auction by Symbol, Get Auction NOII, and
+      Get Historical Auction Results.
+    breaking: false
+  - date: '2026-06'
+    type: addition
+    highlight: 'Order creation supports the GTX (Good Till Crossing) timeInForce value.'
+    breaking: false
+  - date: '2026-06'
+    type: update
+    highlight: 'Market endpoints now include `auctionEnabled` and `auctionPriceCollar`.'
+    breaking: false
+  - date: '2026-04'
+    type: update
+    highlight: >-
+      Trading account endpoints include OTC-related fees — `makerOtcFee`,
+      `takerOtcFee`, `brokerFee`.
+    breaking: false
+  - date: '2026-04'
+    type: update
+    highlight: >-
+      Derivatives Positions now includes a `greeks` object with delta, gamma, theta
+      and vega.
+    breaking: false
+  - date: '2026-03'
+    type: addition
+    highlight: New OTC trade approval command and IDB-related OTC endpoints.
+    breaking: false
+  - date: '2026-03'
+    type: addition
+    highlight: >-
+      New REST API — Get Historical Markets, for retrieving historical and expired
+      markets.
+    breaking: false
+  - date: '2026-02'
+    type: removal
+    highlight: >-
+      Deprecated fields `makerFee` and `takerFee` removed from Get Trading Accounts.
+    breaking: true
+  - date: '2025-12'
+    type: update
+    highlight: >-
+      Get Unconfirmed OTC Trade enhanced with timestamp and expiry datetime fields.
+    breaking: false
+  - date: '2025-11'
+    type: addition
+    highlight: New endpoint for retrieving unconfirmed OTC trade details.
+    breaking: false
+  - date: '2025-11'
+    type: removal
+    highlight: >-
+      Deprecated market fields removed — `maxPriceLimit`, `minPriceLimit`, and fee
+      fields.
+    breaking: true
+coverage:
+  entries_captured: 15
+  breaking_in_window: 2

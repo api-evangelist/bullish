@@ -1,0 +1,73 @@
+generated: '2026-08-08'
+method: searched
+source: https://docs.exchange.bullish.com/rest/changelog
+versioning:
+  scheme: uri-path
+  current: v2
+  coexisting: [v1, v2]
+  docs: https://docs.exchange.bullish.com/rest/introduction
+  detail: >-
+    Versions are carried in the path under /trading-api. Orders, AMM instructions,
+    OTC, IDB and the command-entry surface are on v2; markets, assets, custody,
+    index prices and history remain on v1. Both are live simultaneously.
+  forward_compatibility: >-
+    Bullish reserves the right to add new fields to existing response payloads and
+    instructs clients not to use strict deserialization.
+deprecation:
+  policy_url: https://docs.exchange.bullish.com/rest/deprecated/bullish-deprecated-features-apis
+  spec: openapi/bullish-deprecated-api-openapi.yml
+  sunset_header: false
+  rfc8594: false
+  practice: >-
+    Bullish maintains a SEPARATE published OpenAPI document for deprecated and
+    decommissioned operations rather than marking them deprecated in-place in the
+    live spec. That document carries 15 operations across three tags —
+    "deprecated - q3 2024", "deprecated" and "decommissioned" — so an integrator
+    can see exactly what is on the way out and what is already gone. Removals are
+    then announced in the dated changelog as breaking changes.
+  deprecated_surfaces:
+    - id: bullish-api-key
+      what: The legacy "Bullish API Key" credential type.
+      deprecated_on: '2024-06-28'
+      source: https://docs.exchange.bullish.com/rest/authentication
+    - id: v1-trade-order-endpoints
+      what: >-
+        v1 order create/cancel/get, AMM instruction create/get/terminate, spot
+        account reads, and the v1 asset-transfer command — superseded by the v2
+        /orders, /amm-instructions and /command surfaces.
+      source: openapi/bullish-deprecated-api-openapi.yml
+  breaking_change_examples:
+    - date: '2026-02'
+      change: Deprecated fields makerFee and takerFee removed from Get Trading Accounts.
+    - date: '2025-11'
+      change: Deprecated market fields removed (maxPriceLimit, minPriceLimit, fees).
+deprecated_operations:
+  note: >-
+    Zero operations in the live openapi/bullish-trading-api-openapi.yml carry
+    `deprecated: true`. The deprecated set lives entirely in the separate
+    openapi/bullish-deprecated-api-openapi.yml document (15 operations).
+  live_spec_deprecated_count: 0
+  separate_deprecated_spec_operations: 15
+status_page:
+  url: https://status.bullish.com/
+  machine_readable: https://status.bullish.com/api/v2/summary.json
+  verified: '2026-08-08'
+  http_status: 200
+  detail: >-
+    Per-component status for every listed asset and for the exchange platform, with
+    a public JSON summary API. Confirmed live returning "All Systems Operational".
+sla:
+  url: null
+  uptime_target: null
+  note: >-
+    No public uptime SLA or availability target is published. Bullish operates a
+    maintenance window signalled in-band through statusReasonCode 6050 "The
+    exchange is undergoing maintenance".
+changelogs:
+  rest: https://docs.exchange.bullish.com/rest/changelog
+  websocket: https://docs.exchange.bullish.com/websocket/ws-api-change-log
+  see_also: changelog/bullish-changelog.yml
+support:
+  help_center: https://support.bullish.com
+  service_desk: https://support.exchange.bullish.com/servicedesk/customer/portals
+  api_contact: support@bullish.com

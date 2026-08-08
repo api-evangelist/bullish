@@ -1,0 +1,83 @@
+generated: '2026-08-08'
+method: searched
+source: https://docs.exchange.bullish.com/rest/general/rate-limits
+docs:
+  - https://docs.exchange.bullish.com/rest/general/rate-limits
+  - https://docs.exchange.bullish.com/websocket/protocol/rate-limit
+summary: >-
+  Bullish enforces a blanket rate limit across all requests, split into three
+  independent private-endpoint buckets plus a per-IP ceiling and an
+  exchange-wide global limit. Limits are signalled on every response through
+  x-ratelimit-* headers and breached with HTTP 429 plus a numeric Bullish
+  reason code.
+rate_limits:
+  - name: Private — unauthenticated endpoints
+    limit_count: 50
+    limit_period: second
+    scope: endpoint-category
+    note: One of three independent categories.
+  - name: Private — authenticated /orders endpoints
+    limit_count: 50
+    limit_period: second
+    scope: endpoint-category
+    note: One of three independent categories.
+  - name: Private — other authenticated endpoints
+    limit_count: 50
+    limit_period: second
+    scope: endpoint-category
+    note: One of three independent categories.
+  - name: Per IP address
+    limit_count: 500
+    limit_period: 10 seconds
+    scope: ip
+    note: >-
+      Approximately 50 requests per second. Exceeding it returns HTTP 429 and
+      blocks the IP address for 60 seconds.
+  - name: Default message rate (rate-limit token tier)
+    limit_count: 50
+    limit_period: second
+    scope: account
+    note: >-
+      Default tier. Higher tiers are available by supplying a BX-RATELIMIT-TOKEN
+      header; the token is obtained from the Get Trading Accounts endpoint.
+  - name: Global exchange-wide limit
+    limit_count: null
+    limit_period: null
+    scope: exchange
+    note: >-
+      Applied across the whole exchange; the published value is not disclosed. A
+      breach is signalled by x-ratelimit-global-breach: true and HTTP 429 with
+      error code 96001.
+public_endpoints:
+  covered:
+    - /trading-api/v1/markets
+    - /trading-api/v1/market-data
+    - /trading-api/v1/history/markets
+    - /trading-api/v1/assets
+    - /trading-api/v1/index-prices
+    - /trading-api/v1/index-data
+  published: false
+  note: Specific public-endpoint limits are not published; clients must contact support.
+headers:
+  - name: x-ratelimit-limit
+    description: Maximum requests allowed in the window.
+  - name: x-ratelimit-remaining
+    description: Requests still available in the window.
+  - name: x-ratelimit-reset
+    description: Next reset time.
+  - name: x-ratelimit-global-breach
+    description: 'true / false — exchange-wide limit breach indicator.'
+  - name: BX-RATELIMIT-TOKEN
+    direction: request
+    description: Selects a higher rate-limit tier.
+breach:
+  http_status: 429
+  codes:
+    - {code: 96000, name: RATE_LIMIT_EXCEEDED}
+    - {code: 96001, name: GLOBAL_RATE_LIMIT_EXCEEDED}
+    - {code: 3034, name: Account specific rate limit exceeded, surface: FIX}
+    - {code: 3035, name: Global rate limit exceeded, surface: FIX}
+spec_coverage:
+  operations_declaring_429: 60
+  operations_total: 79
+  source: openapi/bullish-trading-api-openapi.yml

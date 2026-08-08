@@ -1,0 +1,54 @@
+generated: '2026-08-08'
+method: probed
+source: live HTTPS probe of every Bullish host in apis.yml
+summary: >-
+  Bullish publishes NO /.well-known/ discovery surface. Every RFC 8615 path was
+  probed anonymously on all five hosts (the marketing site, the exchange app, the
+  API host, and the docs host) and every one returned 404. No security.txt
+  (RFC 9116), no OpenID Connect or OAuth 2.0 authorization-server metadata (the
+  API is JWT-bearer over a proprietary ECDSA/HMAC login, not OAuth), no
+  api-catalog (RFC 9727), no ai-plugin.json, and no A2A agent card at either the
+  canonical or the legacy path. This is recorded as an honest zero, not a gap in
+  the probe.
+hosts_probed:
+  - bullish.com
+  - www.bullish.com
+  - api.exchange.bullish.com
+  - docs.exchange.bullish.com
+  - exchange.bullish.com
+documents:
+  - path: /.well-known/security.txt
+    status: 404
+    hosts_all_404: true
+  - path: /.well-known/openid-configuration
+    status: 404
+    hosts_all_404: true
+  - path: /.well-known/oauth-authorization-server
+    status: 404
+    hosts_all_404: true
+  - path: /.well-known/oauth-protected-resource
+    status: 404
+    hosts_all_404: true
+  - path: /.well-known/api-catalog
+    status: 404
+    hosts_all_404: true
+  - path: /.well-known/ai-plugin.json
+    status: 404
+    hosts_all_404: true
+  - path: /.well-known/agent-card.json
+    status: 404
+    hosts_all_404: true
+  - path: /.well-known/agent.json
+    status: 404
+    hosts_all_404: true
+  - path: /llms.txt
+    status: 404
+    hosts_all_404: true
+x-evidence:
+  fetched: '2026-08-08'
+  probes: 45
+  hits: 0
+  note: >-
+    bullish.com/.well-known/* returns a distinctive "Invalid .well-known request"
+    404 body, which confirms the path was routed and genuinely not served rather
+    than swallowed by an SPA catch-all.

@@ -1,0 +1,103 @@
+overlay: 1.0.0
+info:
+  title: API Evangelist enhancements for the Bullish Trading API
+  version: 1.0.0
+extends: openapi/bullish-trading-api-openapi.yml
+x-generated: '2026-08-08'
+x-method: generated
+x-source: >-
+  Derived from API Evangelist enrichment artifacts in all/bullish/ — conventions,
+  errors, rate-limits, authentication, lifecycle and sandbox. Never mutates the
+  harvested spec.
+actions:
+  - target: $.info
+    update:
+      x-apievangelist-provider: bullish
+      x-apievangelist-enriched: '2026-08-08'
+      x-apievangelist-artifacts:
+        authentication: authentication/bullish-authentication.yml
+        conventions: conventions/bullish-conventions.yml
+        errors: errors/bullish-error-codes.yml
+        problem-types: errors/bullish-problem-types.yml
+        rate-limits: rate-limits/bullish-rate-limits.yml
+        lifecycle: lifecycle/bullish-lifecycle.yml
+        sandbox: sandbox/bullish-sandbox.yml
+        data-model: data-model/bullish-data-model.yml
+        conformance: conformance/bullish-conformance.yml
+  - target: $.info
+    update:
+      description: >-
+        The Bullish Trading API. REST over HTTPS, JSON only. Public market data is
+        anonymous; private endpoints require a JWT bearer token minted by signing a
+        login request with an ECDSA R1 or HMAC API key. Tokens are valid for 24
+        hours. HMAC-derived tokens reach trading endpoints only — custody requires
+        ECDSA. Versions v1 and v2 coexist in the path under /trading-api. Errors
+        carry a numeric statusReasonCode plus statusReason text drawn from a
+        published 167-code registry. Pagination is cursor-based via _pageSize /
+        _nextPage / _previousPage with _metaData=true for navigation links. There is
+        NO idempotency key — retries are governed by a strictly increasing BX-NONCE,
+        so recover from a 5xx by querying the order by clientOrderId rather than by
+        resubmitting.
+  - target: $.info
+    update:
+      x-apievangelist-idempotency:
+        supported: false
+        mechanism: strictly-increasing BX-NONCE plus clientOrderId dedupe
+        retry_safe: false
+        recovery_operation: trade-get-order-by-client-order-id-v2
+  - target: $.info
+    update:
+      x-apievangelist-rate-limits:
+        default: 50 requests per second per category
+        per_ip: 500 requests per 10 seconds, then a 60-second block
+        headers: [x-ratelimit-limit, x-ratelimit-remaining, x-ratelimit-reset, x-ratelimit-global-breach]
+        breach_codes: [96000, 96001]
+        tier_upgrade_header: BX-RATELIMIT-TOKEN
+  - target: $.info
+    update:
+      x-apievangelist-pagination:
+        style: cursor
+        params: [_pageSize, _metaData, _nextPage, _previousPage]
+        page_sizes: [5, 25, 50, 100]
+        default_page_size: 25
+        envelope: {data: array, links: {next: string, previous: string}}
+  - target: $.info
+    update:
+      x-apievangelist-environments:
+        production:
+          - https://api.exchange.bullish.com/trading-api
+          - https://registered.api.exchange.bullish.com/trading-api
+          - https://prod.access.bullish.com/trading-api
+        simulation:
+          - https://api.simnext.bullish-test.com/trading-api
+          - https://registered.api.simnext.bullish-test.com/trading-api
+          - https://simnext.access.bullish.com/trading-api
+        bug_bounty:
+          - https://api.bugbounty.bullish.com/trading-api
+        self_service_simulation_access: false
+  - target: $.components.securitySchemes.jwtTokenAuth
+    update:
+      x-apievangelist-login:
+        ecdsa: POST /v2/users/login
+        hmac: GET /v1/users/hmac/login
+        logout: GET /v1/users/logout
+        lifetime_hours: 24
+        signing_headers: [BX-TIMESTAMP, BX-NONCE, BX-PUBLIC-KEY, BX-SIGNATURE]
+        hmac_token_scope: trading-only
+        ecdsa_token_scope: trading-and-custody
+  - target: $.paths['/v1/wallets/withdrawal'].post
+    update:
+      x-apievangelist-consequence: irreversible
+      x-apievangelist-human-in-the-loop: required
+      x-apievangelist-note: >-
+        Withdrawal destinations must be whitelisted (error 8336) and must belong to
+        the calling user (error 8335). An ECDSA credential is mandatory — an
+        HMAC-derived token is rejected on the custody surface.
+  - target: $.paths['/v2/orders'].post
+    update:
+      x-apievangelist-consequence: financial
+      x-apievangelist-human-in-the-loop: recommended
+      x-apievangelist-note: >-
+        Not idempotent. Supply clientOrderId and, on any 5xx or timeout, resolve the
+        outcome with trade-get-order-by-client-order-id-v2 before resubmitting; a
+        blind retry creates a second order or is rejected with 3007 / 3023.

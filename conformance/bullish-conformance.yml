@@ -1,0 +1,90 @@
+generated: '2026-08-08'
+method: derived
+source: openapi/bullish-trading-api-openapi.yml, asyncapi/, https://www.bullish.com/us/trust
+notes: >-
+  Standards conformance derived from the published specs plus the compliance
+  posture on the Trust and Transparency page. Bullish is unusual among exchanges
+  in shipping BOTH a real OpenAPI 3.0.3 and six real AsyncAPI 3.0.0 documents, and
+  in supporting FIX alongside REST and WebSocket. It is equally notable for what it
+  does NOT do: no OAuth, no RFC 9457 problem details, no RFC 8594 Sunset headers,
+  and no /.well-known/ surface at all.
+standards:
+  - id: openapi-3.0
+    conforms: true
+    evidence: 'openapi: 3.0.3 — Bullish Trading API, 75 paths / 79 operations, 211 component schemas'
+  - id: asyncapi-3.0
+    conforms: true
+    evidence: 'six AsyncAPI 3.0.0 documents published at docs.exchange.bullish.com/api-specifications'
+  - id: fix-protocol
+    conforms: true
+    evidence: >-
+      Documented FIX order-entry, drop-copy, reference-data and trading-status
+      surfaces with component definitions and session management; rejections use
+      OrdRejReason (103) and Text (58).
+    docs: https://docs.exchange.bullish.com/fix/introduction
+  - id: jwt-rfc7519
+    conforms: true
+    evidence: 'securityScheme jwtTokenAuth — type http, scheme bearer, bearerFormat JWT'
+  - id: ecdsa-p256-signing
+    conforms: true
+    evidence: >-
+      ECDSA R1 (prime256v1 / secp256r1 / P-256) with SHA256; public key in X.509
+      SubjectPublicKeyInfo PEM.
+  - id: oauth2
+    conforms: false
+    evidence: >-
+      No oauth2 securityScheme in either spec; /.well-known/oauth-authorization-server
+      returns 404 on every host.
+  - id: oidc
+    conforms: false
+    evidence: '/.well-known/openid-configuration returns 404 on every host.'
+  - id: rfc9457-problem-details
+    conforms: false
+    evidence: >-
+      All responses are application/json; errors use a proprietary
+      statusReasonCode / statusReason envelope, not application/problem+json.
+  - id: rfc9116-security-txt
+    conforms: false
+    evidence: '/.well-known/security.txt returns 404 on all five hosts.'
+  - id: rfc9727-api-catalog
+    conforms: false
+    evidence: '/.well-known/api-catalog returns 404 on all five hosts.'
+  - id: rfc8594-sunset-header
+    conforms: false
+    evidence: >-
+      No Sunset or Deprecation header support documented; deprecation is handled by
+      publishing a separate deprecated-operations OpenAPI plus dated changelog notes.
+  - id: cursor-pagination
+    conforms: true
+    evidence: '_pageSize / _nextPage / _previousPage / _metaData with data + links envelope'
+    docs: https://docs.exchange.bullish.com/rest/general/pagination
+  - id: idempotency-key
+    conforms: false
+    evidence: >-
+      No Idempotency-Key header and no documented safe-retry semantics; the string
+      "idempot" does not occur in the OpenAPI. Replay is prevented by a strictly
+      increasing BX-NONCE, which makes naive retries fail rather than dedupe.
+  - id: rate-limit-headers
+    conforms: true
+    evidence: 'x-ratelimit-limit / -remaining / -reset / -global-breach on responses; 429 on breach'
+  - id: a2a-agent-card
+    conforms: false
+    evidence: '/.well-known/agent-card.json and /.well-known/agent.json return 404 on all hosts.'
+  - id: mcp
+    conforms: false
+    evidence: >-
+      No hosted or published MCP server; the MCP registry returns zero results for
+      "bullish" and no /mcp endpoint responds on the API or docs hosts.
+compliance:
+  published: true
+  page: https://www.bullish.com/us/trust
+  certifications:
+    - SOC 1 Type 1
+    - SOC 2 Type 1
+  regulators:
+    - Gibraltar Financial Services Commission (DLT provider)
+    - BaFin (MiCA CASP, qualified crypto custodian, payment institution)
+    - Hong Kong SFC (Type 1, Type 7, VATP)
+    - FinCEN (MSB registration)
+    - NYDFS (New York virtual currency business licence)
+  see_also: security/bullish-trust-center.yml
