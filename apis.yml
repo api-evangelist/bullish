@@ -38,44 +38,13 @@ maintainers:
 - FN: APIs.json
   email: info@apis.io
 apis:
-- aid: bullish:trading-api
-  name: Bullish Trading API
-  description: >-
-    The core Bullish REST API — 79 operations across markets, assets, index prices,
-    option ladders and expiry prices, order creation and amendment, trades, AMM
-    instructions, market-maker protection, derivatives positions, portfolio-margin
-    simulation, OTC and inter-dealer-broker trade booking, custody deposit and
-    withdrawal instructions, and account/trade/transfer history. Public market data
-    is anonymous; everything else is JWT bearer.
-  humanURL: https://docs.exchange.bullish.com/rest/introduction
-  baseURL: https://api.exchange.bullish.com/trading-api
-  tags:
-  - Trading
-  - Market Data
-  - Custody
-  - Derivatives
-  - OTC
-  properties:
-  - type: OpenAPI
-    url: openapi/bullish-trading-api-openapi.yml
-  - type: Documentation
-    url: https://docs.exchange.bullish.com/rest/introduction
-  - type: APIReference
-    url: https://docs.exchange.bullish.com/rest/api/get-markets
-  - type: Authentication
-    url: https://docs.exchange.bullish.com/rest/authentication
-  - type: RateLimits
-    url: https://docs.exchange.bullish.com/rest/general/rate-limits
-  - type: ChangeLog
-    url: https://docs.exchange.bullish.com/rest/changelog
 - aid: bullish:deprecated-api
   name: Bullish Deprecated Features and APIs
   description: >-
-    A separately published OpenAPI document carrying the 15 operations Bullish has
-    deprecated or decommissioned — the v1 order create/cancel/get surface, v1 AMM
-    instructions, v1 spot account reads and the v1 asset-transfer command — tagged
-    "deprecated - q3 2024", "deprecated" and "decommissioned" so integrators can
-    see exactly what is on the way out.
+    A separately published OpenAPI document carrying the 15 operations Bullish has deprecated or decommissioned
+    — the v1 order create/cancel/get surface, v1 AMM instructions, v1 spot account reads and the v1 asset-transfer
+    command — tagged "deprecated - q3 2024", "deprecated" and "decommissioned" so integrators can see
+    exactly what is on the way out.
   humanURL: https://docs.exchange.bullish.com/rest/deprecated/bullish-deprecated-features-apis
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
@@ -88,8 +57,8 @@ apis:
 - aid: bullish:ws-orderbook
   name: Bullish WebSocket Multi-Order Book API
   description: >-
-    AsyncAPI 3.0.0 document for simultaneous subscriptions to multiple L1 and L2
-    order books across different Bullish markets over WebSocket.
+    AsyncAPI 3.0.0 document for simultaneous subscriptions to multiple L1 and L2 order books across different
+    Bullish markets over WebSocket.
   humanURL: https://docs.exchange.bullish.com/websocket/public/market-data/orderbook
   baseURL: wss://api.exchange.bullish.com
   tags:
@@ -103,8 +72,8 @@ apis:
 - aid: bullish:ws-trades
   name: Bullish WebSocket Anonymous Trades API
   description: >-
-    AsyncAPI 3.0.0 document for batched anonymous trade subscriptions across
-    multiple Bullish markets over WebSocket.
+    AsyncAPI 3.0.0 document for batched anonymous trade subscriptions across multiple Bullish markets
+    over WebSocket.
   humanURL: https://docs.exchange.bullish.com/websocket/public/market-data/trades
   baseURL: wss://api.exchange.bullish.com
   tags:
@@ -118,8 +87,7 @@ apis:
 - aid: bullish:ws-ticks
   name: Bullish WebSocket Anonymous Ticks API
   description: >-
-    AsyncAPI 3.0.0 document for simultaneous tick subscriptions across multiple
-    Bullish markets over WebSocket.
+    AsyncAPI 3.0.0 document for simultaneous tick subscriptions across multiple Bullish markets over WebSocket.
   humanURL: https://docs.exchange.bullish.com/websocket/public/market-data/ticks
   baseURL: wss://api.exchange.bullish.com
   tags:
@@ -133,8 +101,8 @@ apis:
 - aid: bullish:ws-auction
   name: Bullish WebSocket Auction Feed API
   description: >-
-    AsyncAPI 3.0.0 document for the real-time auction feed, delivering phase and
-    order-imbalance data for Bullish markets with auctions enabled.
+    AsyncAPI 3.0.0 document for the real-time auction feed, delivering phase and order-imbalance data
+    for Bullish markets with auctions enabled.
   humanURL: https://docs.exchange.bullish.com/websocket/public/market-data/auction
   baseURL: wss://api.exchange.bullish.com
   tags:
@@ -149,8 +117,8 @@ apis:
 - aid: bullish:ws-index-data
   name: Bullish WebSocket Index Data API
   description: >-
-    AsyncAPI 3.0.0 document for streaming Bullish index prices, with the subscribed
-    asset set controlled by subscription-message parameters.
+    AsyncAPI 3.0.0 document for streaming Bullish index prices, with the subscribed asset set controlled
+    by subscription-message parameters.
   humanURL: https://docs.exchange.bullish.com/websocket/public/index-data
   baseURL: wss://api.exchange.bullish.com
   tags:
@@ -165,9 +133,8 @@ apis:
 - aid: bullish:ws-private-data
   name: Bullish WebSocket Private Data API
   description: >-
-    AsyncAPI 3.0.0 document for the authenticated private stream — real-time orders,
-    trades, asset accounts, trading accounts, derivatives positions, AMM
-    instructions and market-maker-protection triggers.
+    AsyncAPI 3.0.0 document for the authenticated private stream — real-time orders, trades, asset accounts,
+    trading accounts, derivatives positions, AMM instructions and market-maker-protection triggers.
   humanURL: https://docs.exchange.bullish.com/websocket/private/private-data
   baseURL: wss://api.exchange.bullish.com
   tags:
@@ -184,10 +151,9 @@ apis:
 - aid: bullish:fix-api
   name: Bullish FIX API
   description: >-
-    The Bullish FIX order-entry, drop-copy, reference-data and trading-status
-    surface for institutional and high-frequency clients, with session management
-    and component definitions documented. Rejections carry OrdRejReason (tag 103)
-    and Text (tag 58) using the same numeric registry as REST.
+    The Bullish FIX order-entry, drop-copy, reference-data and trading-status surface for institutional
+    and high-frequency clients, with session management and component definitions documented. Rejections
+    carry OrdRejReason (tag 103) and Text (tag 58) using the same numeric registry as REST.
   humanURL: https://docs.exchange.bullish.com/fix/introduction
   baseURL: https://api.exchange.bullish.com
   tags:
@@ -206,10 +172,9 @@ apis:
 - aid: bullish:aggregator-api
   name: Bullish Aggregator API
   description: >-
-    A small non-authenticated REST surface publishing aggregated public market data
-    — tickers with 24-hour rolling statistics, order books, and the last 100 trades,
-    each optionally filtered by market type. Intended for data aggregators and
-    market-data consumers rather than for trading.
+    A small non-authenticated REST surface publishing aggregated public market data — tickers with 24-hour
+    rolling statistics, order books, and the last 100 trades, each optionally filtered by market type.
+    Intended for data aggregators and market-data consumers rather than for trading.
   humanURL: https://docs.exchange.bullish.com/aggregator/bullish-aggregator-api
   baseURL: https://api.exchange.bullish.com
   tags:
@@ -220,7 +185,486 @@ apis:
     url: https://docs.exchange.bullish.com/aggregator/bullish-aggregator-api
   - type: APIReference
     url: https://docs.exchange.bullish.com/aggregator/get-tickers
+- aid: bullish:bullish-account-assets-api
+  name: Bullish Account Assets API
+  description: Authenticated APIs for reading account data
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - account-assets
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-account-assets-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-amm-instructions-api
+  name: Bullish Amm Instructions API
+  description: "Authenticated APIs that allow users to Create, View and Terminate AMM instructions.\n\n\
+    Please refer to the [AMM instruction Overview Doc](https://github.com/bullish-exchange/api-docs/wiki/Automated-Market-Making-%28AMM%29-Instructions)\
+    \ \nfor more details on how AMM instructions work."
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - amm-instructions
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-amm-instructions-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-asset-data-api
+  name: Bullish Asset Data API
+  description: Non-authenticated APIs for accessing general asset data information
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - asset-data
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-asset-data-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-auction-public-api
+  name: Bullish Auction Public API
+  description: The auction-public API from Bullish — 2 operation(s) for auction-public.
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - auction-public
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-auction-public-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-command-entry-api
+  name: Bullish command entry API
+  description: Authenticated API for submitting commands into the exchange.
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - command entry
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-command-entry-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-custody-api
+  name: Bullish Custody API
+  description: >-
+    Authenticated APIs for custody,  [Custody Basic Examples](https://github.com/bullish-exchange/api-examples/blob/master/bullish/rest/custody_basics.py)
+
+
+    Custody APIs have a limit of 40 requests per IP, per minute. This is combined across all endpoints
+    of type **/wallets/***
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - custody
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-custody-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-deprecated-q3-2024-api
+  name: Bullish deprecated - q3 2024 API
+  description: List of deprecated APIs that will be removed towards the end of Q3 2024.
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - deprecated - q3 2024
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-deprecated-q3-2024-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-derivatives-api
+  name: Bullish Derivatives API
+  description: The derivatives API from Bullish — 1 operation(s) for derivatives.
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - derivatives
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-derivatives-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-derivatives-public-api
+  name: Bullish Derivatives Public API
+  description: The derivatives-public API from Bullish — 3 operation(s) for derivatives-public.
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - derivatives-public
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-derivatives-public-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-general-api
+  name: Bullish General API
+  description: The general API from Bullish — 2 operation(s) for general.
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - general
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-general-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-history-api
+  name: Bullish History API
+  description: The history API from Bullish — 5 operation(s) for history.
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - history
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-history-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-idb-api
+  name: Bullish Idb API
+  description: >-
+    The Inter-dealer Broker (IDB) API is available to authorized inter-dealer brokers to book OTC trades
+    on Bullish on behalf of their respective end customers.
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - idb
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-idb-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-index-price-data-api
+  name: Bullish Index Price Data API
+  description: The index-price-data API from Bullish — 2 operation(s) for index-price-data.
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - index-price-data
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-index-price-data-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-market-data-api
+  name: Bullish Market Data API
+  description: Non-authenticated APIs for accessing general market data information
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - market-data
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-market-data-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-market-history-data-api
+  name: Bullish Market History Data API
+  description: The market-history-data API from Bullish — 4 operation(s) for market-history-data.
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - market-history-data
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-market-history-data-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-market-maker-protection-api
+  name: Bullish Market Maker Protection API
+  description: >-
+    The market-maker-protection API from Bullish — 1 operation(s) for market-maker-protection.
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - market-maker-protection
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-market-maker-protection-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-orders-api
+  name: Bullish Orders API
+  description: Authenticated APIs for interacting with orders
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - orders
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-orders-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-otc-api
+  name: Bullish Otc API
+  description: >-
+    The OTC Clearing Facility API (OTC API) is available to customers to book trades negotiated outside
+    of the Bullish Exchange order book to Bullish's clearing and settlement platform. Customers may agree
+    to an OTC transaction through bilateral negotiations or via a 3rd party RFQ platform. Once the two
+    customers agree on the trade details, they can use the OTC API to book the trade to their Bullish
+    account to benefit from Bullish's risk and collateral management system. For purposes of clarity,
+    the OTC API is not for trading purposes.
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - otc
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-otc-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-portfolio-margin-simulator-api
+  name: Bullish Portfolio Margin Simulator API
+  description: >-
+    The portfolio-margin-simulator API from Bullish — 2 operation(s) for portfolio-margin-simulator.
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - portfolio-margin-simulator
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-portfolio-margin-simulator-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-session-management-api
+  name: Bullish Session Management API
+  description: The session-management API from Bullish — 3 operation(s) for session-management.
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - session-management
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-session-management-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-trades-api
+  name: Bullish Trades API
+  description: Authenticated APIs for reading trade data
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - trades
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-trades-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-trading-accounts-api
+  name: Bullish Trading Accounts API
+  description: The trading-accounts API from Bullish — 2 operation(s) for trading-accounts.
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - trading-accounts
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-trading-accounts-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
+- aid: bullish:bullish-transfer-api
+  name: Bullish Transfer API
+  description: Authenticated API for initiating asset transfers between trading accounts.
+  humanURL: https://docs.exchange.bullish.com/rest/introduction
+  baseURL: https://api.exchange.bullish.com/trading-api
+  tags:
+  - transfer
+  properties:
+  - type: OpenAPI
+    url: openapi/bullish-transfer-api-openapi.yml
+  - type: Documentation
+    url: https://docs.exchange.bullish.com/rest/introduction
+  - type: APIReference
+    url: https://docs.exchange.bullish.com/rest/api/get-markets
+  - type: Authentication
+    url: https://docs.exchange.bullish.com/rest/authentication
+  - type: RateLimits
+    url: https://docs.exchange.bullish.com/rest/general/rate-limits
+  - type: ChangeLog
+    url: https://docs.exchange.bullish.com/rest/changelog
 common:
+- type: MCPServer
+  url: mcp/bullish-mcp.yml
 - type: AgenticAccess
   url: agentic-access/bullish-agentic-access.yml
 - type: DomainSecurity
@@ -238,7 +682,7 @@ common:
 - type: Authentication
   url: authentication/bullish-authentication.yml
 - type: OpenAPI
-  url: openapi/bullish-trading-api-openapi.yml
+  url: openapi/_original/bullish-trading-api-openapi.yml
 - type: AsyncAPI
   url: asyncapi/bullish-ws-private-data-asyncapi.yml
 - type: ChangeLog
