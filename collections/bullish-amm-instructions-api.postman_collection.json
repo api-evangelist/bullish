@@ -1,0 +1,1704 @@
+{
+  "item": [
+    {
+      "id": "2b7d4af6-d50a-4e56-911d-7a42e1db676d",
+      "name": "amm-instructions",
+      "description": {
+        "content": "Authenticated APIs that allow users to Create, View and Terminate AMM instructions.\n\nPlease refer to the [AMM instruction Overview Doc](https://github.com/bullish-exchange/api-docs/wiki/Automated-Market-Making-%28AMM%29-Instructions) \nfor more details on how AMM instructions work.\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9700b8c2-74b4-4da4-bb2f-bfbe0f303be3",
+          "name": "Get AMM Instructions",
+          "request": {
+            "name": "Get AMM Instructions",
+            "description": {
+              "content": "Gets a list of AMM instructions based on applied filters.\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n- [supports pagination](/rest/general/pagination)\n\n**Ratelimited:** `True`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "amm-instructions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "order status"
+                },
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "(Required) Id of the trading account"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "faf5c045-392e-4eff-b7e8-0a9693c2b366",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "amm-instructions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "status",
+                      "value": "OPEN"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"apy\": \"0.0000\",\n    \"baseCurrentQuantity\": \"0.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"baseInvestQuantity\": \"0.00000008\",\n    \"basePrice\": \"345.6700\",\n    \"baseWithdrawQuantity\": \"0.00000010\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"currentValue\": \"0.0000\",\n    \"dislocationEnabled\": false,\n    \"feeTierId\": \"1\",\n    \"impermanentLoss\": \"0.0000\",\n    \"initialBasePrice\": \"100.0000\",\n    \"initialQuotePrice\": \"0.0100\",\n    \"initialValue\": \"0.0000\",\n    \"liquidityId\": \"297735387747975680\",\n    \"instructionId\": \"297735387747975680\",\n    \"lowerBound\": \"0.0013\",\n    \"price\": \"456.7800\",\n    \"quoteFee\": \"1.00000000\",\n    \"quoteInvestQuantity\": \"0.0009\",\n    \"quotePrice\": \"1.0000\",\n    \"quoteWithdrawQuantity\": \"0.0011\",\n    \"requestId\": \"197735387747975680\",\n    \"staticSpreadFee\": \"0.00200000\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"Ok\",\n    \"statusReasonCode\": 1001,\n    \"symbol\": \"BTCUSDC\",\n    \"updatedAtTimestamp\": \"1621490985000\",\n    \"upperBound\": \"14000.0000\",\n    \"yieldEarn\": \"0.00\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"24HrApy\": \"2.3319\",\n    \"24HrYieldEarn\": \"0.00\",\n    \"finalValue\": \"0.0001\",\n    \"quoteCurrentQuantity\": \"0.0000\",\n    \"lastDistributedPrice\": \"string\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"apy\": \"0.0000\",\n    \"baseCurrentQuantity\": \"0.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"baseInvestQuantity\": \"0.00000008\",\n    \"basePrice\": \"345.6700\",\n    \"baseWithdrawQuantity\": \"0.00000010\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"currentValue\": \"0.0000\",\n    \"dislocationEnabled\": false,\n    \"feeTierId\": \"1\",\n    \"impermanentLoss\": \"0.0000\",\n    \"initialBasePrice\": \"100.0000\",\n    \"initialQuotePrice\": \"0.0100\",\n    \"initialValue\": \"0.0000\",\n    \"liquidityId\": \"297735387747975680\",\n    \"instructionId\": \"297735387747975680\",\n    \"lowerBound\": \"0.0013\",\n    \"price\": \"456.7800\",\n    \"quoteFee\": \"1.00000000\",\n    \"quoteInvestQuantity\": \"0.0009\",\n    \"quotePrice\": \"1.0000\",\n    \"quoteWithdrawQuantity\": \"0.0011\",\n    \"requestId\": \"197735387747975680\",\n    \"staticSpreadFee\": \"0.00200000\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"Ok\",\n    \"statusReasonCode\": 1001,\n    \"symbol\": \"BTCUSDC\",\n    \"updatedAtTimestamp\": \"1621490985000\",\n    \"upperBound\": \"14000.0000\",\n    \"yieldEarn\": \"0.00\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"24HrApy\": \"2.3319\",\n    \"24HrYieldEarn\": \"0.00\",\n    \"finalValue\": \"0.0001\",\n    \"quoteCurrentQuantity\": \"0.0000\",\n    \"lastDistributedPrice\": null,\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"apy\": \"0.0000\",\n    \"baseCurrentQuantity\": \"0.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"baseInvestQuantity\": \"0.00000008\",\n    \"basePrice\": \"345.6700\",\n    \"baseWithdrawQuantity\": \"0.00000010\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"currentValue\": \"0.0000\",\n    \"dislocationEnabled\": false,\n    \"feeTierId\": \"1\",\n    \"impermanentLoss\": \"0.0000\",\n    \"initialBasePrice\": \"100.0000\",\n    \"initialQuotePrice\": \"0.0100\",\n    \"initialValue\": \"0.0000\",\n    \"liquidityId\": \"297735387747975680\",\n    \"instructionId\": \"297735387747975680\",\n    \"lowerBound\": \"0.0013\",\n    \"price\": \"456.7800\",\n    \"quoteFee\": \"1.00000000\",\n    \"quoteInvestQuantity\": \"0.0009\",\n    \"quotePrice\": \"1.0000\",\n    \"quoteWithdrawQuantity\": \"0.0011\",\n    \"requestId\": \"197735387747975680\",\n    \"staticSpreadFee\": \"0.00200000\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"Ok\",\n    \"statusReasonCode\": 1001,\n    \"symbol\": \"BTCUSDC\",\n    \"updatedAtTimestamp\": \"1621490985000\",\n    \"upperBound\": \"14000.0000\",\n    \"yieldEarn\": \"0.00\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"24HrApy\": \"2.3319\",\n    \"24HrYieldEarn\": \"0.00\",\n    \"finalValue\": \"0.0001\",\n    \"quoteCurrentQuantity\": \"0.0000\",\n    \"lastDistributedPrice\": \"string\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"apy\": \"0.0000\",\n    \"baseCurrentQuantity\": \"0.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"baseInvestQuantity\": \"0.00000008\",\n    \"basePrice\": \"345.6700\",\n    \"baseWithdrawQuantity\": \"0.00000010\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"currentValue\": \"0.0000\",\n    \"dislocationEnabled\": false,\n    \"feeTierId\": \"1\",\n    \"impermanentLoss\": \"0.0000\",\n    \"initialBasePrice\": \"100.0000\",\n    \"initialQuotePrice\": \"0.0100\",\n    \"initialValue\": \"0.0000\",\n    \"liquidityId\": \"297735387747975680\",\n    \"instructionId\": \"297735387747975680\",\n    \"lowerBound\": \"0.0013\",\n    \"price\": \"456.7800\",\n    \"quoteFee\": \"1.00000000\",\n    \"quoteInvestQuantity\": \"0.0009\",\n    \"quotePrice\": \"1.0000\",\n    \"quoteWithdrawQuantity\": \"0.0011\",\n    \"requestId\": \"197735387747975680\",\n    \"staticSpreadFee\": \"0.00200000\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"Ok\",\n    \"statusReasonCode\": 1001,\n    \"symbol\": \"BTCUSDC\",\n    \"updatedAtTimestamp\": \"1621490985000\",\n    \"upperBound\": \"14000.0000\",\n    \"yieldEarn\": \"0.00\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"24HrApy\": \"2.3319\",\n    \"24HrYieldEarn\": \"0.00\",\n    \"finalValue\": \"0.0001\",\n    \"quoteCurrentQuantity\": \"0.0000\",\n    \"lastDistributedPrice\": \"string\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"apy\": \"0.0000\",\n    \"baseCurrentQuantity\": \"0.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"baseInvestQuantity\": \"0.00000008\",\n    \"basePrice\": \"345.6700\",\n    \"baseWithdrawQuantity\": \"0.00000010\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"currentValue\": \"0.0000\",\n    \"dislocationEnabled\": false,\n    \"feeTierId\": \"1\",\n    \"impermanentLoss\": \"0.0000\",\n    \"initialBasePrice\": \"100.0000\",\n    \"initialQuotePrice\": \"0.0100\",\n    \"initialValue\": \"0.0000\",\n    \"liquidityId\": \"297735387747975680\",\n    \"instructionId\": \"297735387747975680\",\n    \"lowerBound\": \"0.0013\",\n    \"price\": \"456.7800\",\n    \"quoteFee\": \"1.00000000\",\n    \"quoteInvestQuantity\": \"0.0009\",\n    \"quotePrice\": \"1.0000\",\n    \"quoteWithdrawQuantity\": \"0.0011\",\n    \"requestId\": \"197735387747975680\",\n    \"staticSpreadFee\": \"0.00200000\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"Ok\",\n    \"statusReasonCode\": 1001,\n    \"symbol\": \"BTCUSDC\",\n    \"updatedAtTimestamp\": \"1621490985000\",\n    \"upperBound\": \"14000.0000\",\n    \"yieldEarn\": \"0.00\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"24HrApy\": \"2.3319\",\n    \"24HrYieldEarn\": \"0.00\",\n    \"finalValue\": \"0.0001\",\n    \"quoteCurrentQuantity\": \"0.0000\",\n    \"lastDistributedPrice\": \"string\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"apy\": \"0.0000\",\n    \"baseCurrentQuantity\": \"0.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"baseInvestQuantity\": \"0.00000008\",\n    \"basePrice\": \"345.6700\",\n    \"baseWithdrawQuantity\": \"0.00000010\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"currentValue\": \"0.0000\",\n    \"dislocationEnabled\": false,\n    \"feeTierId\": \"1\",\n    \"impermanentLoss\": \"0.0000\",\n    \"initialBasePrice\": \"100.0000\",\n    \"initialQuotePrice\": \"0.0100\",\n    \"initialValue\": \"0.0000\",\n    \"liquidityId\": \"297735387747975680\",\n    \"instructionId\": \"297735387747975680\",\n    \"lowerBound\": \"0.0013\",\n    \"price\": \"456.7800\",\n    \"quoteFee\": \"1.00000000\",\n    \"quoteInvestQuantity\": \"0.0009\",\n    \"quotePrice\": \"1.0000\",\n    \"quoteWithdrawQuantity\": \"0.0011\",\n    \"requestId\": \"197735387747975680\",\n    \"staticSpreadFee\": \"0.00200000\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"Ok\",\n    \"statusReasonCode\": 1001,\n    \"symbol\": \"BTCUSDC\",\n    \"updatedAtTimestamp\": \"1621490985000\",\n    \"upperBound\": \"14000.0000\",\n    \"yieldEarn\": \"0.00\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"24HrApy\": \"2.3319\",\n    \"24HrYieldEarn\": \"0.00\",\n    \"finalValue\": \"0.0001\",\n    \"quoteCurrentQuantity\": \"0.0000\",\n    \"lastDistributedPrice\": \"string\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"apy\": \"0.0000\",\n    \"baseCurrentQuantity\": \"0.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"baseInvestQuantity\": \"0.00000008\",\n    \"basePrice\": \"345.6700\",\n    \"baseWithdrawQuantity\": \"0.00000010\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"currentValue\": \"0.0000\",\n    \"dislocationEnabled\": false,\n    \"feeTierId\": \"1\",\n    \"impermanentLoss\": \"0.0000\",\n    \"initialBasePrice\": \"100.0000\",\n    \"initialQuotePrice\": \"0.0100\",\n    \"initialValue\": \"0.0000\",\n    \"liquidityId\": \"297735387747975680\",\n    \"instructionId\": \"297735387747975680\",\n    \"lowerBound\": \"0.0013\",\n    \"price\": \"456.7800\",\n    \"quoteFee\": \"1.00000000\",\n    \"quoteInvestQuantity\": \"0.0009\",\n    \"quotePrice\": \"1.0000\",\n    \"quoteWithdrawQuantity\": \"0.0011\",\n    \"requestId\": \"197735387747975680\",\n    \"staticSpreadFee\": \"0.00200000\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"Ok\",\n    \"statusReasonCode\": 1001,\n    \"symbol\": \"BTCUSDC\",\n    \"updatedAtTimestamp\": \"1621490985000\",\n    \"upperBound\": \"14000.0000\",\n    \"yieldEarn\": \"0.00\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"24HrApy\": \"2.3319\",\n    \"24HrYieldEarn\": \"0.00\",\n    \"finalValue\": \"0.0001\",\n    \"quoteCurrentQuantity\": \"0.0000\",\n    \"lastDistributedPrice\": null,\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"apy\": \"0.0000\",\n    \"baseCurrentQuantity\": \"0.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"baseInvestQuantity\": \"0.00000008\",\n    \"basePrice\": \"345.6700\",\n    \"baseWithdrawQuantity\": \"0.00000010\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"currentValue\": \"0.0000\",\n    \"dislocationEnabled\": false,\n    \"feeTierId\": \"1\",\n    \"impermanentLoss\": \"0.0000\",\n    \"initialBasePrice\": \"100.0000\",\n    \"initialQuotePrice\": \"0.0100\",\n    \"initialValue\": \"0.0000\",\n    \"liquidityId\": \"297735387747975680\",\n    \"instructionId\": \"297735387747975680\",\n    \"lowerBound\": \"0.0013\",\n    \"price\": \"456.7800\",\n    \"quoteFee\": \"1.00000000\",\n    \"quoteInvestQuantity\": \"0.0009\",\n    \"quotePrice\": \"1.0000\",\n    \"quoteWithdrawQuantity\": \"0.0011\",\n    \"requestId\": \"197735387747975680\",\n    \"staticSpreadFee\": \"0.00200000\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"Ok\",\n    \"statusReasonCode\": 1001,\n    \"symbol\": \"BTCUSDC\",\n    \"updatedAtTimestamp\": \"1621490985000\",\n    \"upperBound\": \"14000.0000\",\n    \"yieldEarn\": \"0.00\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"24HrApy\": \"2.3319\",\n    \"24HrYieldEarn\": \"0.00\",\n    \"finalValue\": \"0.0001\",\n    \"quoteCurrentQuantity\": \"0.0000\",\n    \"lastDistributedPrice\": null,\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"apy\": \"0.0000\",\n    \"baseCurrentQuantity\": \"0.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"baseInvestQuantity\": \"0.00000008\",\n    \"basePrice\": \"345.6700\",\n    \"baseWithdrawQuantity\": \"0.00000010\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"currentValue\": \"0.0000\",\n    \"dislocationEnabled\": false,\n    \"feeTierId\": \"1\",\n    \"impermanentLoss\": \"0.0000\",\n    \"initialBasePrice\": \"100.0000\",\n    \"initialQuotePrice\": \"0.0100\",\n    \"initialValue\": \"0.0000\",\n    \"liquidityId\": \"297735387747975680\",\n    \"instructionId\": \"297735387747975680\",\n    \"lowerBound\": \"0.0013\",\n    \"price\": \"456.7800\",\n    \"quoteFee\": \"1.00000000\",\n    \"quoteInvestQuantity\": \"0.0009\",\n    \"quotePrice\": \"1.0000\",\n    \"quoteWithdrawQuantity\": \"0.0011\",\n    \"requestId\": \"197735387747975680\",\n    \"staticSpreadFee\": \"0.00200000\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"Ok\",\n    \"statusReasonCode\": 1001,\n    \"symbol\": \"BTCUSDC\",\n    \"updatedAtTimestamp\": \"1621490985000\",\n    \"upperBound\": \"14000.0000\",\n    \"yieldEarn\": \"0.00\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"24HrApy\": \"2.3319\",\n    \"24HrYieldEarn\": \"0.00\",\n    \"finalValue\": \"0.0001\",\n    \"quoteCurrentQuantity\": \"0.0000\",\n    \"lastDistributedPrice\": null,\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"apy\": \"0.0000\",\n    \"baseCurrentQuantity\": \"0.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"baseInvestQuantity\": \"0.00000008\",\n    \"basePrice\": \"345.6700\",\n    \"baseWithdrawQuantity\": \"0.00000010\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"currentValue\": \"0.0000\",\n    \"dislocationEnabled\": false,\n    \"feeTierId\": \"1\",\n    \"impermanentLoss\": \"0.0000\",\n    \"initialBasePrice\": \"100.0000\",\n    \"initialQuotePrice\": \"0.0100\",\n    \"initialValue\": \"0.0000\",\n    \"liquidityId\": \"297735387747975680\",\n    \"instructionId\": \"297735387747975680\",\n    \"lowerBound\": \"0.0013\",\n    \"price\": \"456.7800\",\n    \"quoteFee\": \"1.00000000\",\n    \"quoteInvestQuantity\": \"0.0009\",\n    \"quotePrice\": \"1.0000\",\n    \"quoteWithdrawQuantity\": \"0.0011\",\n    \"requestId\": \"197735387747975680\",\n    \"staticSpreadFee\": \"0.00200000\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"Ok\",\n    \"statusReasonCode\": 1001,\n    \"symbol\": \"BTCUSDC\",\n    \"updatedAtTimestamp\": \"1621490985000\",\n    \"upperBound\": \"14000.0000\",\n    \"yieldEarn\": \"0.00\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"24HrApy\": \"2.3319\",\n    \"24HrYieldEarn\": \"0.00\",\n    \"finalValue\": \"0.0001\",\n    \"quoteCurrentQuantity\": \"0.0000\",\n    \"lastDistributedPrice\": \"string\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9d04abe9-728c-420e-bfde-63a038d27271",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "amm-instructions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "status",
+                      "value": "OPEN"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8ea8c151-4a48-495d-b6a0-a7be07d9b1f1",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "amm-instructions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "status",
+                      "value": "OPEN"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "40aa79b6-25fc-40a9-b8bb-0272e21d2a01",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "amm-instructions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "status",
+                      "value": "OPEN"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e8dd1ed9-4d09-49db-a944-2374a51d8948",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "amm-instructions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "status",
+                      "value": "OPEN"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "af6f9758-0f11-485a-a6f7-7f64c50fe076",
+          "name": "Create AMM Instruction",
+          "request": {
+            "name": "Create AMM Instruction",
+            "description": {
+              "content": "Creates an AMM instruction, requires [bearer token](/rest/authentication#add-authenticated-request-header) \nin authorization header.\n\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field ordering\nin the request body. Quantities and prices does not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\n**Ratelimited:** `True`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "amm-instructions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                "key": "BX-SIGNATURE",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                "key": "BX-TIMESTAMP",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                "key": "BX-NONCE",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"commandType\": \"<string>\",\n  \"symbol\": \"<string>\",\n  \"baseQuantity\": \"<string>\",\n  \"quoteQuantity\": \"<string>\",\n  \"upperBound\": \"<string>\",\n  \"lowerBound\": \"<string>\",\n  \"feeTierId\": \"<string>\",\n  \"tradingAccountId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "480f6c7d-e314-4221-ba78-3262771153fd",
+              "name": "Status OK. This means a create AMM instruction command was successfully acknowledged. It does not necessarily mean the instruction was created. To check the current status, query [Get AMM Instruction by ID](/rest/api/get-amm-instruction-by-id-v-2) using the `instructionId` received in the response payload.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "amm-instructions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/CreateAMMInstructionCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"$ref\": \"#/components/schemas/CreateAMMInstructionCommandResponseV3/example\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4d543810-dfe5-49a3-92c9-1c52460ba17e",
+              "name": "Bad Request\n\nFor example, sending a request with the `BX-SIGNATURE` header missing will result in the following response:\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "amm-instructions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/CreateAMMInstructionCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Missing signature header\",\n  \"errorCode\": 6029,\n  \"errorCodeName\": \"MISSING_SIGNATURE_HEADER\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b8e5024d-6e57-40ed-b1f6-d77cb5e14883",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "amm-instructions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/CreateAMMInstructionCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0d3920c7-3e55-48d2-9e1a-cd3c75759b47",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "amm-instructions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/CreateAMMInstructionCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4665efe5-48ae-44b1-8440-60a100618bca",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "amm-instructions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/CreateAMMInstructionCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "575a36b8-c2e4-4aca-a0fc-b48d4156e0aa",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "amm-instructions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/CreateAMMInstructionCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "cfc765b9-5ba2-47c7-bcd0-6e5b86a1fd4b",
+          "name": "Get AMM Instruction by ID",
+          "request": {
+            "name": "Get AMM Instruction by ID",
+            "description": {
+              "content": "Gets a specific AMM instruction based on the `instructionId`, \nrequires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "amm-instructions",
+                ":instructionId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "(Required) Id of the trading account"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "instructionId",
+                  "description": "(Required) unique AMM instruction ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "2c87f8e0-dc2b-465e-af3a-0b1d9bbdd3ac",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "amm-instructions",
+                    ":instructionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "instructionId",
+                      "description": "(Required) unique AMM instruction ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"apy\": \"0.0000\",\n  \"baseCurrentQuantity\": \"0.00000000\",\n  \"baseFee\": \"1.00000000\",\n  \"baseInvestQuantity\": \"0.00000008\",\n  \"basePrice\": \"345.6700\",\n  \"baseWithdrawQuantity\": \"0.00000010\",\n  \"createdAtTimestamp\": \"1621490985000\",\n  \"currentValue\": \"0.0000\",\n  \"dislocationEnabled\": false,\n  \"feeTierId\": \"1\",\n  \"impermanentLoss\": \"0.0000\",\n  \"initialBasePrice\": \"100.0000\",\n  \"initialQuotePrice\": \"0.0100\",\n  \"initialValue\": \"0.0000\",\n  \"liquidityId\": \"297735387747975680\",\n  \"instructionId\": \"297735387747975680\",\n  \"lowerBound\": \"0.0013\",\n  \"price\": \"456.7800\",\n  \"quoteFee\": \"1.00000000\",\n  \"quoteInvestQuantity\": \"0.0009\",\n  \"quotePrice\": \"1.0000\",\n  \"quoteWithdrawQuantity\": \"0.0011\",\n  \"requestId\": \"197735387747975680\",\n  \"staticSpreadFee\": \"0.00200000\",\n  \"status\": \"OPEN\",\n  \"statusReason\": \"Ok\",\n  \"statusReasonCode\": 1001,\n  \"symbol\": \"BTCUSDC\",\n  \"updatedAtTimestamp\": \"1621490985000\",\n  \"upperBound\": \"14000.0000\",\n  \"yieldEarn\": \"0.00\",\n  \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n  \"24HrApy\": \"2.3319\",\n  \"24HrYieldEarn\": \"0.00\",\n  \"finalValue\": \"0.0001\",\n  \"quoteCurrentQuantity\": \"0.0000\",\n  \"lastDistributedPrice\": null,\n  \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4e5c4ecf-8cf5-493a-bc19-52d4abed4406",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "amm-instructions",
+                    ":instructionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "instructionId",
+                      "description": "(Required) unique AMM instruction ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f216d93a-77a0-442a-9443-7d7dd2718cc6",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "amm-instructions",
+                    ":instructionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "instructionId",
+                      "description": "(Required) unique AMM instruction ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e23a9e7c-78d4-46ba-8a93-37182d8c56d7",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "amm-instructions",
+                    ":instructionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "instructionId",
+                      "description": "(Required) unique AMM instruction ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bd92d9a1-eb3f-42c2-a838-c6382f36b4b5",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "amm-instructions",
+                    ":instructionId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "instructionId",
+                      "description": "(Required) unique AMM instruction ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "5a2a30b2-693e-433d-a41b-3530d77bbcac",
+          "name": "Terminate AMM Instruction Command",
+          "request": {
+            "name": "Terminate AMM Instruction Command",
+            "description": {
+              "content": "Submits a command to the trading engine. A successful response indicates that the command entry was acknowledged \nbut does not indicate that the command was executed. \nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field \nordering and addition of null fields in the request body. Quantities and prices does not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\nRequires\n- [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`. Higher tiers of rate limits available by providing the `BX-RATELIMIT-TOKEN` request header.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "command"
+              ],
+              "hash": "terminateAMMInstruction",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                "key": "BX-SIGNATURE",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                "key": "BX-TIMESTAMP",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                "key": "BX-NONCE",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                "key": "BX-NONCE-WINDOW-ENABLED",
+                "value": "false"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"commandType\": \"<string>\",\n  \"instructionId\": \"<string>\",\n  \"symbol\": \"<string>\",\n  \"tradingAccountId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "487a5ec3-bcae-4f1e-b098-e31b44f5d3f2",
+              "name": "Status OK. This means a command was successfully acknowledged.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "terminateAMMInstruction",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/TerminateAMMInstructionCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"$ref\": \"#/components/schemas/TerminateAMMInstructionCommandResponseV3/example\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "425e6dcc-619b-41e9-9fdb-9d71a2e281df",
+              "name": "Bad Request\n\nFor example, sending a request with the `BX-SIGNATURE` header missing will result in the following response:\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "terminateAMMInstruction",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/TerminateAMMInstructionCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Missing signature header\",\n  \"errorCode\": 6029,\n  \"errorCodeName\": \"MISSING_SIGNATURE_HEADER\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0e40bd98-1ef7-4dd7-a5fa-cec52fa9089d",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "terminateAMMInstruction",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/TerminateAMMInstructionCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1c4f6194-8078-46ba-93cb-9a27cfe1226b",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "terminateAMMInstruction",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/TerminateAMMInstructionCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4d7bacfe-f333-4856-a756-644cb575c4eb",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "terminateAMMInstruction",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/TerminateAMMInstructionCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6a98f4c6-0d34-45bb-ae63-68f23445c677",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "terminateAMMInstruction",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/TerminateAMMInstructionCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exchange.bullish.com/trading-api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "f5fc4e96-bea0-471c-abb3-136bec7f0442",
+    "name": "Bullish Trading Amm Instructions API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API specification for the Bullish Trading API.\n\nContact Support:\n Name: Bullish Help Center\n Email: support@bullish.com",
+      "type": "text/plain"
+    }
+  }
+}

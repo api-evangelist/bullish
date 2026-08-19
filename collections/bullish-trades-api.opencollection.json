@@ -1,0 +1,128 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading Trades API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "trades",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Trades",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/trades",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "query",
+                "description": "unique order ID"
+              },
+              {
+                "name": "clientOrderId",
+                "value": "",
+                "type": "query",
+                "description": "unique numeric (i64) identifier generated on the client side, only orderId or clientOrderId can be used"
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account"
+              },
+              {
+                "name": "otcTradeId",
+                "value": "",
+                "type": "query",
+                "description": "unique Bullish otc trade id"
+              },
+              {
+                "name": "clientOtcTradeId",
+                "value": "",
+                "type": "query",
+                "description": "unique client otc trade id"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get a list of trades based on specified filters.\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n- Only the last 24 hours of data is available for querying\n- [supports pagination](/rest/general/pagination)\n- filtering on `createdAtDatetime`, `createdAtTimestamp` requires additional keywords, [see filtering support](/rest/general/filtering)\n\n**Ratelimited:** `True`\n"
+        },
+        {
+          "info": {
+            "name": "Get Trade by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/trades/:tradeId",
+            "params": [
+              {
+                "name": "tradeId",
+                "value": "",
+                "type": "path",
+                "description": "trade ID"
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets a trade by ID, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n"
+        },
+        {
+          "info": {
+            "name": "Get Trades by clientOrder ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/trades/client-order-id/:clientOrderId",
+            "params": [
+              {
+                "name": "clientOrderId",
+                "value": "",
+                "type": "path",
+                "description": "unique numeric (i64) identifier generated on the client side"
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets trade(s) associated with the clientOrderID, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

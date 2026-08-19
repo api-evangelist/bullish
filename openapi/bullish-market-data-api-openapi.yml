@@ -1,0 +1,1050 @@
+openapi: 3.2.0
+info:
+  description: REST API specification for the Bullish Trading API.
+  version: 1.0.0
+  title: Bullish Trading Market Data API
+  contact:
+    name: Bullish Help Center
+    email: support@bullish.com
+    url: https://support.bullish.com
+servers:
+- url: https://api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://registered.api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://prod.access.bullish.com/trading-api
+  description: PRODUCTION (Direct Connect)
+- url: https://api.bugbounty.bullish.com/trading-api
+  description: SECURITY SANDBOX
+- url: https://api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://registered.api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://simnext.access.bullish.com/trading-api
+  description: API SANDBOX (Direct Connect)
+tags:
+- name: market-data
+  x-displayName: Market Data
+  description: Non-authenticated APIs for accessing general market data information
+paths:
+  /v1/markets:
+    parameters:
+    - in: query
+      name: marketType
+      description: Market Types to filter markets against
+      schema:
+        $ref: '#/components/schemas/MarketTypeAsString'
+      required: false
+    - in: query
+      name: optionType
+      description: Option Type to filter markets against. If this is present, only Option Markets will be returned
+      schema:
+        $ref: '#/components/schemas/OptionTypeAsString'
+      required: false
+    get:
+      tags:
+      - market-data
+      summary: Get Markets
+      description: Get Markets.
+      operationId: getMarkets
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                maxItems: 10
+                items:
+                  $ref: '#/components/schemas/Market'
+        '404':
+          description: Not Found
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security: []
+  /v1/markets/{symbol}:
+    parameters:
+    - in: path
+      name: symbol
+      schema:
+        $ref: '#/components/schemas/MarketSymbol'
+      required: true
+    get:
+      tags:
+      - market-data
+      summary: Get Market by Symbol
+      description: Get Market by Symbol.
+      operationId: getMarketBySymbol
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Market'
+        '404':
+          description: Not Found
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security: []
+  /v1/history/markets:
+    get:
+      tags:
+      - market-data
+      summary: Get Historical Markets
+      description: 'Get a list of historical markets, including expired markets.
+
+        This endpoint returns simplified market information and supports filtering by market type and expiry status.
+
+        '
+      operationId: getHistoricalMarkets
+      parameters:
+      - in: query
+        name: marketType
+        description: Filter by market type (can be specified multiple times for multiple types)
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - SPOT
+            - PERPETUAL
+            - DATED_FUTURE
+            - OPTION
+        style: form
+        explode: true
+        required: false
+      - in: query
+        name: status
+        description: Filter by expiry status (can be specified multiple times for multiple statuses)
+        schema:
+          type: array
+          items:
+            type: string
+            enum:
+            - ACTIVE
+            - EXPIRED
+            - ALL
+        style: form
+        explode: true
+        required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  type: object
+                  properties:
+                    symbol:
+                      type: string
+                      description: Market symbol
+                      example: BTC-USD-20241231-100000-C
+                    expiryDatetime:
+                      type: string
+                      description: Expiry datetime in ISO 8601 format (only for DATED_FUTURE and OPTION markets)
+                      example: '2025-12-31T08:00:00.000Z'
+                    status:
+                      type: string
+                      description: Market expiry status
+                      example: EXPIRED
+                      enum:
+                      - ACTIVE
+                      - EXPIRING
+                      - EXPIRED
+              example:
+              - symbol: BTC-USD
+                status: ACTIVE
+              - symbol: BTC-USD-20241231-100000-C
+                expiryDatetime: '2024-12-31T08:00:00.000Z'
+                status: EXPIRED
+              - symbol: ETH-USD-20241231
+                expiryDatetime: '2024-12-31T08:00:00.000Z'
+                status: EXPIRED
+        '400':
+          description: Bad Request - Invalid query parameters
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security: []
+  /v1/history/markets/{symbol}:
+    parameters:
+    - in: path
+      name: symbol
+      schema:
+        $ref: '#/components/schemas/OptionAndDatedFuturesMarketSymbol'
+      required: true
+    get:
+      tags:
+      - market-data
+      summary: Get Historical Market by Symbol
+      description: Get Historical Market by Symbol. This endpoint will return specified market even if it is expired. Only applicable for this is applicable only for `DATED_FUTURE` and `OPTION` markets.
+      operationId: getHistoricalMarketBySymbol
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Market'
+        '404':
+          description: Not Found
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security: []
+  /v1/markets/{symbol}/orderbook/hybrid:
+    get:
+      parameters:
+      - in: path
+        name: symbol
+        schema:
+          $ref: '#/components/schemas/MarketSymbol'
+        required: true
+        description: symbol to get
+      tags:
+      - market-data
+      summary: Get Market Order Book
+      description: 'Get Order Book by Market Symbol
+
+
+        **Ratelimited:** `False`
+
+        '
+      operationId: getMarketOrderBook
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OrderBook'
+        '404':
+          description: Resource Not Found
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security: []
+  /v1/markets/{symbol}/trades:
+    get:
+      parameters:
+      - in: path
+        name: symbol
+        schema:
+          $ref: '#/components/schemas/MarketSymbol'
+        required: true
+        description: symbol to get
+      tags:
+      - market-data
+      summary: Get Latest Market Trades
+      description: 'Get Market Trades by Market Symbol.
+
+        - return 100 most recent trades
+
+        - lookup from local cache
+
+
+        **Ratelimited:** `False`
+
+        '
+      operationId: getLatestMarketTrades
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                maxItems: 100
+                items:
+                  $ref: '#/components/schemas/ObfuscatedTrade'
+        '404':
+          description: Resource Not Found
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security: []
+  /v1/markets/{symbol}/tick:
+    get:
+      parameters:
+      - in: path
+        name: symbol
+        schema:
+          $ref: '#/components/schemas/MarketSymbol'
+        required: true
+        description: symbol to get. Only perpetual markets are supported.
+      tags:
+      - market-data
+      summary: Get Market Tick
+      description: 'Get Current Tick by Market Symbol.
+
+        - return top 100
+
+
+        **Ratelimited:** `False`
+
+        '
+      operationId: getMarketTick
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Tick'
+        '404':
+          description: Resource Not Found
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security: []
+  /v1/markets/{symbol}/candle:
+    get:
+      tags:
+      - market-data
+      summary: Get Market Candle
+      description: 'Get Current OHLCV Candle by Market Symbol
+
+        - [supports pagination](/rest/general/pagination)
+
+        - filtering on `createdAtDatetime`, `createdAtTimestamp` requires additional keywords, [see filtering support](/rest/general/filtering)
+
+
+        **Ratelimited:** `False`
+
+        '
+      operationId: getMarketCandles
+      parameters:
+      - in: path
+        name: symbol
+        schema:
+          $ref: '#/components/schemas/MarketSymbol'
+        required: true
+      - in: query
+        name: createdAtDatetime[gte]
+        description: start timestamp of window, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: true
+      - in: query
+        name: createdAtDatetime[lte]
+        description: end timestamp of window, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: true
+      - in: query
+        name: timeBucket
+        schema:
+          $ref: '#/components/schemas/TimeBucket'
+        required: true
+        description: time bucket size
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 1
+                maxItems: 25
+                items:
+                  $ref: '#/components/schemas/OHLCVCandle'
+        '404':
+          description: Resource Not Found
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security: []
+components:
+  schemas:
+    OrderTypeAsString:
+      type: string
+      description: order type can have the following string values `"LMT"`, `"MKT"`, `"STOP_LIMIT"`, `"POST_ONLY"`. `"MKT"` and `"STOP_LIMIT"` are not applicable for Options
+      example: LMT
+    OptionMarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTC-USDC-20241004-70000-C` for OPTION markets.
+      example: BTC-USDC-20241004-70000-C
+    PriceQuantityTuple:
+      type: object
+      properties:
+        price:
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        priceLevelQuantity:
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+    TimeStampAsString:
+      type: string
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
+    OptionTypeAsString:
+      type: string
+      description: option type can have the following string values `"CALL"`, `"PUT"`
+      enum:
+      - CALL
+      - PUT
+      example: CALL
+    AmmData:
+      type: object
+      description: AMM data
+      required:
+      - feeTierId
+      - bidSpreadFee
+      - askSpreadFee
+      - currentPrice
+      properties:
+        feeTierId:
+          allOf:
+          - $ref: '#/components/schemas/FeeTierId'
+        bidSpreadFee:
+          description: bid spread fee
+          type: string
+          example: '0.00040000'
+        askSpreadFee:
+          description: ask spread fee
+          type: string
+          example: '0.00040000'
+        currentPrice:
+          description: current AMM price
+          type: string
+          example: '16856.0000'
+    TimeBucket:
+      type: string
+      example: 1m
+      enum:
+      - 1m
+      - 5m
+      - 30m
+      - 1h
+      - 6h
+      - 12h
+      - 1d
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.00000000'
+    FeeTier:
+      type: object
+      description: unique fee tier
+      required:
+      - feeTierId
+      - staticSpreadFee
+      - isDislocationEnabled
+      properties:
+        feeTierId:
+          allOf:
+          - $ref: '#/components/schemas/FeeTierId'
+        staticSpreadFee:
+          description: static spread fee
+          type: string
+          example: '0.00040000'
+        isDislocationEnabled:
+          description: dislocation enabled/disabled
+          type: boolean
+          example: true
+    AssetID:
+      type: string
+      description: unique asset ID
+      example: '1'
+    FeeTierId:
+      type: string
+      description: unique fee tier ID, see [Get Market By Symbol](/rest/api/get-market-by-symbol)
+      example: '1'
+    AssetSymbol:
+      type: string
+      description: asset symbol as denoted in the world
+      example: BTC
+    Tick:
+      allOf:
+      - type: object
+        required:
+        - createdAtDatetime
+        - createdAtTimestamp
+        - high
+        - low
+        - bestBid
+        - bidVolume
+        - bestAsk
+        - askVolume
+        - vwap
+        - open
+        - close
+        - last
+        - change
+        - percentage
+        - average
+        - baseVolume
+        - quoteVolume
+        - bancorPrice
+        - lastTradeDatetime
+        - lastTradeTimestamp
+        - lastTradeQuantity
+        - ammData
+        properties:
+          createdAtDatetime:
+            description: denotes the time of the current tick on the exchange, ISO 8601 with millisecond as string
+            allOf:
+            - $ref: '#/components/schemas/DateTime'
+          createdAtTimestamp:
+            description: denotes the time of the current tick on the exchange
+            allOf:
+            - $ref: '#/components/schemas/TimeStampAsString'
+          high:
+            description: highest price, see [asset value](/rest/general/price-quantity-precision) format
+            allOf:
+            - $ref: '#/components/schemas/AssetValue'
+          low:
+            description: lowest price, see [asset value](/rest/general/price-quantity-precision) format
+            allOf:
+            - $ref: '#/components/schemas/AssetValue'
+          bestBid:
+            description: current best bid (buy) price, see [asset value](/rest/general/price-quantity-precision) format
+            allOf:
+            - $ref: '#/components/schemas/AssetValue'
+          bidIVPercentage:
+            description: Implied volatility of the best bid price
+            type: string
+            example: '99.0'
+          bidVolume:
+            description: current best bid (buy) quantity (may be missing or undefined), see [asset value](/rest/general/price-quantity-precision) format
+            allOf:
+            - $ref: '#/components/schemas/AssetValue'
+          bestAsk:
+            description: current best ask (sell) price, see [asset value](/rest/general/price-quantity-precision) format
+            allOf:
+            - $ref: '#/components/schemas/AssetValue'
+          askIVPercentage:
+            description: Implied volatility of the best ask price
+            type: string
+            example: '99.0'
+          askVolume:
+            description: current best ask (sell) quantity (may be missing or undefined), see [asset value](/rest/general/price-quantity-precision) format
+            allOf:
+            - $ref: '#/components/schemas/AssetValue'
+          vwap:
+            description: volume weighed average price, see [asset value](/rest/general/price-quantity-precision) format
+            allOf:
+            - $ref: '#/components/schemas/AssetValue'
+          open:
+            description: opening price, see [asset value](/rest/general/price-quantity-precision) format
+            allOf:
+            - $ref: '#/components/schemas/AssetValue'
+          close:
+            description: price of last trade (closing price for current period), see [asset value](/rest/general/price-quantity-precision) format
+            allOf:
+            - $ref: '#/components/schemas/AssetValue'
+          last:
+            description: price of last trade (closing price for current period), see [asset value](/rest/general/price-quantity-precision) format
+            allOf:
+            - $ref: '#/components/schemas/AssetValue'
+          change:
+            description: absolute change, `last - open`, see [asset value](/rest/general/price-quantity-precision) format
+            allOf:
+            - $ref: '#/components/schemas/AssetValue'
+          percentage:
+            description: relative change, `(change/open) * 100`, see [asset value](/rest/general/price-quantity-precision) format
+            allOf:
+            - $ref: '#/components/schemas/AssetValue'
+          average:
+            description: average price, `(last + open) / 2`, see [asset value](/rest/general/price-quantity-precision) format
+            allOf:
+            - $ref: '#/components/schemas/AssetValue'
+          baseVolume:
+            description: volume of base asset traded for last 24 hours, see [asset value](/rest/general/price-quantity-precision) format
+            allOf:
+            - $ref: '#/components/schemas/AssetValue'
+          quoteVolume:
+            description: volume of quote asset traded for last 24 hours, see [asset value](/rest/general/price-quantity-precision) format
+            allOf:
+            - $ref: '#/components/schemas/AssetValue'
+          bancorPrice:
+            description: current price, see [asset value](/rest/general/price-quantity-precision) format
+            allOf:
+            - $ref: '#/components/schemas/AssetValue'
+          markPrice:
+            description: mark price represents the fair value of a contract at the current time.
+            type: string
+            example: '19999.00'
+          fundingRate:
+            description: funding rate is used to calculate funding, which measures the relative difference between the index price and mark price.
+            type: string
+            example: '0.01'
+          openInterest:
+            description: open interest is the total quantity of open long positions and short positions, see [asset value](/rest/general/price-quantity-precision) format (only applies to derivatives market)
+            type: string
+            example: '100000.32452'
+          lastTradeDatetime:
+            description: time of the last trade on this symbol, ISO 8601 with millisecond as string
+            allOf:
+            - $ref: '#/components/schemas/DateTime'
+          lastTradeTimestamp:
+            description: time of the last trade on this symbol
+            allOf:
+            - $ref: '#/components/schemas/TimeStampAsString'
+          lastTradeQuantity:
+            description: quantity of the last trade on this symbol, see [asset value](/rest/general/price-quantity-precision) format
+            allOf:
+            - $ref: '#/components/schemas/AssetValue'
+          ammData:
+            description: AMM data of all available fee tiers. Not applicable for `Option` markets
+            type: array
+            minItems: 0
+            items:
+              allOf:
+              - $ref: '#/components/schemas/AmmData'
+      - $ref: '#/components/schemas/OptionGreeks'
+    OptionType:
+      description: Type of Option market
+      example: CALL
+      type: string
+      enum:
+      - CALL
+      - PUT
+    OptionGreeks:
+      description: Pricing parameters for option instruments. Only returned for option markets and omitted for spot and perpetual markets.
+      type: object
+      properties:
+        delta:
+          description: Sensitivity of an option's price to a $1 change in the price of the underlying asset. Only present for option markets.
+          type: string
+          example: '0.98'
+        gamma:
+          description: Rate of change of Delta with respect to a $1 change in the underlying asset's price. Only present for option markets.
+          type: string
+          example: '0.98'
+        theta:
+          description: The rate at which an option's price decreases as it approaches its expiration date. Only present for option markets.
+          type: string
+          example: '-0.17'
+        vega:
+          description: Sensitivity of an option's price to a 1% change in the implied volatility of the underlying asset. Only present for option markets.
+          type: string
+          example: '0.05'
+    MarketTypeAsString:
+      type: string
+      description: market type can have the following string values `"SPOT"`, `"PERPETUAL"`, `"DATED_FUTURE"`, `"OPTION"`
+      enum:
+      - SPOT
+      - PERPETUAL
+      - DATED_FUTURE
+      - OPTION
+      example: SPOT
+    TradeID:
+      type: string
+      example: '100020000000000060'
+    OrderSideAsString:
+      type: string
+      description: order side can have the following string values `"BUY"`, `"SELL"`
+      example: BUY
+    OHLCVCandle:
+      type: object
+      properties:
+        open:
+          description: see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        high:
+          description: see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        low:
+          description: see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        close:
+          description: see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        volume:
+          description: see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        createdAtTimestamp:
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        createdAtDatetime:
+          description: date and time of the candle, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        publishedAtTimestamp:
+          description: date and time of the candle getting published, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+    Boolean:
+      type: boolean
+      format: true or false
+      example: true
+    OrderBook:
+      type: object
+      required:
+      - bids
+      - asks
+      - datetime
+      - timestamp
+      - sequenceNumber
+      properties:
+        bids:
+          description: bids
+          type: array
+          minItems: 0
+          maxItems: 10
+          items:
+            allOf:
+            - $ref: '#/components/schemas/PriceQuantityTuple'
+        asks:
+          description: asks
+          type: array
+          minItems: 0
+          maxItems: 10
+          items:
+            allOf:
+            - $ref: '#/components/schemas/PriceQuantityTuple'
+        datetime:
+          description: date and time of order book snapshot, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        timestamp:
+          description: timestamp of order book snapshot
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        sequenceNumber:
+          description: an incremented unique identifier of the order book snapshot
+          type: integer
+          example: 999
+    ObfuscatedTrade:
+      type: object
+      required:
+      - tradeId
+      - symbol
+      - price
+      - quantity
+      - side
+      - isTaker
+      - createdAtTimestamp
+      - createdAtDatetime
+      properties:
+        tradeId:
+          description: unique trade ID
+          allOf:
+          - $ref: '#/components/schemas/TradeID'
+        symbol:
+          description: market symbol
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        price:
+          description: price
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quantity:
+          description: quantity
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        side:
+          description: order side
+          allOf:
+          - $ref: '#/components/schemas/OrderSideAsString'
+          example: BUY
+        isTaker:
+          description: denotes whether this is a taker's trade
+          allOf:
+          - $ref: '#/components/schemas/Boolean'
+        createdAtDatetime:
+          description: denotes the time the trade was executed by the exchange, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        createdAtTimestamp:
+          description: denotes the time the trade was executed by the exchange
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        auctionId:
+          description: unique Bullish auction identifier. Present only for auction trades
+          type: string
+          example: '397735387747975680'
+    MarketID:
+      type: string
+      example: '10000'
+    OptionAndDatedFuturesMarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTC-USDC-20241004-70000-C` for OPTION markets and `BTC-USDC-20241201` for DATED FUTURE markets.
+      example: BTC-USDC-20241004-70000-C
+    MarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTCUSDC`
+      example: BTCUSDC
+    Market:
+      type: object
+      required:
+      - marketId
+      - symbol
+      - quoteAssetId
+      - baseAssetId
+      - quoteSymbol
+      - baseSymbol
+      - quotePrecision
+      - basePrecision
+      - pricePrecision
+      - quantityPrecision
+      - costPrecision
+      - priceBuffer
+      - minQuantityLimit
+      - maxQuantityLimit
+      - timeZone
+      - tickSize
+      - liquidityTickSize
+      - liquidityPrecision
+      - feeGroupId
+      - roundingCorrectionFactor
+      - makerMinLiquidityAddition
+      - spotTradingEnabled
+      - marginTradingEnabled
+      - marketEnabled
+      - createOrderEnabled
+      - cancelOrderEnabled
+      - liquidityInvestEnabled
+      - liquidityWithdrawEnabled
+      - feeTiers
+      - marketType
+      - openInterestUSD
+      - concentrationRiskThresholdUSD
+      - concentrationRiskPercentage
+      - expiryDatetime
+      properties:
+        marketId:
+          description: unique market ID
+          allOf:
+          - $ref: '#/components/schemas/MarketID'
+        symbol:
+          description: market symbol
+          allOf:
+          - $ref: '#/components/schemas/OptionMarketSymbol'
+        baseSymbol:
+          description: base asset symbol (only applies to spot market)
+          allOf:
+          - $ref: '#/components/schemas/AssetSymbol'
+        underlyingBaseSymbol:
+          description: underlying base asset symbol (only applies to derivative market)
+          example: null
+          allOf:
+          - $ref: '#/components/schemas/AssetSymbol'
+        quoteSymbol:
+          description: quote asset symbol (only applies to spot market)
+          allOf:
+          - $ref: '#/components/schemas/AssetSymbol'
+        underlyingQuoteSymbol:
+          description: underlying quote asset symbol (only applies to derivative market)
+          example: null
+          allOf:
+          - $ref: '#/components/schemas/AssetSymbol'
+        quoteAssetId:
+          description: quote asset id
+          allOf:
+          - $ref: '#/components/schemas/AssetID'
+        baseAssetId:
+          description: base asset id
+          allOf:
+          - $ref: '#/components/schemas/AssetID'
+        quotePrecision:
+          description: quote precision
+          type: integer
+          example: 4
+        basePrecision:
+          description: base precision
+          type: integer
+          example: 8
+        pricePrecision:
+          description: number of decimal digits 'after the dot' for price
+          type: integer
+          example: 8
+        quantityPrecision:
+          description: number of decimal digits 'after the dot' for quantity
+          type: integer
+          example: 8
+        costPrecision:
+          description: number of decimal digits 'after the dot' for cost, `price * quantity`
+          type: integer
+          example: 8
+        priceBuffer:
+          description: buffer range of limit price from the last traded price. Not applicable for `Option` markets
+          type: string
+          example: '0.3'
+        minQuantityLimit:
+          description: order quantity should be > min, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        maxQuantityLimit:
+          description: order quantity should be < max, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        timeZone:
+          description: time zone
+          type: string
+          example: Etc/UTC
+        tickSize:
+          description: tick size, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        liquidityTickSize:
+          description: liquidity tick size. Not applicable for `Option` markets
+          type: string
+          example: '100.0000'
+        liquidityPrecision:
+          description: liquidity precision. Not applicable for `Option` markets
+          type: integer
+          example: 4
+        roundingCorrectionFactor:
+          description: rounding correction factor for market
+          type: string
+          example: '0.00000001'
+        makerMinLiquidityAddition:
+          description: minimum amount required to invest liquidity to market. Not applicable for `Option` markets
+          type: string
+          example: '5000'
+        orderTypes:
+          type: array
+          items:
+            allOf:
+            - $ref: '#/components/schemas/OrderTypeAsString'
+        spotTradingEnabled:
+          description: spot trading enabled (only applies for Spot markets)
+          type: boolean
+          example: true
+        marginTradingEnabled:
+          description: margin trading enabled (only applies for Spot markets)
+          type: boolean
+          example: true
+        marketEnabled:
+          description: market enabled
+          type: boolean
+          example: true
+        createOrderEnabled:
+          description: able to create order
+          type: boolean
+          example: true
+        amendOrderEnabled:
+          description: able to amend order
+          type: boolean
+          example: true
+          deprecated: true
+        cancelOrderEnabled:
+          description: able to cancel order
+          type: boolean
+          example: true
+        liquidityInvestEnabled:
+          description: able to invest liquidity to market. Not applicable for `Option` markets
+          type: boolean
+          example: true
+        liquidityWithdrawEnabled:
+          description: able to withdraw liquidity from market. Not applicable for `Option` markets
+          type: boolean
+          example: true
+        feeGroupId:
+          description: Identifier to the trade fee assigned to this market. Used with `tradeFeeRate` at [Get Trading Account](/rest/api/get-trading-account-by-id)
+          type: integer
+          example: 1
+        feeTiers:
+          description: all available fee tiers. Not applicable for `Option` markets
+          type: array
+          minItems: 0
+          items:
+            allOf:
+            - $ref: '#/components/schemas/FeeTier'
+        marketType:
+          description: market type, e.g. "SPOT" for market like "BTCUSD", "PERPETUAL" for market like "BTC-USDC-PERP", "DATED_FUTURE" for market like "BTC-USDC-20250901", "OPTION" for market like "BTC-USDC-20250901-90000-C"
+          allOf:
+          - $ref: '#/components/schemas/MarketTypeAsString'
+        contractMultiplier:
+          description: contract multiplier. (only applies to perpetual market)
+          type: integer
+          example: null
+        settlementAssetSymbol:
+          description: settlement asset symbol. (only applies to perpetual market)
+          type: string
+          example: null
+        openInterestUSD:
+          description: cumulative notional value of all open interest for a specific derivative contract on the exchange.
+          type: string
+          example: null
+        concentrationRiskThresholdUSD:
+          description: open interest notional of an account for a specific derivative contract.
+          type: string
+          example: null
+        concentrationRiskPercentage:
+          description: percentage of the total open interest for a specific derivative contract.
+          type: string
+          example: null
+        expiryDatetime:
+          description: denotes the time when the market expires in ISO 8601 with millisecond format as string
+          type: string
+          example: 2024-10-04 08:00:00+00:00
+        optionStrikePrice:
+          description: The price at which the option can be exercised upon expiry.
+          type: string
+          example: '70000.0000'
+        optionType:
+          description: Specifies if it's a call (right to buy) or a put (right to sell)
+          allOf:
+          - $ref: '#/components/schemas/OptionType'
+        premiumCapRatio:
+          description: A cap that is set on the underlying asset's movement as part of the premium that limits the option buyer's profit.
+          type: string
+          example: '0.10'
+        auctionEnabled:
+          description: whether auction is enabled for this market
+          type: boolean
+          example: true
+        auctionPriceCollar:
+          description: auction clearing price range from Index Price, expressed as a decimal ratio
+          type: string
+          example: '0.05'
+  securitySchemes:
+    jwtTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-tagGroups:
+- name: Public Endpoints
+  tags:
+  - general
+  - asset-data
+  - market-data
+  - market-history-data
+  - index-price-data
+  - derivatives-public
+  - auction-public
+- name: Private Endpoints
+  tags:
+  - session-management
+  - trading-accounts
+  - account-assets
+  - orders
+  - trades
+  - amm-instructions
+  - transfer
+  - custody
+  - derivatives
+  - market-maker-protection
+  - history
+  - otc
+  - idb
+  - portfolio-margin-simulator

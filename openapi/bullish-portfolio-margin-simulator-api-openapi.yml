@@ -1,0 +1,353 @@
+openapi: 3.2.0
+info:
+  description: REST API specification for the Bullish Trading API.
+  version: 1.0.0
+  title: Bullish Trading Portfolio Margin Simulator API
+  contact:
+    name: Bullish Help Center
+    email: support@bullish.com
+    url: https://support.bullish.com
+servers:
+- url: https://api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://registered.api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://prod.access.bullish.com/trading-api
+  description: PRODUCTION (Direct Connect)
+- url: https://api.bugbounty.bullish.com/trading-api
+  description: SECURITY SANDBOX
+- url: https://api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://registered.api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://simnext.access.bullish.com/trading-api
+  description: API SANDBOX (Direct Connect)
+tags:
+- name: portfolio-margin-simulator
+  x-displayName: Portfolio Margin Simulator
+paths:
+  /v1/simulate-portfolio-margin:
+    post:
+      tags:
+      - portfolio-margin-simulator
+      summary: Simulate Portfolio Margin
+      description: "Use Portfolio margin simulator to determine your margin requirements and risk levels based on your current portfolio balances. \nYou can also append position details on top of your portfolio specifics to see simulated results.\n"
+      operationId: simulatePortfolioMargin
+      parameters:
+      - in: query
+        name: includeExisting
+        schema:
+          $ref: '#/components/schemas/Boolean'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/PortfolioSimulationResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Not Authenticated
+        '403':
+          description: Access Forbidden
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/PortfolioSimulationRequest'
+            examples:
+              SimulatePortfolioMarginExample:
+                value:
+                  tradingAccountId: '111000000000001'
+                  positions:
+                  - symbol: BTC
+                    quantity: '1.5'
+                  - symbol: ETH
+                    quantity: '10.0'
+                  orders:
+                  - symbol: BTCUSDC
+                    quantity: '0.5'
+                    limitPrice: '95000.0'
+                    timeInForce: GTX
+                  referencePrices:
+                  - symbol: BTC
+                    price: '100000.0'
+                  - symbol: ETH
+                    price: '3500.0'
+                  priceVolOffsetParams:
+                    cryptoPriceMultipliers:
+                      BTC: 1.2
+                      ETH: 0.9
+                    globalCryptoPriceMultiplier: 1.1
+                    volOffset: 0.05
+      security:
+      - jwtTokenAuth: []
+  /v1/bulk-simulate-portfolio-margin:
+    post:
+      tags:
+      - portfolio-margin-simulator
+      summary: Simulate Portfolio Margin in Bulk
+      description: 'Use Portfolio margin simulator to determine your margin requirements and risk levels based on your current portfolio balances.
+
+        You can also append position details on top of your portfolio specifics to see simulated results.
+
+        This endpoint supports running multiple simulations at the same time.
+
+        '
+      operationId: bulkSimulatePortfolioMargin
+      parameters:
+      - in: query
+        name: includeExisting
+        description: When true, includes existing portfolio positions in the simulation. Defaults to false
+        required: false
+        schema:
+          $ref: '#/components/schemas/Boolean'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/PortfolioSimulationResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Not Authenticated
+        '403':
+          description: Access Forbidden
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              type: array
+              items:
+                $ref: '#/components/schemas/PortfolioSimulationRequest'
+            examples:
+              BulkSimulatePortfolioMarginExample:
+                value:
+                - tradingAccountId: '111000000000001'
+                  positions:
+                  - symbol: BTC
+                    quantity: '1.5'
+                  - symbol: ETH
+                    quantity: '10.0'
+                  orders:
+                  - symbol: BTCUSDC
+                    quantity: '0.5'
+                    limitPrice: '95000.0'
+                    timeInForce: GTX
+                  referencePrices:
+                  - symbol: BTC
+                    price: '100000.0'
+                  - symbol: ETH
+                    price: '3500.0'
+                  priceVolOffsetParams:
+                    cryptoPriceMultipliers:
+                      BTC: 1.2
+                      ETH: 0.9
+                    globalCryptoPriceMultiplier: 1.1
+                    volOffset: 0.05
+      security:
+      - jwtTokenAuth: []
+components:
+  schemas:
+    PortfolioSimulationRequest:
+      type: object
+      required:
+      - tradingAccountId
+      properties:
+        tradingAccountId:
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+        positions:
+          type: array
+          description: portfolio position to be used in simulation
+          items:
+            allOf:
+            - $ref: '#/components/schemas/SimulationPosition'
+        orders:
+          type: array
+          description: pending orders to be used in simulation
+          items:
+            allOf:
+            - $ref: '#/components/schemas/SimulationOrder'
+        referencePrices:
+          type: array
+          description: reference price to be used in simulation
+          items:
+            allOf:
+            - $ref: '#/components/schemas/ReferencePrice'
+        priceVolOffsetParams:
+          description: optional parameters for price and volatility adjustments in simulation
+          allOf:
+          - $ref: '#/components/schemas/PriceVolOffsetParams'
+    PriceVolOffsetParams:
+      type: object
+      description: Parameters for adjusting prices and volatility in portfolio simulation
+      properties:
+        cryptoPriceMultipliers:
+          type: object
+          description: Symbol-specific price multipliers. When specified for a symbol, overrides the global multiplier
+          additionalProperties:
+            type: number
+            format: double
+          example:
+            BTC: 1.2
+            ETH: 0.9
+        globalCryptoPriceMultiplier:
+          type: number
+          format: double
+          description: Global price multiplier applied to all crypto assets (except stablecoins and symbols with explicit multipliers)
+          default: 1.0
+          example: 1.1
+        volOffset:
+          type: number
+          format: double
+          description: Offset to add to implied volatility for options pricing. Can be positive or negative
+          default: 0.0
+          example: 0.05
+    SimulationOrder:
+      type: object
+      required:
+      - symbol
+      - quantity
+      properties:
+        symbol:
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        quantity:
+          description: quantity placed for order
+          type: string
+          example: '1.0'
+        limitPrice:
+          description: limit price for order
+          type: string
+          example: '10000.0'
+        timeInForce:
+          allOf:
+          - $ref: '#/components/schemas/OrderTimeInForceAsString'
+    Boolean:
+      type: boolean
+      format: true or false
+      example: true
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
+    ReferencePrice:
+      type: object
+      properties:
+        symbol:
+          description: asset or market symbol. E.g. `USDC` for asset and `BTCUSDC` for market
+          type: string
+          example: BTC
+        price:
+          description: reference price for asset or market
+          type: string
+          example: '12000.0'
+    PortfolioSimulationResponse:
+      description: Simulation result
+      type: object
+      properties:
+        collateralUSD:
+          description: total collateral across all assets in this trading account displayed in the reference asset in USD
+          type: string
+          example: '13000.0000'
+        borrowedUSD:
+          description: total borrowed across all assets in this trading account displayed in the reference asset in USD
+          type: string
+          example: '12000.0000'
+        initialMarginUSD:
+          description: The minimum margin one must maintain in order to be able to purposefully increase risk
+          type: string
+          example: '14000.0000'
+        warningMarginUSD:
+          description: The minimum margin when the customer will receive warning via email/notifications over UI
+          type: string
+          example: '15000.0000'
+        liquidationMarginUSD:
+          description: The minimum value of margin one must maintain in order to avoid liquidation
+          type: string
+          example: '16000.0000'
+        fullLiquidationMarginUSD:
+          description: The value of margin when full liquidation occurs
+          type: string
+          example: '17000.0000'
+        defaultedMarginUSD:
+          description: The value of margin when this trading account will be moved into a Defaulted state
+          type: string
+          example: '18000.0000'
+        liquidityAddonUSD:
+          description: expected market impact of unwinding the portfolio in the case of a liquidation event
+          type: string
+          example: '19000.0000'
+        marketRiskUSD:
+          description: the worst possible loss on the portfolio based on scenario analysis
+          type: string
+          example: '20000.0000'
+    OrderTimeInForceAsString:
+      type: string
+      description: time in force can have the following string values `"GTC"`, `"FOK"`, `"IOC"`, `"GTX"` (Good Till Crossing - for auction orders), see [details](/rest/general/order-type)
+      example: GTX
+    MarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTCUSDC`
+      example: BTCUSDC
+    SimulationPosition:
+      type: object
+      required:
+      - symbol
+      - quantity
+      properties:
+        symbol:
+          description: asset or market symbol. E.g. `USDC` for asset and `BTCUSDC` for market
+          type: string
+          example: BTC-USDC-PERP
+        quantity:
+          description: size of the position
+          type: string
+          example: '1.0'
+  securitySchemes:
+    jwtTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-tagGroups:
+- name: Public Endpoints
+  tags:
+  - general
+  - asset-data
+  - market-data
+  - market-history-data
+  - index-price-data
+  - derivatives-public
+  - auction-public
+- name: Private Endpoints
+  tags:
+  - session-management
+  - trading-accounts
+  - account-assets
+  - orders
+  - trades
+  - amm-instructions
+  - transfer
+  - custody
+  - derivatives
+  - market-maker-protection
+  - history
+  - otc
+  - idb
+  - portfolio-margin-simulator

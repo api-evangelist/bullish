@@ -1,0 +1,1162 @@
+{
+  "item": [
+    {
+      "id": "f5635f5c-a2a6-4554-a8a1-b34b34a306ad",
+      "name": "market-history-data",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "4654bfde-7f0d-447d-a261-228f758d3043",
+          "name": "Get Historical Market Trades",
+          "request": {
+            "name": "Get Historical Market Trades",
+            "description": {
+              "content": "Get Historical Market Trades by Market Symbol. Supports querying of up to 7 days of data at a time.\n- [supports pagination](/rest/general/pagination)\n\n**Ratelimited:** `False`\n- On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "history",
+                "markets",
+                ":symbol",
+                "trades"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[gte]",
+                  "value": "<dateTime>",
+                  "description": "start timestamp of period, ISO 8601 with millisecond as string"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[lte]",
+                  "value": "<dateTime>",
+                  "description": "end timestamp of period, ISO 8601 with millisecond as string"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol",
+                  "description": "(Required) symbol to get"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "79060bcf-6586-4c26-a489-4e392650827e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "markets",
+                    ":symbol",
+                    "trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) symbol to get"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"auctionId\": \"397735387747975680\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "db285f2e-b60c-4d6d-bb62-48cd6665502f",
+              "name": "Resource Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "markets",
+                    ":symbol",
+                    "trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) symbol to get"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "06961ec0-c1a6-4d2c-9208-f6c112cec44f",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "markets",
+                    ":symbol",
+                    "trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) symbol to get"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2bfa5be8-bd4a-4a8a-bd64-e45cc6b2231c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "markets",
+                    ":symbol",
+                    "trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) symbol to get"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7f9ae20f-2bce-4ce2-8866-1601ad8b039f",
+          "name": "Get Historical Options Market Trades",
+          "request": {
+            "name": "Get Historical Options Market Trades",
+            "description": {
+              "content": "Get Historical Options Market Trades by `optionType`. If `optionType` is not specified in request parameters, both CALL & PUT markets will be returned\n- On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days\n- Only max 100 data will be returned during the window\n- Default: If `createdAtDatetime` is omitted, the endpoint returns a rolling 7-day window of trade history, starting from the most recent trade across all options markets\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "history",
+                "option-trades"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[gte]",
+                  "value": "<dateTime>",
+                  "description": "start timestamp of period, ISO 8601 with millisecond as string"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[lte]",
+                  "value": "<dateTime>",
+                  "description": "end timestamp of period, ISO 8601 with millisecond as string"
+                },
+                {
+                  "disabled": false,
+                  "key": "optionType",
+                  "value": "<string>",
+                  "description": "Specifies if it's a call (right to buy) or a put (right to sell)"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "f18a3d0d-9278-4d2f-87c4-7e329cab377d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "option-trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "optionType",
+                      "value": "CALL"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"tradeId\": \"100020000000000060\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"optionType\": \"CALL\",\n    \"otcTradeId\": \"200000000000000098\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f9fc263-20c3-4bd4-a46e-a04404fd3254",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "option-trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "optionType",
+                      "value": "CALL"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b373d755-2b20-47e7-873b-bdd330021752",
+              "name": "Resource Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "option-trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "optionType",
+                      "value": "CALL"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6da8287a-34b8-4266-9742-b57fba5db872",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "option-trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "optionType",
+                      "value": "CALL"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6b19ee9a-8896-4aba-90b7-c751ccf5f100",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "option-trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "optionType",
+                      "value": "CALL"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "0a0ec3c0-5216-4746-ab68-0ca60756c657",
+          "name": "Get Historical Funding Rate",
+          "request": {
+            "name": "Get Historical Funding Rate",
+            "description": {
+              "content": "Get historical hourly funding rate for the requested perpetual market\n- [supports pagination](/rest/general/pagination)\n- On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "history",
+                "markets",
+                ":symbol",
+                "funding-rate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "updatedAtDatetime[gte]",
+                  "value": "<dateTime>",
+                  "description": "start timestamp of period, ISO 8601 with millisecond as string"
+                },
+                {
+                  "disabled": false,
+                  "key": "updatedAtDatetime[lte]",
+                  "value": "<dateTime>",
+                  "description": "end timestamp of period, ISO 8601 with millisecond as string"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol",
+                  "description": "(Required) symbol to get"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "ee25520b-55af-4940-95a9-3dea7ef549e8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "markets",
+                    ":symbol",
+                    "funding-rate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "updatedAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "updatedAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) symbol to get"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ],\n  [\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    },\n    {\n      \"fundingRate\": \"0.1\",\n      \"updatedAtDatetime\": \"2024-09-16T12:59:59.000Z\"\n    }\n  ]\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fa768a7b-a04b-411e-bdb3-c40fc9500237",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "markets",
+                    ":symbol",
+                    "funding-rate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "updatedAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "updatedAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) symbol to get"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "48766383-201b-4cca-98e1-a2463636c090",
+              "name": "Market Symbol Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "markets",
+                    ":symbol",
+                    "funding-rate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "updatedAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "updatedAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) symbol to get"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cb1079f9-ceae-4c7c-9dde-dfedcbbfb79a",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "markets",
+                    ":symbol",
+                    "funding-rate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "updatedAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "updatedAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) symbol to get"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "356ed615-d58c-4764-b72f-1ca3d1561d88",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "markets",
+                    ":symbol",
+                    "funding-rate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "updatedAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "updatedAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) symbol to get"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "88aa7bcc-805a-40a9-86cd-8b1037b657c2",
+          "name": "Get Historical Auction Results",
+          "request": {
+            "name": "Get Historical Auction Results",
+            "description": {
+              "content": "Get historical auction results for a symbol.\n- [supports pagination](/rest/general/pagination)\n- filtering on `createdAtDatetime` requires additional keywords, [see filtering support](/rest/general/filtering)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "history",
+                "markets",
+                ":symbol",
+                "auctions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[gte]",
+                  "value": "<dateTime>",
+                  "description": "start timestamp of period, ISO 8601 with millisecond as string"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[lte]",
+                  "value": "<dateTime>",
+                  "description": "end timestamp of period, ISO 8601 with millisecond as string"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol",
+                  "description": "(Required) market symbol, e.g. BTCUSDC"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "a210cdb1-b723-4d7a-a1a9-88158e70659e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "markets",
+                    ":symbol",
+                    "auctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) market symbol, e.g. BTCUSDC"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"auctionId\": \"397735387747975680\",\n    \"symbol\": \"BTCUSDC\",\n    \"crossTime\": \"2025-05-20T01:01:01.000Z\",\n    \"clearingPrice\": \"1.00000000\",\n    \"referencePrice\": \"1.00000000\",\n    \"pairedQuantity\": \"1.00000000\",\n    \"imbalanceDirection\": \"NONE\",\n    \"imbalanceQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0cec4506-6ea2-4ebf-9eed-367fe5fc7afa",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "markets",
+                    ":symbol",
+                    "auctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) market symbol, e.g. BTCUSDC"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b1f0b50e-59c6-4e18-8031-606f1eef6764",
+              "name": "Symbol not found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "markets",
+                    ":symbol",
+                    "auctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) market symbol, e.g. BTCUSDC"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "87b82f15-89a2-4e1f-b152-bc6715873d15",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "markets",
+                    ":symbol",
+                    "auctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) market symbol, e.g. BTCUSDC"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exchange.bullish.com/trading-api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "b159807e-9d22-4966-9693-8f9f01ac25a3",
+    "name": "Bullish Trading Market History Data API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API specification for the Bullish Trading API.\n\nContact Support:\n Name: Bullish Help Center\n Email: support@bullish.com",
+      "type": "text/plain"
+    }
+  }
+}

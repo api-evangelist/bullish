@@ -1,0 +1,71 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading Portfolio Margin Simulator API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "portfolio-margin-simulator",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Simulate Portfolio Margin",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/simulate-portfolio-margin",
+            "params": [
+              {
+                "name": "includeExisting",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Use Portfolio margin simulator to determine your margin requirements and risk levels based on your current portfolio balances. \nYou can also append position details on top of your portfolio specifics to see simulated results.\n"
+        },
+        {
+          "info": {
+            "name": "Simulate Portfolio Margin in Bulk",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/bulk-simulate-portfolio-margin",
+            "params": [
+              {
+                "name": "includeExisting",
+                "value": "",
+                "type": "query",
+                "description": "When true, includes existing portfolio positions in the simulation. Defaults to false"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Use Portfolio margin simulator to determine your margin requirements and risk levels based on your current portfolio balances.\nYou can also append position details on top of your portfolio specifics to see simulated results.\nThis endpoint supports running multiple simulations at the same time.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,69 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading Account Assets API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "account-assets",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get All Account Assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/accounts/asset",
+            "params": [
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the asset accounts, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n"
+        },
+        {
+          "info": {
+            "name": "Get All Account Assets by Symbol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/accounts/asset/:symbol",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the asset account by symbol, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

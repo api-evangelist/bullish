@@ -1,0 +1,1128 @@
+openapi: 3.2.0
+info:
+  description: REST API specification for the Bullish Trading API.
+  version: 1.0.0
+  title: Bullish Trading Otc API
+  contact:
+    name: Bullish Help Center
+    email: support@bullish.com
+    url: https://support.bullish.com
+servers:
+- url: https://api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://registered.api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://prod.access.bullish.com/trading-api
+  description: PRODUCTION (Direct Connect)
+- url: https://api.bugbounty.bullish.com/trading-api
+  description: SECURITY SANDBOX
+- url: https://api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://registered.api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://simnext.access.bullish.com/trading-api
+  description: API SANDBOX (Direct Connect)
+tags:
+- name: otc
+  x-displayName: OTC
+  description: The OTC Clearing Facility API (OTC API) is available to customers to book trades negotiated outside of the Bullish Exchange order book to Bullish's clearing and settlement platform. Customers may agree to an OTC transaction through bilateral negotiations or via a 3rd party RFQ platform. Once the two customers agree on the trade details, they can use the OTC API to book the trade to their Bullish account to benefit from Bullish's risk and collateral management system. For purposes of clarity, the OTC API is not for trading purposes.
+paths:
+  /v2/otc-trades:
+    post:
+      x-position: 1
+      summary: Create OTC Trade
+      operationId: createOtcTrade
+      description: "Creates an OTC trade, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header.\n\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field ordering \nand addition of null fields in the request body. Prices do not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n"
+      tags:
+      - otc
+      parameters:
+      - $ref: '#/components/parameters/BX-SIGNATURE'
+      - $ref: '#/components/parameters/BX-TIMESTAMP'
+      - $ref: '#/components/parameters/BX-NONCE'
+      - $ref: '#/components/parameters/BX-REFERRER'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateOtcTradeCommand'
+      responses:
+        '200':
+          description: "Status OK. The create OTC trade command was successfully acknowledged. To check the current status of the \nOTC trade, query [Get Trade by ID](/rest/api/get-otc-trade-by-id) using `otcTradeId` or `clientOtcTradeId` received in the response payload.\n"
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateOtcTradeResponse'
+        '400':
+          description: 'Bad Request
+
+
+            For example, sending a request with the `BX-SIGNATURE` header missing will result in the following response:
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '401':
+          description: Unauthorized. Either API details are missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '403':
+          description: Forbidden- You do not have access to the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+      security:
+      - jwtTokenAuth: []
+    get:
+      x-position: 2
+      summary: Get OTC Trades
+      operationId: getOtcTrades
+      description: 'Get the otc trade list based on specified filters.
+
+        - requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header
+
+        - [supports pagination](/rest/general/pagination)
+
+        - supports filtering on `status`, `tradingAccountId`, `sharedMatchKey`, `clientOtcTradeId`, `createdAtDatetime`, `createdAtTimestamp`, `brokeredBy`
+
+        '
+      tags:
+      - otc
+      parameters:
+      - in: query
+        name: status
+        description: OTC trade status
+        schema:
+          $ref: '#/components/schemas/OtcTradeExternalStatus'
+        required: false
+      - in: query
+        name: tradingAccountId
+        schema:
+          $ref: '#/components/schemas/TradingAccountId'
+        required: true
+      - in: query
+        name: sharedMatchKey
+        schema:
+          $ref: '#/components/schemas/SharedMatchKey'
+      - in: query
+        name: clientOtcTradeId
+        schema:
+          $ref: '#/components/schemas/ClientOtcTradeId'
+        required: false
+      - in: query
+        name: brokeredBy
+        description: Originating broker short code
+        schema:
+          $ref: '#/components/schemas/IdbShortCode'
+        required: false
+      - in: query
+        name: createdAtDatetime[ gte ]
+        description: Start timestamp of window, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: false
+      - in: query
+        name: createdAtDatetime[ lte ]
+        description: End timestamp of window, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                maxItems: 25
+                items:
+                  $ref: '#/components/schemas/OtcTradeView'
+        '400':
+          description: For example, sending a request with an invalid trading account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '401':
+          description: Not Authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '403':
+          description: Access Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+      security:
+      - jwtTokenAuth: []
+  /v2/otc-trades/{otcTradeId}:
+    parameters:
+    - in: path
+      name: otcTradeId
+      schema:
+        type: string
+      required: true
+      description: Id of the OTC Trade
+    get:
+      x-position: 3
+      summary: Get OTC Trade by ID
+      operationId: getOtcTradeById
+      description: Retrieve a specific otc trade using its unique identifier.
+      tags:
+      - otc
+      parameters:
+      - in: query
+        name: tradingAccountId
+        description: Id of the trading account
+        schema:
+          $ref: '#/components/schemas/TradingAccountId'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OtcTradeView'
+        '400':
+          description: For example, sending a request with an invalid trading account
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '401':
+          description: Not Authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '403':
+          description: Access Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '404':
+          description: The given otcTradeId does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+      security:
+      - jwtTokenAuth: []
+  /v2/otc-trades/unconfirmed-trade:
+    get:
+      x-position: 4
+      summary: Get Unconfirmed OTC Trade
+      operationId: getUnconfirmedOtcTrade
+      description: Retrieve the unconfirmed trade details using shared match key.
+      tags:
+      - otc
+      parameters:
+      - in: query
+        name: tradingAccountId
+        description: Id of the trading account for accepting the unconfirmed trade
+        schema:
+          $ref: '#/components/schemas/TradingAccountId'
+        required: true
+      - in: query
+        name: sharedMatchKey
+        description: Provided by your counterparty to identify the trade
+        schema:
+          $ref: '#/components/schemas/SharedMatchKey'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/UnconfirmedOtcTradeView'
+        '400':
+          description: For example, querying a closed OTC trade
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '401':
+          description: Not Authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '403':
+          description: Access Forbidden
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '404':
+          description: The unconfirmed OTC trade does not exist
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+      security:
+      - jwtTokenAuth: []
+  /v2/otc-command#approve:
+    post:
+      x-position: 5
+      summary: Approve OTC Trade
+      operationId: otc-command-approve
+      description: 'Authorize an OTC trade previously submitted on your behalf by an inter-dealer broker.
+
+
+        Submits a command to the trading engine to approve an OTC trade. A successful response indicates that the command entry was acknowledged
+
+        but does not indicate that the command was executed.
+
+        This endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field
+
+        ordering and addition of null fields in the request body.
+
+
+        Command schemas and examples are provided below. Supported commands:
+
+        - V1ApproveOtcTrade
+
+
+        Requires
+
+        - [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header
+
+        '
+      tags:
+      - otc
+      parameters:
+      - $ref: '#/components/parameters/BX-SIGNATURE'
+      - $ref: '#/components/parameters/BX-TIMESTAMP'
+      - $ref: '#/components/parameters/BX-NONCE'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              discriminator:
+                propertyName: commandType
+                mapping:
+                  V1ApproveOtcTrade: '#/components/schemas/ApproveOtcTradeCommand'
+              oneOf:
+              - $ref: '#/components/schemas/ApproveOtcTradeCommand'
+            examples:
+              ApproveOtcTrade:
+                $ref: '#/components/examples/ApproveOtcTradeCommand'
+      responses:
+        '200':
+          description: Status OK. This means a command was successfully acknowledged.
+          content:
+            application/json:
+              schema:
+                oneOf:
+                - $ref: '#/components/schemas/ApproveOtcTradeResponse'
+              examples:
+                ApproveOtcTradeResponse:
+                  $ref: '#/components/examples/ApproveOtcTradeResponse'
+        '400':
+          description: 'Bad Request
+
+
+            For example, sending a request with the `BX-SIGNATURE` header missing will result in the following response:
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '401':
+          description: Unauthorized. Either API details are missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '403':
+          description: Forbidden- You do not have access to the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+      security:
+      - jwtTokenAuth: []
+  /v2/otc-command#cancel:
+    post:
+      x-position: 6
+      summary: Cancel OTC Trade
+      operationId: otc-command-cancel
+      description: 'Cancel a pending OTC trade or reject an OTC trade previously submitted on your behalf by an inter-dealer broker.
+
+
+        Submits a command to the trading engine. A successful response indicates that the command entry was acknowledged
+
+        but does not indicate that the command was executed.
+
+        This endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field
+
+        ordering and addition of null fields in the request body.
+
+
+        Command schemas and examples are provided below. Supported commands:
+
+        - V1CancelOtcTrade
+
+        - V1CancelAllOtcTrades
+
+
+        Requires
+
+        - [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header
+
+        '
+      tags:
+      - otc
+      parameters:
+      - $ref: '#/components/parameters/BX-SIGNATURE'
+      - $ref: '#/components/parameters/BX-TIMESTAMP'
+      - $ref: '#/components/parameters/BX-NONCE'
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              discriminator:
+                propertyName: commandType
+                mapping:
+                  V1CancelOtcTrade: '#/components/schemas/CancelOtcTradeCommand'
+                  V1CancelAllOtcTrades: '#/components/schemas/CancelAllOtcTradesCommand'
+              oneOf:
+              - $ref: '#/components/schemas/CancelOtcTradeCommand'
+              - $ref: '#/components/schemas/CancelAllOtcTradesCommand'
+            examples:
+              CancelOtcTrade:
+                $ref: '#/components/examples/CancelOtcTradeCommand'
+              CancelAllOtcTrades:
+                $ref: '#/components/examples/CancelAllOtcTradesCommand'
+      responses:
+        '200':
+          description: Status OK. This means a command was successfully acknowledged.
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/CancelOtcTradeResponse'
+                - $ref: '#/components/schemas/CancelAllOtcTradesResponse'
+              examples:
+                CancelOtcTradeResponse:
+                  $ref: '#/components/examples/CancelOtcTradeResponse'
+                CancelAllOtcTradeResponse:
+                  $ref: '#/components/examples/CancelAllOtcTradesResponse'
+        '400':
+          description: 'Bad Request
+
+
+            For example, sending a request with the `BX-SIGNATURE` header missing will result in the following response:
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '401':
+          description: Unauthorized. Either API details are missing or invalid
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '403':
+          description: Forbidden- You do not have access to the requested resource
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+      security:
+      - jwtTokenAuth: []
+  /v2/otc-trades/delegated-accounts:
+    get:
+      x-position: 7
+      summary: Get Delegated Trading Accounts
+      operationId: otc-get-delegated-accounts
+      description: 'Get details for all of your trading accounts that are delegated to inter-dealer brokers.
+
+
+        This is the client-side view of the broker relationships exposed to brokers by
+
+        [IDB Get Delegated Trading Accounts](/rest/api/idb-otc-get-delegated-accounts).
+
+
+        - requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header
+
+        '
+      tags:
+      - otc
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/ClientDelegatedAccountView'
+              examples:
+                ClientDelegatedAccountView:
+                  value:
+                  - tradingAccountId: '111000000000001'
+                    idbShortCode: IDB_A
+                    tradingAccountNickname: OTC Desk Primary
+                    approvalMethod: APPROVAL_REQUIRED
+                  - tradingAccountId: '111000000000002'
+                    idbShortCode: IDB_B
+                    tradingAccountNickname: OTC Desk Secondary
+                    approvalMethod: STRAIGHT_THROUGH
+        '401':
+          description: Not Authenticated
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '403':
+          description: Access Forbidden. Returned when an inter-dealer broker calls this client-only endpoint
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+        '500':
+          description: Internal Server Error
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOtcTradeEntryResponse'
+      security:
+      - jwtTokenAuth: []
+components:
+  schemas:
+    RequestID:
+      type: string
+      example: '197735387747975680'
+    UnconfirmedOtcTradeView:
+      type: object
+      description: An unconfirmed OTC trade for booking.
+      required:
+      - sharedMatchKey
+      - isTaker
+      - createdAtDatetime
+      - createdAtTimestamp
+      - expireDatetime
+      - expireTimestamp
+      - trades
+      properties:
+        sharedMatchKey:
+          $ref: '#/components/schemas/SharedMatchKey'
+        isTaker:
+          description: denotes your role as the counterparty to the initiator
+          allOf:
+          - $ref: '#/components/schemas/Boolean'
+        createdAtDatetime:
+          description: denotes the time the otc trade was ACK'd by the exchange, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        createdAtTimestamp:
+          description: denotes the time the otc trade was ACK'd by the exchange
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        expireDatetime:
+          description: denotes the time the otc trade would expire, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        expireTimestamp:
+          description: denotes the time the otc trade would expire
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        trades:
+          type: array
+          description: all trades for the OTC trade
+          items:
+            $ref: '#/components/schemas/TradeInOtcRequest'
+    CancelOtcTradeResponse:
+      description: A response for an acknowledged OTC command to cancel an OTC trade
+      required:
+      - message
+      - requestId
+      - otcTradeId
+      - tradingAccountId
+      properties:
+        message:
+          type: string
+          description: message indicating the status of the request
+          example: Command acknowledged - CancelOtcTrade
+        requestId:
+          $ref: '#/components/schemas/RequestID'
+        otcTradeId:
+          $ref: '#/components/schemas/OtcTradeId'
+        clientOtcTradeId:
+          $ref: '#/components/schemas/ClientOtcTradeId'
+        tradingAccountId:
+          $ref: '#/components/schemas/TradingAccountId'
+      example:
+        message: Command acknowledged - CancelOtcTrade
+        requestId: '100000000000000147'
+        otcTradeId: '200000000000000098'
+        tradingAccountId: '111000000000001'
+    TradeSideAsString:
+      type: string
+      description: trade side can have the following string values `BUY`, `SELL`
+      example: BUY
+    ClientOtcTradeId:
+      type: string
+      description: unique numeric (i64) identifier generated on the client side expressed as a string value
+      example: '20050900225'
+    TimeStampAsString:
+      type: string
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
+    ApproveOtcTradeResponse:
+      description: A response for an acknowledged OTC command to approve an OTC trade
+      required:
+      - message
+      - requestId
+      - otcTradeId
+      - tradingAccountId
+      properties:
+        message:
+          type: string
+          description: message indicating the status of the request
+          example: Command acknowledged - ApproveOtcTrade
+        requestId:
+          $ref: '#/components/schemas/RequestID'
+        otcTradeId:
+          $ref: '#/components/schemas/OtcTradeId'
+        clientOtcTradeId:
+          $ref: '#/components/schemas/ClientOtcTradeId'
+        tradingAccountId:
+          $ref: '#/components/schemas/TradingAccountId'
+      example:
+        message: Command acknowledged - ApproveOtcTrade
+        requestId: '100000000000000149'
+        otcTradeId: '200000000000000098'
+        tradingAccountId: '111000000000001'
+    IdbShortCode:
+      type: string
+      description: broker short code
+      example: IDB_A
+    ClientDelegatedAccountView:
+      type: object
+      description: Details of a trading account delegated to an inter-dealer broker, from the client perspective.
+      required:
+      - tradingAccountId
+      - approvalMethod
+      properties:
+        tradingAccountId:
+          $ref: '#/components/schemas/TradingAccountId'
+        idbShortCode:
+          $ref: '#/components/schemas/IdbShortCode'
+        tradingAccountNickname:
+          description: nickname assigned for this account
+          type:
+          - string
+          - 'null'
+          example: Alpha Traders Primary
+        approvalMethod:
+          $ref: '#/components/schemas/DelegatedApprovalMethod'
+    Remarks:
+      type: string
+      description: text field for client's internal reference to a trade, max length is 255 characters
+      example: first otc trade with xyz client
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.00000000'
+    SharedMatchKey:
+      type: string
+      description: Unique shared key that is agreed between the two customers to represent their OTC trade to be matched on Bullish's OTC Clearing Facility. Must be a 12 to 64 characters alphanumeric value
+      example: cfBtcXrpMatch001
+    CreateOtcTradeResponse:
+      description: A response for an acknowledged OTC trade creation request
+      required:
+      - message
+      - requestId
+      - otcTradeId
+      - sharedMatchKey
+      properties:
+        message:
+          type: string
+          description: message indicating the status of the request
+          example: Command acknowledged - CreateOtcTrade
+        requestId:
+          $ref: '#/components/schemas/RequestID'
+        otcTradeId:
+          $ref: '#/components/schemas/OtcTradeId'
+        clientOtcTradeId:
+          $ref: '#/components/schemas/ClientOtcTradeId'
+        sharedMatchKey:
+          $ref: '#/components/schemas/SharedMatchKey'
+    CancelAllOtcTradesResponse:
+      description: A response for an acknowledged OTC command to cancel all pending OTC trades
+      required:
+      - message
+      - requestId
+      - tradingAccountId
+      properties:
+        message:
+          type: string
+          description: message indicating the status of the request
+          example: Command acknowledged - CancelOtcTrade
+        requestId:
+          $ref: '#/components/schemas/RequestID'
+        tradingAccountId:
+          $ref: '#/components/schemas/TradingAccountId'
+      example:
+        message: Command acknowledged - CancelAllOtcTrades
+        requestId: '100000000000000148'
+        tradingAccountId: '111000000000001'
+    OtcTradeView:
+      type: object
+      required:
+      - otcTradeId
+      - sharedMatchKey
+      - status
+      - statusReason
+      - statusReasonCode
+      - createdAtDatetime
+      - createdAtTimestamp
+      - expireDatetime
+      - expireTimestamp
+      - trades
+      properties:
+        otcTradeId:
+          allOf:
+          - $ref: '#/components/schemas/OtcTradeId'
+        clientOtcTradeId:
+          allOf:
+          - $ref: '#/components/schemas/ClientOtcTradeId'
+        tradingAccountId:
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+        tradingAccountNickname:
+          description: nickname of the trading account (only for brokered trades)
+          type: string
+          example: my-trading-account
+        sharedMatchKey:
+          allOf:
+          - $ref: '#/components/schemas/SharedMatchKey'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/OtcTradeExternalStatus'
+          example: MATCHED
+        statusReason:
+          description: status reason, describes why the otc trade is in a specific state
+          type: string
+          example: Ok
+        statusReasonCode:
+          description: status reason code, see [details](/rest/general/error-rejection-codes)
+          type: string
+          example: '1002'
+        createdAtDatetime:
+          description: denotes the time the otc trade was ACK'd by the exchange, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        createdAtTimestamp:
+          description: denotes the time the otc trade was ACK'd by the exchange
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        expireDatetime:
+          description: denotes the time the otc trade would expire, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        expireTimestamp:
+          description: denotes the time the otc trade would expire
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        remarks:
+          $ref: '#/components/schemas/Remarks'
+        brokeredBy:
+          $ref: '#/components/schemas/IdbShortCode'
+        trades:
+          type: array
+          minItems: 0
+          maxItems: 25
+          description: all trades for the OTC trade
+          items:
+            allOf:
+            - $ref: '#/components/schemas/OtcTradeLegView'
+    CancelAllOtcTradesCommand:
+      type: object
+      description: A command to cancel all pending OTC trades.
+      required:
+      - commandType
+      - tradingAccountId
+      properties:
+        commandType:
+          type: string
+          description: Specifies the command type and must be ‘V1CancelAllOtcTrades' to indicate the cancellation of all pending OTC trades.
+          enum:
+          - V1CancelAllOtcTrades
+        tradingAccountId:
+          $ref: '#/components/schemas/TradingAccountId'
+      example:
+        commandType: V1CancelAllOtcTrades
+        tradingAccountId: '111000000000001'
+    OtcTradeId:
+      type: string
+      description: unique numeric (i64) identifier generated on Bullish side expressed as a string value
+      example: '200000000000000098'
+    DelegatedApprovalMethod:
+      description: 'The default execution workflow for this IDB-Client pair:
+
+        - STRAIGHT_THROUGH: Trades are processed automatically
+
+        - APPROVAL_REQUIRED: Every trade requires manual authorization from the client
+
+        '
+      type: string
+      enum:
+      - STRAIGHT_THROUGH
+      - APPROVAL_REQUIRED
+      example: APPROVAL_REQUIRED
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
+    CancelOtcTradeCommand:
+      type: object
+      description: A command to cancel an OTC trade. Only one of `clientOtcTradeId` or `otcTradeId` can be used in the cancel OTC trade command
+      required:
+      - commandType
+      - tradingAccountId
+      properties:
+        commandType:
+          type: string
+          description: Specifies the command type and must be ‘V1CancelOtcTrade' to indicate the cancellation of an OTC trade.
+          enum:
+          - V1CancelOtcTrade
+        otcTradeId:
+          $ref: '#/components/schemas/OtcTradeId'
+        clientOtcTradeId:
+          $ref: '#/components/schemas/ClientOtcTradeId'
+        tradingAccountId:
+          $ref: '#/components/schemas/TradingAccountId'
+      example:
+        commandType: V1CancelOtcTrade
+        clientOtcTradeId: '20050900225'
+        tradingAccountId: '111000000000001'
+    BadOtcTradeEntryResponse:
+      type: object
+      required:
+      - message
+      - errorCode
+      - errorCodeName
+      properties:
+        message:
+          description: message
+          type: string
+        errorCode:
+          description: unique error code
+          type: integer
+        errorCodeName:
+          description: unique error code name
+          type: string
+    ApproveOtcTradeCommand:
+      type: object
+      description: A command to approve an OTC trade. Only one of `clientOtcTradeId` or `otcTradeId` can be used in the approve OTC trade command
+      required:
+      - commandType
+      - tradingAccountId
+      properties:
+        commandType:
+          type: string
+          description: Specifies the command type and must be 'V1ApproveOtcTrade' to indicate the approval of an OTC trade.
+        tradingAccountId:
+          $ref: '#/components/schemas/TradingAccountId'
+        otcTradeId:
+          $ref: '#/components/schemas/OtcTradeId'
+        clientOtcTradeId:
+          $ref: '#/components/schemas/ClientOtcTradeId'
+      example:
+        commandType: V1ApproveOtcTrade
+        otcTradeId: '200000000000000098'
+        tradingAccountId: '111000000000001'
+    TradeID:
+      type: string
+      example: '100020000000000060'
+    Boolean:
+      type: boolean
+      format: true or false
+      example: true
+    OtcTradeExternalStatus:
+      type: string
+      description: OTC trade status
+      enum:
+      - APPROVAL_PENDING
+      - COUNTERPARTY_PENDING
+      - COUNTERPARTY_PAIRED
+      - RISK_PENDING
+      - MATCHED
+      - CANCELLED
+      - REJECTED
+      x-enumDescriptions:
+        APPROVAL_PENDING: Pending authorization from the customer in an IDB flow
+        COUNTERPARTY_PENDING: Pending counterparty trade submission
+        COUNTERPARTY_PAIRED: Both sides of the trade have been paired and are pending system processing
+        RISK_PENDING: Trade is undergoing risk and margin checks
+        MATCHED: Trade is successfully executed
+        CANCELLED: The trade was manually retracted by the user, counterparty, or broker
+        REJECTED: The trade failed system validation or encountered a system error
+      example: MATCHED
+    OtcMarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTC-USDC-PERP` for PERPETUAL market `BTC-USDC-20250613` for DATEDFUTURE market and `BTC-USDC-20250613-100000-C` for OPTION market
+      example: BTC-USDC-PERP
+    OtcTradeLegView:
+      description: a trade of an OTC trade
+      required:
+      - symbol
+      - price
+      - quantity
+      - side
+      - isTaker
+      properties:
+        tradeId:
+          description: unique trade ID
+          allOf:
+          - $ref: '#/components/schemas/TradeID'
+        symbol:
+          $ref: '#/components/schemas/OtcMarketSymbol'
+        price:
+          description: price, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quantity:
+          description: quantity, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quoteAmount:
+          description: notional value of the trade in quote or settlement asset, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        baseFee:
+          description: base fee, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quoteFee:
+          description: quote fee, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        tradeRebateAssetSymbol:
+          $ref: '#/components/schemas/OtcMarketSymbol'
+        tradeRebateAmount:
+          description: trade rebate fee, see [ asset value ](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        side:
+          allOf:
+          - $ref: '#/components/schemas/TradeSideAsString'
+          example: BUY
+        isTaker:
+          description: denotes whether the role of the counterparty is Taker or Maker. The corresponding leg of the opposite side of the trade should have the inverse role to be successfully matched on the OTC Clearing Facility
+          allOf:
+          - $ref: '#/components/schemas/Boolean'
+        createdAtDatetime:
+          description: denotes the time the trade was executed by the exchange, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        createdAtTimestamp:
+          description: denotes the time the trade was executed by the exchange
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+    CreateOtcTradeCommand:
+      type: object
+      description: A command with details to an OTC trade
+      required:
+      - commandType
+      - sharedMatchKey
+      - tradingAccountId
+      - isTaker
+      - trades
+      properties:
+        commandType:
+          type: string
+          description: Specifies the command type and must be ‘V1CreateOtcTrade' to indicate the submission of an OTC trade.
+        clientOtcTradeId:
+          $ref: '#/components/schemas/ClientOtcTradeId'
+        sharedMatchKey:
+          $ref: '#/components/schemas/SharedMatchKey'
+        tradingAccountId:
+          $ref: '#/components/schemas/TradingAccountId'
+        isTaker:
+          description: denotes whether the role of the counterparty is Taker or Maker. The corresponding leg of the opposite side of the trade should have the inverse role to be successfully matched on the OTC Clearing Facility
+          allOf:
+          - $ref: '#/components/schemas/Boolean'
+        remarks:
+          $ref: '#/components/schemas/Remarks'
+        trades:
+          type: array
+          description: all trades for the OTC trade
+          items:
+            $ref: '#/components/schemas/TradeInOtcRequest'
+      example:
+        commandType: V1CreateOtcTrade
+        clientOtcTradeId: '20050900225'
+        sharedMatchKey: cfBtcXrpMatch001
+        tradingAccountId: '111000000000001'
+        isTaker: true
+        remarks: first otc trade with xyz client
+        trades:
+        - symbol: BTC-USDC-PERP
+          side: BUY
+          price: '98213.0000'
+          quantity: '1.50000000'
+        - symbol: XRP-USDC-PERP
+          side: SELL
+          price: '2.6600'
+          quantity: '50.000000'
+    TradeInOtcRequest:
+      description: A trade of an OTC trade
+      required:
+      - symbol
+      - price
+      - quantity
+      - side
+      properties:
+        symbol:
+          $ref: '#/components/schemas/OtcMarketSymbol'
+        price:
+          description: price, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quantity:
+          description: quantity, see [ asset value ](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        side:
+          $ref: '#/components/schemas/TradeSideAsString'
+  parameters:
+    BX-NONCE:
+      in: header
+      name: BX-NONCE
+      description: nonce is a client side incremented unsigned 64 bit integer
+      required: true
+      schema:
+        type: string
+    BX-SIGNATURE:
+      in: header
+      name: BX-SIGNATURE
+      description: signature obtained using the [signing format](/rest/authentication#signing-format)
+      required: true
+      schema:
+        type: string
+    BX-TIMESTAMP:
+      in: header
+      name: BX-TIMESTAMP
+      description: timestamp is the number of milliseconds since EPOCH
+      required: true
+      schema:
+        type: string
+    BX-REFERRER:
+      in: header
+      name: BX-REFERRER
+      description: A numeric referrer id if applicable
+      required: false
+      schema:
+        type: string
+  examples:
+    CancelAllOtcTradesCommand:
+      value:
+        $ref: '#/components/schemas/CancelAllOtcTradesCommand/example'
+    ApproveOtcTradeCommand:
+      value:
+        $ref: '#/components/schemas/ApproveOtcTradeCommand/example'
+    ApproveOtcTradeResponse:
+      value:
+        $ref: '#/components/schemas/ApproveOtcTradeResponse/example'
+    CancelOtcTradeResponse:
+      value:
+        $ref: '#/components/schemas/CancelOtcTradeResponse/example'
+    CancelOtcTradeCommand:
+      value:
+        $ref: '#/components/schemas/CancelOtcTradeCommand/example'
+    CancelAllOtcTradesResponse:
+      value:
+        $ref: '#/components/schemas/CancelAllOtcTradesResponse/example'
+  securitySchemes:
+    jwtTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-tagGroups:
+- name: Public Endpoints
+  tags:
+  - general
+  - asset-data
+  - market-data
+  - market-history-data
+  - index-price-data
+  - derivatives-public
+  - auction-public
+- name: Private Endpoints
+  tags:
+  - session-management
+  - trading-accounts
+  - account-assets
+  - orders
+  - trades
+  - amm-instructions
+  - transfer
+  - custody
+  - derivatives
+  - market-maker-protection
+  - history
+  - otc
+  - idb
+  - portfolio-margin-simulator

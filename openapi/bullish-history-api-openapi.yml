@@ -1,0 +1,858 @@
+openapi: 3.2.0
+info:
+  description: REST API specification for the Bullish Trading API.
+  version: 1.0.0
+  title: Bullish Trading History API
+  contact:
+    name: Bullish Help Center
+    email: support@bullish.com
+    url: https://support.bullish.com
+servers:
+- url: https://api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://registered.api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://prod.access.bullish.com/trading-api
+  description: PRODUCTION (Direct Connect)
+- url: https://api.bugbounty.bullish.com/trading-api
+  description: SECURITY SANDBOX
+- url: https://api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://registered.api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://simnext.access.bullish.com/trading-api
+  description: API SANDBOX (Direct Connect)
+tags:
+- name: history
+  x-displayName: History
+paths:
+  /v2/history/orders:
+    get:
+      tags:
+      - history
+      summary: Get Historical Orders
+      description: 'Retrieve a list of orders placed by a trading account with specified filters.
+
+        - On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days
+
+
+        This endpoint requires [authentication](/rest/authentication#generate-a-jwt-token) and supports [pagination](/rest/general/pagination).
+
+        To filter by `createdAtDatetime` and `createdAtTimestamp`, additional parameters are required. For detailed instructions, see the [Filtering Support](/rest/general/filtering) section.
+
+        Additionally, this endpoint is subjected to rate limiting.
+
+        '
+      operationId: getOrdersHistoryV2
+      parameters:
+      - in: query
+        name: symbol
+        schema:
+          $ref: '#/components/schemas/MarketSymbol'
+        required: false
+      - in: query
+        name: orderId
+        schema:
+          $ref: '#/components/schemas/OrderID'
+        required: false
+      - in: query
+        name: clientOrderId
+        description: Unique numeric (i64) identifier generated on the client side expressed as a string value
+        schema:
+          $ref: '#/components/schemas/OrderHandle'
+        required: false
+      - in: query
+        name: side
+        description: order side
+        schema:
+          $ref: '#/components/schemas/OrderSide'
+        required: false
+      - in: query
+        name: status
+        description: order status
+        schema:
+          $ref: '#/components/schemas/OrderStatus'
+        required: false
+      - in: query
+        name: tradingAccountId
+        description: Id of the trading account
+        schema:
+          $ref: '#/components/schemas/TradingAccountId'
+        required: true
+      - in: query
+        name: createdAtDatetime[gte]
+        description: start timestamp of period, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: false
+      - in: query
+        name: createdAtDatetime[lte]
+        description: end timestamp of period, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                maxItems: 10
+                items:
+                  $ref: '#/components/schemas/Order'
+        '401':
+          description: Not Authenticated
+        '403':
+          description: Access Forbidden
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security:
+      - jwtTokenAuth: []
+  /v1/history/trades:
+    get:
+      tags:
+      - history
+      summary: Get Historical Trades
+      description: 'Get a list of trades based on specified filters.
+
+        - requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header
+
+        - On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days
+
+        - [supports pagination](/rest/general/pagination)
+
+        - filtering on `createdAtDatetime`, `createdAtTimestamp` requires additional keywords, [see filtering support](/rest/general/filtering)
+
+
+        **Ratelimited:** `True`
+
+        '
+      operationId: getTradesHistory
+      parameters:
+      - in: query
+        name: symbol
+        schema:
+          $ref: '#/components/schemas/MarketSymbol'
+        required: false
+      - in: query
+        name: orderId
+        description: unique order ID
+        schema:
+          $ref: '#/components/schemas/OrderID'
+        required: false
+      - in: query
+        name: tradeId
+        description: unique trade ID
+        schema:
+          $ref: '#/components/schemas/TradeID'
+        required: false
+      - in: query
+        name: clientOrderId
+        description: unique numeric (i64) identifier generated on the client side, only orderId or clientOrderId can be used
+        schema:
+          $ref: '#/components/schemas/OrderHandle'
+        required: false
+      - in: query
+        name: tradingAccountId
+        description: Id of the trading account
+        schema:
+          $ref: '#/components/schemas/TradingAccountId'
+        required: true
+      - in: query
+        name: createdAtDatetime[gte]
+        description: start timestamp of period, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: false
+      - in: query
+        name: createdAtDatetime[lte]
+        description: end timestamp of period, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: false
+      - in: query
+        name: otcTradeId
+        description: unique Bullish otc trade id
+        schema:
+          $ref: '#/components/schemas/OtcTradeId'
+        required: false
+      - in: query
+        name: clientOtcTradeId
+        description: unique client otc trade id
+        schema:
+          $ref: '#/components/schemas/ClientOtcTradeId'
+        required: false
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                maxItems: 10
+                items:
+                  $ref: '#/components/schemas/Trade'
+        '401':
+          description: Not Authenticated
+        '403':
+          description: Access Forbidden
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security:
+      - jwtTokenAuth: []
+  /v1/history/derivatives-settlement:
+    get:
+      tags:
+      - history
+      summary: Get Historical Hourly Derivatives Settlement
+      description: "Get historical derivatives settlement. \n- [supports pagination](/rest/general/pagination)\n- filtering on `settlementDatetime` requires additional keywords, [see filtering support](/rest/general/filtering)\n- On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days. By default the results are returned and sorted in descending order if specific settlement datetime is not specified.\n"
+      operationId: getDerivativesSettlementHistory
+      parameters:
+      - in: query
+        name: tradingAccountId
+        description: Id of the trading account. `tradingAccountId` is mandatory in the query for users with multiple trading accounts. For users with a single trading account, it can be automatically retrieved from the login.
+        schema:
+          $ref: '#/components/schemas/TradingAccountId'
+        required: false
+      - in: query
+        name: symbol
+        example: BTC-USDC-PERP
+        schema:
+          $ref: '#/components/schemas/DatedFutureMarketSymbol'
+        required: false
+      - in: query
+        name: settlementDatetime[gte]
+        description: start timestamp of window, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: true
+      - in: query
+        name: settlementDatetime[lte]
+        description: end timestamp of window, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                maxItems: 25
+                items:
+                  $ref: '#/components/schemas/DerivativesSettlementResponse'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security:
+      - jwtTokenAuth: []
+  /v1/history/transfer:
+    get:
+      tags:
+      - history
+      summary: Get Historical Account Transfer
+      description: 'Get historical transfers.
+
+        - [supports pagination](/rest/general/pagination)
+
+        - filtering on `createdAtDatetime` and `createdAtTimestamp` requires additional keywords, [see filtering support](/rest/general/filtering)
+
+        - On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days
+
+        '
+      operationId: getTransferHistory
+      parameters:
+      - in: query
+        name: tradingAccountId
+        description: Id of the trading account. `tradingAccountId` is mandatory in the query for users with multiple trading accounts. For users with a single trading account, it can be automatically retrieved from the login.
+        schema:
+          $ref: '#/components/schemas/TradingAccountId'
+        required: false
+      - in: query
+        name: status
+        description: Status of the transfer request. Defaults to `CLOSED`
+        schema:
+          type: string
+          example: CLOSED
+          default: CLOSED
+      - in: query
+        name: requestId
+        description: Unique identifier of the transfer request
+        schema:
+          type: string
+          example: '561287547935260672'
+      - in: query
+        name: assetSymbol
+        description: Asset symbol of the transfer request
+        schema:
+          $ref: '#/components/schemas/AssetSymbol'
+      - in: query
+        name: createdAtDatetime[gte]
+        description: start datetime of window, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: true
+      - in: query
+        name: createdAtDatetime[lte]
+        description: end datetime of window, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                maxItems: 25
+                items:
+                  $ref: '#/components/schemas/SubAccountTransferResponse'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security:
+      - jwtTokenAuth: []
+  /v1/history/borrow-interest:
+    get:
+      tags:
+      - history
+      summary: Get Historical Hourly Borrow Interest
+      description: "Get Historical Hourly Borrow Interest. Each entry denotes the hourly quantities for the specific asset. \nTotal borrowed quantity is inclusive of interest. `interest = totalBorrowedQuantity - borrowedQuantity` \nwhich denotes the interest charged in the particular hour for the asset.\n- [supports pagination](/rest/general/pagination)\n- filtering `createdAtDatetime`, `createdAtTimestamp` requires additional keywords, [see filtering support](/rest/general/filtering)\n- On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days\n\n**Ratelimited:** `True`\n"
+      operationId: getBorrowInterestHistory
+      parameters:
+      - in: query
+        name: tradingAccountId
+        description: Id of the trading account. `tradingAccountId` is mandatory in the query for users with multiple trading accounts. For users with a single trading account, it can be automatically retrieved from the login.
+        schema:
+          $ref: '#/components/schemas/TradingAccountId'
+        required: false
+      - in: query
+        name: assetSymbol
+        example: BTC
+        schema:
+          $ref: '#/components/schemas/AssetSymbol'
+        required: true
+      - in: query
+        name: createdAtDatetime[gte]
+        description: start timestamp of period, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: true
+      - in: query
+        name: createdAtDatetime[lte]
+        description: end timestamp of period, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                maxItems: 25
+                items:
+                  $ref: '#/components/schemas/BorrowInterest'
+        '404':
+          description: Resource Not Found
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security:
+      - jwtTokenAuth: []
+components:
+  schemas:
+    OrderTypeAsString:
+      type: string
+      description: order type can have the following string values `"LMT"`, `"MKT"`, `"STOP_LIMIT"`, `"POST_ONLY"`. `"MKT"` and `"STOP_LIMIT"` are not applicable for Options
+      example: LMT
+    OrderStatusAsString:
+      type: string
+      description: order status can have the following string values `"OPEN"`, `"CLOSED"`, `"CANCELLED"`, `"REJECTED"`
+      example: OPEN
+    OrderHandle:
+      description: Unique numeric (i64) identifier generated on the client side expressed as a string value
+      type: string
+      example: '299834741023572480'
+    TimeStampAsString:
+      type: string
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
+    ClientOtcTradeId:
+      type: string
+      description: unique numeric (i64) identifier generated on the client side expressed as a string value
+      example: '20050900225'
+    OrderID:
+      type: string
+      example: '297735387747975680'
+    SubAccountTransferResponse:
+      description: Get account transfer history
+      type: object
+      properties:
+        requestId:
+          description: unique identifier of the transfer request
+          type: string
+          example: '1'
+        toTradingAccountId:
+          description: recipient's trading account
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+        fromTradingAccountId:
+          description: sender's trading account
+          type: string
+          example: '121000000000001'
+        assetSymbol:
+          description: asset currency of the transfer
+          allOf:
+          - $ref: '#/components/schemas/AssetSymbol'
+        quantity:
+          description: transfer quantity
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        status:
+          description: transfer status [CLOSED/OPEN/REJECTED]
+          type: string
+          example: CLOSED
+        statusReasonCode:
+          description: status reason code
+          type: string
+          example: '6002'
+        statusReason:
+          description: readable status reason
+          type: string
+          example: Executed
+        createdAtTimestamp:
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        createdAtDatetime:
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+    OrderTimeInForceAsString:
+      type: string
+      description: time in force can have the following string values `"GTC"`, `"FOK"`, `"IOC"`, `"GTX"` (Good Till Crossing - for auction orders), see [details](/rest/general/order-type)
+      example: GTX
+    DerivativesSettlementResponse:
+      description: Derivatives Settlement of one market for the trading account
+      type: object
+      properties:
+        tradingAccountId:
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+        symbol:
+          example: BTC-USDC-PERP
+          allOf:
+          - $ref: '#/components/schemas/DatedFutureMarketSymbol'
+        side:
+          allOf:
+          - $ref: '#/components/schemas/OrderSide'
+        settlementQuantity:
+          description: position size at the time of the settlement
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        deltaTradingQuantity:
+          description: the change in the position size from the account's trading activities
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        mtmPnl:
+          description: mark to market profit (losses) accumulated since the last settlement
+          allOf:
+          - $ref: '#/components/schemas/UsdcValue'
+        fundingPnl:
+          description: funding profits (losses) accumulated since the last settlement. Applicable for perpetuals only.
+          allOf:
+          - $ref: '#/components/schemas/UsdcValue'
+        eventType:
+          description: derivatives position update event types
+          type: string
+          example: settlementUpdate
+        settlementMarkPrice:
+          description: market price at which the position was settled for this past cycle
+          allOf:
+          - $ref: '#/components/schemas/UsdcValue'
+        settlementIndexPrice:
+          description: index price at which the position was settled for this past cycle
+          allOf:
+          - $ref: '#/components/schemas/UsdcValue'
+        settlementFundingRate:
+          description: funding rate at which the position was settled for this past cycle. Applicable for perpetuals only.
+          type: string
+          example: '10.0'
+        settlementDatetime:
+          description: Denotes the time the position was settled by the exchange, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        settlementTimestamp:
+          description: Denotes the time the position was settled by the exchange, number of milliseconds since EPOCH
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.00000000'
+    OtcTradeId:
+      type: string
+      description: unique numeric (i64) identifier generated on Bullish side expressed as a string value
+      example: '200000000000000098'
+    OrderSide:
+      type: string
+      example: BUY
+      enum:
+      - BUY
+      - SELL
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
+    AssetID:
+      type: string
+      description: unique asset ID
+      example: '1'
+    AssetSymbol:
+      type: string
+      description: asset symbol as denoted in the world
+      example: BTC
+    OrderSideAsString:
+      type: string
+      description: order side can have the following string values `"BUY"`, `"SELL"`
+      example: BUY
+    TradeID:
+      type: string
+      example: '100020000000000060'
+    UsdcValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.0000'
+    Boolean:
+      type: boolean
+      format: true or false
+      example: true
+    BorrowInterest:
+      type: object
+      required:
+      - assetId
+      - assetSymbol
+      - borrowedQuantity
+      - totalBorrowedQuantity
+      - createdAtDatetime
+      - createdAtTimestamp
+      properties:
+        assetId:
+          description: unique asset ID
+          allOf:
+          - $ref: '#/components/schemas/AssetID'
+        assetSymbol:
+          description: asset symbol
+          allOf:
+          - $ref: '#/components/schemas/AssetSymbol'
+        borrowedQuantity:
+          description: the principal borrowed quantity
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        totalBorrowedQuantity:
+          description: the sum of the principal borrowed quantity and the interest charged
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        createdAtDatetime:
+          description: denotes the hour in which the principal quantity was borrowed or when the interest was charged, ISO 8601 with millisecond as string
+          type: string
+          format: date-time
+          example: '2020-08-21T08:00:00.000Z'
+        createdAtTimestamp:
+          description: denotes the hour in which the principal quantity was borrowed or when the interest was charged
+          type: string
+          format: string
+          example: '1621490985000'
+    QuoteAssetSymbol:
+      type: string
+      description: asset symbol as denoted in the world
+      example: USDC
+    Trade:
+      type: object
+      required:
+      - tradeId
+      - orderId
+      - clientOrderId
+      - symbol
+      - price
+      - quantity
+      - quoteAmount
+      - baseFee
+      - quoteFee
+      - side
+      - isTaker
+      - tradeRebateAmount
+      - tradeRebateAssetSymbol
+      - otcMatchId
+      - otcTradeId
+      - clientOtcTradeId
+      - createdAtTimestamp
+      - createdAtDatetime
+      properties:
+        tradeId:
+          description: unique trade ID
+          allOf:
+          - $ref: '#/components/schemas/TradeID'
+        orderId:
+          description: unique order ID
+          allOf:
+          - $ref: '#/components/schemas/OrderID'
+        clientOrderId:
+          description: unique numeric (i64) identifier generated on the client side
+          allOf:
+          - $ref: '#/components/schemas/OrderHandle'
+        symbol:
+          description: market symbol
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        price:
+          description: price, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quantity:
+          description: quantity, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quoteAmount:
+          description: quote quantity deducted from asset account, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        baseFee:
+          description: base fee, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quoteFee:
+          description: quote fee, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        side:
+          description: order side
+          allOf:
+          - $ref: '#/components/schemas/OrderSideAsString'
+          example: BUY
+        isTaker:
+          description: denotes whether this is a taker's trade
+          allOf:
+          - $ref: '#/components/schemas/Boolean'
+        tradeRebateAmount:
+          description: amount of rebate that is credited to the user as part of the trade.
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        tradeRebateAssetSymbol:
+          description: the symbol of the asset in which the rebate is paid
+          allOf:
+          - $ref: '#/components/schemas/QuoteAssetSymbol'
+        otcMatchId:
+          description: unique OTC match ID.
+          allOf:
+          - $ref: '#/components/schemas/OtcMatchId'
+        otcTradeId:
+          description: unique Bullish OTC trade ID
+          allOf:
+          - $ref: '#/components/schemas/OtcTradeId'
+        clientOtcTradeId:
+          description: unique Client OTC trade ID
+          allOf:
+          - $ref: '#/components/schemas/ClientOtcTradeId'
+        createdAtDatetime:
+          description: denotes the time the trade was executed by the exchange, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        createdAtTimestamp:
+          description: denotes the time the trade was executed by the exchange
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+    OrderStatus:
+      type: string
+      example: OPEN
+      enum:
+      - OPEN
+      - CLOSED
+      - CANCELLED
+      - REJECTED
+    DatedFutureMarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTC-USDC-PERP` for PERPETUAL and `BTC-USDC-20241201` for DATED FUTURE markets.
+      example: BTC-USDC-20241201
+    OtcMatchId:
+      type: string
+      description: unique numeric (i64) identifier generated on Bullish side expressed as a string value
+      example: '15'
+    MarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTCUSDC`
+      example: BTCUSDC
+    Order:
+      type: object
+      required:
+      - orderId
+      - clientOrderId
+      - symbol
+      - price
+      - stopPrice
+      - averageFillPrice
+      - allowBorrow
+      - quantity
+      - quantityFilled
+      - quoteAmount
+      - baseFee
+      - quoteFee
+      - isLiquidation
+      - side
+      - type
+      - timeInForce
+      - status
+      - statusReason
+      - statusReasonCode
+      - createdAtTimestamp
+      - createdAtDatetime
+      properties:
+        clientOrderId:
+          allOf:
+          - $ref: '#/components/schemas/OrderHandle'
+        orderId:
+          description: unique order ID
+          allOf:
+          - $ref: '#/components/schemas/OrderID'
+        symbol:
+          description: market symbol
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        price:
+          description: price, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        averageFillPrice:
+          description: average fill price, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        stopPrice:
+          description: stop price, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        allowBorrow:
+          description: indicates if the order was allowed to borrow (does not indicate that borrowing occurred)
+          type: boolean
+          example: false
+        quantity:
+          description: quantity, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quantityFilled:
+          description: quantity filled, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quoteAmount:
+          description: quote quantity deducted from asset account, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        baseFee:
+          description: base fee rate that will be charged upon trade execution, see [asset value](/rest/general/price-quantity-precision) format
+          example: '0.00100000'
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quoteFee:
+          description: quote fee rate that will be charged upon trade execution, see [asset value](/rest/general/price-quantity-precision) format
+          example: '0.0010'
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        borrowedBaseQuantity:
+          description: quantity borrowed, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        borrowedQuoteQuantity:
+          description: quantity borrowed, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        isLiquidation:
+          description: indicates if the order was executed as a liquidation order
+          type: boolean
+          example: false
+        side:
+          description: order side
+          allOf:
+          - $ref: '#/components/schemas/OrderSideAsString'
+          example: BUY
+        type:
+          description: order type
+          allOf:
+          - $ref: '#/components/schemas/OrderTypeAsString'
+          example: LMT
+        timeInForce:
+          description: time in force
+          allOf:
+          - $ref: '#/components/schemas/OrderTimeInForceAsString'
+          example: GTC
+        status:
+          description: order status
+          allOf:
+          - $ref: '#/components/schemas/OrderStatusAsString'
+          example: OPEN
+        statusReason:
+          description: status reason, describes why the order is in a specific state
+          type: string
+          example: User cancelled
+        statusReasonCode:
+          description: status reason code, see [details](/rest/general/error-rejection-codes)
+          type: string
+          example: '1002'
+        createdAtDatetime:
+          description: denotes the time the order was ACK'd by the exchange, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        createdAtTimestamp:
+          description: denotes the time the order was ACK'd by the exchange
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+  securitySchemes:
+    jwtTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-tagGroups:
+- name: Public Endpoints
+  tags:
+  - general
+  - asset-data
+  - market-data
+  - market-history-data
+  - index-price-data
+  - derivatives-public
+  - auction-public
+- name: Private Endpoints
+  tags:
+  - session-management
+  - trading-accounts
+  - account-assets
+  - orders
+  - trades
+  - amm-instructions
+  - transfer
+  - custody
+  - derivatives
+  - market-maker-protection
+  - history
+  - otc
+  - idb
+  - portfolio-margin-simulator

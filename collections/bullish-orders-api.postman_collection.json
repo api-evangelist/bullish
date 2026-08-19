@@ -1,0 +1,2843 @@
+{
+  "item": [
+    {
+      "id": "627f5b89-7a08-442c-8086-eceac269c054",
+      "name": "orders",
+      "description": {
+        "content": "Authenticated APIs for interacting with orders",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "93ce8c80-105c-42d4-8d91-009b46686c49",
+          "name": "Get Orders",
+          "request": {
+            "name": "Get Orders",
+            "description": {
+              "content": "Retrieve a list of orders placed by a trading account with specified filters.\n- Only the last 24 hours of data is available for querying\n\nThis endpoint requires [authentication](/rest/authentication#generate-a-jwt-token) and supports [pagination](/rest/general/pagination).\nTo filter by `createdAtDatetime` and `createdAtTimestamp`, additional parameters are required. For detailed instructions, see the [Filtering Support](/rest/general/filtering) section.\nAdditionally, this endpoint is subjected to rate limiting.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "clientOrderId",
+                  "value": "<string>",
+                  "description": "Unique numeric (i64) identifier generated on the client side expressed as a string value"
+                },
+                {
+                  "disabled": false,
+                  "key": "side",
+                  "value": "<string>",
+                  "description": "order side"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "order status"
+                },
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "(Required) Id of the trading account"
+                },
+                {
+                  "disabled": false,
+                  "key": "isAuctionOrder",
+                  "value": "<boolean>",
+                  "description": "Filter orders by auction type. `true` returns auction orders (GTX) only, `false` returns non-auction orders only. Omit to return all orders"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9ea3b2cb-5081-4b51-ba9b-300e6eefc145",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "side",
+                      "value": "BUY"
+                    },
+                    {
+                      "key": "status",
+                      "value": "OPEN"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "isAuctionOrder",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "e310eeb5-2797-4896-8740-8295570f7e7a",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "side",
+                      "value": "BUY"
+                    },
+                    {
+                      "key": "status",
+                      "value": "OPEN"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "isAuctionOrder",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "280559dd-0f50-446b-b67e-e348f76e2adf",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "side",
+                      "value": "BUY"
+                    },
+                    {
+                      "key": "status",
+                      "value": "OPEN"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "isAuctionOrder",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9f7b3b63-be8c-45af-83ae-ca6a16aa568a",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "side",
+                      "value": "BUY"
+                    },
+                    {
+                      "key": "status",
+                      "value": "OPEN"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "isAuctionOrder",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "695dadc1-0946-4b97-a339-67806f3ead8a",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "side",
+                      "value": "BUY"
+                    },
+                    {
+                      "key": "status",
+                      "value": "OPEN"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "isAuctionOrder",
+                      "value": "<boolean>"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d028f40d-06b4-4c16-af85-b9e92dbbdcbe",
+          "name": "Create Order",
+          "request": {
+            "name": "Create Order",
+            "description": {
+              "content": "Creates an order, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header.\n\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field ordering \nand addition of null fields in the request body. Quantities and prices does not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\n**Ratelimited:** `True`. Higher tiers of rate limits available by providing the `BX-RATELIMIT-TOKEN` request header.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                "key": "BX-SIGNATURE",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                "key": "BX-TIMESTAMP",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                "key": "BX-NONCE",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                "key": "BX-NONCE-WINDOW-ENABLED",
+                "value": "false"
+              },
+              {
+                "disabled": false,
+                "description": "A numeric referrer id if applicable",
+                "key": "BX-REFERRER",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"commandType\": \"<string>\",\n  \"symbol\": \"<string>\",\n  \"type\": \"<string>\",\n  \"side\": \"<string>\",\n  \"quantity\": \"<string>\",\n  \"timeInForce\": \"<string>\",\n  \"tradingAccountId\": \"<string>\",\n  \"clientOrderId\": \"<string>\",\n  \"price\": \"<string>\",\n  \"stopPrice\": \"<string>\",\n  \"allowBorrow\": false,\n  \"isMMP\": \"<boolean>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "40c1a074-d032-4f07-9177-08cfac9f447a",
+              "name": "Status OK. The create order command was successfully acknowledged. To check the current status of the order, query [Get Order by ID](/rest/api/get-order-by-id-v-2) using the `orderId` received in the response payload. Please consult the section [How To Ensure The Order Of *Create Order* or *Cancel Order* Requests](/rest/order-processing-create-cancel-request-mechanism) for more information.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A numeric referrer id if applicable",
+                    "key": "BX-REFERRER",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"commandType\": \"V3CreateOrder\",\n  \"clientOrderId\": \"1234\",\n  \"symbol\": {\n    \"$ref\": \"#/components/schemas/MarketSymbol/example\"\n  },\n  \"type\": \"LIMIT\",\n  \"side\": \"BUY\",\n  \"price\": \"31000.1\",\n  \"quantity\": \"1.1\",\n  \"timeInForce\": \"GTC\",\n  \"allowBorrow\": true,\n  \"tradingAccountId\": {\n    \"$ref\": \"#/components/schemas/TradingAccountId/example\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Command acknowledged - CreateOrder\",\n  \"requestId\": \"633910976353665024\",\n  \"orderId\": \"633910775316480001\",\n  \"clientOrderId\": \"1234567\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9fd42028-e1ca-4cc7-86be-d50a6ef56ceb",
+              "name": "Bad Request\n\nFor example, sending a request with the `BX-SIGNATURE` header missing will result in the following response:\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A numeric referrer id if applicable",
+                    "key": "BX-REFERRER",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"commandType\": \"V3CreateOrder\",\n  \"clientOrderId\": \"1234\",\n  \"symbol\": {\n    \"$ref\": \"#/components/schemas/MarketSymbol/example\"\n  },\n  \"type\": \"LIMIT\",\n  \"side\": \"BUY\",\n  \"price\": \"31000.1\",\n  \"quantity\": \"1.1\",\n  \"timeInForce\": \"GTC\",\n  \"allowBorrow\": true,\n  \"tradingAccountId\": {\n    \"$ref\": \"#/components/schemas/TradingAccountId/example\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Missing signature header\",\n  \"errorCode\": 6029,\n  \"errorCodeName\": \"MISSING_SIGNATURE_HEADER\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4116fa02-6879-43e3-bff5-c7da4513eb72",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A numeric referrer id if applicable",
+                    "key": "BX-REFERRER",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"commandType\": \"V3CreateOrder\",\n  \"clientOrderId\": \"1234\",\n  \"symbol\": {\n    \"$ref\": \"#/components/schemas/MarketSymbol/example\"\n  },\n  \"type\": \"LIMIT\",\n  \"side\": \"BUY\",\n  \"price\": \"31000.1\",\n  \"quantity\": \"1.1\",\n  \"timeInForce\": \"GTC\",\n  \"allowBorrow\": true,\n  \"tradingAccountId\": {\n    \"$ref\": \"#/components/schemas/TradingAccountId/example\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "01069d11-18d5-4ca1-ac21-aefdf2269d15",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A numeric referrer id if applicable",
+                    "key": "BX-REFERRER",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"commandType\": \"V3CreateOrder\",\n  \"clientOrderId\": \"1234\",\n  \"symbol\": {\n    \"$ref\": \"#/components/schemas/MarketSymbol/example\"\n  },\n  \"type\": \"LIMIT\",\n  \"side\": \"BUY\",\n  \"price\": \"31000.1\",\n  \"quantity\": \"1.1\",\n  \"timeInForce\": \"GTC\",\n  \"allowBorrow\": true,\n  \"tradingAccountId\": {\n    \"$ref\": \"#/components/schemas/TradingAccountId/example\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "59dca72f-c73d-4c22-8e7c-ac26dd8733a0",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A numeric referrer id if applicable",
+                    "key": "BX-REFERRER",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"commandType\": \"V3CreateOrder\",\n  \"clientOrderId\": \"1234\",\n  \"symbol\": {\n    \"$ref\": \"#/components/schemas/MarketSymbol/example\"\n  },\n  \"type\": \"LIMIT\",\n  \"side\": \"BUY\",\n  \"price\": \"31000.1\",\n  \"quantity\": \"1.1\",\n  \"timeInForce\": \"GTC\",\n  \"allowBorrow\": true,\n  \"tradingAccountId\": {\n    \"$ref\": \"#/components/schemas/TradingAccountId/example\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "515cfa96-83dc-4aaa-99cb-21f97cb1d477",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "A numeric referrer id if applicable",
+                    "key": "BX-REFERRER",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"commandType\": \"V3CreateOrder\",\n  \"clientOrderId\": \"1234\",\n  \"symbol\": {\n    \"$ref\": \"#/components/schemas/MarketSymbol/example\"\n  },\n  \"type\": \"LIMIT\",\n  \"side\": \"BUY\",\n  \"price\": \"31000.1\",\n  \"quantity\": \"1.1\",\n  \"timeInForce\": \"GTC\",\n  \"allowBorrow\": true,\n  \"tradingAccountId\": {\n    \"$ref\": \"#/components/schemas/TradingAccountId/example\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "de1bbdbf-1bad-4d97-9aa9-09bc923bb278",
+          "name": "Get Order by ID",
+          "request": {
+            "name": "Get Order by ID",
+            "description": {
+              "content": "Retrieve a specific order using its unique identifier.\n\nThis endpoint requires [authentication](/rest/authentication#generate-a-jwt-token) and is subjected to rate limiting.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "orders",
+                ":orderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "(Required) Id of the trading account"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "orderId",
+                  "description": "(Required) order ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8855e277-8a92-4eae-baa2-9213f2bee1bd",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "orderId",
+                      "description": "(Required) order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orderId\": \"297735387747975680\",\n  \"clientOrderId\": \"299834741023572480\",\n  \"symbol\": \"BTCUSDC\",\n  \"price\": \"1.00000000\",\n  \"stopPrice\": \"1.00000000\",\n  \"averageFillPrice\": \"1.00000000\",\n  \"allowBorrow\": false,\n  \"quantity\": \"1.00000000\",\n  \"quantityFilled\": \"1.00000000\",\n  \"quoteAmount\": \"1.00000000\",\n  \"baseFee\": \"0.00100000\",\n  \"quoteFee\": \"0.0010\",\n  \"isLiquidation\": false,\n  \"side\": \"BUY\",\n  \"type\": \"LMT\",\n  \"timeInForce\": \"GTC\",\n  \"status\": \"OPEN\",\n  \"statusReason\": \"User cancelled\",\n  \"statusReasonCode\": \"1002\",\n  \"createdAtTimestamp\": \"1621490985000\",\n  \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n  \"borrowedBaseQuantity\": \"1.00000000\",\n  \"borrowedQuoteQuantity\": \"1.00000000\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "31f6ca5d-1d3d-46b0-b7eb-9f0dd7f7d8c4",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "orderId",
+                      "description": "(Required) order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ae362d63-6f73-4f13-83d4-9c5375f0c18b",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "orderId",
+                      "description": "(Required) order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "9c15c108-4016-48f3-a7d2-07d0596021eb",
+              "name": "Order not found (order ID is invalid)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "orderId",
+                      "description": "(Required) order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "08fc659b-d016-4a7b-a752-590044b916bc",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "orderId",
+                      "description": "(Required) order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "abdba499-c667-41ca-b3f2-d580ed578ccc",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    ":orderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "orderId",
+                      "description": "(Required) order ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "91a74a97-5d5f-4329-bcc6-69ef52d69d14",
+          "name": "Get Order by clientOrder ID",
+          "request": {
+            "name": "Get Order by clientOrder ID",
+            "description": {
+              "content": "Retrieve a specific order using its unique identifier generated on the client side.\n\nThis endpoint requires [authentication](/rest/authentication#generate-a-jwt-token) and is subjected to rate limiting.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "orders",
+                "client-order-id",
+                ":clientOrderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "(Required) Id of the trading account"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "clientOrderId",
+                  "description": "(Required) unique numeric (i64) identifier generated on the client side"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a383f2cd-ddb7-4086-9a49-24b83c183104",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "client-order-id",
+                    ":clientOrderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "clientOrderId",
+                      "description": "(Required) unique numeric (i64) identifier generated on the client side"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"orderId\": \"297735387747975680\",\n  \"clientOrderId\": \"299834741023572480\",\n  \"symbol\": \"BTCUSDC\",\n  \"price\": \"1.00000000\",\n  \"stopPrice\": \"1.00000000\",\n  \"averageFillPrice\": \"1.00000000\",\n  \"allowBorrow\": false,\n  \"quantity\": \"1.00000000\",\n  \"quantityFilled\": \"1.00000000\",\n  \"quoteAmount\": \"1.00000000\",\n  \"baseFee\": \"0.00100000\",\n  \"quoteFee\": \"0.0010\",\n  \"isLiquidation\": false,\n  \"side\": \"BUY\",\n  \"type\": \"LMT\",\n  \"timeInForce\": \"GTC\",\n  \"status\": \"OPEN\",\n  \"statusReason\": \"User cancelled\",\n  \"statusReasonCode\": \"1002\",\n  \"createdAtTimestamp\": \"1621490985000\",\n  \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n  \"borrowedBaseQuantity\": \"1.00000000\",\n  \"borrowedQuoteQuantity\": \"1.00000000\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "61c4f34c-a544-4ee3-976d-8d6781d3f6dc",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "client-order-id",
+                    ":clientOrderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "clientOrderId",
+                      "description": "(Required) unique numeric (i64) identifier generated on the client side"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e0813733-b50b-49f4-917f-2c0a334e5816",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "client-order-id",
+                    ":clientOrderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "clientOrderId",
+                      "description": "(Required) unique numeric (i64) identifier generated on the client side"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fb5b9889-a4d8-452c-893e-3b6cec3a396e",
+              "name": "Order not found (clientOrder ID is invalid)",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "client-order-id",
+                    ":clientOrderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "clientOrderId",
+                      "description": "(Required) unique numeric (i64) identifier generated on the client side"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f17ae72c-0c51-471d-ba77-26ba53b1b679",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "client-order-id",
+                    ":clientOrderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "clientOrderId",
+                      "description": "(Required) unique numeric (i64) identifier generated on the client side"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e3718c89-8b9c-41a3-ac5c-56beaad579ab",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "orders",
+                    "client-order-id",
+                    ":clientOrderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "clientOrderId",
+                      "description": "(Required) unique numeric (i64) identifier generated on the client side"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "34455f18-b070-4ce0-b05f-1677d7efd3c8",
+          "name": "Cancel Order Commands",
+          "request": {
+            "name": "Cancel Order Commands",
+            "description": {
+              "content": "Submits a command to the trading engine. A successful response indicates that the command entry was acknowledged \nbut does not indicate that the command was executed. \nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field \nordering and addition of null fields in the request body. Quantities and prices does not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\nCommand schemas and examples are provided below. Supported commands:\n- V3CancelOrder\n- V1CancelAllOrders\n- V1CancelAllOrdersByMarket\n- V1DelayedCancelAllOrders\n- V1UnsetDelayedCancelAllOrders\n\nRequires\n- [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`. Higher tiers of rate limits available by providing the `BX-RATELIMIT-TOKEN` request header.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "command"
+              ],
+              "hash": "cancellations",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                "key": "BX-SIGNATURE",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                "key": "BX-TIMESTAMP",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                "key": "BX-NONCE",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                "key": "BX-NONCE-WINDOW-ENABLED",
+                "value": "false"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"commandType\": \"<string>\",\n  \"tradingAccountId\": \"<string>\",\n  \"symbol\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"clientOrderId\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "341e228b-7a1d-4fe5-b5fc-aaa1475a2ff4",
+              "name": "Status OK. This means a command was successfully acknowledged.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "cancellations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/CancelOrderCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"$ref\": \"#/components/schemas/CancelOrderCommandResponseV3/example\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "076f0029-5bc8-417e-b3ad-d6fb471c22fe",
+              "name": "Bad Request\n\nFor example, sending a request with the `BX-SIGNATURE` header missing will result in the following response:\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "cancellations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/CancelOrderCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Missing signature header\",\n  \"errorCode\": 6029,\n  \"errorCodeName\": \"MISSING_SIGNATURE_HEADER\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "d8a17a33-c665-42e6-942b-f167059f20eb",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "cancellations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/CancelOrderCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "54266ea4-4732-4720-98c3-6ec2da78461b",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "cancellations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/CancelOrderCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f3eae5e6-2f83-4469-92ca-324ec43ba210",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "cancellations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/CancelOrderCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "02d0d3a9-5201-4aff-9763-69b145941d03",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "cancellations",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/CancelOrderCommandV3/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "837c0847-a1ba-44e7-b803-59bdc95fd65e",
+          "name": "Amend Order Command",
+          "request": {
+            "name": "Amend Order Command",
+            "description": {
+              "content": "Ability to amend the `price`, `quantity` and `type` (i.e. change from Taker Only to Maker Only and vice versa) on GTC Limit orders. It can be applied only to open orders (`quantityFilled=0` and `status=OPEN`). For Auction Limit Orders (LOC), only `price` can be amended. Auction Market Orders (MOC) do not support amendment.\n\nSubmits a command to the trading engine to amend an order. A successful response indicates that the command entry was acknowledged \nbut does not indicate that the command was executed. \n\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field \nordering and addition of null fields in the request body. Quantities and prices does not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\nRequires\n- [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`. Higher tiers of rate limits available by providing the `BX-RATELIMIT-TOKEN` request header.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "command"
+              ],
+              "hash": "amend",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                "key": "BX-SIGNATURE",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                "key": "BX-TIMESTAMP",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                "key": "BX-NONCE",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                "key": "BX-NONCE-WINDOW-ENABLED",
+                "value": "false"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"commandType\": \"<string>\",\n  \"symbol\": \"<string>\",\n  \"tradingAccountId\": \"<string>\",\n  \"orderId\": \"<string>\",\n  \"type\": \"<string>\",\n  \"price\": \"<string>\",\n  \"clientOrderId\": \"<string>\",\n  \"quantity\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d0fa83f4-998c-4dfe-b4e2-228f11ee08ff",
+              "name": "Status OK. This means a command was successfully acknowledged.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "amend",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/AmendOrderCommandV1/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"$ref\": \"#/components/schemas/AmendOrderCommandResponseV1/example\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "557cd674-bda9-49ac-b46a-a51eb304b661",
+              "name": "Bad Request\n\nFor example, sending a request with the `BX-SIGNATURE` header missing will result in the following response:\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "amend",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/AmendOrderCommandV1/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Missing signature header\",\n  \"errorCode\": 6029,\n  \"errorCodeName\": \"MISSING_SIGNATURE_HEADER\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "051fe38b-bc5a-4e32-9e7a-e641f8558f7c",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "amend",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/AmendOrderCommandV1/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1043e0b1-232a-44d2-8449-439bf9b7493c",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "amend",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/AmendOrderCommandV1/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "87bb4cef-01e1-4201-af1e-f93c821aee66",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "amend",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/AmendOrderCommandV1/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "01828e76-24ae-4ddd-8f46-d9e5c6bde27d",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "command"
+                  ],
+                  "hash": "amend",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)\n",
+                    "key": "BX-NONCE-WINDOW-ENABLED",
+                    "value": "false"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/AmendOrderCommandV1/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exchange.bullish.com/trading-api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3ec44cd0-f4e9-46a0-a0ab-bbb01de6a29e",
+    "name": "Bullish Trading Orders API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API specification for the Bullish Trading API.\n\nContact Support:\n Name: Bullish Help Center\n Email: support@bullish.com",
+      "type": "text/plain"
+    }
+  }
+}

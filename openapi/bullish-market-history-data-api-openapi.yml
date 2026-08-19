@@ -1,0 +1,477 @@
+openapi: 3.2.0
+info:
+  description: REST API specification for the Bullish Trading API.
+  version: 1.0.0
+  title: Bullish Trading Market History Data API
+  contact:
+    name: Bullish Help Center
+    email: support@bullish.com
+    url: https://support.bullish.com
+servers:
+- url: https://api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://registered.api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://prod.access.bullish.com/trading-api
+  description: PRODUCTION (Direct Connect)
+- url: https://api.bugbounty.bullish.com/trading-api
+  description: SECURITY SANDBOX
+- url: https://api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://registered.api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://simnext.access.bullish.com/trading-api
+  description: API SANDBOX (Direct Connect)
+tags:
+- name: market-history-data
+  x-displayName: Market History Data
+paths:
+  /v1/history/markets/{symbol}/trades:
+    get:
+      parameters:
+      - in: path
+        name: symbol
+        schema:
+          $ref: '#/components/schemas/MarketSymbol'
+        required: true
+        description: symbol to get
+      - in: query
+        name: createdAtDatetime[gte]
+        description: start timestamp of period, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: false
+      - in: query
+        name: createdAtDatetime[lte]
+        description: end timestamp of period, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: false
+      tags:
+      - market-history-data
+      summary: Get Historical Market Trades
+      description: 'Get Historical Market Trades by Market Symbol. Supports querying of up to 7 days of data at a time.
+
+        - [supports pagination](/rest/general/pagination)
+
+
+        **Ratelimited:** `False`
+
+        - On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days
+
+        '
+      operationId: getHistoricalMarketTrades
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                maxItems: 25
+                items:
+                  $ref: '#/components/schemas/ObfuscatedTradeWithId'
+        '404':
+          description: Resource Not Found
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security: []
+  /v1/history/option-trades:
+    get:
+      parameters:
+      - in: query
+        name: createdAtDatetime[gte]
+        description: start timestamp of period, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: false
+      - in: query
+        name: createdAtDatetime[lte]
+        description: end timestamp of period, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: false
+      - in: query
+        name: optionType
+        description: Specifies if it's a call (right to buy) or a put (right to sell)
+        schema:
+          $ref: '#/components/schemas/OptionType'
+        required: false
+      tags:
+      - market-history-data
+      summary: Get Historical Options Market Trades
+      description: 'Get Historical Options Market Trades by `optionType`. If `optionType` is not specified in request parameters, both CALL & PUT markets will be returned
+
+        - On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days
+
+        - Only max 100 data will be returned during the window
+
+        - Default: If `createdAtDatetime` is omitted, the endpoint returns a rolling 7-day window of trade history, starting from the most recent trade across all options markets
+
+        '
+      operationId: getHistoricalOptionTrades
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                maxItems: 100
+                items:
+                  $ref: '#/components/schemas/OptionTrade'
+        '404':
+          description: Resource Not Found
+        '429':
+          description: Too Many Requests
+        '400':
+          description: Bad Request
+        '500':
+          description: Internal Server Error
+      security: []
+  /v1/history/markets/{symbol}/funding-rate:
+    get:
+      parameters:
+      - in: path
+        name: symbol
+        schema:
+          $ref: '#/components/schemas/PerpMarketSymbol'
+        required: true
+        description: symbol to get
+      - in: query
+        name: updatedAtDatetime[gte]
+        description: start timestamp of period, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+      - in: query
+        name: updatedAtDatetime[lte]
+        description: end timestamp of period, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+      tags:
+      - market-history-data
+      summary: Get Historical Funding Rate
+      description: 'Get historical hourly funding rate for the requested perpetual market
+
+        - [supports pagination](/rest/general/pagination)
+
+        - On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days
+
+        '
+      operationId: getFundingRateHistory
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                maxItems: 100
+                items:
+                  $ref: '#/components/schemas/FundingRateHistoryResponse'
+        '400':
+          description: Bad Request
+        '404':
+          description: Market Symbol Not Found
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security: []
+  /v1/history/markets/{symbol}/auctions:
+    get:
+      parameters:
+      - in: path
+        name: symbol
+        schema:
+          $ref: '#/components/schemas/MarketSymbol'
+        required: true
+        description: market symbol, e.g. BTCUSDC
+      - in: query
+        name: createdAtDatetime[gte]
+        description: start timestamp of period, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: false
+      - in: query
+        name: createdAtDatetime[lte]
+        description: end timestamp of period, ISO 8601 with millisecond as string
+        schema:
+          $ref: '#/components/schemas/DateTime'
+        required: false
+      tags:
+      - market-history-data
+      summary: Get Historical Auction Results
+      description: 'Get historical auction results for a symbol.
+
+        - [supports pagination](/rest/general/pagination)
+
+        - filtering on `createdAtDatetime` requires additional keywords, [see filtering support](/rest/general/filtering)
+
+        '
+      operationId: getHistoricalAuctionResults
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                maxItems: 25
+                items:
+                  $ref: '#/components/schemas/AuctionResult'
+        '400':
+          description: Bad Request
+        '404':
+          description: Symbol not found
+        '500':
+          description: Internal Server Error
+      security: []
+components:
+  schemas:
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.00000000'
+    AuctionResult:
+      type: object
+      properties:
+        auctionId:
+          description: auction identifier
+          type: string
+          example: '397735387747975680'
+        symbol:
+          description: market symbol
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        crossTime:
+          description: actual cross time, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        clearingPrice:
+          description: final clearing price
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        referencePrice:
+          description: Last Trade Price on Regular Continuous Orderbook; if Last Trade Price is not available, then Index Price
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        pairedQuantity:
+          description: total matched volume
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        imbalanceDirection:
+          description: 'final imbalance direction: BUY, SELL, or NONE'
+          type: string
+          enum:
+          - BUY
+          - SELL
+          - NONE
+          example: NONE
+        imbalanceQuantity:
+          description: final imbalance quantity
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        createdAtDatetime:
+          description: denotes the time the auction cross was executed, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+    OtcTradeId:
+      type: string
+      description: unique numeric (i64) identifier generated on Bullish side expressed as a string value
+      example: '200000000000000098'
+    OptionMarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTC-USDC-20241004-70000-C` for OPTION markets.
+      example: BTC-USDC-20241004-70000-C
+    OptionType:
+      description: Type of Option market
+      example: CALL
+      type: string
+      enum:
+      - CALL
+      - PUT
+    TimeStampAsString:
+      type: string
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
+    OrderSideAsString:
+      type: string
+      description: order side can have the following string values `"BUY"`, `"SELL"`
+      example: BUY
+    TradeID:
+      type: string
+      example: '100020000000000060'
+    FundingRateHistoryResponse:
+      description: Hourly Funding Rate History of one market
+      type: array
+      items:
+        type: object
+        properties:
+          fundingRate:
+            description: funding rate for this hour
+            type: string
+            example: '0.1'
+          updatedAtDatetime:
+            description: date time of the last funding rate update for the hour
+            type: string
+            example: '2024-09-16T12:59:59.000Z'
+    OptionTrade:
+      type: object
+      required:
+      - symbol
+      - tradeId
+      - price
+      - quantity
+      - side
+      - isTaker
+      - createdAtTimestamp
+      - createdAtDatetime
+      - optionType
+      - otcTradeId
+      properties:
+        symbol:
+          description: option market symbol
+          allOf:
+          - $ref: '#/components/schemas/OptionMarketSymbol'
+        tradeId:
+          description: unique trade ID
+          allOf:
+          - $ref: '#/components/schemas/TradeID'
+        price:
+          description: price
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quantity:
+          description: quantity
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        side:
+          description: order side
+          allOf:
+          - $ref: '#/components/schemas/OrderSideAsString'
+          example: BUY
+        isTaker:
+          description: denotes whether this is a taker's trade
+          allOf:
+          - $ref: '#/components/schemas/Boolean'
+        createdAtDatetime:
+          description: denotes the time the trade was executed by the exchange, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        createdAtTimestamp:
+          description: denotes the time the trade was executed by the exchange
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        optionType:
+          description: Specifies if it's a call (right to buy) or a put (right to sell)
+          allOf:
+          - $ref: '#/components/schemas/OptionType'
+        otcTradeId:
+          description: unique Bullish OTC trade ID
+          allOf:
+          - $ref: '#/components/schemas/OtcTradeId'
+    PerpMarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTC-USDC-PERP` for PERPETUAL market
+      example: BTC-USDC-PERP
+    MarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTCUSDC`
+      example: BTCUSDC
+    Boolean:
+      type: boolean
+      format: true or false
+      example: true
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+    ObfuscatedTradeWithId:
+      type: object
+      required:
+      - tradeId
+      - symbol
+      - price
+      - quantity
+      - side
+      - isTaker
+      - createdAtTimestamp
+      - createdAtDatetime
+      properties:
+        tradeId:
+          description: unique trade ID
+          allOf:
+          - $ref: '#/components/schemas/TradeID'
+        symbol:
+          description: market symbol
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        price:
+          description: price
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quantity:
+          description: quantity
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        side:
+          description: order side
+          allOf:
+          - $ref: '#/components/schemas/OrderSideAsString'
+          example: BUY
+        isTaker:
+          description: denotes whether this is a taker's trade
+          allOf:
+          - $ref: '#/components/schemas/Boolean'
+        createdAtDatetime:
+          description: denotes the time the trade was executed by the exchange, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        createdAtTimestamp:
+          description: denotes the time the trade was executed by the exchange
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        auctionId:
+          description: unique Bullish auction identifier. Present only for auction trades
+          type: string
+          example: '397735387747975680'
+  securitySchemes:
+    jwtTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-tagGroups:
+- name: Public Endpoints
+  tags:
+  - general
+  - asset-data
+  - market-data
+  - market-history-data
+  - index-price-data
+  - derivatives-public
+  - auction-public
+- name: Private Endpoints
+  tags:
+  - session-management
+  - trading-accounts
+  - account-assets
+  - orders
+  - trades
+  - amm-instructions
+  - transfer
+  - custody
+  - derivatives
+  - market-maker-protection
+  - history
+  - otc
+  - idb
+  - portfolio-margin-simulator

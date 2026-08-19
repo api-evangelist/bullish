@@ -1,0 +1,260 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading Custody API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "custody",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Custody Transaction History",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/wallets/transactions",
+            "params": [
+              {
+                "name": "createdAtDatetime[gte]",
+                "value": "",
+                "type": "query",
+                "description": "start timestamp of period, ISO 8601 with millisecond as string"
+              },
+              {
+                "name": "createdAtDatetime[lte]",
+                "value": "",
+                "type": "query",
+                "description": "end timestamp of period, ISO 8601 with millisecond as string"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get custody transaction history, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\nPlease note that Custody endpoints utilize a non-multiplied asset format for long decimal assets like SHIB and PEPE, ensuring consistency with real-world asset representation. This differs from Trading endpoints, which use a multiplied asset format, such as SHIB1M and PEPE1M. For more information, please see [help center](https://bullishexchange.atlassian.net/w"
+        },
+        {
+          "info": {
+            "name": "Get Withdrawal Limits for Symbol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/wallets/limits/:symbol",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get withdrawal limits for symbol, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\nPlease note that Custody endpoints utilize a non-multiplied asset format for long decimal assets like SHIB and PEPE, ensuring consistency with real-world asset representation. This differs from Trading endpoints, which use a multiplied asset format, such as SHIB1M and PEPE1M. For more information, please see [help center](https://bullishexchange.atlassian.net/"
+        },
+        {
+          "info": {
+            "name": "Get Deposit Instructions for Crypto",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/wallets/deposit-instructions/crypto/:symbol",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get deposit instructions, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\nPlease note that Custody endpoints utilize a non-multiplied asset format for long decimal assets like SHIB and PEPE, ensuring consistency with real-world asset representation. This differs from Trading endpoints, which use a multiplied asset format, such as SHIB1M and PEPE1M. For more information, please see [help center](https://bullishexchange.atlassian.net/wiki/spa"
+        },
+        {
+          "info": {
+            "name": "Get Withdrawal Instructions for Crypto",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/wallets/withdrawal-instructions/crypto/:symbol",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "signed",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "locked",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get crypto withdrawal instructions, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header. Please note that all withdrawal addresses must be whitelisted via the Bullish website before any digital asset withdrawals can be processed.\n\nPlease note that Custody endpoints utilize a non-multiplied asset format for long decimal assets like SHIB and PEPE, ensuring consistency with real-world asset representation. This differs from Trading endpoints, which"
+        },
+        {
+          "info": {
+            "name": "Get Deposit Instructions for Fiat",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/wallets/deposit-instructions/fiat/:symbol",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "USD",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get deposit instructions, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True` - see [custody limits](/rest/general/rate-limits)\n"
+        },
+        {
+          "info": {
+            "name": "Get Withdrawal Instructions for Fiat",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/wallets/withdrawal-instructions/fiat/:symbol",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get withdrawal instructions added by the user, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header. Please note that before withdrawal destinations can be used for withdrawing to, they must be whitelisted on the Bullish website.\n\n**Ratelimited:** `True` - see [custody limits](/rest/general/rate-limits)\n"
+        },
+        {
+          "info": {
+            "name": "Initiate Self-Hosted Wallet Verification",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/wallets/self-hosted/initiate",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is used for initiating wallet verification requests.\n\nNote: users will have 24 hours to complete the wallet verification by sending the exact total amount to the Bullish deposit address provided.\n\n**Ratelimited:** `True` - see [custody limits](/rest/general/rate-limits)\n"
+        },
+        {
+          "info": {
+            "name": "Get a List of Self-Hosted Wallet Verification Attempts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/wallets/self-hosted/verification-attempts",
+            "params": [
+              {
+                "name": "address",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "destinationId",
+                "value": "",
+                "type": "query"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint provides a history of all Wallet Verification attempts, including those that are completed, pending verification and expired.\n\n**Ratelimited:** `True` - see [custody limits](/rest/general/rate-limits)\n"
+        },
+        {
+          "info": {
+            "name": "Delete Existing Wallet Address",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/wallets/withdrawal-instructions/:destinationId",
+            "params": [
+              {
+                "name": "destinationId",
+                "value": "",
+                "type": "path"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "This endpoint is used for deleting any existing withdrawal addresses.\n\n**Ratelimited:** `True` - see [custody limits](/rest/general/rate-limits)\n"
+        },
+        {
+          "info": {
+            "name": "Create Withdrawal",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/wallets/withdrawal",
+            "headers": [
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Trigger a withdrawal, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\nThe `BX-SIGNATURE` header should be created by signing the request with an ECDSA API Key as follows:\n\n1. Construct a string that concatenates the following fields:\n    - `timestamp` - current epoch milliseconds e.g. 1697008474031\n    - `nonce` - a UUID identifier to protect against replay attacks e.g. 255241a1-2cde-4954-87b1-13beef547960\n    - `request method` - e.g. POST"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

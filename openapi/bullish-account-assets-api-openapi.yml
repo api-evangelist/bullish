@@ -1,0 +1,219 @@
+openapi: 3.2.0
+info:
+  description: REST API specification for the Bullish Trading API.
+  version: 1.0.0
+  title: Bullish Trading Account Assets API
+  contact:
+    name: Bullish Help Center
+    email: support@bullish.com
+    url: https://support.bullish.com
+servers:
+- url: https://api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://registered.api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://prod.access.bullish.com/trading-api
+  description: PRODUCTION (Direct Connect)
+- url: https://api.bugbounty.bullish.com/trading-api
+  description: SECURITY SANDBOX
+- url: https://api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://registered.api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://simnext.access.bullish.com/trading-api
+  description: API SANDBOX (Direct Connect)
+tags:
+- name: account-assets
+  x-displayName: Account Assets
+  description: Authenticated APIs for reading account data
+paths:
+  /v1/accounts/asset:
+    get:
+      tags:
+      - account-assets
+      summary: Get All Account Assets
+      description: 'Gets the asset accounts, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header
+
+
+        **Ratelimited:** `True`
+
+        '
+      operationId: getAssetAccounts
+      parameters:
+      - in: query
+        name: tradingAccountId
+        description: Id of the trading account
+        schema:
+          $ref: '#/components/schemas/TradingAccountId'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                maxItems: 10
+                items:
+                  $ref: '#/components/schemas/AssetAccount'
+        '401':
+          description: Not Authenticated
+        '403':
+          description: Access Forbidden
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security:
+      - jwtTokenAuth: []
+  /v1/accounts/asset/{symbol}:
+    get:
+      parameters:
+      - in: path
+        name: symbol
+        schema:
+          $ref: '#/components/schemas/AssetSymbol'
+        required: true
+      - in: query
+        name: tradingAccountId
+        description: Id of the trading account
+        schema:
+          $ref: '#/components/schemas/TradingAccountId'
+        required: true
+      tags:
+      - account-assets
+      summary: Get All Account Assets by Symbol
+      description: 'Gets the asset account by symbol, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header
+
+
+        **Ratelimited:** `True`
+
+        '
+      operationId: getAssetAccountBySymbol
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AssetAccount'
+        '401':
+          description: Not Authenticated
+        '403':
+          description: Access Forbidden
+        '404':
+          description: Resource Not Found
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security:
+      - jwtTokenAuth: []
+components:
+  schemas:
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.00000000'
+    AssetSymbol:
+      type: string
+      description: asset symbol as denoted in the world
+      example: BTC
+    AssetAccount:
+      type: object
+      required:
+      - tradingAccountId
+      - assetId
+      - assetSymbol
+      - availableQuantity
+      - borrowedQuantity
+      - lockedQuantity
+      - loanedQuantity
+      - updatedAtDatetime
+      - updatedAtTimestamp
+      properties:
+        tradingAccountId:
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+        assetId:
+          description: asset ID
+          allOf:
+          - $ref: '#/components/schemas/AssetID'
+        assetSymbol:
+          description: asset symbol
+          allOf:
+          - $ref: '#/components/schemas/AssetSymbol'
+        availableQuantity:
+          description: the assets that are available to use on the account, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        borrowedQuantity:
+          description: the assets on the account that are borrowed, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        lockedQuantity:
+          description: the assets on the account that are locked in orders, loans and AMM instructions, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        loanedQuantity:
+          description: the assets on the account that are being loaned, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        updatedAtDatetime:
+          description: denotes the time the AMM instruction was updated by the exchange, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        updatedAtTimestamp:
+          description: denotes the time the AMM instruction was updated by the exchange
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+    TimeStampAsString:
+      type: string
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
+    AssetID:
+      type: string
+      description: unique asset ID
+      example: '1'
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+  securitySchemes:
+    jwtTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-tagGroups:
+- name: Public Endpoints
+  tags:
+  - general
+  - asset-data
+  - market-data
+  - market-history-data
+  - index-price-data
+  - derivatives-public
+  - auction-public
+- name: Private Endpoints
+  tags:
+  - session-management
+  - trading-accounts
+  - account-assets
+  - orders
+  - trades
+  - amm-instructions
+  - transfer
+  - custody
+  - derivatives
+  - market-maker-protection
+  - history
+  - otc
+  - idb
+  - portfolio-margin-simulator

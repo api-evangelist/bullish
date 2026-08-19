@@ -1,0 +1,1828 @@
+{
+  "item": [
+    {
+      "id": "6bc38a69-6bc3-474b-87db-24866cf0fe8a",
+      "name": "history",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e89443d1-3d3b-477e-bcd6-fe5e3750d703",
+          "name": "Get Historical Orders",
+          "request": {
+            "name": "Get Historical Orders",
+            "description": {
+              "content": "Retrieve a list of orders placed by a trading account with specified filters.\n- On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days\n\nThis endpoint requires [authentication](/rest/authentication#generate-a-jwt-token) and supports [pagination](/rest/general/pagination).\nTo filter by `createdAtDatetime` and `createdAtTimestamp`, additional parameters are required. For detailed instructions, see the [Filtering Support](/rest/general/filtering) section.\nAdditionally, this endpoint is subjected to rate limiting.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "history",
+                "orders"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderId",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "clientOrderId",
+                  "value": "<string>",
+                  "description": "Unique numeric (i64) identifier generated on the client side expressed as a string value"
+                },
+                {
+                  "disabled": false,
+                  "key": "side",
+                  "value": "<string>",
+                  "description": "order side"
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "order status"
+                },
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "(Required) Id of the trading account"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[gte]",
+                  "value": "<dateTime>",
+                  "description": "start timestamp of period, ISO 8601 with millisecond as string"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[lte]",
+                  "value": "<dateTime>",
+                  "description": "end timestamp of period, ISO 8601 with millisecond as string"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "c3d69d13-27ad-4508-89d7-936a342d726d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "history",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "297735387747975680"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "side",
+                      "value": "BUY"
+                    },
+                    {
+                      "key": "status",
+                      "value": "OPEN"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  },\n  {\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"stopPrice\": \"1.00000000\",\n    \"averageFillPrice\": \"1.00000000\",\n    \"allowBorrow\": false,\n    \"quantity\": \"1.00000000\",\n    \"quantityFilled\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"0.00100000\",\n    \"quoteFee\": \"0.0010\",\n    \"isLiquidation\": false,\n    \"side\": \"BUY\",\n    \"type\": \"LMT\",\n    \"timeInForce\": \"GTC\",\n    \"status\": \"OPEN\",\n    \"statusReason\": \"User cancelled\",\n    \"statusReasonCode\": \"1002\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"borrowedBaseQuantity\": \"1.00000000\",\n    \"borrowedQuoteQuantity\": \"1.00000000\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "b6a3b569-f43a-466b-aa93-480456a6c115",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "history",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "297735387747975680"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "side",
+                      "value": "BUY"
+                    },
+                    {
+                      "key": "status",
+                      "value": "OPEN"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "42f50baa-93e4-4157-90a3-0c8e70f5432b",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "history",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "297735387747975680"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "side",
+                      "value": "BUY"
+                    },
+                    {
+                      "key": "status",
+                      "value": "OPEN"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "111e300d-382e-4da9-8267-75e5bde9667b",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "history",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "297735387747975680"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "side",
+                      "value": "BUY"
+                    },
+                    {
+                      "key": "status",
+                      "value": "OPEN"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "34f360c4-99ed-44f7-b489-628f0f0f6853",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "history",
+                    "orders"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "297735387747975680"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "side",
+                      "value": "BUY"
+                    },
+                    {
+                      "key": "status",
+                      "value": "OPEN"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "bd7b9d79-ebff-458a-af48-9170b1a3d012",
+          "name": "Get Historical Trades",
+          "request": {
+            "name": "Get Historical Trades",
+            "description": {
+              "content": "Get a list of trades based on specified filters.\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n- On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days\n- [supports pagination](/rest/general/pagination)\n- filtering on `createdAtDatetime`, `createdAtTimestamp` requires additional keywords, [see filtering support](/rest/general/filtering)\n\n**Ratelimited:** `True`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "history",
+                "trades"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderId",
+                  "value": "<string>",
+                  "description": "unique order ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "tradeId",
+                  "value": "<string>",
+                  "description": "unique trade ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "clientOrderId",
+                  "value": "<string>",
+                  "description": "unique numeric (i64) identifier generated on the client side, only orderId or clientOrderId can be used"
+                },
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "(Required) Id of the trading account"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[gte]",
+                  "value": "<dateTime>",
+                  "description": "start timestamp of period, ISO 8601 with millisecond as string"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[lte]",
+                  "value": "<dateTime>",
+                  "description": "end timestamp of period, ISO 8601 with millisecond as string"
+                },
+                {
+                  "disabled": false,
+                  "key": "otcTradeId",
+                  "value": "<string>",
+                  "description": "unique Bullish otc trade id"
+                },
+                {
+                  "disabled": false,
+                  "key": "clientOtcTradeId",
+                  "value": "<string>",
+                  "description": "unique client otc trade id"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "a6b5308c-c4a4-4b28-a9d7-534804c539a6",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "297735387747975680"
+                    },
+                    {
+                      "key": "tradeId",
+                      "value": "100020000000000060"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "otcTradeId",
+                      "value": "200000000000000098"
+                    },
+                    {
+                      "key": "clientOtcTradeId",
+                      "value": "20050900225"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "345ebbdc-0a81-495b-8029-33254444935b",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "297735387747975680"
+                    },
+                    {
+                      "key": "tradeId",
+                      "value": "100020000000000060"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "otcTradeId",
+                      "value": "200000000000000098"
+                    },
+                    {
+                      "key": "clientOtcTradeId",
+                      "value": "20050900225"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b0a06cbc-c10d-4d79-948d-b5fb020a346a",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "297735387747975680"
+                    },
+                    {
+                      "key": "tradeId",
+                      "value": "100020000000000060"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "otcTradeId",
+                      "value": "200000000000000098"
+                    },
+                    {
+                      "key": "clientOtcTradeId",
+                      "value": "20050900225"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0d55529e-119b-4a46-9748-df2aabc6d1ba",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "297735387747975680"
+                    },
+                    {
+                      "key": "tradeId",
+                      "value": "100020000000000060"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "otcTradeId",
+                      "value": "200000000000000098"
+                    },
+                    {
+                      "key": "clientOtcTradeId",
+                      "value": "20050900225"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b613dfb7-7468-4cde-8e51-17e2de34190b",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "297735387747975680"
+                    },
+                    {
+                      "key": "tradeId",
+                      "value": "100020000000000060"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "otcTradeId",
+                      "value": "200000000000000098"
+                    },
+                    {
+                      "key": "clientOtcTradeId",
+                      "value": "20050900225"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "49dd6312-8621-4ebf-b610-c742bbe37fe7",
+          "name": "Get Historical Hourly Derivatives Settlement",
+          "request": {
+            "name": "Get Historical Hourly Derivatives Settlement",
+            "description": {
+              "content": "Get historical derivatives settlement. \n- [supports pagination](/rest/general/pagination)\n- filtering on `settlementDatetime` requires additional keywords, [see filtering support](/rest/general/filtering)\n- On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days. By default the results are returned and sorted in descending order if specific settlement datetime is not specified.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "history",
+                "derivatives-settlement"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "Id of the trading account. `tradingAccountId` is mandatory in the query for users with multiple trading accounts. For users with a single trading account, it can be automatically retrieved from the login."
+                },
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "settlementDatetime[gte]",
+                  "value": "<dateTime>",
+                  "description": "(Required) start timestamp of window, ISO 8601 with millisecond as string"
+                },
+                {
+                  "disabled": false,
+                  "key": "settlementDatetime[lte]",
+                  "value": "<dateTime>",
+                  "description": "(Required) end timestamp of window, ISO 8601 with millisecond as string"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "acf62990-cf84-4945-af37-06f3255d6b8d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "derivatives-settlement"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "symbol",
+                      "value": "BTC-USDC-PERP"
+                    },
+                    {
+                      "key": "settlementDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "settlementDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"settlementQuantity\": \"1.00000000\",\n    \"deltaTradingQuantity\": \"1.00000000\",\n    \"mtmPnl\": \"1.0000\",\n    \"fundingPnl\": \"1.0000\",\n    \"eventType\": \"settlementUpdate\",\n    \"settlementMarkPrice\": \"1.0000\",\n    \"settlementIndexPrice\": \"1.0000\",\n    \"settlementFundingRate\": \"10.0\",\n    \"settlementDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"settlementTimestamp\": \"1621490985000\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "095d5a48-6ecd-4870-9b35-f175a51d77a4",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "derivatives-settlement"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "symbol",
+                      "value": "BTC-USDC-PERP"
+                    },
+                    {
+                      "key": "settlementDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "settlementDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ba00603b-0f58-4f57-8d80-43faed5ccff8",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "derivatives-settlement"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "symbol",
+                      "value": "BTC-USDC-PERP"
+                    },
+                    {
+                      "key": "settlementDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "settlementDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "46f26374-d78f-4592-b650-288786bbfb3f",
+          "name": "Get Historical Account Transfer",
+          "request": {
+            "name": "Get Historical Account Transfer",
+            "description": {
+              "content": "Get historical transfers.\n- [supports pagination](/rest/general/pagination)\n- filtering on `createdAtDatetime` and `createdAtTimestamp` requires additional keywords, [see filtering support](/rest/general/filtering)\n- On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "history",
+                "transfer"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "Id of the trading account. `tradingAccountId` is mandatory in the query for users with multiple trading accounts. For users with a single trading account, it can be automatically retrieved from the login."
+                },
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "CLOSED",
+                  "description": "Status of the transfer request. Defaults to `CLOSED`"
+                },
+                {
+                  "disabled": false,
+                  "key": "requestId",
+                  "value": "<string>",
+                  "description": "Unique identifier of the transfer request"
+                },
+                {
+                  "disabled": false,
+                  "key": "assetSymbol",
+                  "value": "<string>",
+                  "description": "Asset symbol of the transfer request"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[gte]",
+                  "value": "<dateTime>",
+                  "description": "(Required) start datetime of window, ISO 8601 with millisecond as string"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[lte]",
+                  "value": "<dateTime>",
+                  "description": "(Required) end datetime of window, ISO 8601 with millisecond as string"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "d339e74c-a378-45d9-908d-8681cf7d3f18",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "transfer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "status",
+                      "value": "CLOSED"
+                    },
+                    {
+                      "key": "requestId",
+                      "value": "561287547935260672"
+                    },
+                    {
+                      "key": "assetSymbol",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"requestId\": \"1\",\n    \"toTradingAccountId\": \"111000000000001\",\n    \"fromTradingAccountId\": \"121000000000001\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"1.00000000\",\n    \"status\": \"CLOSED\",\n    \"statusReasonCode\": \"6002\",\n    \"statusReason\": \"Executed\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1cee01b0-65ee-42b7-be4d-c360e0cd5131",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "transfer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "status",
+                      "value": "CLOSED"
+                    },
+                    {
+                      "key": "requestId",
+                      "value": "561287547935260672"
+                    },
+                    {
+                      "key": "assetSymbol",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "71a9ee13-a233-483d-853d-0c9fbc13f607",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "transfer"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "status",
+                      "value": "CLOSED"
+                    },
+                    {
+                      "key": "requestId",
+                      "value": "561287547935260672"
+                    },
+                    {
+                      "key": "assetSymbol",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4663ae71-781c-4df4-9370-eafa3a813854",
+          "name": "Get Historical Hourly Borrow Interest",
+          "request": {
+            "name": "Get Historical Hourly Borrow Interest",
+            "description": {
+              "content": "Get Historical Hourly Borrow Interest. Each entry denotes the hourly quantities for the specific asset. \nTotal borrowed quantity is inclusive of interest. `interest = totalBorrowedQuantity - borrowedQuantity` \nwhich denotes the interest charged in the particular hour for the asset.\n- [supports pagination](/rest/general/pagination)\n- filtering `createdAtDatetime`, `createdAtTimestamp` requires additional keywords, [see filtering support](/rest/general/filtering)\n- On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days\n\n**Ratelimited:** `True`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "history",
+                "borrow-interest"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "Id of the trading account. `tradingAccountId` is mandatory in the query for users with multiple trading accounts. For users with a single trading account, it can be automatically retrieved from the login."
+                },
+                {
+                  "disabled": false,
+                  "key": "assetSymbol",
+                  "value": "<string>",
+                  "description": "(Required) "
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[gte]",
+                  "value": "<dateTime>",
+                  "description": "(Required) start timestamp of period, ISO 8601 with millisecond as string"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[lte]",
+                  "value": "<dateTime>",
+                  "description": "(Required) end timestamp of period, ISO 8601 with millisecond as string"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "281e85ef-8092-4fab-a9be-8df1865cb770",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "borrow-interest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "assetSymbol",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"totalBorrowedQuantity\": \"1.00000000\",\n    \"createdAtDatetime\": \"2020-08-21T08:00:00.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "10932ad8-d2ea-4359-8a25-79c1d409afca",
+              "name": "Resource Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "borrow-interest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "assetSymbol",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ea6871d1-3691-4c30-895b-eeb4038f3a22",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "borrow-interest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "assetSymbol",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f8d90706-5372-47be-b5e1-bdeb0a0ecdfb",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "history",
+                    "borrow-interest"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "assetSymbol",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exchange.bullish.com/trading-api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "7fc1adf3-55e8-4c55-bdf7-19c4be753490",
+    "name": "Bullish Trading History API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API specification for the Bullish Trading API.\n\nContact Support:\n Name: Bullish Help Center\n Email: support@bullish.com",
+      "type": "text/plain"
+    }
+  }
+}

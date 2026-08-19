@@ -1,0 +1,268 @@
+openapi: 3.2.0
+info:
+  description: REST API specification for the Bullish Trading API.
+  version: 1.0.0
+  title: Bullish Trading Session Management API
+  contact:
+    name: Bullish Help Center
+    email: support@bullish.com
+    url: https://support.bullish.com
+servers:
+- url: https://api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://registered.api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://prod.access.bullish.com/trading-api
+  description: PRODUCTION (Direct Connect)
+- url: https://api.bugbounty.bullish.com/trading-api
+  description: SECURITY SANDBOX
+- url: https://api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://registered.api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://simnext.access.bullish.com/trading-api
+  description: API SANDBOX (Direct Connect)
+tags:
+- name: session-management
+  x-displayName: Session Management
+paths:
+  /v1/users/logout:
+    get:
+      x-position: 3
+      tags:
+      - session-management
+      summary: Logout
+      description: "Logout of the session associated with the JWT. It requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header. \n\n**Ratelimited:** `True`\n"
+      operationId: logoutUser
+      responses:
+        '200':
+          description: OK
+        '401':
+          description: Not Authenticated
+        '403':
+          description: Access Forbidden
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security:
+      - jwtTokenAuth: []
+  /v2/users/login:
+    post:
+      x-position: 1
+      tags:
+      - session-management
+      summary: Login
+      description: "Login and generate a new session associated with a JWT. Once you log in from an IP, the same IP must be used for \nthe duration of the session for any subsequent requests.\n\n**Ratelimited:** `True`\n"
+      operationId: loginUserV2
+      responses:
+        '200':
+          description: returns JWT and the `authorizer` for signing requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Not Authenticated
+        '403':
+          description: Access Forbidden
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      requestBody:
+        description: login request body
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/LoginRequest'
+      security: []
+  /v1/users/hmac/login:
+    get:
+      x-position: 2
+      tags:
+      - session-management
+      summary: HMAC Login
+      description: 'Login and generate a new session associated with a JWT using HMAC. Once you log in from an IP, the same IP must
+
+        be used for the duration of the session for any subsequent requests.
+
+
+        **Ratelimited:** `True`
+
+        '
+      operationId: loginUserHmac
+      parameters:
+      - $ref: '#/components/parameters/BX-SIGNATURE'
+      - $ref: '#/components/parameters/BX-TIMESTAMP'
+      - $ref: '#/components/parameters/BX-NONCE'
+      - $ref: '#/components/parameters/BX-PUBLIC-KEY'
+      responses:
+        '200':
+          description: returns JWT and the `authorizer` for signing requests
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/LoginResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Not Authenticated
+        '403':
+          description: Access Forbidden
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security: []
+components:
+  schemas:
+    LoginRequest:
+      type: object
+      required:
+      - timestamp
+      - nonce
+      - authorizer
+      - command
+      properties:
+        publicKey:
+          allOf:
+          - $ref: '#/components/schemas/PublicKey'
+        signature:
+          allOf:
+          - $ref: '#/components/schemas/Signature'
+        loginPayload:
+          allOf:
+          - $ref: '#/components/schemas/LoginPayload'
+    JWT:
+      type: string
+      format: string
+      example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic2FuZGVlcCByYWtocmEifQ.wyVq6PlKaldWXtu-jz2hJCvkGl1lM2S7HUKCH8LnXp0
+      description: JWT token
+    Authorizer:
+      type: string
+      format: string
+      example: 03E02367E8C900000500000000000000
+      description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
+    TimeStampInSeconds:
+      type: integer
+      format: int64
+      example: 1621490985
+      description: number of seconds since EPOCH as integer
+    PublicKey:
+      type: string
+      example: PUB_R1_6PTdfWbXvXWQduhcCiRooGHTVpriu15xMqfr7EDq6sWLDj7NjS
+    LoginPayload:
+      type: object
+      required:
+      - userId
+      - nonce
+      - expirationTime
+      - biometricsUsed
+      - sessionKey
+      properties:
+        userId:
+          description: Bullish user ID corresponding to the metadata
+          allOf:
+          - $ref: '#/components/schemas/UserId'
+        nonce:
+          description: epoch timestamp in seconds; note this login API nonce has no connection to the orders API nonce
+          allOf:
+          - $ref: '#/components/schemas/TimeStampInSeconds'
+        expirationTime:
+          description: epoch timestamp in seconds that is 5 minutes in the future
+          allOf:
+          - $ref: '#/components/schemas/TimeStampInSeconds'
+        biometricsUsed:
+          description: biometrics flag. always `false`
+          type: boolean
+          example: false
+        sessionKey:
+          description: session key. always `null`
+          type:
+          - string
+          - 'null'
+    UserId:
+      type: string
+      example: '12345'
+      description: Bullish user ID
+    Signature:
+      type: string
+      example: SIG_R1_K35d5hSY5FbNoJwrCfmH6QvPG7m9XmhL2mgWYcSB7q2hKJ2mv39Luck9WBJroSB635ZAXhdg36TYG7QJX1fTidbsMvyE8N
+    LoginResponse:
+      type: object
+      required:
+      - authorizer
+      - token
+      properties:
+        authorizer:
+          description: Authorizer
+          allOf:
+          - $ref: '#/components/schemas/Authorizer'
+        token:
+          description: JWT token
+          allOf:
+          - $ref: '#/components/schemas/JWT'
+  parameters:
+    BX-TIMESTAMP:
+      in: header
+      name: BX-TIMESTAMP
+      description: timestamp is the number of milliseconds since EPOCH
+      required: true
+      schema:
+        type: string
+    BX-NONCE:
+      in: header
+      name: BX-NONCE
+      description: nonce is a client side incremented unsigned 64 bit integer
+      required: true
+      schema:
+        type: string
+    BX-PUBLIC-KEY:
+      in: header
+      name: BX-PUBLIC-KEY
+      description: public key being used to generate the JWT
+      required: true
+      schema:
+        type: string
+    BX-SIGNATURE:
+      in: header
+      name: BX-SIGNATURE
+      description: signature obtained using the [signing format](/rest/authentication#signing-format)
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    jwtTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-tagGroups:
+- name: Public Endpoints
+  tags:
+  - general
+  - asset-data
+  - market-data
+  - market-history-data
+  - index-price-data
+  - derivatives-public
+  - auction-public
+- name: Private Endpoints
+  tags:
+  - session-management
+  - trading-accounts
+  - account-assets
+  - orders
+  - trades
+  - amm-instructions
+  - transfer
+  - custody
+  - derivatives
+  - market-maker-protection
+  - history
+  - otc
+  - idb
+  - portfolio-margin-simulator

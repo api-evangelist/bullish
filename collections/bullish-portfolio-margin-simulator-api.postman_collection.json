@@ -1,0 +1,803 @@
+{
+  "item": [
+    {
+      "id": "09c4005d-c36a-4c2d-b953-bc98f7d7cfb6",
+      "name": "portfolio-margin-simulator",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "0101ce17-29c6-439f-a4b1-70c55e7c99e6",
+          "name": "Simulate Portfolio Margin",
+          "request": {
+            "name": "Simulate Portfolio Margin",
+            "description": {
+              "content": "Use Portfolio margin simulator to determine your margin requirements and risk levels based on your current portfolio balances. \nYou can also append position details on top of your portfolio specifics to see simulated results.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "simulate-portfolio-margin"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeExisting",
+                  "value": "<true or false>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"tradingAccountId\": \"<string>\",\n  \"positions\": [\n    {\n      \"symbol\": \"<string>\",\n      \"quantity\": \"<string>\"\n    },\n    {\n      \"symbol\": \"<string>\",\n      \"quantity\": \"<string>\"\n    }\n  ],\n  \"orders\": [\n    {\n      \"symbol\": \"<string>\",\n      \"quantity\": \"<string>\",\n      \"limitPrice\": \"<string>\",\n      \"timeInForce\": \"<string>\"\n    },\n    {\n      \"symbol\": \"<string>\",\n      \"quantity\": \"<string>\",\n      \"limitPrice\": \"<string>\",\n      \"timeInForce\": \"<string>\"\n    }\n  ],\n  \"referencePrices\": [\n    {\n      \"symbol\": \"<string>\",\n      \"price\": \"<string>\"\n    },\n    {\n      \"symbol\": \"<string>\",\n      \"price\": \"<string>\"\n    }\n  ],\n  \"priceVolOffsetParams\": {\n    \"cryptoPriceMultipliers\": {\n      \"key_0\": \"<double>\"\n    },\n    \"globalCryptoPriceMultiplier\": 1,\n    \"volOffset\": 0\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "d680ba39-b623-41a4-b4db-60295179ff86",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "simulate-portfolio-margin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeExisting",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tradingAccountId\": \"111000000000001\",\n  \"positions\": [\n    {\n      \"symbol\": \"BTC\",\n      \"quantity\": \"1.5\"\n    },\n    {\n      \"symbol\": \"ETH\",\n      \"quantity\": \"10.0\"\n    }\n  ],\n  \"orders\": [\n    {\n      \"symbol\": \"BTCUSDC\",\n      \"quantity\": \"0.5\",\n      \"limitPrice\": \"95000.0\",\n      \"timeInForce\": \"GTX\"\n    }\n  ],\n  \"referencePrices\": [\n    {\n      \"symbol\": \"BTC\",\n      \"price\": \"100000.0\"\n    },\n    {\n      \"symbol\": \"ETH\",\n      \"price\": \"3500.0\"\n    }\n  ],\n  \"priceVolOffsetParams\": {\n    \"cryptoPriceMultipliers\": {\n      \"BTC\": 1.2,\n      \"ETH\": 0.9\n    },\n    \"globalCryptoPriceMultiplier\": 1.1,\n    \"volOffset\": 0.05\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"collateralUSD\": \"13000.0000\",\n  \"borrowedUSD\": \"12000.0000\",\n  \"initialMarginUSD\": \"14000.0000\",\n  \"warningMarginUSD\": \"15000.0000\",\n  \"liquidationMarginUSD\": \"16000.0000\",\n  \"fullLiquidationMarginUSD\": \"17000.0000\",\n  \"defaultedMarginUSD\": \"18000.0000\",\n  \"liquidityAddonUSD\": \"19000.0000\",\n  \"marketRiskUSD\": \"20000.0000\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "45856a7e-5923-4e0d-b0dd-5f86c854f31f",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "simulate-portfolio-margin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeExisting",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tradingAccountId\": \"111000000000001\",\n  \"positions\": [\n    {\n      \"symbol\": \"BTC\",\n      \"quantity\": \"1.5\"\n    },\n    {\n      \"symbol\": \"ETH\",\n      \"quantity\": \"10.0\"\n    }\n  ],\n  \"orders\": [\n    {\n      \"symbol\": \"BTCUSDC\",\n      \"quantity\": \"0.5\",\n      \"limitPrice\": \"95000.0\",\n      \"timeInForce\": \"GTX\"\n    }\n  ],\n  \"referencePrices\": [\n    {\n      \"symbol\": \"BTC\",\n      \"price\": \"100000.0\"\n    },\n    {\n      \"symbol\": \"ETH\",\n      \"price\": \"3500.0\"\n    }\n  ],\n  \"priceVolOffsetParams\": {\n    \"cryptoPriceMultipliers\": {\n      \"BTC\": 1.2,\n      \"ETH\": 0.9\n    },\n    \"globalCryptoPriceMultiplier\": 1.1,\n    \"volOffset\": 0.05\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "169b06e2-67e3-4bd2-a60b-c30a1b40d707",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "simulate-portfolio-margin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeExisting",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tradingAccountId\": \"111000000000001\",\n  \"positions\": [\n    {\n      \"symbol\": \"BTC\",\n      \"quantity\": \"1.5\"\n    },\n    {\n      \"symbol\": \"ETH\",\n      \"quantity\": \"10.0\"\n    }\n  ],\n  \"orders\": [\n    {\n      \"symbol\": \"BTCUSDC\",\n      \"quantity\": \"0.5\",\n      \"limitPrice\": \"95000.0\",\n      \"timeInForce\": \"GTX\"\n    }\n  ],\n  \"referencePrices\": [\n    {\n      \"symbol\": \"BTC\",\n      \"price\": \"100000.0\"\n    },\n    {\n      \"symbol\": \"ETH\",\n      \"price\": \"3500.0\"\n    }\n  ],\n  \"priceVolOffsetParams\": {\n    \"cryptoPriceMultipliers\": {\n      \"BTC\": 1.2,\n      \"ETH\": 0.9\n    },\n    \"globalCryptoPriceMultiplier\": 1.1,\n    \"volOffset\": 0.05\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b2f9e2f2-fc51-4a0e-bb04-2e93d70e49f8",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "simulate-portfolio-margin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeExisting",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tradingAccountId\": \"111000000000001\",\n  \"positions\": [\n    {\n      \"symbol\": \"BTC\",\n      \"quantity\": \"1.5\"\n    },\n    {\n      \"symbol\": \"ETH\",\n      \"quantity\": \"10.0\"\n    }\n  ],\n  \"orders\": [\n    {\n      \"symbol\": \"BTCUSDC\",\n      \"quantity\": \"0.5\",\n      \"limitPrice\": \"95000.0\",\n      \"timeInForce\": \"GTX\"\n    }\n  ],\n  \"referencePrices\": [\n    {\n      \"symbol\": \"BTC\",\n      \"price\": \"100000.0\"\n    },\n    {\n      \"symbol\": \"ETH\",\n      \"price\": \"3500.0\"\n    }\n  ],\n  \"priceVolOffsetParams\": {\n    \"cryptoPriceMultipliers\": {\n      \"BTC\": 1.2,\n      \"ETH\": 0.9\n    },\n    \"globalCryptoPriceMultiplier\": 1.1,\n    \"volOffset\": 0.05\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5a4e25b6-7503-4c80-9517-a8cd7965fe36",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "simulate-portfolio-margin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeExisting",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tradingAccountId\": \"111000000000001\",\n  \"positions\": [\n    {\n      \"symbol\": \"BTC\",\n      \"quantity\": \"1.5\"\n    },\n    {\n      \"symbol\": \"ETH\",\n      \"quantity\": \"10.0\"\n    }\n  ],\n  \"orders\": [\n    {\n      \"symbol\": \"BTCUSDC\",\n      \"quantity\": \"0.5\",\n      \"limitPrice\": \"95000.0\",\n      \"timeInForce\": \"GTX\"\n    }\n  ],\n  \"referencePrices\": [\n    {\n      \"symbol\": \"BTC\",\n      \"price\": \"100000.0\"\n    },\n    {\n      \"symbol\": \"ETH\",\n      \"price\": \"3500.0\"\n    }\n  ],\n  \"priceVolOffsetParams\": {\n    \"cryptoPriceMultipliers\": {\n      \"BTC\": 1.2,\n      \"ETH\": 0.9\n    },\n    \"globalCryptoPriceMultiplier\": 1.1,\n    \"volOffset\": 0.05\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fdd11495-34b4-463c-83f2-08ec7f443014",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "simulate-portfolio-margin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeExisting",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"tradingAccountId\": \"111000000000001\",\n  \"positions\": [\n    {\n      \"symbol\": \"BTC\",\n      \"quantity\": \"1.5\"\n    },\n    {\n      \"symbol\": \"ETH\",\n      \"quantity\": \"10.0\"\n    }\n  ],\n  \"orders\": [\n    {\n      \"symbol\": \"BTCUSDC\",\n      \"quantity\": \"0.5\",\n      \"limitPrice\": \"95000.0\",\n      \"timeInForce\": \"GTX\"\n    }\n  ],\n  \"referencePrices\": [\n    {\n      \"symbol\": \"BTC\",\n      \"price\": \"100000.0\"\n    },\n    {\n      \"symbol\": \"ETH\",\n      \"price\": \"3500.0\"\n    }\n  ],\n  \"priceVolOffsetParams\": {\n    \"cryptoPriceMultipliers\": {\n      \"BTC\": 1.2,\n      \"ETH\": 0.9\n    },\n    \"globalCryptoPriceMultiplier\": 1.1,\n    \"volOffset\": 0.05\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "261825e2-aa36-4be4-9609-0b368e2a0fef",
+          "name": "Simulate Portfolio Margin in Bulk",
+          "request": {
+            "name": "Simulate Portfolio Margin in Bulk",
+            "description": {
+              "content": "Use Portfolio margin simulator to determine your margin requirements and risk levels based on your current portfolio balances.\nYou can also append position details on top of your portfolio specifics to see simulated results.\nThis endpoint supports running multiple simulations at the same time.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "bulk-simulate-portfolio-margin"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "includeExisting",
+                  "value": "<true or false>",
+                  "description": "When true, includes existing portfolio positions in the simulation. Defaults to false"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "[\n  {\n    \"tradingAccountId\": \"<string>\",\n    \"positions\": [\n      {\n        \"symbol\": \"<string>\",\n        \"quantity\": \"<string>\"\n      },\n      {\n        \"symbol\": \"<string>\",\n        \"quantity\": \"<string>\"\n      }\n    ],\n    \"orders\": [\n      {\n        \"symbol\": \"<string>\",\n        \"quantity\": \"<string>\",\n        \"limitPrice\": \"<string>\",\n        \"timeInForce\": \"<string>\"\n      },\n      {\n        \"symbol\": \"<string>\",\n        \"quantity\": \"<string>\",\n        \"limitPrice\": \"<string>\",\n        \"timeInForce\": \"<string>\"\n      }\n    ],\n    \"referencePrices\": [\n      {\n        \"symbol\": \"<string>\",\n        \"price\": \"<string>\"\n      },\n      {\n        \"symbol\": \"<string>\",\n        \"price\": \"<string>\"\n      }\n    ],\n    \"priceVolOffsetParams\": {\n      \"cryptoPriceMultipliers\": {\n        \"key_0\": \"<double>\",\n        \"key_1\": \"<double>\"\n      },\n      \"globalCryptoPriceMultiplier\": 1,\n      \"volOffset\": 0\n    }\n  },\n  {\n    \"tradingAccountId\": \"<string>\",\n    \"positions\": [\n      {\n        \"symbol\": \"<string>\",\n        \"quantity\": \"<string>\"\n      },\n      {\n        \"symbol\": \"<string>\",\n        \"quantity\": \"<string>\"\n      }\n    ],\n    \"orders\": [\n      {\n        \"symbol\": \"<string>\",\n        \"quantity\": \"<string>\",\n        \"limitPrice\": \"<string>\",\n        \"timeInForce\": \"<string>\"\n      },\n      {\n        \"symbol\": \"<string>\",\n        \"quantity\": \"<string>\",\n        \"limitPrice\": \"<string>\",\n        \"timeInForce\": \"<string>\"\n      }\n    ],\n    \"referencePrices\": [\n      {\n        \"symbol\": \"<string>\",\n        \"price\": \"<string>\"\n      },\n      {\n        \"symbol\": \"<string>\",\n        \"price\": \"<string>\"\n      }\n    ],\n    \"priceVolOffsetParams\": {\n      \"cryptoPriceMultipliers\": {\n        \"key_0\": \"<double>\"\n      },\n      \"globalCryptoPriceMultiplier\": 1,\n      \"volOffset\": 0\n    }\n  }\n]",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "001b3941-61ca-403a-a184-d54e70bfe30b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "bulk-simulate-portfolio-margin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeExisting",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"positions\": [\n      {\n        \"symbol\": \"BTC\",\n        \"quantity\": \"1.5\"\n      },\n      {\n        \"symbol\": \"ETH\",\n        \"quantity\": \"10.0\"\n      }\n    ],\n    \"orders\": [\n      {\n        \"symbol\": \"BTCUSDC\",\n        \"quantity\": \"0.5\",\n        \"limitPrice\": \"95000.0\",\n        \"timeInForce\": \"GTX\"\n      }\n    ],\n    \"referencePrices\": [\n      {\n        \"symbol\": \"BTC\",\n        \"price\": \"100000.0\"\n      },\n      {\n        \"symbol\": \"ETH\",\n        \"price\": \"3500.0\"\n      }\n    ],\n    \"priceVolOffsetParams\": {\n      \"cryptoPriceMultipliers\": {\n        \"BTC\": 1.2,\n        \"ETH\": 0.9\n      },\n      \"globalCryptoPriceMultiplier\": 1.1,\n      \"volOffset\": 0.05\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"collateralUSD\": \"13000.0000\",\n    \"borrowedUSD\": \"12000.0000\",\n    \"initialMarginUSD\": \"14000.0000\",\n    \"warningMarginUSD\": \"15000.0000\",\n    \"liquidationMarginUSD\": \"16000.0000\",\n    \"fullLiquidationMarginUSD\": \"17000.0000\",\n    \"defaultedMarginUSD\": \"18000.0000\",\n    \"liquidityAddonUSD\": \"19000.0000\",\n    \"marketRiskUSD\": \"20000.0000\"\n  },\n  {\n    \"collateralUSD\": \"13000.0000\",\n    \"borrowedUSD\": \"12000.0000\",\n    \"initialMarginUSD\": \"14000.0000\",\n    \"warningMarginUSD\": \"15000.0000\",\n    \"liquidationMarginUSD\": \"16000.0000\",\n    \"fullLiquidationMarginUSD\": \"17000.0000\",\n    \"defaultedMarginUSD\": \"18000.0000\",\n    \"liquidityAddonUSD\": \"19000.0000\",\n    \"marketRiskUSD\": \"20000.0000\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9df8dd20-128e-4573-b1b7-ffb6cfa4bb3e",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "bulk-simulate-portfolio-margin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeExisting",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"positions\": [\n      {\n        \"symbol\": \"BTC\",\n        \"quantity\": \"1.5\"\n      },\n      {\n        \"symbol\": \"ETH\",\n        \"quantity\": \"10.0\"\n      }\n    ],\n    \"orders\": [\n      {\n        \"symbol\": \"BTCUSDC\",\n        \"quantity\": \"0.5\",\n        \"limitPrice\": \"95000.0\",\n        \"timeInForce\": \"GTX\"\n      }\n    ],\n    \"referencePrices\": [\n      {\n        \"symbol\": \"BTC\",\n        \"price\": \"100000.0\"\n      },\n      {\n        \"symbol\": \"ETH\",\n        \"price\": \"3500.0\"\n      }\n    ],\n    \"priceVolOffsetParams\": {\n      \"cryptoPriceMultipliers\": {\n        \"BTC\": 1.2,\n        \"ETH\": 0.9\n      },\n      \"globalCryptoPriceMultiplier\": 1.1,\n      \"volOffset\": 0.05\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7689334a-16bc-4328-a3f7-82895fd84bf9",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "bulk-simulate-portfolio-margin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeExisting",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"positions\": [\n      {\n        \"symbol\": \"BTC\",\n        \"quantity\": \"1.5\"\n      },\n      {\n        \"symbol\": \"ETH\",\n        \"quantity\": \"10.0\"\n      }\n    ],\n    \"orders\": [\n      {\n        \"symbol\": \"BTCUSDC\",\n        \"quantity\": \"0.5\",\n        \"limitPrice\": \"95000.0\",\n        \"timeInForce\": \"GTX\"\n      }\n    ],\n    \"referencePrices\": [\n      {\n        \"symbol\": \"BTC\",\n        \"price\": \"100000.0\"\n      },\n      {\n        \"symbol\": \"ETH\",\n        \"price\": \"3500.0\"\n      }\n    ],\n    \"priceVolOffsetParams\": {\n      \"cryptoPriceMultipliers\": {\n        \"BTC\": 1.2,\n        \"ETH\": 0.9\n      },\n      \"globalCryptoPriceMultiplier\": 1.1,\n      \"volOffset\": 0.05\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c9e4e01f-63b5-468a-8fff-1c86b68be12f",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "bulk-simulate-portfolio-margin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeExisting",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"positions\": [\n      {\n        \"symbol\": \"BTC\",\n        \"quantity\": \"1.5\"\n      },\n      {\n        \"symbol\": \"ETH\",\n        \"quantity\": \"10.0\"\n      }\n    ],\n    \"orders\": [\n      {\n        \"symbol\": \"BTCUSDC\",\n        \"quantity\": \"0.5\",\n        \"limitPrice\": \"95000.0\",\n        \"timeInForce\": \"GTX\"\n      }\n    ],\n    \"referencePrices\": [\n      {\n        \"symbol\": \"BTC\",\n        \"price\": \"100000.0\"\n      },\n      {\n        \"symbol\": \"ETH\",\n        \"price\": \"3500.0\"\n      }\n    ],\n    \"priceVolOffsetParams\": {\n      \"cryptoPriceMultipliers\": {\n        \"BTC\": 1.2,\n        \"ETH\": 0.9\n      },\n      \"globalCryptoPriceMultiplier\": 1.1,\n      \"volOffset\": 0.05\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "412d9ee6-2d00-4e1e-9b56-6589a0969238",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "bulk-simulate-portfolio-margin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeExisting",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"positions\": [\n      {\n        \"symbol\": \"BTC\",\n        \"quantity\": \"1.5\"\n      },\n      {\n        \"symbol\": \"ETH\",\n        \"quantity\": \"10.0\"\n      }\n    ],\n    \"orders\": [\n      {\n        \"symbol\": \"BTCUSDC\",\n        \"quantity\": \"0.5\",\n        \"limitPrice\": \"95000.0\",\n        \"timeInForce\": \"GTX\"\n      }\n    ],\n    \"referencePrices\": [\n      {\n        \"symbol\": \"BTC\",\n        \"price\": \"100000.0\"\n      },\n      {\n        \"symbol\": \"ETH\",\n        \"price\": \"3500.0\"\n      }\n    ],\n    \"priceVolOffsetParams\": {\n      \"cryptoPriceMultipliers\": {\n        \"BTC\": 1.2,\n        \"ETH\": 0.9\n      },\n      \"globalCryptoPriceMultiplier\": 1.1,\n      \"volOffset\": 0.05\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d103c699-afb6-43ec-913c-32cc2e490801",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "bulk-simulate-portfolio-margin"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "includeExisting",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "[\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"positions\": [\n      {\n        \"symbol\": \"BTC\",\n        \"quantity\": \"1.5\"\n      },\n      {\n        \"symbol\": \"ETH\",\n        \"quantity\": \"10.0\"\n      }\n    ],\n    \"orders\": [\n      {\n        \"symbol\": \"BTCUSDC\",\n        \"quantity\": \"0.5\",\n        \"limitPrice\": \"95000.0\",\n        \"timeInForce\": \"GTX\"\n      }\n    ],\n    \"referencePrices\": [\n      {\n        \"symbol\": \"BTC\",\n        \"price\": \"100000.0\"\n      },\n      {\n        \"symbol\": \"ETH\",\n        \"price\": \"3500.0\"\n      }\n    ],\n    \"priceVolOffsetParams\": {\n      \"cryptoPriceMultipliers\": {\n        \"BTC\": 1.2,\n        \"ETH\": 0.9\n      },\n      \"globalCryptoPriceMultiplier\": 1.1,\n      \"volOffset\": 0.05\n    }\n  }\n]",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exchange.bullish.com/trading-api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0fe99490-a71f-456d-ba9b-b10b64b28033",
+    "name": "Bullish Trading Portfolio Margin Simulator API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API specification for the Bullish Trading API.\n\nContact Support:\n Name: Bullish Help Center\n Email: support@bullish.com",
+      "type": "text/plain"
+    }
+  }
+}

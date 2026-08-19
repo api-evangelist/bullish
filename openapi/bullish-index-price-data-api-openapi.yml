@@ -1,0 +1,149 @@
+openapi: 3.2.0
+info:
+  description: REST API specification for the Bullish Trading API.
+  version: 1.0.0
+  title: Bullish Trading Index Price Data API
+  contact:
+    name: Bullish Help Center
+    email: support@bullish.com
+    url: https://support.bullish.com
+servers:
+- url: https://api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://registered.api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://prod.access.bullish.com/trading-api
+  description: PRODUCTION (Direct Connect)
+- url: https://api.bugbounty.bullish.com/trading-api
+  description: SECURITY SANDBOX
+- url: https://api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://registered.api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://simnext.access.bullish.com/trading-api
+  description: API SANDBOX (Direct Connect)
+tags:
+- name: index-price-data
+  x-displayName: Index Price Data
+paths:
+  /v1/index-prices:
+    get:
+      tags:
+      - index-price-data
+      summary: Get Index Prices
+      description: 'Retrieves the index price of all supported assets
+
+        '
+      operationId: getIndexPrices
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/IndexPrice'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security: []
+  /v1/index-prices/{assetSymbol}:
+    parameters:
+    - in: path
+      name: assetSymbol
+      schema:
+        $ref: '#/components/schemas/AssetSymbol'
+      required: true
+    get:
+      tags:
+      - index-price-data
+      summary: Get Index Price by Asset Symbol
+      description: Retrieves the index price of a specified asset
+      operationId: getIndexPriceBySymbol
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/IndexPrice'
+        '404':
+          description: Not found
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security: []
+components:
+  schemas:
+    AssetSymbol:
+      type: string
+      description: asset symbol as denoted in the world
+      example: BTC
+    IndexPrice:
+      type: object
+      required:
+      - assetSymbol
+      - price
+      - updatedAtDatetime
+      - updatedAtTimestamp
+      properties:
+        assetSymbol:
+          description: Asset symbol
+          allOf:
+          - $ref: '#/components/schemas/AssetSymbol'
+        price:
+          description: Asset price in USD
+          example: '66100.0000'
+          type: string
+        updatedAtDatetime:
+          description: Date and time when the index price is updated
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        updatedAtTimestamp:
+          description: Timestamp when the index price is updated
+          allOf:
+          - $ref: '#/components/schemas/TimeStamp'
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+    TimeStamp:
+      type: string
+      format: int64
+      example: '1621490985000'
+      description: number of milliseconds since EPOCH as string
+  securitySchemes:
+    jwtTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-tagGroups:
+- name: Public Endpoints
+  tags:
+  - general
+  - asset-data
+  - market-data
+  - market-history-data
+  - index-price-data
+  - derivatives-public
+  - auction-public
+- name: Private Endpoints
+  tags:
+  - session-management
+  - trading-accounts
+  - account-assets
+  - orders
+  - trades
+  - amm-instructions
+  - transfer
+  - custody
+  - derivatives
+  - market-maker-protection
+  - history
+  - otc
+  - idb
+  - portfolio-margin-simulator

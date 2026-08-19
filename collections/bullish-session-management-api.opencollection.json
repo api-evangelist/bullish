@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading Session Management API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "session-management",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Logout",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/users/logout",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Logout of the session associated with the JWT. It requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header. \n\n**Ratelimited:** `True`\n"
+        },
+        {
+          "info": {
+            "name": "Login",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/users/login",
+            "body": {
+              "type": "json",
+              "data": "{}"
+            }
+          },
+          "docs": "Login and generate a new session associated with a JWT. Once you log in from an IP, the same IP must be used for \nthe duration of the session for any subsequent requests.\n\n**Ratelimited:** `True`\n"
+        },
+        {
+          "info": {
+            "name": "HMAC Login",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/users/hmac/login",
+            "headers": [
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "BX-TIMESTAMP",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE",
+                "value": ""
+              },
+              {
+                "name": "BX-PUBLIC-KEY",
+                "value": ""
+              }
+            ]
+          },
+          "docs": "Login and generate a new session associated with a JWT using HMAC. Once you log in from an IP, the same IP must\nbe used for the duration of the session for any subsequent requests.\n\n**Ratelimited:** `True`\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

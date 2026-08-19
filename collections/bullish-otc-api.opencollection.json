@@ -1,0 +1,250 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading Otc API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "otc",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get OTC Trades",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/otc-trades",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "OTC trade status"
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "sharedMatchKey",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "clientOtcTradeId",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "brokeredBy",
+                "value": "",
+                "type": "query",
+                "description": "Originating broker short code"
+              },
+              {
+                "name": "createdAtDatetime[ gte ]",
+                "value": "",
+                "type": "query",
+                "description": "Start timestamp of window, ISO 8601 with millisecond as string"
+              },
+              {
+                "name": "createdAtDatetime[ lte ]",
+                "value": "",
+                "type": "query",
+                "description": "End timestamp of window, ISO 8601 with millisecond as string"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the otc trade list based on specified filters.\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n- [supports pagination](/rest/general/pagination)\n- supports filtering on `status`, `tradingAccountId`, `sharedMatchKey`, `clientOtcTradeId`, `createdAtDatetime`, `createdAtTimestamp`, `brokeredBy`\n"
+        },
+        {
+          "info": {
+            "name": "Create OTC Trade",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/otc-trades",
+            "headers": [
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "BX-TIMESTAMP",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE",
+                "value": ""
+              },
+              {
+                "name": "BX-REFERRER",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates an OTC trade, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header.\n\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field ordering \nand addition of null fields in the request body. Prices do not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n"
+        },
+        {
+          "info": {
+            "name": "Get OTC Trade by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/otc-trades/:otcTradeId",
+            "params": [
+              {
+                "name": "otcTradeId",
+                "value": "",
+                "type": "path",
+                "description": "Id of the OTC Trade"
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a specific otc trade using its unique identifier."
+        },
+        {
+          "info": {
+            "name": "Get Unconfirmed OTC Trade",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/otc-trades/unconfirmed-trade",
+            "params": [
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account for accepting the unconfirmed trade"
+              },
+              {
+                "name": "sharedMatchKey",
+                "value": "",
+                "type": "query",
+                "description": "Provided by your counterparty to identify the trade"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve the unconfirmed trade details using shared match key."
+        },
+        {
+          "info": {
+            "name": "Approve OTC Trade",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/otc-command#approve",
+            "headers": [
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "BX-TIMESTAMP",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Authorize an OTC trade previously submitted on your behalf by an inter-dealer broker.\n\nSubmits a command to the trading engine to approve an OTC trade. A successful response indicates that the command entry was acknowledged\nbut does not indicate that the command was executed.\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field\nordering and addition of null fields in the request body.\n\nCommand schemas and examples are provided below. Su"
+        },
+        {
+          "info": {
+            "name": "Cancel OTC Trade",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/otc-command#cancel",
+            "headers": [
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "BX-TIMESTAMP",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancel a pending OTC trade or reject an OTC trade previously submitted on your behalf by an inter-dealer broker.\n\nSubmits a command to the trading engine. A successful response indicates that the command entry was acknowledged\nbut does not indicate that the command was executed.\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field\nordering and addition of null fields in the request body.\n\nCommand schemas and examples are provided below."
+        },
+        {
+          "info": {
+            "name": "Get Delegated Trading Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/otc-trades/delegated-accounts",
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get details for all of your trading accounts that are delegated to inter-dealer brokers.\n\nThis is the client-side view of the broker relationships exposed to brokers by\n[IDB Get Delegated Trading Accounts](/rest/api/idb-otc-get-delegated-accounts).\n\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,293 @@
+{
+  "item": [
+    {
+      "id": "267b5714-0e66-4601-aa17-8f40f3683179",
+      "name": "derivatives",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "6d91201a-3fe0-4639-954f-21ae8e9d24b4",
+          "name": "Get Derivatives Positions",
+          "request": {
+            "name": "Get Derivatives Positions",
+            "description": {
+              "content": "Get derivatives positions",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "derivatives-positions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "Id of the trading account. `tradingAccountId` is mandatory in the query for users with multiple trading accounts. For users with a single trading account, it can be automatically retrieved from the login."
+                },
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "marketType",
+                  "value": "<string>",
+                  "description": "Optional - Filter for results by expiry date"
+                },
+                {
+                  "disabled": false,
+                  "key": "optionType",
+                  "value": "<string>",
+                  "description": "Optional - Filter for results by option type"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Optional - Sort results by Market Type or Option Type"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "cca2f849-79e6-429c-8c07-fe97baa58b78",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "derivatives-positions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "symbol",
+                      "value": "BTC-USDC-PERP"
+                    },
+                    {
+                      "key": "marketType",
+                      "value": "DATED_FUTURE"
+                    },
+                    {
+                      "key": "optionType",
+                      "value": "CALL"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "optionType"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"quantity\": \"1.00000000\",\n    \"notional\": \"1.0000\",\n    \"entryNotional\": \"1.0000\",\n    \"mtmPnl\": \"1.0000\",\n    \"reportedMtmPnl\": \"1.0000\",\n    \"reportedFundingPnl\": \"1.0000\",\n    \"realizedPnl\": \"1.0000\",\n    \"settlementAssetSymbol\": \"USDC\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\",\n    \"greeks\": {\n      \"delta\": \"0.98000000\",\n      \"gamma\": \"0.01000000\",\n      \"theta\": \"-0.1700\",\n      \"vega\": \"0.0500\"\n    }\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"symbol\": \"BTC-USDC-PERP\",\n    \"side\": \"BUY\",\n    \"quantity\": \"1.00000000\",\n    \"notional\": \"1.0000\",\n    \"entryNotional\": \"1.0000\",\n    \"mtmPnl\": \"1.0000\",\n    \"reportedMtmPnl\": \"1.0000\",\n    \"reportedFundingPnl\": \"1.0000\",\n    \"realizedPnl\": \"1.0000\",\n    \"settlementAssetSymbol\": \"USDC\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\",\n    \"greeks\": {\n      \"delta\": \"0.98000000\",\n      \"gamma\": \"0.01000000\",\n      \"theta\": \"-0.1700\",\n      \"vega\": \"0.0500\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "475433cb-da04-4b13-bb1d-59e11f4d3699",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "derivatives-positions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "symbol",
+                      "value": "BTC-USDC-PERP"
+                    },
+                    {
+                      "key": "marketType",
+                      "value": "DATED_FUTURE"
+                    },
+                    {
+                      "key": "optionType",
+                      "value": "CALL"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "optionType"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "86ae3ad3-0f1f-4153-910b-862ed8145de1",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "derivatives-positions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "symbol",
+                      "value": "BTC-USDC-PERP"
+                    },
+                    {
+                      "key": "marketType",
+                      "value": "DATED_FUTURE"
+                    },
+                    {
+                      "key": "optionType",
+                      "value": "CALL"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "optionType"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exchange.bullish.com/trading-api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "0303a320-8f1a-4a6b-87b8-eb2a45be41ac",
+    "name": "Bullish Trading Derivatives API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API specification for the Bullish Trading API.\n\nContact Support:\n Name: Bullish Help Center\n Email: support@bullish.com",
+      "type": "text/plain"
+    }
+  }
+}

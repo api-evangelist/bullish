@@ -1,0 +1,40 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading General API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "general",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Current Nonce Range",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/nonce"
+          },
+          "docs": "Get the current nonce range. The lower bound of nonce range is EPOCH start of day in microseconds, and upper bound of nonce range is EPOCH end of day in microseconds.\n\n**Ratelimited:** `False`\n"
+        },
+        {
+          "info": {
+            "name": "Get Exchange Time",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/time"
+          },
+          "docs": "Get Current Exchange Time"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

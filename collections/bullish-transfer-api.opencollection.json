@@ -1,0 +1,55 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading Transfer API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "transfer",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Transfer Asset Command",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/command#transferAsset",
+            "headers": [
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "BX-TIMESTAMP",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE-WINDOW-ENABLED",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Submits a command to the trading engine. A successful response indicates that the command entry was acknowledged \nbut does not indicate that the command was executed. \nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field \nordering and addition of null fields in the request body. Quantities and prices does not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

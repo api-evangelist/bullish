@@ -1,0 +1,1224 @@
+{
+  "item": [
+    {
+      "id": "6c403208-553d-4ced-9281-1a03ef9a0c37",
+      "name": "trades",
+      "description": {
+        "content": "Authenticated APIs for reading trade data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "7709f29c-2c49-4b78-8cf9-c892bb0fef7b",
+          "name": "Get Trades",
+          "request": {
+            "name": "Get Trades",
+            "description": {
+              "content": "Get a list of trades based on specified filters.\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n- Only the last 24 hours of data is available for querying\n- [supports pagination](/rest/general/pagination)\n- filtering on `createdAtDatetime`, `createdAtTimestamp` requires additional keywords, [see filtering support](/rest/general/filtering)\n\n**Ratelimited:** `True`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "trades"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "symbol",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "orderId",
+                  "value": "<string>",
+                  "description": "unique order ID"
+                },
+                {
+                  "disabled": false,
+                  "key": "clientOrderId",
+                  "value": "<string>",
+                  "description": "unique numeric (i64) identifier generated on the client side, only orderId or clientOrderId can be used"
+                },
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "(Required) Id of the trading account"
+                },
+                {
+                  "disabled": false,
+                  "key": "otcTradeId",
+                  "value": "<string>",
+                  "description": "unique Bullish otc trade id"
+                },
+                {
+                  "disabled": false,
+                  "key": "clientOtcTradeId",
+                  "value": "<string>",
+                  "description": "unique client otc trade id"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "f9cc80df-6141-4d48-8cef-485b2c343b4f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "297735387747975680"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "otcTradeId",
+                      "value": "200000000000000098"
+                    },
+                    {
+                      "key": "clientOtcTradeId",
+                      "value": "20050900225"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"tradeId\": \"100020000000000060\",\n    \"orderId\": \"297735387747975680\",\n    \"clientOrderId\": \"299834741023572480\",\n    \"symbol\": \"BTCUSDC\",\n    \"price\": \"1.00000000\",\n    \"quantity\": \"1.00000000\",\n    \"quoteAmount\": \"1.00000000\",\n    \"baseFee\": \"1.00000000\",\n    \"quoteFee\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"tradeRebateAmount\": \"1.00000000\",\n    \"tradeRebateAssetSymbol\": \"USDC\",\n    \"otcMatchId\": \"15\",\n    \"otcTradeId\": \"200000000000000098\",\n    \"clientOtcTradeId\": \"20050900225\",\n    \"createdAtTimestamp\": \"1621490985000\",\n    \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6515ebd-0bfb-4bd5-9f26-19c038e5554d",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "297735387747975680"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "otcTradeId",
+                      "value": "200000000000000098"
+                    },
+                    {
+                      "key": "clientOtcTradeId",
+                      "value": "20050900225"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "979a8d18-84fd-4720-9d94-2b2b98aadfbd",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "297735387747975680"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "otcTradeId",
+                      "value": "200000000000000098"
+                    },
+                    {
+                      "key": "clientOtcTradeId",
+                      "value": "20050900225"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "1732be8b-a155-4738-ae67-e59017255338",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "297735387747975680"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "otcTradeId",
+                      "value": "200000000000000098"
+                    },
+                    {
+                      "key": "clientOtcTradeId",
+                      "value": "20050900225"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5ac9d266-6096-463b-b285-e8de311ed392",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "symbol",
+                      "value": "BTCUSDC"
+                    },
+                    {
+                      "key": "orderId",
+                      "value": "297735387747975680"
+                    },
+                    {
+                      "key": "clientOrderId",
+                      "value": "299834741023572480"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "otcTradeId",
+                      "value": "200000000000000098"
+                    },
+                    {
+                      "key": "clientOtcTradeId",
+                      "value": "20050900225"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4f599c3f-e85d-4736-97ac-c24eebd0e912",
+          "name": "Get Trade by ID",
+          "request": {
+            "name": "Get Trade by ID",
+            "description": {
+              "content": "Gets a trade by ID, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "trades",
+                ":tradeId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "(Required) Id of the trading account"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<number>",
+                  "key": "tradeId",
+                  "description": "(Required) trade ID"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "32c7a393-3551-491f-9c5f-45bdfcd7fe2a",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "trades",
+                    ":tradeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "tradeId",
+                      "description": "(Required) trade ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tradeId\": \"100020000000000060\",\n  \"orderId\": \"297735387747975680\",\n  \"clientOrderId\": \"299834741023572480\",\n  \"symbol\": \"BTCUSDC\",\n  \"price\": \"1.00000000\",\n  \"quantity\": \"1.00000000\",\n  \"quoteAmount\": \"1.00000000\",\n  \"baseFee\": \"1.00000000\",\n  \"quoteFee\": \"1.00000000\",\n  \"side\": \"BUY\",\n  \"isTaker\": true,\n  \"tradeRebateAmount\": \"1.00000000\",\n  \"tradeRebateAssetSymbol\": \"USDC\",\n  \"otcMatchId\": \"15\",\n  \"otcTradeId\": \"200000000000000098\",\n  \"clientOtcTradeId\": \"20050900225\",\n  \"createdAtTimestamp\": \"1621490985000\",\n  \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "4738fed1-20fa-417a-9271-f49349771ae5",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "trades",
+                    ":tradeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "tradeId",
+                      "description": "(Required) trade ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e76a2522-fd3b-4e6a-95ed-18aa19f5d8e8",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "trades",
+                    ":tradeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "tradeId",
+                      "description": "(Required) trade ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "bf5af9d3-157d-40c9-b93d-da6aeeee382d",
+              "name": "Resource Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "trades",
+                    ":tradeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "tradeId",
+                      "description": "(Required) trade ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "256d13a4-45e9-452f-aa5f-e8279c5e8201",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "trades",
+                    ":tradeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "tradeId",
+                      "description": "(Required) trade ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a97d329c-5962-4e8c-996f-a881a808fd69",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "trades",
+                    ":tradeId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<number>",
+                      "key": "tradeId",
+                      "description": "(Required) trade ID"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "43cfcfd5-929a-4c2f-8043-3c9a51ff1ebf",
+          "name": "Get Trades by clientOrder ID",
+          "request": {
+            "name": "Get Trades by clientOrder ID",
+            "description": {
+              "content": "Gets trade(s) associated with the clientOrderID, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "trades",
+                "client-order-id",
+                ":clientOrderId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "(Required) Id of the trading account"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "clientOrderId",
+                  "description": "(Required) unique numeric (i64) identifier generated on the client side"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "69c7b6c3-2072-44ae-b485-3ed58a8c7ae5",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "trades",
+                    "client-order-id",
+                    ":clientOrderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientOrderId",
+                      "description": "(Required) unique numeric (i64) identifier generated on the client side"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tradeId\": \"100020000000000060\",\n  \"orderId\": \"297735387747975680\",\n  \"clientOrderId\": \"299834741023572480\",\n  \"symbol\": \"BTCUSDC\",\n  \"price\": \"1.00000000\",\n  \"quantity\": \"1.00000000\",\n  \"quoteAmount\": \"1.00000000\",\n  \"baseFee\": \"1.00000000\",\n  \"quoteFee\": \"1.00000000\",\n  \"side\": \"BUY\",\n  \"isTaker\": true,\n  \"tradeRebateAmount\": \"1.00000000\",\n  \"tradeRebateAssetSymbol\": \"USDC\",\n  \"otcMatchId\": \"15\",\n  \"otcTradeId\": \"200000000000000098\",\n  \"clientOtcTradeId\": \"20050900225\",\n  \"createdAtTimestamp\": \"1621490985000\",\n  \"createdAtDatetime\": \"2025-05-20T01:01:01.000Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "add462d0-2871-4bfb-b061-f32737766ffa",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "trades",
+                    "client-order-id",
+                    ":clientOrderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientOrderId",
+                      "description": "(Required) unique numeric (i64) identifier generated on the client side"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "11a39666-9c0c-4d77-a7a4-472d23237545",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "trades",
+                    "client-order-id",
+                    ":clientOrderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientOrderId",
+                      "description": "(Required) unique numeric (i64) identifier generated on the client side"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4f74c9ea-a5ac-4f46-94ec-c26445dba82d",
+              "name": "Resource Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "trades",
+                    "client-order-id",
+                    ":clientOrderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientOrderId",
+                      "description": "(Required) unique numeric (i64) identifier generated on the client side"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "732ce411-6089-4dd8-b996-358d755faa49",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "trades",
+                    "client-order-id",
+                    ":clientOrderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientOrderId",
+                      "description": "(Required) unique numeric (i64) identifier generated on the client side"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0916c40a-ad60-4aa0-a215-845c76f403ac",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "trades",
+                    "client-order-id",
+                    ":clientOrderId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "clientOrderId",
+                      "description": "(Required) unique numeric (i64) identifier generated on the client side"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exchange.bullish.com/trading-api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "cbdae1da-d508-43da-a103-e8a101642dac",
+    "name": "Bullish Trading Trades API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API specification for the Bullish Trading API.\n\nContact Support:\n Name: Bullish Help Center\n Email: support@bullish.com",
+      "type": "text/plain"
+    }
+  }
+}

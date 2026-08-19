@@ -1,0 +1,2246 @@
+{
+  "item": [
+    {
+      "id": "56177c33-e978-44b5-89e2-81d84e565d12",
+      "name": "custody",
+      "description": {
+        "content": "Authenticated APIs for custody,  [Custody Basic Examples](https://github.com/bullish-exchange/api-examples/blob/master/bullish/rest/custody_basics.py)\n\nCustody APIs have a limit of 40 requests per IP, per minute. This is combined across all endpoints of type **/wallets/***\n",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9bdcca72-e4ff-4a9e-ab75-05421b73827f",
+          "name": "Get Custody Transaction History",
+          "request": {
+            "name": "Get Custody Transaction History",
+            "description": {
+              "content": "Get custody transaction history, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\nPlease note that Custody endpoints utilize a non-multiplied asset format for long decimal assets like SHIB and PEPE, ensuring consistency with real-world asset representation. This differs from Trading endpoints, which use a multiplied asset format, such as SHIB1M and PEPE1M. For more information, please see [help center](https://bullishexchange.atlassian.net/wiki/spaces/BHC/pages/20807684/Understanding+Multiplied+Assets+PEPE1M+and+SHIB1M)\n\n- [supports pagination](/rest/general/pagination)\n\n**Ratelimited:** `True` - see [custody limits](/rest/general/rate-limits)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "wallets",
+                "transactions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[gte]",
+                  "value": "<dateTime>",
+                  "description": "start timestamp of period, ISO 8601 with millisecond as string"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[lte]",
+                  "value": "<dateTime>",
+                  "description": "end timestamp of period, ISO 8601 with millisecond as string"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b10ce6ff-6273-4d41-86bd-8797d85fbc9c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"custodyTransactionId\": \"DB:9e6304a08c9cc2a33e6bc6429a088eae2a6b940c8e312aede3a3780257b9b979\",\n    \"direction\": \"DEPOSIT\",\n    \"quantity\": \"100000.00\",\n    \"symbol\": \"USDC\",\n    \"network\": \"ETH\",\n    \"fee\": \"3.00\",\n    \"memo\": \"925891241\",\n    \"createdAtDateTime\": \"2022-09-16T07:56:15.000Z\",\n    \"status\": \"COMPLETE\",\n    \"transactionDetails\": {\n      \"address\": \"0xb0a64d976972d87b0783eeb1ff88306cd1891f02\",\n      \"blockchainTxId\": \"0xec557f2c7278d2dae2d98a27b9bd43f386789a4209090cbbd11595f1bed4a4c2\",\n      \"swiftUetr\": \"b55aa5cd-baa2-4122-8c17-ae9b856ae36a\"\n    }\n  },\n  {\n    \"custodyTransactionId\": \"DB:9e6304a08c9cc2a33e6bc6429a088eae2a6b940c8e312aede3a3780257b9b979\",\n    \"direction\": \"DEPOSIT\",\n    \"quantity\": \"100000.00\",\n    \"symbol\": \"USDC\",\n    \"network\": \"ETH\",\n    \"fee\": \"3.00\",\n    \"memo\": \"925891241\",\n    \"createdAtDateTime\": \"2022-09-16T07:56:15.000Z\",\n    \"status\": \"COMPLETE\",\n    \"transactionDetails\": {\n      \"address\": \"0xb0a64d976972d87b0783eeb1ff88306cd1891f02\",\n      \"blockchainTxId\": \"0xec557f2c7278d2dae2d98a27b9bd43f386789a4209090cbbd11595f1bed4a4c2\",\n      \"swiftUetr\": \"b55aa5cd-baa2-4122-8c17-ae9b856ae36a\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bf31fcce-1e2f-4953-af09-d01eb3efd4b2",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dcee8ff3-9fbb-4e62-bda9-7e87e86a541e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "transactions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "createdAtDatetime[gte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[lte]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "088e1c46-6f63-4de9-a619-8a56f387903d",
+          "name": "Get Withdrawal Limits for Symbol",
+          "request": {
+            "name": "Get Withdrawal Limits for Symbol",
+            "description": {
+              "content": "Get withdrawal limits for symbol, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\nPlease note that Custody endpoints utilize a non-multiplied asset format for long decimal assets like SHIB and PEPE, ensuring consistency with real-world asset representation. This differs from Trading endpoints, which use a multiplied asset format, such as SHIB1M and PEPE1M. For more information, please see [help center](https://bullishexchange.atlassian.net/wiki/spaces/BHC/pages/20807684/Understanding+Multiplied+Assets+PEPE1M+and+SHIB1M)\n\n**Ratelimited:** `True` - see [custody limits](/rest/general/rate-limits)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "wallets",
+                "limits",
+                ":symbol"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "215cbf45-c7b7-4dfb-a398-52247ceee85f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "limits",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"symbol\": \"USDC\",\n  \"available\": \"20000.0\",\n  \"twentyFourHour\": \"1000000.00\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7b907ce0-7746-4c96-aa1f-8a16fec89940",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "limits",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "421ce4fb-2f68-41d1-96fc-ce28f92fe149",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "limits",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6f9c2001-c363-4cdc-9f1d-6afdb7b74d42",
+          "name": "Get Deposit Instructions for Crypto",
+          "request": {
+            "name": "Get Deposit Instructions for Crypto",
+            "description": {
+              "content": "Get deposit instructions, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\nPlease note that Custody endpoints utilize a non-multiplied asset format for long decimal assets like SHIB and PEPE, ensuring consistency with real-world asset representation. This differs from Trading endpoints, which use a multiplied asset format, such as SHIB1M and PEPE1M. For more information, please see [help center](https://bullishexchange.atlassian.net/wiki/spaces/BHC/pages/20807684/Understanding+Multiplied+Assets+PEPE1M+and+SHIB1M)\n\n**Ratelimited:** `True` - see [custody limits](/rest/general/rate-limits)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "wallets",
+                "deposit-instructions",
+                "crypto",
+                ":symbol"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "1beec402-a73a-4789-b69d-0a89da9bd72d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "deposit-instructions",
+                    "crypto",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"network\": \"ETH\",\n    \"symbol\": \"USDC\",\n    \"address\": \"0xb0a64d976972d87b0783eeb1ff88306cd1891f02\",\n    \"minimumDepositAmount\": \"0.01\"\n  },\n  {\n    \"network\": \"ETH\",\n    \"symbol\": \"USDC\",\n    \"address\": \"0xb0a64d976972d87b0783eeb1ff88306cd1891f02\",\n    \"minimumDepositAmount\": \"0.01\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "54a21569-bd08-421e-8cd3-87501ec523a4",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "deposit-instructions",
+                    "crypto",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6a880edb-db01-46b8-8605-53738b501e6e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "deposit-instructions",
+                    "crypto",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "7c540c2f-23e2-4928-a4eb-09caac69b3f6",
+          "name": "Get Withdrawal Instructions for Crypto",
+          "request": {
+            "name": "Get Withdrawal Instructions for Crypto",
+            "description": {
+              "content": "Get crypto withdrawal instructions, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header. Please note that all withdrawal addresses must be whitelisted via the Bullish website before any digital asset withdrawals can be processed.\n\nPlease note that Custody endpoints utilize a non-multiplied asset format for long decimal assets like SHIB and PEPE, ensuring consistency with real-world asset representation. This differs from Trading endpoints, which use a multiplied asset format, such as SHIB1M and PEPE1M. For more information, please see [help center](https://bullishexchange.atlassian.net/wiki/spaces/BHC/pages/20807684/Understanding+Multiplied+Assets+PEPE1M+and+SHIB1M)\n\n**Ratelimited:** `True` - see [custody limits](/rest/general/rate-limits)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "wallets",
+                "withdrawal-instructions",
+                "crypto",
+                ":symbol"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "signed",
+                  "value": "<boolean>"
+                },
+                {
+                  "disabled": false,
+                  "key": "locked",
+                  "value": "<boolean>"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "70eb6c5c-72ad-4c6d-9401-a6c4364a50d3",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "withdrawal-instructions",
+                    "crypto",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "signed",
+                      "value": "true"
+                    },
+                    {
+                      "key": "locked",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"network\": \"ETH\",\n    \"symbol\": \"USDC\",\n    \"address\": \"0xb0a64d976972d87b0783eeb1ff88306cd1891f02\",\n    \"fee\": \"3.00\",\n    \"label\": \"Our cold wallet\",\n    \"destinationId\": \"1560ec0b406c0d909bb9f5f827dd6aa14a1f638884f33a2a3134878102e78038\",\n    \"minimumWithdrawalAmount\": \"0.01\",\n    \"vaspName\": \"Bullish\",\n    \"userWalletType\": \"HOSTED\",\n    \"signed\": true,\n    \"locked\": true,\n    \"lockExpiryDateTime\": \"2026-06-24T12:00:00Z\"\n  },\n  {\n    \"network\": \"ETH\",\n    \"symbol\": \"USDC\",\n    \"address\": \"0xb0a64d976972d87b0783eeb1ff88306cd1891f02\",\n    \"fee\": \"3.00\",\n    \"label\": \"Our cold wallet\",\n    \"destinationId\": \"1560ec0b406c0d909bb9f5f827dd6aa14a1f638884f33a2a3134878102e78038\",\n    \"minimumWithdrawalAmount\": \"0.01\",\n    \"vaspName\": \"Bullish\",\n    \"userWalletType\": \"HOSTED\",\n    \"signed\": true,\n    \"locked\": true,\n    \"lockExpiryDateTime\": \"2026-06-24T12:00:00Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "7a5bd1ac-3d6d-4505-89a3-3b6762f6d4bb",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "withdrawal-instructions",
+                    "crypto",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "signed",
+                      "value": "true"
+                    },
+                    {
+                      "key": "locked",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ea6fceb7-f08f-4982-9130-ce869044a7a0",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "withdrawal-instructions",
+                    "crypto",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "signed",
+                      "value": "true"
+                    },
+                    {
+                      "key": "locked",
+                      "value": "true"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c923c533-f38a-4489-a702-a9859ff5b1ba",
+          "name": "Get Deposit Instructions for Fiat",
+          "request": {
+            "name": "Get Deposit Instructions for Fiat",
+            "description": {
+              "content": "Get deposit instructions, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True` - see [custody limits](/rest/general/rate-limits)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "wallets",
+                "deposit-instructions",
+                "fiat",
+                ":symbol"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "ddd0c1aa-66b4-430f-963d-3df04395e465",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "deposit-instructions",
+                    "fiat",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"network\": \"SWIFT\",\n    \"symbol\": \"USD\",\n    \"accountNumber\": \"5090022533\",\n    \"name\": \"Bullish (GI) Limited\",\n    \"physicalAddress\": \"26/F, The Centrium, 60 Wyndham Street, Central, Hong Kong\",\n    \"memo\": \"8VZPKSGPA\",\n    \"bank\": {\n      \"name\": \"Silvergate Bank\",\n      \"physicalAddress\": \"4250 Executive Square Suite 300 La Jolla, CA 92037\",\n      \"routingCode\": \"322286803\"\n    }\n  },\n  {\n    \"network\": \"SWIFT\",\n    \"symbol\": \"USD\",\n    \"accountNumber\": \"5090022533\",\n    \"name\": \"Bullish (GI) Limited\",\n    \"physicalAddress\": \"26/F, The Centrium, 60 Wyndham Street, Central, Hong Kong\",\n    \"memo\": \"8VZPKSGPA\",\n    \"bank\": {\n      \"name\": \"Silvergate Bank\",\n      \"physicalAddress\": \"4250 Executive Square Suite 300 La Jolla, CA 92037\",\n      \"routingCode\": \"322286803\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "93cfdb25-ecde-48a8-90ef-363d8a1a6bca",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "deposit-instructions",
+                    "fiat",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "8ff31d84-ffe9-4b5a-bd19-4046970a95dd",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "deposit-instructions",
+                    "fiat",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "8c02e0e5-9629-4b84-a1d8-cd60b8b7571e",
+          "name": "Get Withdrawal Instructions for Fiat",
+          "request": {
+            "name": "Get Withdrawal Instructions for Fiat",
+            "description": {
+              "content": "Get withdrawal instructions added by the user, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header. Please note that before withdrawal destinations can be used for withdrawing to, they must be whitelisted on the Bullish website.\n\n**Ratelimited:** `True` - see [custody limits](/rest/general/rate-limits)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "wallets",
+                "withdrawal-instructions",
+                "fiat",
+                ":symbol"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "54fdc7f4-8fb9-4c50-b03b-01e6408b7e3e",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "withdrawal-instructions",
+                    "fiat",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"destinationId\": \"1560ec0b406c0d909bb9f5f827dd6aa14a1f638884f33a2a3134878102e78038\",\n    \"accountNumber\": \"9873481227\",\n    \"network\": \"SWIFT\",\n    \"symbol\": \"USD\",\n    \"name\": \"Silvergate Bank\",\n    \"physicalAddress\": \"4250 Executive Square Suite 300 La Jolla, CA 92037\",\n    \"fee\": \"3.00\",\n    \"memo\": \"MZAXEMRXA\",\n    \"bank\": {\n      \"name\": \"Silvergate Bank\",\n      \"physicalAddress\": \"4250 Executive Square Suite 300 La Jolla, CA 92037\",\n      \"routingCode\": \"322286803\"\n    },\n    \"intermediaryBank\": {\n      \"name\": \"Middle Bank\",\n      \"physicalAddress\": \"523 Exchange Square, Canary Wharf, E14 2WA\",\n      \"routingCode\": \"321176234\"\n    }\n  },\n  {\n    \"destinationId\": \"1560ec0b406c0d909bb9f5f827dd6aa14a1f638884f33a2a3134878102e78038\",\n    \"accountNumber\": \"9873481227\",\n    \"network\": \"SWIFT\",\n    \"symbol\": \"USD\",\n    \"name\": \"Silvergate Bank\",\n    \"physicalAddress\": \"4250 Executive Square Suite 300 La Jolla, CA 92037\",\n    \"fee\": \"3.00\",\n    \"memo\": \"MZAXEMRXA\",\n    \"bank\": {\n      \"name\": \"Silvergate Bank\",\n      \"physicalAddress\": \"4250 Executive Square Suite 300 La Jolla, CA 92037\",\n      \"routingCode\": \"322286803\"\n    },\n    \"intermediaryBank\": {\n      \"name\": \"Middle Bank\",\n      \"physicalAddress\": \"523 Exchange Square, Canary Wharf, E14 2WA\",\n      \"routingCode\": \"321176234\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ca3f1909-fd78-416f-ba7f-a055d613fb72",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "withdrawal-instructions",
+                    "fiat",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a39a5ae4-f8ec-4e04-88e6-b9e5ae586af9",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "withdrawal-instructions",
+                    "fiat",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "717115b4-5056-444a-9c0f-62422fa608e6",
+          "name": "Initiate Self-Hosted Wallet Verification",
+          "request": {
+            "name": "Initiate Self-Hosted Wallet Verification",
+            "description": {
+              "content": "This endpoint is used for initiating wallet verification requests.\n\nNote: users will have 24 hours to complete the wallet verification by sending the exact total amount to the Bullish deposit address provided.\n\n**Ratelimited:** `True` - see [custody limits](/rest/general/rate-limits)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "wallets",
+                "self-hosted",
+                "initiate"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"network\": \"<string>\",\n  \"symbol\": \"<string>\",\n  \"address\": \"<string>\",\n  \"label\": \"<string>\",\n  \"requestedDepositAmount\": \"<string>\",\n  \"memo\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "8441bcc0-2bab-49eb-888e-331e4753f86c",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "self-hosted",
+                    "initiate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"network\": \"ETH\",\n  \"symbol\": \"USDC\",\n  \"address\": \"0xb0a64d976972d87b0783eeb1ff88306cd1891f02\",\n  \"label\": \"Our cold wallet\",\n  \"requestedDepositAmount\": \"12.3456\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"destinationId\": \"1560ec0b406c0d909bb9f5f827dd6aa14a1f638884f33a2a3134878102e78038\",\n  \"network\": \"ETH\",\n  \"symbol\": \"USDC\",\n  \"depositAddress\": \"0xb0a64d976972d87b0783eeb1ff88306cd1891f02\",\n  \"requestedDepositAmount\": \"12.3456\",\n  \"verificationAmount\": \"0.0012\",\n  \"totalDepositAmount\": \"12.3468\",\n  \"verificationExpiryTime\": \"2025-05-20T01:01:01.000Z\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "564ff898-979e-4404-97ee-487f5e2bc991",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "self-hosted",
+                    "initiate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"network\": \"ETH\",\n  \"symbol\": \"USDC\",\n  \"address\": \"0xb0a64d976972d87b0783eeb1ff88306cd1891f02\",\n  \"label\": \"Our cold wallet\",\n  \"requestedDepositAmount\": \"12.3456\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f92b46df-215e-48b0-a5d6-6bf67c5469f1",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "self-hosted",
+                    "initiate"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"network\": \"ETH\",\n  \"symbol\": \"USDC\",\n  \"address\": \"0xb0a64d976972d87b0783eeb1ff88306cd1891f02\",\n  \"label\": \"Our cold wallet\",\n  \"requestedDepositAmount\": \"12.3456\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "372c1b00-3c14-4e33-850e-c50651fe6832",
+          "name": "Get a List of Self-Hosted Wallet Verification Attempts",
+          "request": {
+            "name": "Get a List of Self-Hosted Wallet Verification Attempts",
+            "description": {
+              "content": "This endpoint provides a history of all Wallet Verification attempts, including those that are completed, pending verification and expired.\n\n**Ratelimited:** `True` - see [custody limits](/rest/general/rate-limits)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "wallets",
+                "self-hosted",
+                "verification-attempts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "address",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "destinationId",
+                  "value": "<string>"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "b8724b24-5502-46df-b296-904827d17b48",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "self-hosted",
+                    "verification-attempts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "address",
+                      "value": "0xb0a64d976972d87b0783eeb1ff88306cd1891f02"
+                    },
+                    {
+                      "key": "destinationId",
+                      "value": "1560ec0b406c0d909bb9f5f827dd6aa14a1f638884f33a2a3134878102e78038"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"destinationId\": \"1560ec0b406c0d909bb9f5f827dd6aa14a1f638884f33a2a3134878102e78038\",\n    \"network\": \"ETH\",\n    \"symbol\": \"USDC\",\n    \"address\": \"0xb0a64d976972d87b0783eeb1ff88306cd1891f02\",\n    \"verificationStatus\": \"VERIFIED\",\n    \"requestedDepositAmount\": \"12.3456\",\n    \"verificationAmount\": \"0.0012\",\n    \"totalDepositAmount\": \"12.3468\",\n    \"verificationExpiryTime\": \"2025-05-20T01:01:01.000Z\"\n  },\n  {\n    \"destinationId\": \"1560ec0b406c0d909bb9f5f827dd6aa14a1f638884f33a2a3134878102e78038\",\n    \"network\": \"ETH\",\n    \"symbol\": \"USDC\",\n    \"address\": \"0xb0a64d976972d87b0783eeb1ff88306cd1891f02\",\n    \"verificationStatus\": \"VERIFIED\",\n    \"requestedDepositAmount\": \"12.3456\",\n    \"verificationAmount\": \"0.0012\",\n    \"totalDepositAmount\": \"12.3468\",\n    \"verificationExpiryTime\": \"2025-05-20T01:01:01.000Z\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3ca8211d-b302-4b89-8d45-a32331fbd5d4",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "self-hosted",
+                    "verification-attempts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "address",
+                      "value": "0xb0a64d976972d87b0783eeb1ff88306cd1891f02"
+                    },
+                    {
+                      "key": "destinationId",
+                      "value": "1560ec0b406c0d909bb9f5f827dd6aa14a1f638884f33a2a3134878102e78038"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2540315b-cf32-4b4d-b68a-83c15619a08c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "self-hosted",
+                    "verification-attempts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "address",
+                      "value": "0xb0a64d976972d87b0783eeb1ff88306cd1891f02"
+                    },
+                    {
+                      "key": "destinationId",
+                      "value": "1560ec0b406c0d909bb9f5f827dd6aa14a1f638884f33a2a3134878102e78038"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "c47a4a51-49e3-452d-9d47-859c37693e91",
+          "name": "Delete Existing Wallet Address",
+          "request": {
+            "name": "Delete Existing Wallet Address",
+            "description": {
+              "content": "This endpoint is used for deleting any existing withdrawal addresses.\n\n**Ratelimited:** `True` - see [custody limits](/rest/general/rate-limits)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "wallets",
+                "withdrawal-instructions",
+                ":destinationId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "destinationId",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "method": "DELETE",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "fe0dacc7-e82d-480e-9d80-cd2adfc94af8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "withdrawal-instructions",
+                    ":destinationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "destinationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "f9e0de82-cd90-42a7-9d1e-a1aebd1de893",
+              "name": "A wallet destination is not found for the specified `destinationId`.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "withdrawal-instructions",
+                    ":destinationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "destinationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a72d3987-ef5b-4f5b-ba68-708b7221a3ff",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "withdrawal-instructions",
+                    ":destinationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "destinationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "14e37200-a5cc-495a-a063-384283308ba4",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "withdrawal-instructions",
+                    ":destinationId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "destinationId",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "DELETE",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "22c0a4cb-9e15-4fc1-a4da-e212a30eeed9",
+          "name": "Create Withdrawal",
+          "request": {
+            "name": "Create Withdrawal",
+            "description": {
+              "content": "Trigger a withdrawal, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\nThe `BX-SIGNATURE` header should be created by signing the request with an ECDSA API Key as follows:\n\n1. Construct a string that concatenates the following fields:\n    - `timestamp` - current epoch milliseconds e.g. 1697008474031\n    - `nonce` - a UUID identifier to protect against replay attacks e.g. 255241a1-2cde-4954-87b1-13beef547960\n    - `request method` - e.g. POST\n    - `request path` - e.g. /trading-api/v1/wallets/withdrawal\n    - `request body JSON string`, removing any spaces and newline characters\n2. Hash the string using a SHA-256 hash function and sign the resulting hexdigest with your `<PRIVATE_KEY>`.\n3. DER encode the signature, and base64 encode the DER encoded signature.\n\n> **Bullish requires you to whitelist a withdrawal destination address before submitting a withdrawal request. You may view, approve, and manage your list of destination addresses in Account Settings on the Bullish website. If you attempt a withdrawal without first whitelisting an address in Account Settings, then the withdrawal attempt will fail.**\n\nFor a full example of using the withdrawal endpoint please see the [Custody Withdrawal Example](https://github.com/bullish-exchange/api-examples/blob/master/custody/custody_withdrawal_ecdsa.py)\n\nPlease note that Custody endpoints utilize a non-multiplied asset format for long decimal assets like SHIB and PEPE, ensuring consistency with real-world asset representation. This differs from Trading endpoints, which use a multiplied asset format, such as SHIB1M and PEPE1M. For more information, please see [help center](https://bullishexchange.atlassian.net/wiki/spaces/BHC/pages/20807684/Understanding+Multiplied+Assets+PEPE1M+and+SHIB1M)\n\nThe currently supported precisions for withdrawal quantities are as follows. Please note that fees are always specified in units of the symbol itself, not in smaller denominations (e.g. BTC not Satoshi, ETH not Wei) :\n\n| Symbol | Precision | Remarks |\n| ---------- |---------------- | --- |\n| USD | 2dp | |\n| BTC | 8dp | |\n| DOGE | 8dp | |\n| ETH | 8dp | |\n| LTC | 8dp | |\n| XRP | 6dp | |\n| AAVE | 8dp | |\n| CRV | 8dp | |\n| LINK | 8dp | |\n| MANA | 8dp | |\n| MATIC | 8dp | |\n| SUSHI | 8dp | |\n| UNI | 8dp | |\n| USDC | 6dp | |\n| USDT | 6dp | |\n| SHIB | 2dp | Please ensure to use the non-multiplied asset format (e.g., SHIB, PEPE, BONK) when creating withdrawals, as Custody endpoints align with real-world asset representation |\n| PEPE | 2dp | Please ensure to use the non-multiplied asset format (e.g., SHIB, PEPE, BONK) when creating withdrawals, as Custody endpoints align with real-world asset representation |\n| BONK | Round to the nearest ten (e.g., 120 or 130, not 125). | Please ensure to use the non-multiplied asset format (e.g., SHIB, PEPE, BONK) when creating withdrawals, as Custody endpoints align with real-world asset representation |\n\n**Ratelimited:** `True` - see [custody limits](/rest/general/rate-limits)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "wallets",
+                "withdrawal"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                "key": "BX-SIGNATURE",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"timestamp\": \"<string>\",\n  \"nonce\": \"<string>\",\n  \"authorizer\": \"<string>\",\n  \"command\": {\n    \"commandType\": \"<string>\",\n    \"destinationId\": \"<string>\",\n    \"symbol\": \"<string>\",\n    \"network\": \"<string>\",\n    \"quantity\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "605d5cf5-9a29-4ff3-9810-a7dd751ca5e2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "withdrawal"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"timestamp\": \"1621490985000\",\n  \"nonce\": \"1628376611\",\n  \"authorizer\": \"03E02367E8C900000500000000000000\",\n  \"command\": {\n    \"commandType\": \"V1Withdrawal\",\n    \"destinationId\": \"1560ec0b406c0d909bb9f5f827dd6aa14a1f638884f33a2a3134878102e78038\",\n    \"symbol\": \"USDC\",\n    \"network\": \"ETH\",\n    \"quantity\": \"100000.000001\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"statusReason\": \"Withdrawal accepted\",\n  \"statusReasonCode\": 1001,\n  \"custodyTransactionId\": \"DB:9e6304a08c9cc2a33e6bc6429a088eae2a6b940c8e312aede3a3780257b9b979\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1f0a1a9f-57c1-409f-84ff-79ee946a4626",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "withdrawal"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"timestamp\": \"1621490985000\",\n  \"nonce\": \"1628376611\",\n  \"authorizer\": \"03E02367E8C900000500000000000000\",\n  \"command\": {\n    \"commandType\": \"V1Withdrawal\",\n    \"destinationId\": \"1560ec0b406c0d909bb9f5f827dd6aa14a1f638884f33a2a3134878102e78038\",\n    \"symbol\": \"USDC\",\n    \"network\": \"ETH\",\n    \"quantity\": \"100000.000001\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "0561e249-acca-4283-bb31-50fb3ccb53d0",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "wallets",
+                    "withdrawal"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"timestamp\": \"1621490985000\",\n  \"nonce\": \"1628376611\",\n  \"authorizer\": \"03E02367E8C900000500000000000000\",\n  \"command\": {\n    \"commandType\": \"V1Withdrawal\",\n    \"destinationId\": \"1560ec0b406c0d909bb9f5f827dd6aa14a1f638884f33a2a3134878102e78038\",\n    \"symbol\": \"USDC\",\n    \"network\": \"ETH\",\n    \"quantity\": \"100000.000001\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exchange.bullish.com/trading-api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "9f30b199-4fb7-4f36-98a0-f76d17240499",
+    "name": "Bullish Trading Custody API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API specification for the Bullish Trading API.\n\nContact Support:\n Name: Bullish Help Center\n Email: support@bullish.com",
+      "type": "text/plain"
+    }
+  }
+}

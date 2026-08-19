@@ -1,0 +1,350 @@
+openapi: 3.2.0
+info:
+  description: REST API specification for the Bullish Trading API.
+  version: 1.0.0
+  title: Bullish Trading Market Maker Protection API
+  contact:
+    name: Bullish Help Center
+    email: support@bullish.com
+    url: https://support.bullish.com
+servers:
+- url: https://api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://registered.api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://prod.access.bullish.com/trading-api
+  description: PRODUCTION (Direct Connect)
+- url: https://api.bugbounty.bullish.com/trading-api
+  description: SECURITY SANDBOX
+- url: https://api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://registered.api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://simnext.access.bullish.com/trading-api
+  description: API SANDBOX (Direct Connect)
+tags:
+- name: market-maker-protection
+  x-displayName: Market Maker Protection (MMP)
+paths:
+  /v2/mmp-configuration:
+    post:
+      x-position: 2
+      tags:
+      - market-maker-protection
+      summary: Setup Market Maker Protection (MMP)
+      description: "MMP configurations are setup per underlying asset symbol for a specific trading Account. While setting up MMP configurations you can specify `windowTimeInSeconds`, `frozenTimeInSeconds`, `quantityLimit` and `deltaLimit` and use it as best suited.\nPlease reach out to your relationship manager to understand how to enable MMP for your trading accounts.\n\n- To get updates on the status of your set / reset MMP configs request for an underlying asset symbol over WS, please subscribe to `mmpRequest` TOPIC within the [Private Data WebSocket](/websocket/private/private-data).\n- To get updates about MMP triggered event over WS, please subscribe to the `mmpTriggered` TOPIC within the [Private Data WebSocket](/websocket/private/private-data).\n\nTo update/amend your MMP configs, please use the ResetMMPCommandV1 to reset the MMP configurations, followed by setting up a new MMP config via setMMPCommandV1 per underlying asset symbol.\n\nNotes: \n- MMP is only applicable for Options [Orders created](/rest/api/create-order-v-2) with the `isMMP` flag set to `true`.\n- ResetMMPCommandV1 will trigger only when there are no `isMMP=true` open orders on the account\n"
+      operationId: setMmpConfiguration
+      parameters:
+      - $ref: '#/components/parameters/BX-SIGNATURE'
+      - $ref: '#/components/parameters/BX-TIMESTAMP'
+      - $ref: '#/components/parameters/BX-NONCE'
+      responses:
+        '200':
+          description: Status OK. This means a command was successfully acknowledged.
+          content:
+            application/json:
+              schema:
+                anyOf:
+                - $ref: '#/components/schemas/SetMMPCommandResponse'
+                - $ref: '#/components/schemas/ResetMMPCommandResponse'
+              examples:
+                SetMMPCommandResponse:
+                  $ref: '#/components/examples/SetMMPCommandResponse'
+                ResetMMPCommandResponse:
+                  $ref: '#/components/examples/ResetMMPCommandResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Not Authenticated
+        '403':
+          description: Access Forbidden
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              oneOf:
+              - $ref: '#/components/schemas/SetMMPCommandV1'
+              - $ref: '#/components/schemas/ResetMMPCommandV1'
+            examples:
+              SetMMPCommandV1:
+                $ref: '#/components/examples/SetMMPCommandV1'
+              ResetMMPCommandV1:
+                $ref: '#/components/examples/ResetMMPCommandV1'
+      security:
+      - jwtTokenAuth: []
+    get:
+      x-position: 1
+      tags:
+      - market-maker-protection
+      summary: Get Market Marker Protection (MMP) by Trading Account ID
+      description: 'Get market maker protection configurations under a trading account id
+
+
+        This endpoint requires [authentication](/rest/authentication#generate-a-jwt-token). To filter by `symbol`, additional parameters are required. For detailed instructions, see the [Filtering Support](/rest/general/filtering) section.
+
+        '
+      operationId: getMmpConfiguration
+      parameters:
+      - in: query
+        name: symbol
+        description: The underlying asset id you filter the configurations against. If symbol is provided, this API will only return the market maker protection configuration for this symbol for this trading account.
+        schema:
+          $ref: '#/components/schemas/UnderlyingAssetSymbol'
+        required: false
+      - in: query
+        name: tradingAccountId
+        description: Id of the trading account
+        schema:
+          $ref: '#/components/schemas/TradingAccountId'
+        required: true
+      responses:
+        '200':
+          description: Status OK. This means a command was successfully acknowledged.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/GetMmpConfigurationResponse'
+        '400':
+          description: Bad Request
+        '401':
+          description: Not Authenticated
+        '403':
+          description: Access Forbidden
+      security:
+      - jwtTokenAuth: []
+components:
+  schemas:
+    RequestID:
+      type: string
+      example: '197735387747975680'
+    SetMMPCommandResponse:
+      type: object
+      required:
+      - message
+      - requestId
+      properties:
+        message:
+          description: message
+          type: string
+        requestId:
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+      example:
+        message: Command acknowledged - SetMMPConfig
+        requestId: '633910976353665025'
+    UnderlyingAssetSymbol:
+      type: string
+      description: the underlying asset symbol that is configured for MMP checks
+      example: BTC
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
+    GetMmpConfigurationResponse:
+      type: object
+      required:
+      - tradingAccountId
+      - message
+      - mmpConfigurations
+      properties:
+        tradingAccountId:
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+        message:
+          description: If there are no market maker protection configurations setup for this trading account or for the provided optional symbol under the same trading account, this field will be returned as "No mmp config setup".
+          type: string
+          example: No mmp config setup
+        mmpConfigurations:
+          description: A list of market maker protection configurations that the user has setup for each underlying asset symbol under the trading account provided. Supports filtering of symbol.
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/MmpConfiguration'
+    ResetMMPCommandV1:
+      type: object
+      required:
+      - commandType
+      - tradingAccountId
+      - underlyingAssetSymbol
+      properties:
+        commandType:
+          description: the command type must be provided as 'V1ResetMMP'
+          type: string
+          enum:
+          - V1ResetMMP
+          example: V1ResetMMP
+        tradingAccountId:
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+        underlyingAssetSymbol:
+          allOf:
+          - $ref: '#/components/schemas/UnderlyingAssetSymbol'
+      example:
+        commandType: V1ResetMMP
+        tradingAccountId: '123567443543'
+        underlyingAssetSymbol: BTC
+    SetMMPCommandV1:
+      type: object
+      required:
+      - commandType
+      - tradingAccountId
+      - underlyingAssetSymbol
+      - windowTimeInSeconds
+      - frozenTimeInSeconds
+      properties:
+        commandType:
+          description: the command type must be provided as 'V1SetMMP'
+          type: string
+          enum:
+          - V1SetMMP
+          example: V1SetMMP
+        tradingAccountId:
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+        underlyingAssetSymbol:
+          allOf:
+          - $ref: '#/components/schemas/UnderlyingAssetSymbol'
+        windowTimeInSeconds:
+          type: string
+          description: time window during which the MMP checks are conducted. It helps in determining how frequently the system evaluates the market maker's activity against predefined thresholds. Value needs to be `> 0`. Maximum value is 600 seconds (10 minutes).
+        frozenTimeInSeconds:
+          type: string
+          description: the duration for which a market maker's trading activity is temporarily halted after a protective measure is triggered. Value needs to be `>= 0`. Maximum value is 3600 seconds (60 minutes).
+        quantityLimit:
+          type: string
+          description: cap on the total number of contracts that a market maker can trade within `windowTimeInSeconds`. This is direction(side) agnostic. Needs to be `> 0` if set.
+          example: '100'
+        deltaLimit:
+          type: string
+          description: net delta exposure that a market maker can accumulate within `windowTimeInSeconds`
+          example: '10'
+      example:
+        commandType: V1SetMMP
+        tradingAccountId: '123567443543'
+        underlyingAssetSymbol: BTC
+        windowTimeInSeconds: '10'
+        frozenTimeInSeconds: '5'
+        quantityLimit: '10'
+        deltaLimit: '1'
+    MmpConfiguration:
+      type: object
+      required:
+      - underlyingAssetSymbol
+      - windowTimeInSeconds
+      - frozenTimeInSeconds
+      - quantityLimit
+      - deltaLimit
+      - isActive
+      properties:
+        underlyingAssetSymbol:
+          type: string
+          description: Underlying Asset Symbol
+          example: BTC
+        windowTimeInSeconds:
+          type: integer
+          description: Time window during which the MMP checks are conducted. It helps in determining how frequently the system evaluates the market maker's activity against predefined thresholds. Value needs to be `> 0`. Maximum value is 600 seconds (10 minutes).
+          example: 60
+        frozenTimeInSeconds:
+          type: integer
+          description: The duration for which a market maker's trading activity is temporarily halted after a protective measure is triggered. Value needs to be `>= 0`. Maximum value is 3600 seconds (60 minutes).
+          example: 120
+        quantityLimit:
+          type: string
+          description: Cap on the total number of contracts that a market maker can trade within `windowTimeInSeconds`. This is direction(side) agnostic. Needs to be `> 0` if set.
+          example: '100'
+        deltaLimit:
+          type: string
+          description: Net delta exposure that a market maker can accumulate within `windowTimeInSeconds`
+          example: '10'
+        isActive:
+          type: boolean
+          description: This boolean indicates if this configuration is in effect or not.
+          example: true
+    ResetMMPCommandResponse:
+      type: object
+      required:
+      - message
+      - requestId
+      properties:
+        message:
+          description: message
+          type: string
+        requestId:
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+      example:
+        message: Command acknowledged - ResetMMPConfig
+        requestId: '633910976353665026'
+  parameters:
+    BX-NONCE:
+      in: header
+      name: BX-NONCE
+      description: nonce is a client side incremented unsigned 64 bit integer
+      required: true
+      schema:
+        type: string
+    BX-SIGNATURE:
+      in: header
+      name: BX-SIGNATURE
+      description: signature obtained using the [signing format](/rest/authentication#signing-format)
+      required: true
+      schema:
+        type: string
+    BX-TIMESTAMP:
+      in: header
+      name: BX-TIMESTAMP
+      description: timestamp is the number of milliseconds since EPOCH
+      required: true
+      schema:
+        type: string
+  examples:
+    ResetMMPCommandV1:
+      value:
+        $ref: '#/components/schemas/ResetMMPCommandV1/example'
+    SetMMPCommandResponse:
+      value:
+        $ref: '#/components/schemas/SetMMPCommandResponse/example'
+    ResetMMPCommandResponse:
+      value:
+        $ref: '#/components/schemas/ResetMMPCommandResponse/example'
+    SetMMPCommandV1:
+      value:
+        $ref: '#/components/schemas/SetMMPCommandV1/example'
+  securitySchemes:
+    jwtTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-tagGroups:
+- name: Public Endpoints
+  tags:
+  - general
+  - asset-data
+  - market-data
+  - market-history-data
+  - index-price-data
+  - derivatives-public
+  - auction-public
+- name: Private Endpoints
+  tags:
+  - session-management
+  - trading-accounts
+  - account-assets
+  - orders
+  - trades
+  - amm-instructions
+  - transfer
+  - custody
+  - derivatives
+  - market-maker-protection
+  - history
+  - otc
+  - idb
+  - portfolio-margin-simulator

@@ -1,0 +1,329 @@
+openapi: 3.2.0
+info:
+  description: REST API specification for the Bullish Trading API.
+  version: 1.0.0
+  title: Bullish Trading Derivatives Public API
+  contact:
+    name: Bullish Help Center
+    email: support@bullish.com
+    url: https://support.bullish.com
+servers:
+- url: https://api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://registered.api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://prod.access.bullish.com/trading-api
+  description: PRODUCTION (Direct Connect)
+- url: https://api.bugbounty.bullish.com/trading-api
+  description: SECURITY SANDBOX
+- url: https://api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://registered.api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://simnext.access.bullish.com/trading-api
+  description: API SANDBOX (Direct Connect)
+tags:
+- name: derivatives-public
+  x-displayName: Derivatives
+paths:
+  /v1/option-ladder:
+    get:
+      parameters:
+      - in: query
+        name: baseSymbol
+        schema:
+          $ref: '#/components/schemas/AssetSymbol'
+        required: true
+        description: symbol to get
+      - in: query
+        name: expiry
+        description: Optional - Filter results by expiry date in YYYYMMDD format (e.g. 20250520)
+        schema:
+          $ref: '#/components/schemas/OptionExpiryDate'
+      - in: query
+        name: type
+        description: Optional - Filter results by type (`CALL` or ` PUT`) of the option markets
+        schema:
+          $ref: '#/components/schemas/OptionType'
+      - in: query
+        name: sort
+        description: Optional - Sort results by Option Type or Expiry Datetime
+        schema:
+          $ref: '#/components/schemas/OptionTypeOrExpiryDatetimeSortAsString'
+      tags:
+      - derivatives-public
+      summary: Get Option Ladder by Base Symbol
+      description: 'Returns the available options contracts. This data helps traders quickly assess the available options and their respective prices, implied volatilities, and Greeks (such as delta, gamma, theta, and vega).
+
+        '
+      operationId: getOptionLadder
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/OptionLadderResponse'
+        '400':
+          description: Bad Request
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security: []
+  /v1/option-ladder/{symbol}:
+    get:
+      parameters:
+      - in: path
+        name: symbol
+        schema:
+          $ref: '#/components/schemas/OptionMarketSymbol'
+        required: true
+        description: symbol to get. Only option markets are supported.
+      tags:
+      - derivatives-public
+      summary: Get Option Ladder by Symbol
+      description: 'Returns the for a given `baseSymbol`, organized by strike prices and expiration dates. This data helps traders quickly assess the available options and their respective prices, implied volatilities, and Greeks (such as delta, gamma, theta, and vega).
+
+        '
+      operationId: getOptionLadderBySymbol
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/OptionLadderResponse'
+        '400':
+          description: Bad Request
+        '404':
+          description: Option Market Not Found
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security: []
+  /v1/expiry-prices/{symbol}:
+    get:
+      summary: Get Expiry Prices
+      operationId: get-expiry-prices--symbol
+      description: Retrieves Expiry Price and Expiry Notional for respective Options and Dated Futures markets.
+      tags:
+      - derivatives-public
+      parameters:
+      - in: path
+        name: symbol
+        schema:
+          $ref: '#/components/schemas/DerivativeMarketSymbol'
+        required: true
+      responses:
+        '200':
+          description: Retrieve expiry price and expiry notional for options and dated future.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/MarketExpiryPriceResponse'
+        '400':
+          description: Expiry price for market is not (yet) available
+        '500':
+          description: Internal Server Error
+        '404':
+          description: Invalid symbol provided
+components:
+  schemas:
+    QuoteAssetSymbol:
+      type: string
+      description: asset symbol as denoted in the world
+      example: USDC
+    AssetSymbol:
+      type: string
+      description: asset symbol as denoted in the world
+      example: BTC
+    OptionGreeks:
+      description: Pricing parameters for option instruments. Only returned for option markets and omitted for spot and perpetual markets.
+      type: object
+      properties:
+        delta:
+          description: Sensitivity of an option's price to a $1 change in the price of the underlying asset. Only present for option markets.
+          type: string
+          example: '0.98'
+        gamma:
+          description: Rate of change of Delta with respect to a $1 change in the underlying asset's price. Only present for option markets.
+          type: string
+          example: '0.98'
+        theta:
+          description: The rate at which an option's price decreases as it approaches its expiration date. Only present for option markets.
+          type: string
+          example: '-0.17'
+        vega:
+          description: Sensitivity of an option's price to a 1% change in the implied volatility of the underlying asset. Only present for option markets.
+          type: string
+          example: '0.05'
+    OptionType:
+      description: Type of Option market
+      example: CALL
+      type: string
+      enum:
+      - CALL
+      - PUT
+    OptionMarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTC-USDC-20241004-70000-C` for OPTION markets.
+      example: BTC-USDC-20241004-70000-C
+    DerivativeMarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTC-USDC-20250919-90000-C` for OPTION markets and `BTC-USDC-20250919` for DATED FUTURE markets.
+      example: BTC-USDC-20250919-90000-C
+    OptionExpiryDate:
+      type: string
+      example: '20250520'
+      description: Expiry date of the option market in YYYYMMDD format (e.g. 20250520)
+    OptionLadderResponse:
+      description: Option Ladder Response
+      type: object
+      properties:
+        symbol:
+          description: Symbol of the option market. For example `BTC-USDC-20241004-70000-C`
+          allOf:
+          - $ref: '#/components/schemas/OptionMarketSymbol'
+        baseSymbol:
+          description: Base symbol of the option market. For `BTC-USDC-20241004-70000-C`, it will be `BTC`
+          allOf:
+          - $ref: '#/components/schemas/AssetSymbol'
+        settlementAssetSymbol:
+          description: Asset used for Mark To Market settlement
+          allOf:
+          - $ref: '#/components/schemas/QuoteAssetSymbol'
+        bidQuantity:
+          description: Quantity of `bid`
+          type: string
+          example: '0.0'
+        askQuantity:
+          description: Quantity of `ask`
+          type: string
+          example: '0.0'
+        bidIVPercentage:
+          description: Implied volatility of the best bid price
+          type: string
+          example: '99.0'
+        askIVPercentage:
+          description: Implied volatility of the best ask price
+          type: string
+          example: '99.0'
+        bid:
+          description: Bid price in the order book
+          type: string
+          example: '90000.0000'
+        ask:
+          description: Ask price in the order book
+          type: string
+          example: '90000.0000'
+        underlyingPrice:
+          description: Index price of the base asset
+          type: string
+          example: '100000.0000'
+        optionStrikePrice:
+          description: Strike price of the option market
+          type: string
+          example: '90000'
+        markPrice:
+          description: Mark Price of the option market
+          type: string
+          example: '100.0000'
+        quantity:
+          description: Number of contracts outstanding
+          type: string
+          example: '1000'
+        openInterest:
+          description: Amount of outstanding contracts in the exchange
+          type: string
+          example: '0.11442400'
+        openInterestUSD:
+          description: USD value of outstanding contracts in the exchange
+          type: string
+          example: '1144240.0000'
+        optionType:
+          description: Specifies if it's a call (right to buy) or a put (right to sell)
+          allOf:
+          - $ref: '#/components/schemas/OptionType'
+        expiryDatetime:
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        greeks:
+          description: Option greeks
+          allOf:
+          - $ref: '#/components/schemas/OptionGreeks'
+    MarketExpiryPriceResponse:
+      type: object
+      required:
+      - symbol
+      - expiryPrice
+      - expiryNotional
+      - expiryDatetime
+      - expiryTimestamp
+      properties:
+        symbol:
+          type: string
+          description: Market Symbol
+          example: BTC-USDC-20250912-95000-C
+        expiryPrice:
+          type: string
+          description: Price used upon Expiry for an Options/Dated Futures contract
+          example: '115123.2512'
+        expiryNotional:
+          type: string
+          description: Difference between strike price and expiry price for an Options contract expressed in notional per unit contract
+          example: '20123.3033'
+        expiryDatetime:
+          type: string
+          description: Datetime by which the market expires at
+          example: '2018-11-18T00:00:00.000Z'
+        expiryTimestamp:
+          type: string
+          description: Timestamp by which the market expires at
+          example: '1672041600000'
+    OptionTypeOrExpiryDatetimeSortAsString:
+      type: string
+      description: Sorting parameter that can have the following string values `"optionType"`, `"expiryDatetime"`
+      enum:
+      - optionType
+      - expiryDatetime
+      example: optionType
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+  securitySchemes:
+    jwtTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-tagGroups:
+- name: Public Endpoints
+  tags:
+  - general
+  - asset-data
+  - market-data
+  - market-history-data
+  - index-price-data
+  - derivatives-public
+  - auction-public
+- name: Private Endpoints
+  tags:
+  - session-management
+  - trading-accounts
+  - account-assets
+  - orders
+  - trades
+  - amm-instructions
+  - transfer
+  - custody
+  - derivatives
+  - market-maker-protection
+  - history
+  - otc
+  - idb
+  - portfolio-margin-simulator

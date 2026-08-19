@@ -1,0 +1,47 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading Index Price Data API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "index-price-data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Index Prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/index-prices"
+          },
+          "docs": "Retrieves the index price of all supported assets\n"
+        },
+        {
+          "info": {
+            "name": "Get Index Price by Asset Symbol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/index-prices/:assetSymbol",
+            "params": [
+              {
+                "name": "assetSymbol",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves the index price of a specified asset"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

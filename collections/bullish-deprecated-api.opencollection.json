@@ -1,0 +1,126 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Features Deprecated API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "deprecated",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Spot Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/accounts/spot",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "`Deprecated`: Please look at [Asset Account](/rest/api/get-asset-accounts) instead.\n\nGets the spot accounts, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n"
+        },
+        {
+          "info": {
+            "name": "Get Spot Account by Symbol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/accounts/spot/:symbol",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "`Deprecated`: Please look at [Asset Account by Symbol](/rest/api/get-asset-account-by-symbol) instead.\n\nGets the spot account by symbol, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n"
+        },
+        {
+          "info": {
+            "name": "Transfer Asset",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/command",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "BX-TIMESTAMP",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "commandType",
+                "value": "",
+                "type": "query",
+                "description": "The command type, must be 'V1TransferAsset'"
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Send command to transfer asset between two trading accounts.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

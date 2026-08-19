@@ -1,0 +1,461 @@
+{
+  "item": [
+    {
+      "id": "5a30a7b4-0b19-4ab7-9ef8-46bdf88cf70a",
+      "name": "auction-public",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3e41d42b-57bb-44b0-8e2b-67c641bcdc70",
+          "name": "Get Auction by Symbol",
+          "request": {
+            "name": "Get Auction by Symbol",
+            "description": {
+              "content": "Get current auction information and phase for a symbol.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "markets",
+                ":symbol",
+                "auctions"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol",
+                  "description": "(Required) market symbol, e.g. BTCUSDC"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "1cfc066c-13c3-4e98-8984-0ec1717150c9",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "markets",
+                    ":symbol",
+                    "auctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) market symbol, e.g. BTCUSDC"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"auctionId\": \"397735387747975680\",\n      \"symbol\": \"BTCUSDC\",\n      \"phase\": \"ACCUMULATION\",\n      \"startTime\": \"2025-05-20T01:01:01.000Z\",\n      \"lockdownTime\": \"2025-05-20T01:01:01.000Z\",\n      \"scheduledCrossTime\": \"2025-05-20T01:01:01.000Z\",\n      \"createAuctionOrderEnabled\": true,\n      \"amendAuctionOrderEnabled\": true,\n      \"cancelAuctionOrderEnabled\": true,\n      \"createdAt\": \"2025-05-20T01:01:01.000Z\",\n      \"updatedAt\": \"2025-05-20T01:01:01.000Z\"\n    },\n    {\n      \"auctionId\": \"397735387747975680\",\n      \"symbol\": \"BTCUSDC\",\n      \"phase\": \"ACCUMULATION\",\n      \"startTime\": \"2025-05-20T01:01:01.000Z\",\n      \"lockdownTime\": \"2025-05-20T01:01:01.000Z\",\n      \"scheduledCrossTime\": \"2025-05-20T01:01:01.000Z\",\n      \"createAuctionOrderEnabled\": true,\n      \"amendAuctionOrderEnabled\": true,\n      \"cancelAuctionOrderEnabled\": true,\n      \"createdAt\": \"2025-05-20T01:01:01.000Z\",\n      \"updatedAt\": \"2025-05-20T01:01:01.000Z\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "bb93b461-0c98-4d29-9769-6f338a179ddc",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "markets",
+                    ":symbol",
+                    "auctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) market symbol, e.g. BTCUSDC"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3c816e4c-266e-4cb0-b906-2999a67ceaf3",
+              "name": "Symbol not found or auction not available",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "markets",
+                    ":symbol",
+                    "auctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) market symbol, e.g. BTCUSDC"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "5998e047-fc11-40bf-9bce-f0a1537d68d0",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "markets",
+                    ":symbol",
+                    "auctions"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) market symbol, e.g. BTCUSDC"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "55ae3c72-69f9-4e4e-9a39-13d2b7d4f440",
+          "name": "Get Auction Net Order Imbalance Indicator",
+          "request": {
+            "name": "Get Auction Net Order Imbalance Indicator",
+            "description": {
+              "content": "Get NOII (Net Order Imbalance Indicator) snapshot. Available during Lockdown phase only.\nReturns empty array in other phases.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "markets",
+                ":symbol",
+                "auctions",
+                "noii"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol",
+                  "description": "(Required) market symbol, e.g. BTCUSDC"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "facb3937-0d68-4132-8481-a8782079b6b2",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "markets",
+                    ":symbol",
+                    "auctions",
+                    "noii"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) market symbol, e.g. BTCUSDC"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"data\": [\n    {\n      \"auctionId\": \"397735387747975680\",\n      \"symbol\": \"BTCUSDC\",\n      \"timestamp\": \"2025-05-20T01:01:01.000Z\",\n      \"farPrice\": \"1.00000000\",\n      \"referencePrice\": \"1.00000000\",\n      \"imbalanceDirection\": \"BUY\",\n      \"imbalanceQuantity\": \"1.00000000\",\n      \"pairedQuantity\": \"1.00000000\"\n    },\n    {\n      \"auctionId\": \"397735387747975680\",\n      \"symbol\": \"BTCUSDC\",\n      \"timestamp\": \"2025-05-20T01:01:01.000Z\",\n      \"farPrice\": \"1.00000000\",\n      \"referencePrice\": \"1.00000000\",\n      \"imbalanceDirection\": \"BUY\",\n      \"imbalanceQuantity\": \"1.00000000\",\n      \"pairedQuantity\": \"1.00000000\"\n    }\n  ]\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c412b364-383e-417d-9da7-1c0f242c83ef",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "markets",
+                    ":symbol",
+                    "auctions",
+                    "noii"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) market symbol, e.g. BTCUSDC"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7024f630-faa6-4935-b72e-bdbb78dd247d",
+              "name": "Symbol not found or auction not available",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "markets",
+                    ":symbol",
+                    "auctions",
+                    "noii"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) market symbol, e.g. BTCUSDC"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "29f27212-fca3-4c1b-b6a6-64e3b0baf2ce",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "markets",
+                    ":symbol",
+                    "auctions",
+                    "noii"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) market symbol, e.g. BTCUSDC"
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exchange.bullish.com/trading-api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "bd77fe49-c548-4ce6-8ffc-f00807e67af0",
+    "name": "Bullish Trading Auction Public API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API specification for the Bullish Trading API.\n\nContact Support:\n Name: Bullish Help Center\n Email: support@bullish.com",
+      "type": "text/plain"
+    }
+  }
+}

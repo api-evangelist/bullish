@@ -1,0 +1,1331 @@
+{
+  "item": [
+    {
+      "id": "6832718e-58fd-49fd-99bd-2fdf9034ba09",
+      "name": "deprecated",
+      "description": {
+        "content": "List of APIs that has been marked to be deprecated. You can still use these APIs till their end of service date.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "9504bed8-99fb-4c26-a578-10576847e1da",
+          "name": "Get Spot Accounts",
+          "request": {
+            "name": "Get Spot Accounts",
+            "description": {
+              "content": "`Deprecated`: Please look at [Asset Account](/rest/api/get-asset-accounts) instead.\n\nGets the spot accounts, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "accounts",
+                "spot"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "(Required) Id of the trading account"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "9f8813de-e533-4910-bffd-1eb904af6bfb",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "spot"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"accountId\": \"1\",\n    \"type\": \"spot\",\n    \"symbol\": \"BTC\",\n    \"total\": \"1.00000000\",\n    \"free\": \"1.00000000\",\n    \"used\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2021-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"accountId\": \"1\",\n    \"type\": \"spot\",\n    \"symbol\": \"BTC\",\n    \"total\": \"1.00000000\",\n    \"free\": \"1.00000000\",\n    \"used\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2021-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"accountId\": \"1\",\n    \"type\": \"spot\",\n    \"symbol\": \"BTC\",\n    \"total\": \"1.00000000\",\n    \"free\": \"1.00000000\",\n    \"used\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2021-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"accountId\": \"1\",\n    \"type\": \"spot\",\n    \"symbol\": \"BTC\",\n    \"total\": \"1.00000000\",\n    \"free\": \"1.00000000\",\n    \"used\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2021-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"accountId\": \"1\",\n    \"type\": \"spot\",\n    \"symbol\": \"BTC\",\n    \"total\": \"1.00000000\",\n    \"free\": \"1.00000000\",\n    \"used\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2021-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"accountId\": \"1\",\n    \"type\": \"spot\",\n    \"symbol\": \"BTC\",\n    \"total\": \"1.00000000\",\n    \"free\": \"1.00000000\",\n    \"used\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2021-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"accountId\": \"1\",\n    \"type\": \"spot\",\n    \"symbol\": \"BTC\",\n    \"total\": \"1.00000000\",\n    \"free\": \"1.00000000\",\n    \"used\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2021-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"accountId\": \"1\",\n    \"type\": \"spot\",\n    \"symbol\": \"BTC\",\n    \"total\": \"1.00000000\",\n    \"free\": \"1.00000000\",\n    \"used\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2021-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"accountId\": \"1\",\n    \"type\": \"spot\",\n    \"symbol\": \"BTC\",\n    \"total\": \"1.00000000\",\n    \"free\": \"1.00000000\",\n    \"used\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2021-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"accountId\": \"1\",\n    \"type\": \"spot\",\n    \"symbol\": \"BTC\",\n    \"total\": \"1.00000000\",\n    \"free\": \"1.00000000\",\n    \"used\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2021-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "989be747-bc1d-4830-8fef-c7b00c451ec0",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "spot"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b1bfc8c9-d731-4974-9e87-0207dbb9b0bd",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "spot"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "209ad0a2-250c-4660-8390-56633fa5dccf",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "spot"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "34960783-603d-42b0-b021-ba9cdc77114d",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "spot"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "e3adc55e-7132-4467-a189-d990c2841af8",
+          "name": "Get Spot Account by Symbol",
+          "request": {
+            "name": "Get Spot Account by Symbol",
+            "description": {
+              "content": "`Deprecated`: Please look at [Asset Account by Symbol](/rest/api/get-asset-account-by-symbol) instead.\n\nGets the spot account by symbol, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "accounts",
+                "spot",
+                ":symbol"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "(Required) Id of the trading account"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "bdb67dd6-5455-41df-a9bb-367447868525",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "spot",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"accountId\": \"1\",\n  \"type\": \"spot\",\n  \"symbol\": \"BTC\",\n  \"total\": \"1.00000000\",\n  \"free\": \"1.00000000\",\n  \"used\": \"1.00000000\",\n  \"updatedAtDatetime\": \"2021-05-20T01:01:01.000Z\",\n  \"updatedAtTimestamp\": \"1621490985000\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8798167a-10e4-488f-bcd4-0d3a2313b0ae",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "spot",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "04cd70b8-5fd6-40ee-bbaa-5ea0fdb1a02b",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "spot",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "a907a218-5e02-4d80-801b-5bcaae4a6526",
+              "name": "Resource Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "spot",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "3a8e290c-c92b-4edc-befe-63cf48a7c95a",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "spot",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "c902211e-28d5-4258-bcf0-3081c87396d6",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "spot",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)",
+                    "key": "Authorization",
+                    "value": "string"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "16e7a005-b341-4686-84e3-ee1d5ce4b126",
+          "name": "Transfer Asset",
+          "request": {
+            "name": "Transfer Asset",
+            "description": {
+              "content": "Send command to transfer asset between two trading accounts.\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "command"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "commandType",
+                  "value": "<string>",
+                  "description": "(Required) The command type, must be 'V1TransferAsset'"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) signature obtained using the [signing format](#overview--how-to-ensure-the-order-of-create-order-or-cancel-order-requests)",
+                "key": "BX-SIGNATURE",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                "key": "BX-TIMESTAMP",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                "key": "BX-NONCE",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"timestamp\": \"<string>\",\n  \"nonce\": \"<string>\",\n  \"authorizer\": \"<string>\",\n  \"command\": {\n    \"commandType\": \"<string>\",\n    \"assetSymbol\": \"<string>\",\n    \"quantity\": \"<string>\",\n    \"fromTradingAccountId\": \"<string>\",\n    \"toTradingAccountId\": \"<string>\"\n  }\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "183c7bab-d46f-4093-a49d-2b6cd925ca56",
+              "name": "Status OK. This means the request was successfully acknowledged. It does not necessarily mean the command was successfully executed.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "command"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "commandType",
+                      "value": "V1TransferAsset"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](#overview--how-to-ensure-the-order-of-create-order-or-cancel-order-requests)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"timestamp\": \"1621490985000\",\n  \"nonce\": \"123456789\",\n  \"authorizer\": \"03E02367E8C900000500000000000000\",\n  \"command\": {\n    \"commandType\": \"V1TransferAsset\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"100\",\n    \"fromTradingAccountId\": \"111000000000001\",\n    \"toTradingAccountId\": \"111000000000001\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Command acknowledged - TransferAsset\",\n  \"requestId\": \"633909659774222336\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "0724bbb7-fc48-44a7-9e9b-1b1a22804bed",
+              "name": "Bad Request\n\nFor example, sending a request with the `BX-SIGNATURE` header missing will result in the following response:\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "command"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "commandType",
+                      "value": "V1TransferAsset"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](#overview--how-to-ensure-the-order-of-create-order-or-cancel-order-requests)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"timestamp\": \"1621490985000\",\n  \"nonce\": \"123456789\",\n  \"authorizer\": \"03E02367E8C900000500000000000000\",\n  \"command\": {\n    \"commandType\": \"V1TransferAsset\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"100\",\n    \"fromTradingAccountId\": \"111000000000001\",\n    \"toTradingAccountId\": \"111000000000001\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Missing signature header\",\n  \"errorCode\": 6029,\n  \"errorCodeName\": \"MISSING_SIGNATURE_HEADER\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "29294174-f791-4339-802c-c9e88d53941c",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "command"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "commandType",
+                      "value": "V1TransferAsset"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](#overview--how-to-ensure-the-order-of-create-order-or-cancel-order-requests)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"timestamp\": \"1621490985000\",\n  \"nonce\": \"123456789\",\n  \"authorizer\": \"03E02367E8C900000500000000000000\",\n  \"command\": {\n    \"commandType\": \"V1TransferAsset\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"100\",\n    \"fromTradingAccountId\": \"111000000000001\",\n    \"toTradingAccountId\": \"111000000000001\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "83d28478-47cc-4d92-a968-623d87dfd7ed",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "command"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "commandType",
+                      "value": "V1TransferAsset"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](#overview--how-to-ensure-the-order-of-create-order-or-cancel-order-requests)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"timestamp\": \"1621490985000\",\n  \"nonce\": \"123456789\",\n  \"authorizer\": \"03E02367E8C900000500000000000000\",\n  \"command\": {\n    \"commandType\": \"V1TransferAsset\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"100\",\n    \"fromTradingAccountId\": \"111000000000001\",\n    \"toTradingAccountId\": \"111000000000001\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b1a45f73-ada0-4f4f-8782-a0cc0604d34a",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "command"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "commandType",
+                      "value": "V1TransferAsset"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](#overview--how-to-ensure-the-order-of-create-order-or-cancel-order-requests)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"timestamp\": \"1621490985000\",\n  \"nonce\": \"123456789\",\n  \"authorizer\": \"03E02367E8C900000500000000000000\",\n  \"command\": {\n    \"commandType\": \"V1TransferAsset\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"100\",\n    \"fromTradingAccountId\": \"111000000000001\",\n    \"toTradingAccountId\": \"111000000000001\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "208197ac-cb31-4eb6-84b2-2a60fef7bb5b",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "command"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "commandType",
+                      "value": "V1TransferAsset"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)",
+                    "key": "Authorization",
+                    "value": "string"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](#overview--how-to-ensure-the-order-of-create-order-or-cancel-order-requests)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"timestamp\": \"1621490985000\",\n  \"nonce\": \"123456789\",\n  \"authorizer\": \"03E02367E8C900000500000000000000\",\n  \"command\": {\n    \"commandType\": \"V1TransferAsset\",\n    \"assetSymbol\": \"BTC\",\n    \"quantity\": \"100\",\n    \"fromTradingAccountId\": \"111000000000001\",\n    \"toTradingAccountId\": \"111000000000001\"\n  }\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exchange.bullish.com/trading-api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "8202e171-7072-45d1-bc67-db1b47da9ccb",
+    "name": "Bullish Features Deprecated API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "# Overview\n\nWelcome to the _Bullish Deprecated Features & APIs_ documentation!\n\nThis documentation provides a list of Features and APIs that have been marked as deprecated, and will be decommissioned soon.\nYou will still be able to use these Features or APIs till the stated decommission date. \n\n## Additional Links\n\n- API documentations - [Trading API Documentation](/rest/introduction)\n\n## Deprecated Features\nList of Features that are marked for deprecation.\n\n## Bullish Key\n`Decommissioned`: *Creation of Bullish API key has been suspended as of `29 March, 2024`*\n\n`Deprecated`: *Existing Bullish API key will no longer be usable as of `28 June, 2024`*\n- A Bullish API key is a public/private key pair used for ECDSA based signing of trading and custody API requests\n- From here on the:\n  - public key will be referred to as `PUBLIC_KEY`\n  - private key will be referred to as `PRIVATE_KEY`\n- For information about the format of keys please review EOS Wallet Specification\n- Always store your private keys in a secure medium as they are used to sign your requests. Do not share your private keys in any publicly accessible areas such as code repositories, client side code, or other vulnerable areas and make sure the keys are not shipped with your mobile or web apps.\n\nA Bullish API key additionally has a `metadata` string associated with it which is displayed along side the key.\nYou must base64 decode the `metadata` to extract your `userId` (example follows). You will need the `userId` in the next step.\nPlease note that the `accountId` field is deprecated, and will be removed along with `v1/users/login` API towards the end of Q4 2023. Clients should reference the `userId` field instead.\nOld `metadata` strings generated before the March 2023 upgrade will not contain the `userId` field; clients are advised to get the `metadata` from the Settings page on the UI again.\n\n```shell\necho eyJwdWJsaWNLZXkiOiJQVUJfUjFfNWNpVW52TW5rVThMOVBCWnZaa1BGcjhqdkRnUHpzcHhWNGlqOThIN1JqM1FSNzJyMkEiLCJhY2NvdW50SWQiOjIyMjAwMDAwMDAwMDAwNCwiY3JlZGVudGlhbElkIjoiMTAifQ== | base64 --decode\n{\"publicKey\":\"PUB_R1_5ciUnvMnkU8L9PBZvZkPFr8jvDgPzspxV4ij98H7Rj3QR72r2A\",\"userId\":\"12345\",\"accountId\":\"12345\",\"credentialId\":\"10\"}\n```\n\n## Signing Format (Old)\n\n`Deprecated`: *Please use the new [Signing Format](/rest/authentication#signing-format)*\n\nBefore signing the `<COMMAND>` string remove any spaces and newline characters.\n\nThe resulting value is also referred to as the request signature. Each component of the signature is detailed below:\n  - `<TIMESTAMP>`: number of milliseconds since EPOCH\n  - `<NONCE>`: client side incremented 64-bit unsigned integer\n  - `<AUTHORIZER>`: JWT authorizer you obtain along with the [JWT token](/rest/authentication#add-authenticated-request-header)\n  - `<COMMAND>`: the command which is sent in the request payload, JSON encoded\n\n### How To Sign - Bullish API Key\n\nTo obtain the signature:\n\n1. Encode the request JSON payload, also referred to as body, with the SHA-256 hash function and take the hexdigest\n2. Sign the hexdigest from step 1 with ECDSA P-256 using your `<PRIVATE_KEY>`\n3. Various signing examples can be found on [GitHub](https://github.com/bullish-exchange)\n\n### How To Sign - HMAC API Key\n\nTo obtain the signature:\n\n1. Encode the request JSON payload, also referred to as body, with the SHA-256 hash function and take the hexdigest\n2. Sign the hexdigest from step 1 with your HMAC Secret Key.\n\nSee sign a request with HMAC for a sample Python script.\n\n## Hybrid Order Book WebSocket (unauthenticated)\n`Deprecated`: *Please use the [unauthenticated multi-order book WebSocket](/websocket/public/market-data/orderbook).*\n\n**Route**\n- `/markets/{symbol}/orderbook/hybrid`\n- `/v2/market-data/orderbook/hybrid/{symbol}?depth={depth}&aggregationFactor={aggregationFactor}`\n\n**Additional notes**: \n- Allowable depths - `[ 10, 50, 100, 200 ]`.\n- Allowable aggregation factors - `[ 1, 5, 10 ]`.\n- This endpoint does not require subscriptions.\n\nOn connection, the client receives a snapshot of the current hybrid order book with default depth of 10 (unless specified otherwise).\nSubsequently, if the order book moves, the client then receives a conflated update of the hybrid order book periodically \nat 300ms with standard ingress and at 100ms with Cloudflare bypass. If there is a sequence number mismatch between the \nconflated update and the snapshot, the server disconnects the client with the following error message - \n`4003 (Try Again, sequence number miss-match between snapshot and updates)`.\n\n### l2Snapshot response\n\n| Name                    | Type   | Description                                                                                                                                                                                                              |\n|---------------------    |--------|--------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| symbol                  | String | market symbol                                                                                                                                                                                                            |\n| bids                    | Array  | array of size 20 (default unless specified otherwise by the `depth` parameter) where even indices denote price, odd indices denote absolute quantities                                                                   |\n| asks                    | Array  | array of size 20 (default unless specified otherwise by the `depth` parameter) where even indices denote price, odd indices denote absolute quantities                                                                   |\n| sequenceNumberRange     | Array  | array of size 2 where first element denotes lower bound, second element denotes upper bound of sequence numbers <br /> lower and upper bound are equal for initial snapshot; this may differ for subsequent snapshots    |\n| datetime                | String | denotes the time the update was created by the engine, ISO 8601 with millisecond as string                                                                                                                               |\n| timestamp               | String | denotes the time the update was created by the engine                                                                                                                                                                    |\n| publishedAtTimestamp    | String | denotes the time the update was broadcasted to connected WebSockets                                                                                                                                                      |\n\n```json\n{\n  \"type\": \"snapshot\",\n  \"dataType\": \"V1TALevel2\",\n  \"data\": {\n    \"symbol\": \"BTCUSD\",\n    \"bids\": [\n      \"5199.5000\",\n      \"110.92467647\",\n      \"5199.4000\",\n      \"20.92470365\",\n      \"5199.3000\",\n      \"0.92473034\",\n      \"5199.2000\",\n      \"0.92475701\",\n      \"5199.1000\",\n      \"0.92478369\",\n      \"5199.0000\",\n      \"0.92481038\",\n      \"5198.9000\",\n      \"0.92483705\",\n      \"5198.8000\",\n      \"0.92486375\",\n      \"5198.7000\",\n      \"0.92489042\",\n      \"5198.6000\",\n      \"0.92491712\"\n    ],\n    \"asks\": [\n      \"5199.6000\",\n      \"96.37848193\",\n      \"5199.7000\",\n      \"0.92465082\",\n      \"5199.8000\",\n      \"11.04464563\",\n      \"5199.9000\",\n      \"0.92459696\",\n      \"5200.0000\",\n      \"0.92457029\",\n      \"5200.1000\",\n      \"0.92454362\",\n      \"5200.2000\",\n      \"0.92451695\",\n      \"5200.3000\",\n      \"0.92449028\",\n      \"5200.4000\",\n      \"0.92446361\",\n      \"5200.5000\",\n      \"0.92443695\"\n    ],\n    \"sequenceNumberRange\": [6, 6],\n    \"datetime\": \"2020-05-13T10:23:46.000Z\",\n    \"timestamp\": \"1589365426000\",\n    \"publishedAtTimestamp\": \"1589365426100\"\n  }\n}\n```\n\n\n### l2Update response\n\n| Name                  | Type   | Description                                                                                                                                                |\n|---------------------  |--------|------------------------------------------------------------------------------------------------------------------------------------------------------------|\n| symbol                | String | market symbol                                                                                                                                              |\n| bids                  | Array  | even indices denote price, odd indices denote absolute quantities                                                                                          |\n| asks                  | Array  | even indices denote price, odd indices denote absolute quantities                                                                                          |\n| sequenceNumberRange   | Array  | array of size 2 where first element denotes lower bound, second element denotes upper <br /> bound of sequence numbers represented by the conflated update |\n| datetime              | String | denotes the time the update was created by the engine, ISO 8601 with millisecond as string                                                                 |\n| timestamp             | String | denotes the time the update was created by the engine                                                                                                      |\n| publishedAtTimestamp  | String | denotes the time the update was broadcasted to connected WebSockets                                                                                        |\n\n```json\n{\n  \"type\": \"update\",\n  \"dataType\": \"V1TALevel2\",\n  \"data\": {\n    \"symbol\": \"BTCUSD\",\n    \"bids\": [],\n    \"asks\": [\"5199.7000\", \"101.30313224\"],\n    \"sequenceNumberRange\": [7, 10],\n    \"datetime\": \"2020-06-29T06:28:55.500Z\",\n    \"timestamp\": \"1593412135500\",\n    \"publishedAtTimestamp\": \"1593412135600\"\n  }\n}\n```\n\n### Maintaining Hybrid Order Book\n1. Connect to hybrid order book WebSocket API.\n2. Receive initial snapshot message.\n3. Record sequence number and create order book.\n4. Compare current sequence number with that of new message. If sequence number is out of order, reconnect.\n5. Receive update messages of price levels with new absolute quantity and update order book.\n   If quantity is 0, price level is removed.\n6. Receive a subsequent snapshot message and reset existing order book. Create order book with new price levels.\n\nSee connect to hybrid order book WebSocket for a sample Python script.\n\n## Market Data WebSocket (authenticated)\n`Deprecated`: *Please use the [unauthenticated multi-order book WebSocket](/websocket/public/market-data/orderbook).*\n\nRoute\n- `/v1/market-data`\n| Topic         |  Description                              | Data Type        | Subscription Type           |\n|:--------------|:------------------------------------------|:-----------------|:----------------------------|\n| l1Orderbook   | Provides updates for Level 1 market data  | `V1TABookLevel1` | By `<TOPIC>` and `<SYMBOL>` |\n### l1Orderbook response\n- Level 1 market data updates are realtime.\n- If the `sequenceNumber` of an incoming update is smaller than that of a previously received update, then the\n`sequenceNumber` is out of order. Terminate the WebSocket connection and reconnect.\n| Name           | Type   | Description                                                                          |\n|:---------------|:-------|:-----------------------------------------------------------------                    |\n| sequenceNumber | String | incrementing, unique, unsigned integer that identifies a state of the L1 order book   |\n| symbol         | String | market symbol                                                                        |\n| timestamp      | String | denotes the time the update was created                                              |\n| bid            | Array  | nested array containing price and quantity of highest bid                            |\n| ask            | Array  | nested array containing price and quantity of lowest ask                             |\n```json\n{\n  \"type\": \"update\",\n  \"dataType\": \"V1TABookLevel1\",\n  \"data\": {\n    \"sequenceNumber\": \"1\",\n    \"symbol\": \"BTCUSD\",\n    \"timestamp\": \"1466812800000\",\n    \"bid\": [ [ \"35.0000\", \"2.00000000\" ] ],\n    \"ask\": [ [ \"35.5000\", \"1.00000000\" ] ]\n  }\n}\n```\nSee connect to market data WebSocket for a sample Python script.\n\n## Spot Account\n`Deprecated`: *Spot Account will be replaced by `Asset Account` which provides a more granular view of the assets in your trading account*\n\n- REST Endpoints [(Get Spot Accounts)](/rest/deprecated/user-get-spot-accounts)\n  - REST - `GET /accounts/spot` replaced by REST - [GET /accounts/asset](/rest/api/get-asset-accounts)\n  - REST - `GET /accounts/spot/{symbol}` replaced by REST - [GET `/accounts/asset/{symbol}`](/rest/api/get-asset-account-by-symbol)\n\n- [Private Data WebSocket (Authenticated)](/websocket/private/private-data)\n  - Topic: `spotAccounts` replaced by `assetAccounts`\n  - Response: `V1TASpotAccount` replaced by `V1TAAssetAccount`\n### spotAccounts response\n\nThe *Formula* colummn below shows how the fields in `V1TASpotAccount` are calculated.\n\n| Name                 | Type   | Description                                                                                                                                                                         |  Formula <br /> (expressed in `assetAccounts` response fields)      |\n|:---------------------|:-------|:------------------------------------------------------------------------------------------------------------------------------------------------------------------------------------|:--------------------------------------------------------------------|\n| accountId            | String | unique spot account ID                                                                                                                                                              |                                                                     |\n| symbol               | String | asset symbol                                                                                                                                                                        |                                                                     |\n| type                 | String | type of account                                                                                                                                                                     |                                                                     |\n| total                | String | total is `free` + `used` assets within the account, see [asset value](/rest/general/price-quantity-precision) format                                             |   =max(0, availableQuantity - borrowedQuantity) + lockedQuantity    |\n| free                 | String | refers to the assets that are available to use on the account excluding borrowed assets, see [asset value](/rest/general/price-quantity-precision) format.       |   =max(0, availableQuantity - borrowedQuantity)                     |\n| used                 | String | refers to the assets that are locked in orders, see [asset value](/rest/general/price-quantity-precision) format                                                 |   =lockedQuantity                                                   |\n| updatedAtDatetime    | String | denotes the time the spot account was updated by the exchange, ISO 8601 with millisecond as string                                                                                  |                                                                     |\n| updatedAtTimestamp   | String | denotes the time the spot account was updated by the exchange                                                                                                                       |                                                                     |\n| publishedAtTimestamp | String | denotes the time the update was broadcasted to connected WebSockets                                                                                                                 |                                                                     |\n\n\n```json\n{\n  \"tradingAccountId\": \"1111\",\n  \"type\": \"snapshot\",\n  \"dataType\": \"V1TASpotAccount\",\n  \"data\": [\n    {\n      \"accountId\": \"1\",\n      \"type\": \"spot\",\n      \"symbol\": \"BTC\",\n      \"total\": \"4.00000000\",\n      \"free\": \"4.00000000\",\n      \"used\": \"0.00000000\",\n      \"updatedAtDatetime\": \"2021-12-30T07:36:35.918Z\",\n      \"updatedAtTimestamp\": \"1640849795918\",\n      \"publishedAtTimestamp\": \"1640849795920\"\n    }\n  ]\n}\n```\n\n## Anonymous Trades WebSocket (unauthenticated)\n**Route**\n- `/v1/market-data/trades/{symbol}`\n\n**Note**: This endpoint does not require subscriptions.\n\nOn connection, the client receives a snapshot of the latest 100 trades, in descending order. Subsequently,\nthe client receives real-time updates of trades that have been executed. If the `tradeId` of an incoming update is \nsmaller than that of a previously received update, then the `tradeId` is out of order. Terminate the\nWebSocket connection and reconnect.\n\n### Trades response\n\n| Name                 | Type      | Description                                                                               |\n|:---------------------|:----------|:------------------------------------------------------------------------------------------|\n| tradeId              | String    | unique trade ID                                                                           |\n| symbol               | String    | market symbol                                                                             |\n| price                | String    | price, see [asset value](/rest/general/price-quantity-precision) format                  |\n| quantity             | String    | quantity, see [asset value](/rest/general/price-quantity-precision) format               |\n| side                 | String    | order side                                                                                |\n| isTaker              | Boolean   | denotes whether this is a taker's trade                                                   |\n| createdAtTimestamp   | String    | denotes the time the order was ACK'd by the exchange                                      |\n| createdAtDatetime    | String    | denotes the time the order was ACK'd by the exchange, ISO 8601 with millisecond as string |\n| publishedAtTimestamp | String    | denotes the time the update was broadcasted to connected WebSockets                       |\n\n```json\n{\n  \"type\": \"update\",\n  \"dataType\": \"V1TAAnonymousTrade\",\n  \"data\": {\n    \"tradeId\": \"100000000000001050\",\n    \"symbol\": \"BTCUSD\",\n    \"price\": \"11528.2203\",\n    \"quantity\": \"1.00000000\",\n    \"side\": \"BUY\",\n    \"isTaker\": true,\n    \"createdAtTimestamp\": \"1662453438774\",\n    \"createdAtDatetime\": \"2022-09-06T08:37:18.774Z\",\n    \"publishedAtTimestamp\": \"1662453438780\"\n  }\n}\n```\n\nSee [connect to trades WebSocket](https://github.com/bullish-exchange/api-examples/blob/master/websocket/trades_web_socket.py) for a sample Python script.\n\n## Decommissioned Features\nList of Features that have been decommissioned and no longer usable.\n\n## Changelog\n### 2025 Changes\n  - May\n    - Deprecated Features:\n      - Anonymous Trades WebSocket (unauthenticated)\n### 2024 Changes\n  - April\n    - Deprecated Features:\n      - Bullish API Key\n      - Signing Format (Old)\n      - Hybrid OrderBook WebSocket (unauthenticated)\n      - Market Data WebSocket (authenticated)\n      - Spot Account\n    - Deprecated APIs for end of Q3 2024:\n      - REST - `GET | POST | DELETE /trading-api/v1/orders`\n      - REST - `GET /v1/orders/{orderId}`\n      - REST - `POST /v1/command?commandType=V1CancelAllOrders`\n      - REST - `POST /v1/command?commandType=V1CancelAllOrdersByMarket`\n      - REST - `POST /v1/command?commandType=V1DelayedCancelAllOrders`\n      - REST - `POST /v1/command?commandType=V1UnsetDelayedCancelAllOrders`\n      - REST - `GET | POST | DELETE /v1/amm-instructions`\n      - REST - `GET /v1/amm-instructions/{liquidityId}`\n    - Deprecated APIs:\n      - REST `GET /accounts/spot`\n      - REST `GET /accounts/spot/asset`\n",
+      "type": "text/plain"
+    }
+  }
+}

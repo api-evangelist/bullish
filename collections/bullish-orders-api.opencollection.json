@@ -1,0 +1,243 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading Orders API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "orders",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/orders",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "clientOrderId",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric (i64) identifier generated on the client side expressed as a string value"
+              },
+              {
+                "name": "side",
+                "value": "",
+                "type": "query",
+                "description": "order side"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "order status"
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account"
+              },
+              {
+                "name": "isAuctionOrder",
+                "value": "",
+                "type": "query",
+                "description": "Filter orders by auction type. `true` returns auction orders (GTX) only, `false` returns non-auction orders only. Omit to return all orders"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a list of orders placed by a trading account with specified filters.\n- Only the last 24 hours of data is available for querying\n\nThis endpoint requires [authentication](/rest/authentication#generate-a-jwt-token) and supports [pagination](/rest/general/pagination).\nTo filter by `createdAtDatetime` and `createdAtTimestamp`, additional parameters are required. For detailed instructions, see the [Filtering Support](/rest/general/filtering) section.\nAdditionally, this endpoint is subjected t"
+        },
+        {
+          "info": {
+            "name": "Create Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/orders",
+            "headers": [
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "BX-TIMESTAMP",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE-WINDOW-ENABLED",
+                "value": ""
+              },
+              {
+                "name": "BX-REFERRER",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates an order, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header.\n\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field ordering \nand addition of null fields in the request body. Quantities and prices does not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\n**Ratelimited:** `True`. Higher tiers of rate"
+        },
+        {
+          "info": {
+            "name": "Get Order by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/orders/:orderId",
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "order ID"
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a specific order using its unique identifier.\n\nThis endpoint requires [authentication](/rest/authentication#generate-a-jwt-token) and is subjected to rate limiting.\n"
+        },
+        {
+          "info": {
+            "name": "Get Order by clientOrder ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/orders/client-order-id/:clientOrderId",
+            "params": [
+              {
+                "name": "clientOrderId",
+                "value": "",
+                "type": "path",
+                "description": "unique numeric (i64) identifier generated on the client side"
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Retrieve a specific order using its unique identifier generated on the client side.\n\nThis endpoint requires [authentication](/rest/authentication#generate-a-jwt-token) and is subjected to rate limiting.\n"
+        },
+        {
+          "info": {
+            "name": "Cancel Order Commands",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/command#cancellations",
+            "headers": [
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "BX-TIMESTAMP",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE-WINDOW-ENABLED",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Submits a command to the trading engine. A successful response indicates that the command entry was acknowledged \nbut does not indicate that the command was executed. \nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field \nordering and addition of null fields in the request body. Quantities and prices does not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\n"
+        },
+        {
+          "info": {
+            "name": "Amend Order Command",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/command#amend",
+            "headers": [
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "BX-TIMESTAMP",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE-WINDOW-ENABLED",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Ability to amend the `price`, `quantity` and `type` (i.e. change from Taker Only to Maker Only and vice versa) on GTC Limit orders. It can be applied only to open orders (`quantityFilled=0` and `status=OPEN`). For Auction Limit Orders (LOC), only `price` can be amended. Auction Market Orders (MOC) do not support amendment.\n\nSubmits a command to the trading engine to amend an order. A successful response indicates that the command entry was acknowledged \nbut does not indicate that the command was"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

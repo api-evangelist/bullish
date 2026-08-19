@@ -1,0 +1,253 @@
+openapi: 3.2.0
+info:
+  description: REST API specification for the Bullish Trading API.
+  version: 1.0.0
+  title: Bullish Trading Derivatives API
+  contact:
+    name: Bullish Help Center
+    email: support@bullish.com
+    url: https://support.bullish.com
+servers:
+- url: https://api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://registered.api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://prod.access.bullish.com/trading-api
+  description: PRODUCTION (Direct Connect)
+- url: https://api.bugbounty.bullish.com/trading-api
+  description: SECURITY SANDBOX
+- url: https://api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://registered.api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://simnext.access.bullish.com/trading-api
+  description: API SANDBOX (Direct Connect)
+tags:
+- name: derivatives
+  x-displayName: Derivatives
+paths:
+  /v1/derivatives-positions:
+    get:
+      tags:
+      - derivatives
+      summary: Get Derivatives Positions
+      description: Get derivatives positions
+      operationId: getDerivativesPositions
+      parameters:
+      - in: query
+        name: tradingAccountId
+        description: Id of the trading account. `tradingAccountId` is mandatory in the query for users with multiple trading accounts. For users with a single trading account, it can be automatically retrieved from the login.
+        schema:
+          $ref: '#/components/schemas/TradingAccountId'
+        required: false
+      - in: query
+        name: symbol
+        example: BTC-USDC-PERP
+        schema:
+          $ref: '#/components/schemas/MarketSymbol'
+      - in: query
+        name: marketType
+        description: Optional - Filter for results by expiry date
+        example: DATED_FUTURE
+        schema:
+          $ref: '#/components/schemas/MarketTypeAsString'
+      - in: query
+        name: optionType
+        description: Optional - Filter for results by option type
+        example: CALL
+        schema:
+          $ref: '#/components/schemas/OptionTypeAsString'
+      - in: query
+        name: sort
+        description: Optional - Sort results by Market Type or Option Type
+        schema:
+          $ref: '#/components/schemas/MarketTypeOrOptionTypeSortByAsString'
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                items:
+                  $ref: '#/components/schemas/DerivativesPositionResponse'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security:
+      - jwtTokenAuth: []
+components:
+  schemas:
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.00000000'
+    MarketTypeOrOptionTypeSortByAsString:
+      type: string
+      description: Sorting parameter that can have the following string values `"marketType"`, `"optionType"`
+      enum:
+      - marketType
+      - optionType
+      example: optionType
+    TimeStampAsString:
+      type: string
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
+    OrderSide:
+      type: string
+      example: BUY
+      enum:
+      - BUY
+      - SELL
+    MarketTypeAsString:
+      type: string
+      description: market type can have the following string values `"SPOT"`, `"PERPETUAL"`, `"DATED_FUTURE"`, `"OPTION"`
+      enum:
+      - SPOT
+      - PERPETUAL
+      - DATED_FUTURE
+      - OPTION
+      example: SPOT
+    OptionTypeAsString:
+      type: string
+      description: option type can have the following string values `"CALL"`, `"PUT"`
+      enum:
+      - CALL
+      - PUT
+      example: CALL
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
+    MarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTCUSDC`
+      example: BTCUSDC
+    DerivativesPositionResponse:
+      description: Derivatives Position of one market for the trading account
+      type: object
+      properties:
+        tradingAccountId:
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+        symbol:
+          example: BTC-USDC-PERP
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        side:
+          allOf:
+          - $ref: '#/components/schemas/OrderSide'
+        quantity:
+          description: Current size of the  position [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        notional:
+          description: Notional value of the current position, calculated using the mark price
+          allOf:
+          - $ref: '#/components/schemas/UsdcValue'
+        entryNotional:
+          description: Notional value of the position, using the average entry price
+          allOf:
+          - $ref: '#/components/schemas/UsdcValue'
+        mtmPnl:
+          description: Sum of all mark-to-market profits and losses plus profits and losses realised from trading, accumulated since the last settlement
+          allOf:
+          - $ref: '#/components/schemas/UsdcValue'
+        reportedMtmPnl:
+          description: The profit/losses from the net price change since the last time the absolute quantity decreased. It is updated with every mark to market and is not updated during settlement or a position size increase
+          allOf:
+          - $ref: '#/components/schemas/UsdcValue'
+        reportedFundingPnl:
+          description: Sum of all funding payments received  since the position was opened. This is updated every time funding is paid.
+          allOf:
+          - $ref: '#/components/schemas/UsdcValue'
+        realizedPnl:
+          description: Total profits realized since the trading account first opened this position. This is only updated every time a position's absolute quantity (aka size) is reduced.
+          allOf:
+          - $ref: '#/components/schemas/UsdcValue'
+        settlementAssetSymbol:
+          description: Settlement Asset Symbol
+          type: string
+          example: USDC
+        createdAtDatetime:
+          description: Denotes the time the position was created by the exchange, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        createdAtTimestamp:
+          description: Denotes the time the position was created by the exchange, number of milliseconds since EPOCH
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        updatedAtDatetime:
+          description: Denotes the time the position was updated by the exchange, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        updatedAtTimestamp:
+          description: Denotes the time the position was updated by the exchange, number of milliseconds since EPOCH
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        greeks:
+          description: Position greeks
+          allOf:
+          - $ref: '#/components/schemas/PositionGreeks'
+    PositionGreeks:
+      description: Position greeks for derivative instruments
+      type: object
+      properties:
+        delta:
+          description: The sensitivity of the portfolio's value to a change in the underlying price, expressed in the base asset (e.g., BTC, ETH)
+          type: string
+          example: '0.98000000'
+        gamma:
+          description: The rate of change in Delta per 1 USDC move in the underlying price, expressed in the base asset
+          type: string
+          example: '0.01000000'
+        theta:
+          description: The rate at which the portfolio's value changes as it approaches expiration, expressed in $/day
+          type: string
+          example: '-0.1700'
+        vega:
+          description: The change in portfolio value for a 1% (percentage point) absolute change in implied volatility, expressed in dollars ($)
+          type: string
+          example: '0.0500'
+    UsdcValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.0000'
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+  securitySchemes:
+    jwtTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-tagGroups:
+- name: Public Endpoints
+  tags:
+  - general
+  - asset-data
+  - market-data
+  - market-history-data
+  - index-price-data
+  - derivatives-public
+  - auction-public
+- name: Private Endpoints
+  tags:
+  - session-management
+  - trading-accounts
+  - account-assets
+  - orders
+  - trades
+  - amm-instructions
+  - transfer
+  - custody
+  - derivatives
+  - market-maker-protection
+  - history
+  - otc
+  - idb
+  - portfolio-margin-simulator

@@ -1,0 +1,694 @@
+{
+  "item": [
+    {
+      "id": "1de96e6c-bea2-4534-ac19-a5c300fed5a6",
+      "name": "trading-accounts",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "50105274-bca9-4fe0-a7c9-ecd412d9c6ab",
+          "name": "Get All Trading Accounts Details",
+          "request": {
+            "name": "Get All Trading Accounts Details",
+            "description": {
+              "content": "Gets details for all trading accounts accessible by the API key used in the request. It requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header. The trading account's id will be used in all other REST API\n\n**Ratelimited:** `True`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "accounts",
+                "trading-accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "8adef1cf-d648-4bd2-86d9-6f2f4faae8f8",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "trading-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  },\n  {\n    \"isBorrowing\": \"false\",\n    \"isLending\": \"false\",\n    \"isPrimaryAccount\": \"false\",\n    \"maxInitialLeverage\": \"1\",\n    \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n    \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountName\": \"algo trading account\",\n    \"isDefaulted\": \"false\",\n    \"riskLimitUSD\": \"10000.0000\",\n    \"totalBorrowedUSD\": \"12000.0000\",\n    \"totalCollateralUSD\": \"13000.0000\",\n    \"initialMarginUSD\": \"0000.0000\",\n    \"warningMarginUSD\": \"0000.0000\",\n    \"liquidationMarginUSD\": \"0000.0000\",\n    \"fullLiquidationMarginUSD\": \"0000.0000\",\n    \"defaultedMarginUSD\": \"0000.0000\",\n    \"endCustomerId\": \"PrimeBroker\",\n    \"isConcentrationRiskEnabled\": \"true\",\n    \"liquidityAddonUSD\": \"1000.0000\",\n    \"marketRiskUSD\": \"2000.0000\",\n    \"marginProfile\": {\n      \"initialMarketRiskMultiplierPct\": \"200.00\",\n      \"warningMarketRiskMultiplierPct\": \"150.00\",\n      \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n      \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n      \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n    },\n    \"totalLiabilitiesUSD\": \"14000.0000\",\n    \"tradeFeeRate\": [\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      },\n      {\n        \"feeGroupId\": 1,\n        \"makerFee\": \"0.00005000\",\n        \"takerFee\": \"0.00005000\",\n        \"makerOtcFee\": \"0.00005000\",\n        \"takerOtcFee\": \"0.00005000\",\n        \"brokerFee\": \"0.00005000\",\n        \"auctionFee\": \"0.00005000\"\n      }\n    ],\n    \"makerFee\": \"0.00000000\",\n    \"takerFee\": \"0.00020000\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "90fc0a3d-476c-4ec0-93c1-c8d64813e73b",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "trading-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "75e2a018-ce27-42b0-898c-f8bb7e24bff0",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "trading-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "aa328d17-ec8c-4dd2-8539-240244098575",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "trading-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6353a658-79d9-4e4d-8c9e-a18484f0ad95",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "trading-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "d5f0c976-91d6-4ba9-a585-6c7c86309bc3",
+          "name": "Get Trading Account Details by ID",
+          "request": {
+            "name": "Get Trading Account Details by ID",
+            "description": {
+              "content": "Gets details for specific trading account by `tradingAccountId` and API key used in the request. It requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header.\n\n**Ratelimited:** `True`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "accounts",
+                "trading-accounts",
+                ":tradingAccountId"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "tradingAccountId",
+                  "description": "(Required) Id of the trading account"
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "649fbf94-956d-40d5-bc46-0f4b8e44a160",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "trading-accounts",
+                    ":tradingAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tradingAccountId",
+                      "description": "(Required) Id of the trading account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"isBorrowing\": \"false\",\n  \"isLending\": \"false\",\n  \"isPrimaryAccount\": \"false\",\n  \"maxInitialLeverage\": \"1\",\n  \"rateLimitToken\": \"97d98951b12fb11f330dd9cb1b807d888c702679ee602edcf1ebc6bac17ad63d\",\n  \"tradingAccountDescription\": \"algo trading account with experimental strategy\",\n  \"tradingAccountId\": \"111000000000001\",\n  \"tradingAccountName\": \"algo trading account\",\n  \"isDefaulted\": \"false\",\n  \"riskLimitUSD\": \"10000.0000\",\n  \"totalBorrowedUSD\": \"12000.0000\",\n  \"totalCollateralUSD\": \"13000.0000\",\n  \"initialMarginUSD\": \"0000.0000\",\n  \"warningMarginUSD\": \"0000.0000\",\n  \"liquidationMarginUSD\": \"0000.0000\",\n  \"fullLiquidationMarginUSD\": \"0000.0000\",\n  \"defaultedMarginUSD\": \"0000.0000\",\n  \"endCustomerId\": \"PrimeBroker\",\n  \"isConcentrationRiskEnabled\": \"true\",\n  \"liquidityAddonUSD\": \"1000.0000\",\n  \"marketRiskUSD\": \"2000.0000\",\n  \"marginProfile\": {\n    \"initialMarketRiskMultiplierPct\": \"200.00\",\n    \"warningMarketRiskMultiplierPct\": \"150.00\",\n    \"liquidationMarketRiskMultiplierPct\": \"100.00\",\n    \"fullLiquidationMarketRiskMultiplierPct\": \"75.00\",\n    \"defaultedMarketRiskMultiplierPct\": \"50.00\"\n  },\n  \"totalLiabilitiesUSD\": \"14000.0000\",\n  \"tradeFeeRate\": [\n    {\n      \"feeGroupId\": 1,\n      \"makerFee\": \"0.00005000\",\n      \"takerFee\": \"0.00005000\",\n      \"makerOtcFee\": \"0.00005000\",\n      \"takerOtcFee\": \"0.00005000\",\n      \"brokerFee\": \"0.00005000\",\n      \"auctionFee\": \"0.00005000\"\n    },\n    {\n      \"feeGroupId\": 1,\n      \"makerFee\": \"0.00005000\",\n      \"takerFee\": \"0.00005000\",\n      \"makerOtcFee\": \"0.00005000\",\n      \"takerOtcFee\": \"0.00005000\",\n      \"brokerFee\": \"0.00005000\",\n      \"auctionFee\": \"0.00005000\"\n    }\n  ],\n  \"makerFee\": \"0.00000000\",\n  \"takerFee\": \"0.00020000\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "03cc0a4a-e75b-424c-8d32-348c326a81b0",
+              "name": "Bad Request Parameter",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "trading-accounts",
+                    ":tradingAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tradingAccountId",
+                      "description": "(Required) Id of the trading account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "4e6884e9-31b4-45c8-8075-092a484d81d6",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "trading-accounts",
+                    ":tradingAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tradingAccountId",
+                      "description": "(Required) Id of the trading account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "d49f5437-390e-424f-9715-d58fd4f78673",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "trading-accounts",
+                    ":tradingAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tradingAccountId",
+                      "description": "(Required) Id of the trading account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ce11d262-4cb6-409c-a1d0-1f2fa2927d25",
+              "name": "Resource Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "trading-accounts",
+                    ":tradingAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tradingAccountId",
+                      "description": "(Required) Id of the trading account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "29dc0c23-b356-410c-a300-02eea0db97f1",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "trading-accounts",
+                    ":tradingAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tradingAccountId",
+                      "description": "(Required) Id of the trading account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e6e3c55e-4f92-4402-9162-b3d2f11a435e",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "trading-accounts",
+                    ":tradingAccountId"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "tradingAccountId",
+                      "description": "(Required) Id of the trading account"
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exchange.bullish.com/trading-api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "284aa5ee-7e31-4067-abef-694d64e9edaa",
+    "name": "Bullish Trading Trading Accounts API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API specification for the Bullish Trading API.\n\nContact Support:\n Name: Bullish Help Center\n Email: support@bullish.com",
+      "type": "text/plain"
+    }
+  }
+}

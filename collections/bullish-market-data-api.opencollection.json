@@ -1,0 +1,197 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading Market Data API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "market-data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Markets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/markets",
+            "params": [
+              {
+                "name": "marketType",
+                "value": "",
+                "type": "query",
+                "description": "Market Types to filter markets against"
+              },
+              {
+                "name": "optionType",
+                "value": "",
+                "type": "query",
+                "description": "Option Type to filter markets against. If this is present, only Option Markets will be returned"
+              }
+            ]
+          },
+          "docs": "Get Markets."
+        },
+        {
+          "info": {
+            "name": "Get Market by Symbol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/markets/:symbol",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Market by Symbol."
+        },
+        {
+          "info": {
+            "name": "Get Historical Markets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/history/markets",
+            "params": [
+              {
+                "name": "marketType",
+                "value": "",
+                "type": "query",
+                "description": "Filter by market type (can be specified multiple times for multiple types)"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "Filter by expiry status (can be specified multiple times for multiple statuses)"
+              }
+            ]
+          },
+          "docs": "Get a list of historical markets, including expired markets.\nThis endpoint returns simplified market information and supports filtering by market type and expiry status.\n"
+        },
+        {
+          "info": {
+            "name": "Get Historical Market by Symbol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/history/markets/:symbol",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Historical Market by Symbol. This endpoint will return specified market even if it is expired. Only applicable for this is applicable only for `DATED_FUTURE` and `OPTION` markets."
+        },
+        {
+          "info": {
+            "name": "Get Market Order Book",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/markets/:symbol/orderbook/hybrid",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "symbol to get"
+              }
+            ]
+          },
+          "docs": "Get Order Book by Market Symbol\n\n**Ratelimited:** `False`\n"
+        },
+        {
+          "info": {
+            "name": "Get Latest Market Trades",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/markets/:symbol/trades",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "symbol to get"
+              }
+            ]
+          },
+          "docs": "Get Market Trades by Market Symbol.\n- return 100 most recent trades\n- lookup from local cache\n\n**Ratelimited:** `False`\n"
+        },
+        {
+          "info": {
+            "name": "Get Market Tick",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/markets/:symbol/tick",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "symbol to get. Only perpetual markets are supported."
+              }
+            ]
+          },
+          "docs": "Get Current Tick by Market Symbol.\n- return top 100\n\n**Ratelimited:** `False`\n"
+        },
+        {
+          "info": {
+            "name": "Get Market Candle",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/markets/:symbol/candle",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path"
+              },
+              {
+                "name": "createdAtDatetime[gte]",
+                "value": "",
+                "type": "query",
+                "description": "start timestamp of window, ISO 8601 with millisecond as string"
+              },
+              {
+                "name": "createdAtDatetime[lte]",
+                "value": "",
+                "type": "query",
+                "description": "end timestamp of window, ISO 8601 with millisecond as string"
+              },
+              {
+                "name": "timeBucket",
+                "value": "",
+                "type": "query",
+                "description": "time bucket size"
+              }
+            ]
+          },
+          "docs": "Get Current OHLCV Candle by Market Symbol\n- [supports pagination](/rest/general/pagination)\n- filtering on `createdAtDatetime`, `createdAtTimestamp` requires additional keywords, [see filtering support](/rest/general/filtering)\n\n**Ratelimited:** `False`\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

@@ -1,0 +1,56 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading Auction Public API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "auction-public",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Auction by Symbol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/markets/:symbol/auctions",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "market symbol, e.g. BTCUSDC"
+              }
+            ]
+          },
+          "docs": "Get current auction information and phase for a symbol."
+        },
+        {
+          "info": {
+            "name": "Get Auction Net Order Imbalance Indicator",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/markets/:symbol/auctions/noii",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "market symbol, e.g. BTCUSDC"
+              }
+            ]
+          },
+          "docs": "Get NOII (Net Order Imbalance Indicator) snapshot. Available during Lockdown phase only.\nReturns empty array in other phases.\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

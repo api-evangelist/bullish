@@ -1,0 +1,740 @@
+{
+  "item": [
+    {
+      "id": "23ca7ffb-6716-40b1-97da-de17b49df015",
+      "name": "derivatives-public",
+      "description": {
+        "content": "",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "e12ca4be-f541-46fd-8f28-0a21e7f821bf",
+          "name": "Get Option Ladder by Base Symbol",
+          "request": {
+            "name": "Get Option Ladder by Base Symbol",
+            "description": {
+              "content": "Returns the available options contracts. This data helps traders quickly assess the available options and their respective prices, implied volatilities, and Greeks (such as delta, gamma, theta, and vega).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "option-ladder"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "baseSymbol",
+                  "value": "<string>",
+                  "description": "(Required) symbol to get"
+                },
+                {
+                  "disabled": false,
+                  "key": "expiry",
+                  "value": "<string>",
+                  "description": "Optional - Filter results by expiry date in YYYYMMDD format (e.g. 20250520)"
+                },
+                {
+                  "disabled": false,
+                  "key": "type",
+                  "value": "<string>",
+                  "description": "Optional - Filter results by type (`CALL` or ` PUT`) of the option markets"
+                },
+                {
+                  "disabled": false,
+                  "key": "sort",
+                  "value": "<string>",
+                  "description": "Optional - Sort results by Option Type or Expiry Datetime"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "5302f1fd-826b-4cd5-bdfc-76cf5b0bee7d",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "option-ladder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "baseSymbol",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "expiry",
+                      "value": "20250520"
+                    },
+                    {
+                      "key": "type",
+                      "value": "CALL"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "optionType"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"baseSymbol\": \"BTC\",\n    \"settlementAssetSymbol\": \"USDC\",\n    \"bidQuantity\": \"0.0\",\n    \"askQuantity\": \"0.0\",\n    \"bidIVPercentage\": \"99.0\",\n    \"askIVPercentage\": \"99.0\",\n    \"bid\": \"90000.0000\",\n    \"ask\": \"90000.0000\",\n    \"underlyingPrice\": \"100000.0000\",\n    \"optionStrikePrice\": \"90000\",\n    \"markPrice\": \"100.0000\",\n    \"quantity\": \"1000\",\n    \"openInterest\": \"0.11442400\",\n    \"openInterestUSD\": \"1144240.0000\",\n    \"optionType\": \"CALL\",\n    \"expiryDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"greeks\": {\n      \"delta\": \"0.98\",\n      \"gamma\": \"0.98\",\n      \"theta\": \"-0.17\",\n      \"vega\": \"0.05\"\n    }\n  },\n  {\n    \"symbol\": \"BTC-USDC-20241004-70000-C\",\n    \"baseSymbol\": \"BTC\",\n    \"settlementAssetSymbol\": \"USDC\",\n    \"bidQuantity\": \"0.0\",\n    \"askQuantity\": \"0.0\",\n    \"bidIVPercentage\": \"99.0\",\n    \"askIVPercentage\": \"99.0\",\n    \"bid\": \"90000.0000\",\n    \"ask\": \"90000.0000\",\n    \"underlyingPrice\": \"100000.0000\",\n    \"optionStrikePrice\": \"90000\",\n    \"markPrice\": \"100.0000\",\n    \"quantity\": \"1000\",\n    \"openInterest\": \"0.11442400\",\n    \"openInterestUSD\": \"1144240.0000\",\n    \"optionType\": \"CALL\",\n    \"expiryDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"greeks\": {\n      \"delta\": \"0.98\",\n      \"gamma\": \"0.98\",\n      \"theta\": \"-0.17\",\n      \"vega\": \"0.05\"\n    }\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "f72d3b0b-a87c-421f-b9fa-0705ceb48abd",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "option-ladder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "baseSymbol",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "expiry",
+                      "value": "20250520"
+                    },
+                    {
+                      "key": "type",
+                      "value": "CALL"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "optionType"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "2f4d48ac-227a-4f77-888a-e144192d18c3",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "option-ladder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "baseSymbol",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "expiry",
+                      "value": "20250520"
+                    },
+                    {
+                      "key": "type",
+                      "value": "CALL"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "optionType"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "953a28b0-5223-46ee-964e-836ec9d8e60c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "option-ladder"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "baseSymbol",
+                      "value": "BTC"
+                    },
+                    {
+                      "key": "expiry",
+                      "value": "20250520"
+                    },
+                    {
+                      "key": "type",
+                      "value": "CALL"
+                    },
+                    {
+                      "key": "sort",
+                      "value": "optionType"
+                    }
+                  ],
+                  "variable": []
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "f5356a98-088e-4012-9b0d-49907cdfd36e",
+          "name": "Get Option Ladder by Symbol",
+          "request": {
+            "name": "Get Option Ladder by Symbol",
+            "description": {
+              "content": "Returns the for a given `baseSymbol`, organized by strike prices and expiration dates. This data helps traders quickly assess the available options and their respective prices, implied volatilities, and Greeks (such as delta, gamma, theta, and vega).\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "option-ladder",
+                ":symbol"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol",
+                  "description": "(Required) symbol to get. Only option markets are supported."
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "56434b93-9d0b-4272-947d-b33da01cf086",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "option-ladder",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) symbol to get. Only option markets are supported."
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"symbol\": \"BTC-USDC-20241004-70000-C\",\n  \"baseSymbol\": \"BTC\",\n  \"settlementAssetSymbol\": \"USDC\",\n  \"bidQuantity\": \"0.0\",\n  \"askQuantity\": \"0.0\",\n  \"bidIVPercentage\": \"99.0\",\n  \"askIVPercentage\": \"99.0\",\n  \"bid\": \"90000.0000\",\n  \"ask\": \"90000.0000\",\n  \"underlyingPrice\": \"100000.0000\",\n  \"optionStrikePrice\": \"90000\",\n  \"markPrice\": \"100.0000\",\n  \"quantity\": \"1000\",\n  \"openInterest\": \"0.11442400\",\n  \"openInterestUSD\": \"1144240.0000\",\n  \"optionType\": \"CALL\",\n  \"expiryDatetime\": \"2025-05-20T01:01:01.000Z\",\n  \"greeks\": {\n    \"delta\": \"0.98\",\n    \"gamma\": \"0.98\",\n    \"theta\": \"-0.17\",\n    \"vega\": \"0.05\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "758afdc5-42ad-425b-a1b1-187b4c245a2b",
+              "name": "Bad Request",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "option-ladder",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) symbol to get. Only option markets are supported."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "843ecaa6-daf6-48a6-9e17-f137ca9bad22",
+              "name": "Option Market Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "option-ladder",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) symbol to get. Only option markets are supported."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "140e09e8-0d8c-4e58-993b-95debcdc7919",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "option-ladder",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) symbol to get. Only option markets are supported."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "6ee93f25-acf7-478a-9f72-7a030a5f35ee",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "option-ladder",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) symbol to get. Only option markets are supported."
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "6e8e3b05-5657-4e8a-b2cf-0b6e911484ca",
+          "name": "Get Expiry Prices",
+          "request": {
+            "name": "Get Expiry Prices",
+            "description": {
+              "content": "Retrieves Expiry Price and Expiry Notional for respective Options and Dated Futures markets.",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "expiry-prices",
+                ":symbol"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": null
+          },
+          "response": [
+            {
+              "id": "56ae39a3-2e31-4eee-aee2-9d7b3793fc0f",
+              "name": "Retrieve expiry price and expiry notional for options and dated future.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "expiry-prices",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"symbol\": \"BTC-USDC-20250912-95000-C\",\n  \"expiryPrice\": \"115123.2512\",\n  \"expiryNotional\": \"20123.3033\",\n  \"expiryDatetime\": \"2018-11-18T00:00:00.000Z\",\n  \"expiryTimestamp\": \"1672041600000\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "5565926f-55b2-4358-ade0-0ac9f1921fc3",
+              "name": "Expiry price for market is not (yet) available",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "expiry-prices",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "064abd3b-5dc0-4b3c-bd6f-e38a0a425353",
+              "name": "Invalid symbol provided",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "expiry-prices",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "7e63a2ab-ee41-43b2-9b0a-6048a0332d97",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "expiry-prices",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exchange.bullish.com/trading-api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "3638dacc-a0a0-4138-888a-94040d5b29d7",
+    "name": "Bullish Trading Derivatives Public API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API specification for the Bullish Trading API.\n\nContact Support:\n Name: Bullish Help Center\n Email: support@bullish.com",
+      "type": "text/plain"
+    }
+  }
+}

@@ -1,0 +1,713 @@
+{
+  "item": [
+    {
+      "id": "683343a3-e2ab-4be9-ae9a-239843f0016c",
+      "name": "account-assets",
+      "description": {
+        "content": "Authenticated APIs for reading account data",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "3b92a242-0506-453a-8907-dadba0ef7d53",
+          "name": "Get All Account Assets",
+          "request": {
+            "name": "Get All Account Assets",
+            "description": {
+              "content": "Gets the asset accounts, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "accounts",
+                "asset"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "(Required) Id of the trading account"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "40f45218-b748-4761-bf4d-495c6a17a4c5",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "asset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"availableQuantity\": \"1.00000000\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"lockedQuantity\": \"1.00000000\",\n    \"loanedQuantity\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"availableQuantity\": \"1.00000000\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"lockedQuantity\": \"1.00000000\",\n    \"loanedQuantity\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"availableQuantity\": \"1.00000000\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"lockedQuantity\": \"1.00000000\",\n    \"loanedQuantity\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"availableQuantity\": \"1.00000000\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"lockedQuantity\": \"1.00000000\",\n    \"loanedQuantity\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"availableQuantity\": \"1.00000000\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"lockedQuantity\": \"1.00000000\",\n    \"loanedQuantity\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"availableQuantity\": \"1.00000000\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"lockedQuantity\": \"1.00000000\",\n    \"loanedQuantity\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"availableQuantity\": \"1.00000000\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"lockedQuantity\": \"1.00000000\",\n    \"loanedQuantity\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"availableQuantity\": \"1.00000000\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"lockedQuantity\": \"1.00000000\",\n    \"loanedQuantity\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"availableQuantity\": \"1.00000000\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"lockedQuantity\": \"1.00000000\",\n    \"loanedQuantity\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  },\n  {\n    \"tradingAccountId\": \"111000000000001\",\n    \"assetId\": \"1\",\n    \"assetSymbol\": \"BTC\",\n    \"availableQuantity\": \"1.00000000\",\n    \"borrowedQuantity\": \"1.00000000\",\n    \"lockedQuantity\": \"1.00000000\",\n    \"loanedQuantity\": \"1.00000000\",\n    \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n    \"updatedAtTimestamp\": \"1621490985000\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "ec21b53d-518d-4aec-80d1-235c539f06b0",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "asset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "e1d786e4-7164-4e5f-a7b7-7967fa9041a4",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "asset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "cb8f15ba-5c69-4b91-b613-7fd7c6b33d03",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "asset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "dd48ed9c-022d-4031-a766-63dab7b970c1",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "asset"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a5caf922-de99-46c9-abc4-c3160ea4eabc",
+          "name": "Get All Account Assets by Symbol",
+          "request": {
+            "name": "Get All Account Assets by Symbol",
+            "description": {
+              "content": "Gets the asset account by symbol, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v1",
+                "accounts",
+                "asset",
+                ":symbol"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "(Required) Id of the trading account"
+                }
+              ],
+              "variable": [
+                {
+                  "disabled": false,
+                  "type": "any",
+                  "value": "<string>",
+                  "key": "symbol",
+                  "description": "(Required) "
+                }
+              ]
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "16b1b8cd-71c4-4917-9103-3b27f26d491f",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "asset",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"tradingAccountId\": \"111000000000001\",\n  \"assetId\": \"1\",\n  \"assetSymbol\": \"BTC\",\n  \"availableQuantity\": \"1.00000000\",\n  \"borrowedQuantity\": \"1.00000000\",\n  \"lockedQuantity\": \"1.00000000\",\n  \"loanedQuantity\": \"1.00000000\",\n  \"updatedAtDatetime\": \"2025-05-20T01:01:01.000Z\",\n  \"updatedAtTimestamp\": \"1621490985000\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8799129d-bd14-4fa2-805a-0dcfb8c629fe",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "asset",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "fa89a2fe-cc51-4efb-adff-44893e8b278e",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "asset",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ef83d6fd-1f69-414f-bf06-0c05a205ac26",
+              "name": "Resource Not Found",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "asset",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Not Found",
+              "code": 404,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "ba108493-8b82-4f9d-931c-63b3987d9e17",
+              "name": "Too Many Requests",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "asset",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Too Many Requests",
+              "code": 429,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            },
+            {
+              "id": "b50ac1ab-baa4-4672-b5e6-d3df6584271c",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v1",
+                    "accounts",
+                    "asset",
+                    ":symbol"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": [
+                    {
+                      "disabled": false,
+                      "type": "any",
+                      "value": "<string>",
+                      "key": "symbol",
+                      "description": "(Required) "
+                    }
+                  ]
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "text/plain"
+                }
+              ],
+              "body": "",
+              "cookie": [],
+              "_postman_previewlanguage": "text"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exchange.bullish.com/trading-api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "bb003210-7362-48f3-ae87-7cb372d28588",
+    "name": "Bullish Trading Account Assets API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API specification for the Bullish Trading API.\n\nContact Support:\n Name: Bullish Help Center\n Email: support@bullish.com",
+      "type": "text/plain"
+    }
+  }
+}

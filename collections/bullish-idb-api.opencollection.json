@@ -1,0 +1,186 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading Idb API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "idb",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "IDB Get Delegated Trading Accounts",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/idb/delegated-accounts",
+            "params": [
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Optional filter by a single delegated trading account"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get details for all delegated trading accounts from the broker perspective.\n\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n- [supports pagination](/rest/general/pagination)\n"
+        },
+        {
+          "info": {
+            "name": "IDB Create OTC Trade",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/idb/otc-trades",
+            "headers": [
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "BX-TIMESTAMP",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Enables authorized inter-dealer broker to book a dual-sided OTC trade on behalf of two clients.\n\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field\nordering and addition of null fields in the request body. Prices do not require strict precision.\nEg. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authori"
+        },
+        {
+          "info": {
+            "name": "IDB Get OTC Trades",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/idb/otc-trades#list",
+            "params": [
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "OTC trade status"
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "111000000000001",
+                "type": "query",
+                "description": "Allow filtering across multiple delegated trading accounts; if tradingAccountId is null or omitted, returns trades for all delegated accounts"
+              },
+              {
+                "name": "sharedMatchKey",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "createdAtDatetime[ gte ]",
+                "value": "",
+                "type": "query",
+                "description": "Start timestamp of window, ISO 8601 with millisecond as string"
+              },
+              {
+                "name": "createdAtDatetime[ lte ]",
+                "value": "",
+                "type": "query",
+                "description": "End timestamp of window, ISO 8601 with millisecond as string"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get the brokered OTC trade list initiated by the IDB based on specified filters.\n\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n- supports filtering on `status`, `tradingAccountId`, `sharedMatchKey`, `createdAtDatetime`, `createdAtTimestamp`\n- [supports pagination](/rest/general/pagination)\n"
+        },
+        {
+          "info": {
+            "name": "IDB Cancel OTC Trade",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/idb/otc-command#cancel",
+            "headers": [
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "BX-TIMESTAMP",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancel a pending OTC trade that was previously initiated by the IDB.\n\nSubmits a command to the trading engine. A successful response indicates that the command entry was acknowledged\nbut does not indicate that the command was executed.\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field\nordering and addition of null fields in the request body.\n\nCommand schemas and examples are provided below. Supported commands:\n- V1IdbCancelOtcTrade\n\n"
+        },
+        {
+          "info": {
+            "name": "IDB Update Remarks",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/idb/otc-command#update-remarks",
+            "headers": [
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "BX-TIMESTAMP",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Update the IDB remarks of a previously initiated OTC trade.\n\nSubmits a command to the trading engine. A successful response indicates that the command entry was acknowledged\nbut does not indicate that the command was executed.\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field\nordering and addition of null fields in the request body.\n\nCommand schemas and examples are provided below. Supported commands:\n- V1IdbUpdateRemarks\n\n- requires"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

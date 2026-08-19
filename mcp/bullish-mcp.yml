@@ -5,146 +5,150 @@ source: openapi/bullish-trading-api-openapi.yml
 search_result:
   found: false
   probed:
-    - {url: 'https://registry.modelcontextprotocol.io/v0/servers?search=bullish', result: '0 servers'}
-    - {url: 'https://api.exchange.bullish.com/mcp', http_status: 404}
-    - {url: 'https://docs.exchange.bullish.com/mcp', http_status: 404}
-    - {url: 'https://mcp.bullish.com/', result: 'does not resolve'}
-    - {url: 'https://github.com/bullish-exchange', result: 'no MCP repository among 9 public repos'}
-  detail: >-
-    Bullish publishes no hosted or packaged MCP server. The tool set below is a
-    CANDIDATE derived from the published OpenAPI — it is what a Bullish MCP server
-    would expose if one existed, grounded one-to-one in real operationIds. It is
-    not a Bullish claim and must not be presented as one.
+  - url: https://registry.modelcontextprotocol.io/v0/servers?search=bullish
+    result: 0 servers
+  - url: https://api.exchange.bullish.com/mcp
+    http_status: 404
+  - url: https://docs.exchange.bullish.com/mcp
+    http_status: 404
+  - url: https://mcp.bullish.com/
+    result: does not resolve
+  - url: https://github.com/bullish-exchange
+    result: no MCP repository among 9 public repos
+  detail: Bullish publishes no hosted or packaged MCP server. The tool set below is a CANDIDATE derived
+    from the published OpenAPI — it is what a Bullish MCP server would expose if one existed, grounded
+    one-to-one in real operationIds. It is not a Bullish claim and must not be presented as one.
 server:
   name: bullish
   transport: http
   url: null
-  auth: >-
-    Would require the Bullish JWT bearer flow — an ECDSA R1 or HMAC signed login
-    exchanged for a 24-hour token. This is the reason a first-party server matters
-    here: the signing step is exactly the part an agent cannot improvise.
+  auth: 'Would require the Bullish JWT bearer flow — an ECDSA R1 or HMAC signed login exchanged for a
+    24-hour token. This is the reason a first-party server matters here: the signing step is exactly the
+    part an agent cannot improvise.'
 design_notes:
-  read_write_split: >-
-    A responsible Bullish MCP server should ship the public read surface unguarded
-    and gate every write behind explicit human confirmation. Order creation,
-    amendment, cancellation, AMM instructions, OTC booking and custody withdrawal
-    all move real money on a regulated venue, and there is NO idempotency key — a
-    retried tool call is a second order, not a deduplicated one.
+  read_write_split: A responsible Bullish MCP server should ship the public read surface unguarded and
+    gate every write behind explicit human confirmation. Order creation, amendment, cancellation, AMM
+    instructions, OTC booking and custody withdrawal all move real money on a regulated venue, and there
+    is NO idempotency key — a retried tool call is a second order, not a deduplicated one.
   highest_consequence_tools:
-    - create_order
-    - submit_cancellation_commands
-    - submit_amendment_command
-    - create_custody_withdrawal
-    - create_otc_trade
-    - submit_transfer_asset_command
+  - create_order
+  - submit_cancellation_commands
+  - submit_amendment_command
+  - create_custody_withdrawal
+  - create_otc_trade
+  - submit_transfer_asset_command
 tools:
-  - name: get_markets
-    description: List all Bullish markets.
-    source_operation: openapi/bullish-trading-api-openapi.yml#getMarkets
-    access: public
-  - name: get_market_by_symbol
-    description: Get a single market by symbol.
-    source_operation: openapi/bullish-trading-api-openapi.yml#getMarketBySymbol
-    access: public
-  - name: get_market_order_book
-    description: Get the hybrid order book for a market.
-    source_operation: openapi/bullish-trading-api-openapi.yml#getMarketOrderBook
-    access: public
-  - name: get_market_tick
-    description: Get the current tick for a market.
-    source_operation: openapi/bullish-trading-api-openapi.yml#getMarketTick
-    access: public
-  - name: get_market_candles
-    description: Get OHLCV candles for a market.
-    source_operation: openapi/bullish-trading-api-openapi.yml#getMarketCandles
-    access: public
-  - name: get_latest_market_trades
-    description: Get the latest public trades for a market.
-    source_operation: openapi/bullish-trading-api-openapi.yml#getLatestMarketTrades
-    access: public
-  - name: get_assets
-    description: List all supported assets.
-    source_operation: openapi/bullish-trading-api-openapi.yml#getAssets
-    access: public
-  - name: get_index_prices
-    description: List index prices for all assets.
-    source_operation: openapi/bullish-trading-api-openapi.yml#getIndexPrices
-    access: public
-  - name: get_option_ladder
-    description: Get the option ladder across markets.
-    source_operation: openapi/bullish-trading-api-openapi.yml#getOptionLadder
-    access: public
-  - name: get_auction_by_symbol
-    description: Get the current auction for a market.
-    source_operation: openapi/bullish-trading-api-openapi.yml#getAuctionBySymbol
-    access: public
-  - name: get_exchange_time
-    description: Get exchange server time.
-    source_operation: openapi/bullish-trading-api-openapi.yml#getExchangeTime
-    access: public
-  - name: get_trading_accounts
-    description: List the caller's trading accounts.
-    source_operation: openapi/bullish-trading-api-openapi.yml#getTradingAccounts
-    access: authenticated
-  - name: get_asset_accounts
-    description: List asset balances for a trading account.
-    source_operation: openapi/bullish-trading-api-openapi.yml#getAssetAccounts
-    access: authenticated
-  - name: get_orders
-    description: List orders for a trading account.
-    source_operation: openapi/bullish-trading-api-openapi.yml#getOrdersV2
-    access: authenticated
-  - name: get_order_by_client_order_id
-    description: >-
-      Look up an order by the client-supplied clientOrderId. The recovery path
-      after a 5xx, since there is no idempotency key.
-    source_operation: openapi/bullish-trading-api-openapi.yml#trade-get-order-by-client-order-id-v2
-    access: authenticated
-  - name: get_trades
-    description: List fills for a trading account.
-    source_operation: openapi/bullish-trading-api-openapi.yml#getTrades
-    access: authenticated
-  - name: get_derivatives_positions
-    description: List open derivatives positions with greeks.
-    source_operation: openapi/bullish-trading-api-openapi.yml#getDerivativesPositions
-    access: authenticated
-  - name: simulate_portfolio_margin
-    description: Simulate the portfolio margin impact of a hypothetical position set.
-    source_operation: openapi/bullish-trading-api-openapi.yml#simulatePortfolioMargin
-    access: authenticated
-    consequence: read-only simulation
-  - name: create_order
-    description: Create an order.
-    source_operation: openapi/bullish-trading-api-openapi.yml#createOrderV2
-    access: authenticated
-    consequence: financial
-    human_in_the_loop: recommended
-  - name: submit_amendment_command
-    description: Amend an existing order.
-    source_operation: openapi/bullish-trading-api-openapi.yml#submitAmendmentCommand
-    access: authenticated
-    consequence: financial
-    human_in_the_loop: recommended
-  - name: submit_cancellation_commands
-    description: Cancel orders.
-    source_operation: openapi/bullish-trading-api-openapi.yml#submitCancellationCommands
-    access: authenticated
-    consequence: financial
-  - name: create_custody_withdrawal
-    description: Initiate a custody withdrawal.
-    source_operation: openapi/bullish-trading-api-openapi.yml#createCustodyWithdrawal
-    access: authenticated-ecdsa-only
-    consequence: irreversible
-    human_in_the_loop: required
-  - name: create_otc_trade
-    description: Book an OTC trade with a counterparty.
-    source_operation: openapi/bullish-trading-api-openapi.yml#createOtcTrade
-    access: authenticated
-    consequence: financial
-    human_in_the_loop: required
+- name: get_markets
+  description: List all Bullish markets.
+  source_operation: openapi/bullish-trading-api-openapi.yml#getMarkets
+  access: public
+- name: get_market_by_symbol
+  description: Get a single market by symbol.
+  source_operation: openapi/bullish-trading-api-openapi.yml#getMarketBySymbol
+  access: public
+- name: get_market_order_book
+  description: Get the hybrid order book for a market.
+  source_operation: openapi/bullish-trading-api-openapi.yml#getMarketOrderBook
+  access: public
+- name: get_market_tick
+  description: Get the current tick for a market.
+  source_operation: openapi/bullish-trading-api-openapi.yml#getMarketTick
+  access: public
+- name: get_market_candles
+  description: Get OHLCV candles for a market.
+  source_operation: openapi/bullish-trading-api-openapi.yml#getMarketCandles
+  access: public
+- name: get_latest_market_trades
+  description: Get the latest public trades for a market.
+  source_operation: openapi/bullish-trading-api-openapi.yml#getLatestMarketTrades
+  access: public
+- name: get_assets
+  description: List all supported assets.
+  source_operation: openapi/bullish-trading-api-openapi.yml#getAssets
+  access: public
+- name: get_index_prices
+  description: List index prices for all assets.
+  source_operation: openapi/bullish-trading-api-openapi.yml#getIndexPrices
+  access: public
+- name: get_option_ladder
+  description: Get the option ladder across markets.
+  source_operation: openapi/bullish-trading-api-openapi.yml#getOptionLadder
+  access: public
+- name: get_auction_by_symbol
+  description: Get the current auction for a market.
+  source_operation: openapi/bullish-trading-api-openapi.yml#getAuctionBySymbol
+  access: public
+- name: get_exchange_time
+  description: Get exchange server time.
+  source_operation: openapi/bullish-trading-api-openapi.yml#getExchangeTime
+  access: public
+- name: get_trading_accounts
+  description: List the caller's trading accounts.
+  source_operation: openapi/bullish-trading-api-openapi.yml#getTradingAccounts
+  access: authenticated
+- name: get_asset_accounts
+  description: List asset balances for a trading account.
+  source_operation: openapi/bullish-trading-api-openapi.yml#getAssetAccounts
+  access: authenticated
+- name: get_orders
+  description: List orders for a trading account.
+  source_operation: openapi/bullish-trading-api-openapi.yml#getOrdersV2
+  access: authenticated
+- name: get_order_by_client_order_id
+  description: Look up an order by the client-supplied clientOrderId. The recovery path after a 5xx, since
+    there is no idempotency key.
+  source_operation: openapi/bullish-trading-api-openapi.yml#trade-get-order-by-client-order-id-v2
+  access: authenticated
+- name: get_trades
+  description: List fills for a trading account.
+  source_operation: openapi/bullish-trading-api-openapi.yml#getTrades
+  access: authenticated
+- name: get_derivatives_positions
+  description: List open derivatives positions with greeks.
+  source_operation: openapi/bullish-trading-api-openapi.yml#getDerivativesPositions
+  access: authenticated
+- name: simulate_portfolio_margin
+  description: Simulate the portfolio margin impact of a hypothetical position set.
+  source_operation: openapi/bullish-trading-api-openapi.yml#simulatePortfolioMargin
+  access: authenticated
+  consequence: read-only simulation
+- name: create_order
+  description: Create an order.
+  source_operation: openapi/bullish-trading-api-openapi.yml#createOrderV2
+  access: authenticated
+  consequence: financial
+  human_in_the_loop: recommended
+- name: submit_amendment_command
+  description: Amend an existing order.
+  source_operation: openapi/bullish-trading-api-openapi.yml#submitAmendmentCommand
+  access: authenticated
+  consequence: financial
+  human_in_the_loop: recommended
+- name: submit_cancellation_commands
+  description: Cancel orders.
+  source_operation: openapi/bullish-trading-api-openapi.yml#submitCancellationCommands
+  access: authenticated
+  consequence: financial
+- name: create_custody_withdrawal
+  description: Initiate a custody withdrawal.
+  source_operation: openapi/bullish-trading-api-openapi.yml#createCustodyWithdrawal
+  access: authenticated-ecdsa-only
+  consequence: irreversible
+  human_in_the_loop: required
+- name: create_otc_trade
+  description: Book an OTC trade with a counterparty.
+  source_operation: openapi/bullish-trading-api-openapi.yml#createOtcTrade
+  access: authenticated
+  consequence: financial
+  human_in_the_loop: required
 coverage:
   rest_operations_total: 79
   tools_derived: 23
-  note: >-
-    Deliberately not one tool per operation. History, IDB, self-hosted-wallet
-    verification and the deprecated v1 surface are omitted from the candidate set.
+  note: Deliberately not one tool per operation. History, IDB, self-hosted-wallet verification and the
+    deprecated v1 surface are omitted from the candidate set.
+deployment:
+  mode: none
+  verified: derived
+  tools: 23
+  checked: '2026-08-12'
+  source: catalog MCP census

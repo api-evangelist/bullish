@@ -1,0 +1,142 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading Market History Data API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "market-history-data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Historical Market Trades",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/history/markets/:symbol/trades",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "symbol to get"
+              },
+              {
+                "name": "createdAtDatetime[gte]",
+                "value": "",
+                "type": "query",
+                "description": "start timestamp of period, ISO 8601 with millisecond as string"
+              },
+              {
+                "name": "createdAtDatetime[lte]",
+                "value": "",
+                "type": "query",
+                "description": "end timestamp of period, ISO 8601 with millisecond as string"
+              }
+            ]
+          },
+          "docs": "Get Historical Market Trades by Market Symbol. Supports querying of up to 7 days of data at a time.\n- [supports pagination](/rest/general/pagination)\n\n**Ratelimited:** `False`\n- On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days\n"
+        },
+        {
+          "info": {
+            "name": "Get Historical Options Market Trades",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/history/option-trades",
+            "params": [
+              {
+                "name": "createdAtDatetime[gte]",
+                "value": "",
+                "type": "query",
+                "description": "start timestamp of period, ISO 8601 with millisecond as string"
+              },
+              {
+                "name": "createdAtDatetime[lte]",
+                "value": "",
+                "type": "query",
+                "description": "end timestamp of period, ISO 8601 with millisecond as string"
+              },
+              {
+                "name": "optionType",
+                "value": "",
+                "type": "query",
+                "description": "Specifies if it's a call (right to buy) or a put (right to sell)"
+              }
+            ]
+          },
+          "docs": "Get Historical Options Market Trades by `optionType`. If `optionType` is not specified in request parameters, both CALL & PUT markets will be returned\n- On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days\n- Only max 100 data will be returned during the window\n- Default: If `createdAtDatetime` is omitted, the endpoint returns a rolling 7-day window of trade history, starting from the most recent trade across all options markets\n"
+        },
+        {
+          "info": {
+            "name": "Get Historical Funding Rate",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/history/markets/:symbol/funding-rate",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "symbol to get"
+              },
+              {
+                "name": "updatedAtDatetime[gte]",
+                "value": "",
+                "type": "query",
+                "description": "start timestamp of period, ISO 8601 with millisecond as string"
+              },
+              {
+                "name": "updatedAtDatetime[lte]",
+                "value": "",
+                "type": "query",
+                "description": "end timestamp of period, ISO 8601 with millisecond as string"
+              }
+            ]
+          },
+          "docs": "Get historical hourly funding rate for the requested perpetual market\n- [supports pagination](/rest/general/pagination)\n- On a single query request you can retrieve data over a 7 day window, with the data available for the last 90 days\n"
+        },
+        {
+          "info": {
+            "name": "Get Historical Auction Results",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/history/markets/:symbol/auctions",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "market symbol, e.g. BTCUSDC"
+              },
+              {
+                "name": "createdAtDatetime[gte]",
+                "value": "",
+                "type": "query",
+                "description": "start timestamp of period, ISO 8601 with millisecond as string"
+              },
+              {
+                "name": "createdAtDatetime[lte]",
+                "value": "",
+                "type": "query",
+                "description": "end timestamp of period, ISO 8601 with millisecond as string"
+              }
+            ]
+          },
+          "docs": "Get historical auction results for a symbol.\n- [supports pagination](/rest/general/pagination)\n- filtering on `createdAtDatetime` requires additional keywords, [see filtering support](/rest/general/filtering)\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

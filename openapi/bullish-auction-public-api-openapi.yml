@@ -1,0 +1,235 @@
+openapi: 3.2.0
+info:
+  description: REST API specification for the Bullish Trading API.
+  version: 1.0.0
+  title: Bullish Trading Auction Public API
+  contact:
+    name: Bullish Help Center
+    email: support@bullish.com
+    url: https://support.bullish.com
+servers:
+- url: https://api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://registered.api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://prod.access.bullish.com/trading-api
+  description: PRODUCTION (Direct Connect)
+- url: https://api.bugbounty.bullish.com/trading-api
+  description: SECURITY SANDBOX
+- url: https://api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://registered.api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://simnext.access.bullish.com/trading-api
+  description: API SANDBOX (Direct Connect)
+tags:
+- name: auction-public
+  x-displayName: Auction
+paths:
+  /v1/markets/{symbol}/auctions:
+    get:
+      parameters:
+      - in: path
+        name: symbol
+        schema:
+          $ref: '#/components/schemas/MarketSymbol'
+        required: true
+        description: market symbol, e.g. BTCUSDC
+      tags:
+      - auction-public
+      summary: Get Auction by Symbol
+      description: Get current auction information and phase for a symbol.
+      operationId: getAuctionBySymbol
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/Auction'
+        '400':
+          description: Bad Request
+        '404':
+          description: Symbol not found or auction not available
+        '500':
+          description: Internal Server Error
+      security: []
+  /v1/markets/{symbol}/auctions/noii:
+    get:
+      parameters:
+      - in: path
+        name: symbol
+        schema:
+          $ref: '#/components/schemas/MarketSymbol'
+        required: true
+        description: market symbol, e.g. BTCUSDC
+      tags:
+      - auction-public
+      summary: Get Auction Net Order Imbalance Indicator
+      description: 'Get NOII (Net Order Imbalance Indicator) snapshot. Available during Lockdown phase only.
+
+        Returns empty array in other phases.
+
+        '
+      operationId: getAuctionNoii
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: object
+                properties:
+                  data:
+                    type: array
+                    items:
+                      $ref: '#/components/schemas/AuctionNoii'
+        '400':
+          description: Bad Request
+        '404':
+          description: Symbol not found or auction not available
+        '500':
+          description: Internal Server Error
+      security: []
+components:
+  schemas:
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.00000000'
+    AuctionNoii:
+      type: object
+      properties:
+        auctionId:
+          description: auction identifier
+          type: string
+          example: '397735387747975680'
+        symbol:
+          description: market symbol
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        timestamp:
+          description: data timestamp, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        farPrice:
+          description: indicative clearing price (auction orders only)
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        referencePrice:
+          description: Last Trade Price on Regular Continuous Orderbook; if Last Trade Price is not available, then Index Price
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        imbalanceDirection:
+          description: 'imbalance direction: BUY, SELL, or NONE'
+          type: string
+          enum:
+          - BUY
+          - SELL
+          - NONE
+          example: BUY
+        imbalanceQuantity:
+          description: unmatched quantity at farPrice
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        pairedQuantity:
+          description: predicted matched volume
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+    MarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTCUSDC`
+      example: BTCUSDC
+    Auction:
+      type: object
+      properties:
+        auctionId:
+          description: unique auction identifier
+          type: string
+          example: '397735387747975680'
+        symbol:
+          description: market symbol
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        phase:
+          description: 'current auction phase: COOLING, ACCUMULATION, LOCKDOWN, CROSS'
+          type: string
+          enum:
+          - COOLING
+          - ACCUMULATION
+          - LOCKDOWN
+          - CROSS
+          example: ACCUMULATION
+        startTime:
+          description: accumulation start time, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        lockdownTime:
+          description: lockdown start time, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        scheduledCrossTime:
+          description: scheduled cross time, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        createAuctionOrderEnabled:
+          description: whether new auction orders can be created. Defaults true after auction starts (post-cooling)
+          type: boolean
+          example: true
+        amendAuctionOrderEnabled:
+          description: whether auction orders can be amended. Defaults true after auction starts; auto-switches to false during lockdown
+          type: boolean
+          example: true
+        cancelAuctionOrderEnabled:
+          description: whether auction orders can be cancelled. Defaults true after auction starts; auto-switches to false during lockdown
+          type: boolean
+          example: true
+        createdAt:
+          description: auction creation time, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        updatedAt:
+          description: auction last update time, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+  securitySchemes:
+    jwtTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-tagGroups:
+- name: Public Endpoints
+  tags:
+  - general
+  - asset-data
+  - market-data
+  - market-history-data
+  - index-price-data
+  - derivatives-public
+  - auction-public
+- name: Private Endpoints
+  tags:
+  - session-management
+  - trading-accounts
+  - account-assets
+  - orders
+  - trades
+  - amm-instructions
+  - transfer
+  - custody
+  - derivatives
+  - market-maker-protection
+  - history
+  - otc
+  - idb
+  - portfolio-margin-simulator

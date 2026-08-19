@@ -1,0 +1,245 @@
+openapi: 3.2.0
+info:
+  description: REST API specification for the Bullish Trading API.
+  version: 1.0.0
+  title: Bullish Trading Transfer API
+  contact:
+    name: Bullish Help Center
+    email: support@bullish.com
+    url: https://support.bullish.com
+servers:
+- url: https://api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://registered.api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://prod.access.bullish.com/trading-api
+  description: PRODUCTION (Direct Connect)
+- url: https://api.bugbounty.bullish.com/trading-api
+  description: SECURITY SANDBOX
+- url: https://api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://registered.api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://simnext.access.bullish.com/trading-api
+  description: API SANDBOX (Direct Connect)
+tags:
+- name: transfer
+  x-displayName: Transfer
+  description: Authenticated API for initiating asset transfers between trading accounts.
+paths:
+  /v2/command#transferAsset:
+    post:
+      tags:
+      - transfer
+      summary: Transfer Asset Command
+      description: "Submits a command to the trading engine. A successful response indicates that the command entry was acknowledged \nbut does not indicate that the command was executed. \nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field \nordering and addition of null fields in the request body. Quantities and prices does not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\nRequires\n- [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`. Higher tiers of rate limits available by providing the `BX-RATELIMIT-TOKEN` request header.\n"
+      operationId: submitTransferAssetCommand
+      parameters:
+      - $ref: '#/components/parameters/BX-SIGNATURE'
+      - $ref: '#/components/parameters/BX-TIMESTAMP'
+      - $ref: '#/components/parameters/BX-NONCE'
+      - $ref: '#/components/parameters/BX-NONCE-WINDOW-ENABLED'
+      responses:
+        '200':
+          description: Status OK. This means a command was successfully acknowledged.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TradingAccountTransferResponse'
+              examples:
+                TransferAssetResponse:
+                  $ref: '#/components/examples/TransferAssetCommandResponse'
+        '400':
+          description: 'Bad Request
+
+
+            For example, sending a request with the `BX-SIGNATURE` header missing will result in the following response:
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOrderEntryResponse'
+        '401':
+          description: Not Authenticated
+        '403':
+          description: Access Forbidden
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TransferAssetCommandV2'
+            examples:
+              TransferAssetCommand:
+                $ref: '#/components/examples/TransferAssetCommand'
+      security:
+      - jwtTokenAuth: []
+components:
+  schemas:
+    RequestID:
+      type: string
+      example: '197735387747975680'
+    AssetSymbol:
+      type: string
+      description: asset symbol as denoted in the world
+      example: BTC
+    TradingAccountTransferResponse:
+      type: object
+      required:
+      - commandType
+      - message
+      - requestId
+      properties:
+        commandType:
+          description: The command type
+          type: string
+          enum:
+          - V2TransferAsset
+        message:
+          description: message
+          type: string
+        requestId:
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+      example:
+        commandType: V2TransferAsset
+        message: Command acknowledged - TransferAsset
+        requestId: '633909659774222336'
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
+    TransferAssetCommandV2:
+      type: object
+      required:
+      - commandType
+      - assetSymbol
+      - quantity
+      - fromTradingAccountId
+      - toTradingAccountId
+      properties:
+        commandType:
+          description: The command type, e.g. 'V2TransferAsset'
+          type: string
+          enum:
+          - V2TransferAsset
+        assetSymbol:
+          description: Symbol of the asset. i.e. currency
+          allOf:
+          - $ref: '#/components/schemas/AssetSymbol'
+        quantity:
+          description: "Quantity of the asset. Can be representated with any number of trailing zeroes up to asset precision \n(eg `100.1`, `100.10`, `100.100`, `100.1000` are valid for asset precision 4)\n"
+          type: string
+        fromTradingAccountId:
+          description: Source of the asset transfer
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+        toTradingAccountId:
+          description: Destination of the asset transfer
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+      example:
+        commandType: V2TransferAsset
+        assetSymbol:
+          $ref: '#/components/schemas/AssetSymbol/example'
+        quantity: '100.1'
+        fromTradingAccountId:
+          $ref: '#/components/schemas/TradingAccountId/example'
+        toTradingAccountId: '111000000000002'
+    BadOrderEntryResponse:
+      type: object
+      required:
+      - message
+      - errorCode
+      - errorCodeName
+      properties:
+        message:
+          description: message
+          type: string
+          example: Missing signature header
+        errorCode:
+          description: unique error code
+          type: integer
+          example: 6029
+        errorCodeName:
+          description: unique error code name
+          type: string
+          example: MISSING_SIGNATURE_HEADER
+  parameters:
+    BX-TIMESTAMP:
+      in: header
+      name: BX-TIMESTAMP
+      description: timestamp is the number of milliseconds since EPOCH
+      required: true
+      schema:
+        type: string
+    BX-NONCE-WINDOW-ENABLED:
+      in: header
+      name: BX-NONCE-WINDOW-ENABLED
+      description: 'string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)
+
+        '
+      schema:
+        type: string
+        enum:
+        - 'false'
+        - 'true'
+        default: 'false'
+    BX-NONCE:
+      in: header
+      name: BX-NONCE
+      description: nonce is a client side incremented unsigned 64 bit integer
+      required: true
+      schema:
+        type: string
+    BX-SIGNATURE:
+      in: header
+      name: BX-SIGNATURE
+      description: signature obtained using the [signing format](/rest/authentication#signing-format)
+      required: true
+      schema:
+        type: string
+  examples:
+    TransferAssetCommandResponse:
+      value:
+        $ref: '#/components/schemas/TradingAccountTransferResponse/example'
+    TransferAssetCommand:
+      value:
+        $ref: '#/components/schemas/TransferAssetCommandV2/example'
+  securitySchemes:
+    jwtTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-tagGroups:
+- name: Public Endpoints
+  tags:
+  - general
+  - asset-data
+  - market-data
+  - market-history-data
+  - index-price-data
+  - derivatives-public
+  - auction-public
+- name: Private Endpoints
+  tags:
+  - session-management
+  - trading-accounts
+  - account-assets
+  - orders
+  - trades
+  - amm-instructions
+  - transfer
+  - custody
+  - derivatives
+  - market-maker-protection
+  - history
+  - otc
+  - idb
+  - portfolio-margin-simulator

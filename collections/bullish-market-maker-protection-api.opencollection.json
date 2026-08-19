@@ -1,0 +1,80 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading Market Maker Protection API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "market-maker-protection",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Market Marker Protection (MMP) by Trading Account ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/mmp-configuration",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query",
+                "description": "The underlying asset id you filter the configurations against. If symbol is provided, this API will only return the market maker protection configuration for this symbol for this trading account."
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get market maker protection configurations under a trading account id\n\nThis endpoint requires [authentication](/rest/authentication#generate-a-jwt-token). To filter by `symbol`, additional parameters are required. For detailed instructions, see the [Filtering Support](/rest/general/filtering) section.\n"
+        },
+        {
+          "info": {
+            "name": "Setup Market Maker Protection (MMP)",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v2/mmp-configuration",
+            "headers": [
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "BX-TIMESTAMP",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "MMP configurations are setup per underlying asset symbol for a specific trading Account. While setting up MMP configurations you can specify `windowTimeInSeconds`, `frozenTimeInSeconds`, `quantityLimit` and `deltaLimit` and use it as best suited.\nPlease reach out to your relationship manager to understand how to enable MMP for your trading accounts.\n\n- To get updates on the status of your set / reset MMP configs request for an underlying asset symbol over WS, please subscribe to `mmpRequest` TOP"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

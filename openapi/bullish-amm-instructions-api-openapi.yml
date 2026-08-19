@@ -1,0 +1,689 @@
+openapi: 3.2.0
+info:
+  description: REST API specification for the Bullish Trading API.
+  version: 1.0.0
+  title: Bullish Trading Amm Instructions API
+  contact:
+    name: Bullish Help Center
+    email: support@bullish.com
+    url: https://support.bullish.com
+servers:
+- url: https://api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://registered.api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://prod.access.bullish.com/trading-api
+  description: PRODUCTION (Direct Connect)
+- url: https://api.bugbounty.bullish.com/trading-api
+  description: SECURITY SANDBOX
+- url: https://api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://registered.api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://simnext.access.bullish.com/trading-api
+  description: API SANDBOX (Direct Connect)
+tags:
+- name: amm-instructions
+  x-displayName: AMM Instructions
+  description: "Authenticated APIs that allow users to Create, View and Terminate AMM instructions.\n\nPlease refer to the [AMM instruction Overview Doc](https://github.com/bullish-exchange/api-docs/wiki/Automated-Market-Making-%28AMM%29-Instructions) \nfor more details on how AMM instructions work.\n"
+paths:
+  /v2/amm-instructions:
+    get:
+      x-position: 1
+      tags:
+      - amm-instructions
+      summary: Get AMM Instructions
+      description: 'Gets a list of AMM instructions based on applied filters.
+
+        - requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header
+
+        - [supports pagination](/rest/general/pagination)
+
+
+        **Ratelimited:** `True`
+
+        '
+      operationId: getAmmInstructions
+      parameters:
+      - in: query
+        name: symbol
+        schema:
+          $ref: '#/components/schemas/MarketSymbol'
+        required: false
+      - in: query
+        name: status
+        description: order status
+        schema:
+          $ref: '#/components/schemas/AMMInstructionStatus'
+        required: false
+      - in: query
+        name: tradingAccountId
+        description: Id of the trading account
+        schema:
+          $ref: '#/components/schemas/TradingAccountId'
+        required: true
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                type: array
+                minItems: 0
+                maxItems: 10
+                items:
+                  $ref: '#/components/schemas/AMMInstruction'
+        '401':
+          description: Not Authenticated
+        '403':
+          description: Access Forbidden
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security:
+      - jwtTokenAuth: []
+    post:
+      x-position: 3
+      tags:
+      - amm-instructions
+      summary: Create AMM Instruction
+      description: "Creates an AMM instruction, requires [bearer token](/rest/authentication#add-authenticated-request-header) \nin authorization header.\n\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field ordering\nin the request body. Quantities and prices does not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\n**Ratelimited:** `True`\n"
+      operationId: createAmmInstruction
+      parameters:
+      - $ref: '#/components/parameters/BX-SIGNATURE'
+      - $ref: '#/components/parameters/BX-TIMESTAMP'
+      - $ref: '#/components/parameters/BX-NONCE'
+      responses:
+        '200':
+          description: Status OK. This means a create AMM instruction command was successfully acknowledged. It does not necessarily mean the instruction was created. To check the current status, query [Get AMM Instruction by ID](/rest/api/get-amm-instruction-by-id-v-2) using the `instructionId` received in the response payload.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CreateAMMInstructionCommandResponseV3'
+              examples:
+                CreateAMMInstructionCommandResponse:
+                  $ref: '#/components/examples/CreateAMMInstructionCommandResponse'
+        '400':
+          description: 'Bad Request
+
+
+            For example, sending a request with the `BX-SIGNATURE` header missing will result in the following response:
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOrderEntryResponse'
+        '401':
+          description: Not Authenticated
+        '403':
+          description: Access Forbidden
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      requestBody:
+        description: new AMM instruction
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/CreateAMMInstructionCommandV3'
+            examples:
+              CreateAMMInstructionCommand:
+                $ref: '#/components/examples/CreateAMMInstructionCommand'
+      security:
+      - jwtTokenAuth: []
+  /v2/amm-instructions/{instructionId}:
+    parameters:
+    - in: path
+      name: instructionId
+      schema:
+        type: number
+      required: true
+      description: unique AMM instruction ID
+    - in: query
+      name: tradingAccountId
+      description: Id of the trading account
+      schema:
+        $ref: '#/components/schemas/TradingAccountId'
+      required: true
+    get:
+      x-position: 2
+      tags:
+      - amm-instructions
+      summary: Get AMM Instruction by ID
+      description: "Gets a specific AMM instruction based on the `instructionId`, \nrequires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n"
+      operationId: getAmmInstructionByIdV2
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/AMMInstruction'
+        '401':
+          description: Not Authenticated
+        '403':
+          description: Access Forbidden
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security:
+      - jwtTokenAuth: []
+  /v2/command#terminateAMMInstruction:
+    post:
+      x-position: 4
+      tags:
+      - amm-instructions
+      summary: Terminate AMM Instruction Command
+      description: "Submits a command to the trading engine. A successful response indicates that the command entry was acknowledged \nbut does not indicate that the command was executed. \nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field \nordering and addition of null fields in the request body. Quantities and prices does not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\nRequires\n- [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`. Higher tiers of rate limits available by providing the `BX-RATELIMIT-TOKEN` request header.\n"
+      operationId: submitTerminateAMMInstructionCommand
+      parameters:
+      - $ref: '#/components/parameters/BX-SIGNATURE'
+      - $ref: '#/components/parameters/BX-TIMESTAMP'
+      - $ref: '#/components/parameters/BX-NONCE'
+      - $ref: '#/components/parameters/BX-NONCE-WINDOW-ENABLED'
+      responses:
+        '200':
+          description: Status OK. This means a command was successfully acknowledged.
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/TerminateAMMInstructionCommandResponseV3'
+              examples:
+                TerminateAMMInstructionResponse:
+                  $ref: '#/components/examples/TerminateAMMInstructionCommandResponse'
+        '400':
+          description: 'Bad Request
+
+
+            For example, sending a request with the `BX-SIGNATURE` header missing will result in the following response:
+
+            '
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/BadOrderEntryResponse'
+        '401':
+          description: Not Authenticated
+        '403':
+          description: Access Forbidden
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      requestBody:
+        required: true
+        content:
+          application/json:
+            schema:
+              $ref: '#/components/schemas/TerminateAMMInstructionCommandV3'
+            examples:
+              TerminateAMMInstructionCommand:
+                $ref: '#/components/examples/TerminateAMMInstructionCommand'
+      security:
+      - jwtTokenAuth: []
+components:
+  schemas:
+    RequestID:
+      type: string
+      example: '197735387747975680'
+    OrderStatusAsString:
+      type: string
+      description: order status can have the following string values `"OPEN"`, `"CLOSED"`, `"CANCELLED"`, `"REJECTED"`
+      example: OPEN
+    TimeStampAsString:
+      type: string
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
+    TerminateAMMInstructionCommandV3:
+      type: object
+      required:
+      - commandType
+      - instructionId
+      - symbol
+      - tradingAccountId
+      properties:
+        commandType:
+          description: The command type, it must be 'V3TerminateAMMInstruction'
+          type: string
+          enum:
+          - V3TerminateAMMInstruction
+        instructionId:
+          description: unique AMM instruction ID
+          allOf:
+          - $ref: '#/components/schemas/AMMInstructionID'
+        symbol:
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        tradingAccountId:
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+      example:
+        commandType: V3TerminateAMMInstruction
+        instructionId: '297735387747975680'
+        symbol: BTCUSDC
+        tradingAccountId: '111000000000001'
+    AMMInstructionID:
+      type: string
+      example: '297735387747975680'
+    BadOrderEntryResponse:
+      type: object
+      required:
+      - message
+      - errorCode
+      - errorCodeName
+      properties:
+        message:
+          description: message
+          type: string
+          example: Missing signature header
+        errorCode:
+          description: unique error code
+          type: integer
+          example: 6029
+        errorCodeName:
+          description: unique error code name
+          type: string
+          example: MISSING_SIGNATURE_HEADER
+    TerminateAMMInstructionCommandResponseV3:
+      type: object
+      required:
+      - commandType
+      - message
+      - requestId
+      - instructionId
+      properties:
+        commandType:
+          description: The command type
+          type: string
+          enum:
+          - V3TerminateAMMInstruction
+        message:
+          description: message
+          type: string
+        requestId:
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+        instructionId:
+          description: unique AMM instruction ID
+          allOf:
+          - $ref: '#/components/schemas/AMMInstructionID'
+      example:
+        commandType: V3TerminateAMMInstruction
+        message: Command acknowledged - TerminateAMMInstruction
+        requestId: '633906221577404416'
+        instructionId: '633906221577404424'
+    CreateAMMInstructionCommandV3:
+      type: object
+      required:
+      - commandType
+      - symbol
+      - baseQuantity
+      - quoteQuantity
+      - upperBound
+      - lowerBound
+      - feeTierId
+      - tradingAccountId
+      properties:
+        commandType:
+          description: The command type, it must be 'V3CreateAMMInstruction'
+          type: string
+        symbol:
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        baseQuantity:
+          description: base quantity
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quoteQuantity:
+          description: quote quantity
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        upperBound:
+          type: string
+          description: upper bound of price range, in quote currency
+        lowerBound:
+          type: string
+          description: lower bound of price range, in quote currency
+        feeTierId:
+          allOf:
+          - $ref: '#/components/schemas/FeeTierId'
+        tradingAccountId:
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+      example:
+        commandType: V3CreateAMMInstruction
+        symbol:
+          $ref: '#/components/schemas/MarketSymbol/example'
+        baseQuantity: '0'
+        quoteQuantity: '50000.1'
+        upperBound: '25000'
+        lowerBound: '20000'
+        feeTierId:
+          $ref: '#/components/schemas/FeeTierId/example'
+        tradingAccountId:
+          $ref: '#/components/schemas/TradingAccountId/example'
+    AMMInstructionStatus:
+      type: string
+      example: OPEN
+      enum:
+      - OPEN
+      - CLOSED
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+    AMMInstruction:
+      type: object
+      required:
+      - apy
+      - baseCurrentQuantity
+      - baseFee
+      - baseInvestQuantity
+      - basePrice
+      - baseWithdrawQuantity
+      - createdAtDateTime
+      - createdAtTimestamp
+      - currentValue
+      - dislocationEnabled
+      - feeTierId
+      - impermanentLoss
+      - initialBasePrice
+      - initialQuotePrice
+      - initialValue
+      - liquidityId
+      - instructionId
+      - lowerBound
+      - price
+      - quoteFee
+      - quoteInvestQuantity
+      - quotePrice
+      - quoteWithdrawQuantity
+      - requestId
+      - staticSpreadFee
+      - status
+      - statusReason
+      - statusReasonCode
+      - symbol
+      - updatedAtDateTime
+      - updatedAtTimestamp
+      - upperBound
+      - yieldEarn
+      properties:
+        liquidityId:
+          description: unique AMM instruction ID
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/AMMInstructionID'
+        instructionId:
+          description: unique AMM instruction ID
+          allOf:
+          - $ref: '#/components/schemas/AMMInstructionID'
+        symbol:
+          description: market symbol
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        baseFee:
+          description: base fee, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quoteFee:
+          description: quote fee, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        status:
+          description: order status
+          allOf:
+          - $ref: '#/components/schemas/OrderStatusAsString'
+          example: OPEN
+        statusReason:
+          description: status reason, describes why the order is in a specific state
+          type: string
+          example: Ok
+        statusReasonCode:
+          description: status reason code, see [details](/rest/general/error-rejection-codes)
+          type: integer
+          example: 1001
+        createdAtDatetime:
+          description: denotes the time the order was ACK'd by the exchange, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        createdAtTimestamp:
+          description: denotes the time the order was ACK'd by the exchange
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        24HrApy:
+          type: string
+          description: APY of the last 24 Hours, only for AMM instructions with `OPEN` status
+          example: '2.3319'
+        24HrYieldEarn:
+          type: string
+          description: amount of money earned in USD from the last 24 Hours, only for AMM instructions with `OPEN` status
+          example: '0.00'
+        apy:
+          type: string
+          description: yield generated from the time AMM instruction was created, in annualised percentage
+          example: '0.0000'
+        baseCurrentQuantity:
+          type: string
+          description: amount of base asset this AMM instruction currently holds, only for AMM instruction with `OPEN` status
+          example: '0.00000000'
+        baseInvestQuantity:
+          type: string
+          description: initial base investment
+          example: '0.00000008'
+        basePrice:
+          type: string
+          description: current price of base asset
+          example: '345.6700'
+        baseWithdrawQuantity:
+          type: string
+          description: amount of base asset returned when AMM instruction is terminated
+          example: '0.00000010'
+        currentValue:
+          type: string
+          description: value of assets (base and quote) in USD amount that this AMM instruction currently holds
+          example: '0.0000'
+        dislocationEnabled:
+          description: dislocation enabled/disabled
+          type: boolean
+          example: false
+        feeTierId:
+          allOf:
+          - $ref: '#/components/schemas/FeeTierId'
+        finalValue:
+          type: string
+          description: value of assets (base and quote) in USD amount when AMM instruction was terminated, only for AMM instruction with `CLOSED` status
+          example: '0.0001'
+        impermanentLoss:
+          type: string
+          description: impermanent loss
+          example: '0.0000'
+        initialBasePrice:
+          type: string
+          description: price of base asset when AMM instruction was created
+          example: '100.0000'
+        initialQuotePrice:
+          type: string
+          description: price of quote asset when AMM instruction was created
+          example: '0.0100'
+        initialValue:
+          type: string
+          description: value of assets (base and quote) in USD amount when AMM instruction was created
+          example: '0.0000'
+        lowerBound:
+          type: string
+          description: lower bound of price range, in quote currency
+          example: '0.0013'
+        price:
+          type: string
+          description: current price of AMM, see [Get Tick By Symbol](/rest/api/get-market-tick)
+          example: '456.7800'
+        quoteCurrentQuantity:
+          type: string
+          description: amount of quote asset this AMM instruction currently holds, only for AMM instruction with `OPEN` status
+          example: '0.0000'
+        quoteInvestQuantity:
+          type: string
+          description: initial quote investment
+          example: '0.0009'
+        quotePrice:
+          type: string
+          description: current price of quote asset
+          example: '1.0000'
+        quoteWithdrawQuantity:
+          type: string
+          description: amount of quote asset returned when AMM instruction is terminated
+          example: '0.0011'
+        lastDistributedPrice:
+          type:
+          - string
+          - 'null'
+          description: (Perpetual market only) The price used at the time of settlement for AMM Instructions that can be used to determine mtmPnl and the actual Pnl
+        requestId:
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+        staticSpreadFee:
+          type: string
+          description: static spread fee, see [Get Market By Symbol](/rest/api/get-market-by-symbol)
+          example: '0.00200000'
+        updatedAtDatetime:
+          description: denotes the time the AMM instruction was updated by the exchange, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        updatedAtTimestamp:
+          description: denotes the time the AMM instruction was updated by the exchange
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        upperBound:
+          type: string
+          description: upper bound of price range, in quote currency
+          example: '14000.0000'
+        yieldEarn:
+          type: string
+          description: amount of money earned in USD
+          example: '0.00'
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.00000000'
+    FeeTierId:
+      type: string
+      description: unique fee tier ID, see [Get Market By Symbol](/rest/api/get-market-by-symbol)
+      example: '1'
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
+    CreateAMMInstructionCommandResponseV3:
+      type: object
+      required:
+      - message
+      - requestId
+      - instructionId
+      properties:
+        message:
+          description: message
+          type: string
+        requestId:
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+        instructionId:
+          description: unique AMM instruction ID
+          allOf:
+          - $ref: '#/components/schemas/AMMInstructionID'
+      example:
+        message: Command acknowledged - CreateAMMInstruction
+        requestId: '633906221577404416'
+        instructionId: '633906221577404424'
+    MarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTCUSDC`
+      example: BTCUSDC
+  examples:
+    TerminateAMMInstructionCommandResponse:
+      value:
+        $ref: '#/components/schemas/TerminateAMMInstructionCommandResponseV3/example'
+    CreateAMMInstructionCommand:
+      value:
+        $ref: '#/components/schemas/CreateAMMInstructionCommandV3/example'
+    CreateAMMInstructionCommandResponse:
+      value:
+        $ref: '#/components/schemas/CreateAMMInstructionCommandResponseV3/example'
+    TerminateAMMInstructionCommand:
+      value:
+        $ref: '#/components/schemas/TerminateAMMInstructionCommandV3/example'
+  parameters:
+    BX-NONCE:
+      in: header
+      name: BX-NONCE
+      description: nonce is a client side incremented unsigned 64 bit integer
+      required: true
+      schema:
+        type: string
+    BX-NONCE-WINDOW-ENABLED:
+      in: header
+      name: BX-NONCE-WINDOW-ENABLED
+      description: 'string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)
+
+        '
+      schema:
+        type: string
+        enum:
+        - 'false'
+        - 'true'
+        default: 'false'
+    BX-SIGNATURE:
+      in: header
+      name: BX-SIGNATURE
+      description: signature obtained using the [signing format](/rest/authentication#signing-format)
+      required: true
+      schema:
+        type: string
+    BX-TIMESTAMP:
+      in: header
+      name: BX-TIMESTAMP
+      description: timestamp is the number of milliseconds since EPOCH
+      required: true
+      schema:
+        type: string
+  securitySchemes:
+    jwtTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-tagGroups:
+- name: Public Endpoints
+  tags:
+  - general
+  - asset-data
+  - market-data
+  - market-history-data
+  - index-price-data
+  - derivatives-public
+  - auction-public
+- name: Private Endpoints
+  tags:
+  - session-management
+  - trading-accounts
+  - account-assets
+  - orders
+  - trades
+  - amm-instructions
+  - transfer
+  - custody
+  - derivatives
+  - market-maker-protection
+  - history
+  - otc
+  - idb
+  - portfolio-margin-simulator

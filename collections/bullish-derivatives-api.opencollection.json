@@ -1,0 +1,64 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading Derivatives API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "derivatives",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Derivatives Positions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/derivatives-positions",
+            "params": [
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account. `tradingAccountId` is mandatory in the query for users with multiple trading accounts. For users with a single trading account, it can be automatically retrieved from the login."
+              },
+              {
+                "name": "symbol",
+                "value": "BTC-USDC-PERP",
+                "type": "query"
+              },
+              {
+                "name": "marketType",
+                "value": "DATED_FUTURE",
+                "type": "query",
+                "description": "Optional - Filter for results by expiry date"
+              },
+              {
+                "name": "optionType",
+                "value": "CALL",
+                "type": "query",
+                "description": "Optional - Filter for results by option type"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Optional - Sort results by Market Type or Option Type"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Get derivatives positions"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

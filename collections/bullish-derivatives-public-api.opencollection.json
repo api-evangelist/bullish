@@ -1,0 +1,92 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading Derivatives Public API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "derivatives-public",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Option Ladder by Base Symbol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/option-ladder",
+            "params": [
+              {
+                "name": "baseSymbol",
+                "value": "",
+                "type": "query",
+                "description": "symbol to get"
+              },
+              {
+                "name": "expiry",
+                "value": "",
+                "type": "query",
+                "description": "Optional - Filter results by expiry date in YYYYMMDD format (e.g. 20250520)"
+              },
+              {
+                "name": "type",
+                "value": "",
+                "type": "query",
+                "description": "Optional - Filter results by type (`CALL` or ` PUT`) of the option markets"
+              },
+              {
+                "name": "sort",
+                "value": "",
+                "type": "query",
+                "description": "Optional - Sort results by Option Type or Expiry Datetime"
+              }
+            ]
+          },
+          "docs": "Returns the available options contracts. This data helps traders quickly assess the available options and their respective prices, implied volatilities, and Greeks (such as delta, gamma, theta, and vega).\n"
+        },
+        {
+          "info": {
+            "name": "Get Option Ladder by Symbol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/option-ladder/:symbol",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path",
+                "description": "symbol to get. Only option markets are supported."
+              }
+            ]
+          },
+          "docs": "Returns the for a given `baseSymbol`, organized by strike prices and expiration dates. This data helps traders quickly assess the available options and their respective prices, implied volatilities, and Greeks (such as delta, gamma, theta, and vega).\n"
+        },
+        {
+          "info": {
+            "name": "Get Expiry Prices",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/expiry-prices/:symbol",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Retrieves Expiry Price and Expiry Notional for respective Options and Dated Futures markets."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

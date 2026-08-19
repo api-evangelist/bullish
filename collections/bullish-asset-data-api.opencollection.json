@@ -1,0 +1,77 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Trading Asset Data API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "asset-data",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Assets",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/assets"
+          },
+          "docs": "Get supported assets."
+        },
+        {
+          "info": {
+            "name": "Get Asset by Symbol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/assets/:symbol",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "BTC",
+                "type": "path"
+              }
+            ]
+          },
+          "docs": "Get Asset by Symbol"
+        },
+        {
+          "info": {
+            "name": "Get Vol Grids",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/vol-grids"
+          },
+          "docs": "Returns grids for **all** options-enabled underlyings."
+        },
+        {
+          "info": {
+            "name": "Get Vol Grid by Symbol",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/assets/:symbol/vol-grid",
+            "params": [
+              {
+                "name": "symbol",
+                "value": "BTC",
+                "type": "path",
+                "description": "The underlying asset symbol (e.g. `BTC`, `ETH`)"
+              }
+            ]
+          },
+          "docs": "Returns the current active BPM (Bullish Portfolio Margin) vol grid configuration for the specified underlying asset."
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}

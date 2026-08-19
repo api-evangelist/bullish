@@ -1,0 +1,145 @@
+openapi: 3.2.0
+info:
+  description: REST API specification for the Bullish Trading API.
+  version: 1.0.0
+  title: Bullish Trading General API
+  contact:
+    name: Bullish Help Center
+    email: support@bullish.com
+    url: https://support.bullish.com
+servers:
+- url: https://api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://registered.api.exchange.bullish.com/trading-api
+  description: PRODUCTION
+- url: https://prod.access.bullish.com/trading-api
+  description: PRODUCTION (Direct Connect)
+- url: https://api.bugbounty.bullish.com/trading-api
+  description: SECURITY SANDBOX
+- url: https://api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://registered.api.simnext.bullish-test.com/trading-api
+  description: API SANDBOX
+- url: https://simnext.access.bullish.com/trading-api
+  description: API SANDBOX (Direct Connect)
+tags:
+- name: general
+  x-displayName: General
+paths:
+  /v1/nonce:
+    get:
+      tags:
+      - general
+      summary: Get Current Nonce Range
+      description: 'Get the current nonce range. The lower bound of nonce range is EPOCH start of day in microseconds, and upper bound of nonce range is EPOCH end of day in microseconds.
+
+
+        **Ratelimited:** `False`
+
+        '
+      operationId: getNonce
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/Nonce'
+        '401':
+          description: Not Authenticated
+        '403':
+          description: Access Forbidden
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security: []
+  /v1/time:
+    get:
+      tags:
+      - general
+      summary: Get Exchange Time
+      description: Get Current Exchange Time
+      operationId: getExchangeTime
+      responses:
+        '200':
+          description: OK
+          content:
+            application/json:
+              schema:
+                $ref: '#/components/schemas/CurrentExchangeTimeResponse'
+        '429':
+          description: Too Many Requests
+        '500':
+          description: Internal Server Error
+      security: []
+components:
+  schemas:
+    CurrentExchangeTimeResponse:
+      type: object
+      required:
+      - timestamp
+      - datetime
+      properties:
+        timestamp:
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        datetime:
+          description: ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+    Nonce:
+      type: object
+      required:
+      - upperBound
+      - lowerBound
+      properties:
+        lowerBound:
+          description: lower bound of nonce range
+          type: integer
+          example: 8455
+        upperBound:
+          description: upper bound of nonce range
+          type: integer
+          example: 9455
+    TimeStampAsString:
+      type: string
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+  securitySchemes:
+    jwtTokenAuth:
+      type: http
+      scheme: bearer
+      bearerFormat: JWT
+x-tagGroups:
+- name: Public Endpoints
+  tags:
+  - general
+  - asset-data
+  - market-data
+  - market-history-data
+  - index-price-data
+  - derivatives-public
+  - auction-public
+- name: Private Endpoints
+  tags:
+  - session-management
+  - trading-accounts
+  - account-assets
+  - orders
+  - trades
+  - amm-instructions
+  - transfer
+  - custody
+  - derivatives
+  - market-maker-protection
+  - history
+  - otc
+  - idb
+  - portfolio-margin-simulator

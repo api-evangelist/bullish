@@ -1,0 +1,2006 @@
+{
+  "item": [
+    {
+      "id": "91c6a6b4-bab9-4c62-9a5d-f44237d2dff6",
+      "name": "idb",
+      "description": {
+        "content": "The Inter-dealer Broker (IDB) API is available to authorized inter-dealer brokers to book OTC trades on Bullish on behalf of their respective end customers.",
+        "type": "text/plain"
+      },
+      "item": [
+        {
+          "id": "cbbc4121-9ee7-4716-b151-9c2119ecdfa9",
+          "name": "IDB Get Delegated Trading Accounts",
+          "request": {
+            "name": "IDB Get Delegated Trading Accounts",
+            "description": {
+              "content": "Get details for all delegated trading accounts from the broker perspective.\n\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n- [supports pagination](/rest/general/pagination)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "idb",
+                "delegated-accounts"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "Optional filter by a single delegated trading account"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "3cac861a-60f6-4026-9eb2-c44341917fd4",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "delegated-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"institutionName\": \"Alpha Traders\",\n    \"institutionRegistrationNumber\": \"87654321\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountNickname\": \"Alpha Traders Primary\",\n    \"approvalMethod\": \"APPROVAL_REQUIRED\"\n  },\n  {\n    \"institutionName\": \"Beta Traders\",\n    \"tradingAccountId\": \"111000000000002\",\n    \"tradingAccountNickname\": \"Beta Traders OTC\",\n    \"approvalMethod\": \"STRAIGHT_THROUGH\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "2814deb3-5e4f-4b52-9574-b86dc875cab5",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "delegated-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fdf5727b-8aec-4603-a1ef-bb7b31983570",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "delegated-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c654875f-3512-4010-9570-f5c1605f8fa2",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "delegated-accounts"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "4384f379-78f8-4b14-b4d6-06354e8b16a2",
+          "name": "IDB Create OTC Trade",
+          "request": {
+            "name": "IDB Create OTC Trade",
+            "description": {
+              "content": "Enables authorized inter-dealer broker to book a dual-sided OTC trade on behalf of two clients.\n\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field\nordering and addition of null fields in the request body. Prices do not require strict precision.\nEg. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "idb",
+                "otc-trades"
+              ],
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                "key": "BX-SIGNATURE",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                "key": "BX-TIMESTAMP",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                "key": "BX-NONCE",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"commandType\": \"<string>\",\n  \"maker\": {\n    \"tradingAccountId\": \"<string>\",\n    \"remarks\": \"<string>\"\n  },\n  \"taker\": {\n    \"tradingAccountId\": \"<string>\",\n    \"remarks\": \"<string>\"\n  },\n  \"trades\": [\n    {\n      \"symbol\": \"<string>\",\n      \"price\": \"<string>\",\n      \"quantity\": \"<string>\",\n      \"side\": \"<string>\"\n    },\n    {\n      \"symbol\": \"<string>\",\n      \"price\": \"<string>\",\n      \"quantity\": \"<string>\",\n      \"side\": \"<string>\"\n    }\n  ],\n  \"idbRemarks\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "f13ad8f0-617b-4ec4-8857-61c7fcc7aaa6",
+              "name": "Status OK. The IDB create OTC trade command was successfully acknowledged. To check the current status of the OTC trades, query [IDB Get OTC Trades](/rest/api/idb-otc-get-trades) using `sharedMatchKey` received in the response payload.\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"commandType\": \"V1IdbCreateOtcTrade\",\n  \"idbRemarks\": \"otc trades between abc and xyz client\",\n  \"maker\": {\n    \"tradingAccountId\": \"111000000000001\",\n    \"remarks\": \"confirmed over the phone\"\n  },\n  \"taker\": {\n    \"tradingAccountId\": \"111000000000002\"\n  },\n  \"trades\": [\n    {\n      \"symbol\": \"BTC-USDC-PERP\",\n      \"side\": \"BUY\",\n      \"price\": \"98213.0000\",\n      \"quantity\": \"1.50000000\"\n    },\n    {\n      \"symbol\": \"XRP-USDC-PERP\",\n      \"side\": \"SELL\",\n      \"price\": \"2.6600\",\n      \"quantity\": \"50.000000\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"Command acknowledged - IdbCreateOtcTrade\",\n  \"sharedMatchKey\": \"a40d0c302d0448ce8e144c8312dd6ef0\",\n  \"maker\": {\n    \"requestId\": \"100000000000000147\",\n    \"otcTradeId\": \"200000000000000098\"\n  },\n  \"taker\": {\n    \"requestId\": \"100000000000000148\",\n    \"otcTradeId\": \"200000000000000099\"\n  }\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "8f35e892-8333-4e25-bf7b-f0e3f504cb69",
+              "name": "Bad Request\n\nFor example, sending a request with the `BX-SIGNATURE` header missing will result in the following response:\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"commandType\": \"V1IdbCreateOtcTrade\",\n  \"idbRemarks\": \"otc trades between abc and xyz client\",\n  \"maker\": {\n    \"tradingAccountId\": \"111000000000001\",\n    \"remarks\": \"confirmed over the phone\"\n  },\n  \"taker\": {\n    \"tradingAccountId\": \"111000000000002\"\n  },\n  \"trades\": [\n    {\n      \"symbol\": \"BTC-USDC-PERP\",\n      \"side\": \"BUY\",\n      \"price\": \"98213.0000\",\n      \"quantity\": \"1.50000000\"\n    },\n    {\n      \"symbol\": \"XRP-USDC-PERP\",\n      \"side\": \"SELL\",\n      \"price\": \"2.6600\",\n      \"quantity\": \"50.000000\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c351ab7f-64e1-4573-9d56-d3def5cff82a",
+              "name": "Unauthorized. Either API details are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"commandType\": \"V1IdbCreateOtcTrade\",\n  \"idbRemarks\": \"otc trades between abc and xyz client\",\n  \"maker\": {\n    \"tradingAccountId\": \"111000000000001\",\n    \"remarks\": \"confirmed over the phone\"\n  },\n  \"taker\": {\n    \"tradingAccountId\": \"111000000000002\"\n  },\n  \"trades\": [\n    {\n      \"symbol\": \"BTC-USDC-PERP\",\n      \"side\": \"BUY\",\n      \"price\": \"98213.0000\",\n      \"quantity\": \"1.50000000\"\n    },\n    {\n      \"symbol\": \"XRP-USDC-PERP\",\n      \"side\": \"SELL\",\n      \"price\": \"2.6600\",\n      \"quantity\": \"50.000000\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "990f6e91-8c91-490f-b532-8cb13a9c9c30",
+              "name": "Forbidden- You do not have access to the requested resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"commandType\": \"V1IdbCreateOtcTrade\",\n  \"idbRemarks\": \"otc trades between abc and xyz client\",\n  \"maker\": {\n    \"tradingAccountId\": \"111000000000001\",\n    \"remarks\": \"confirmed over the phone\"\n  },\n  \"taker\": {\n    \"tradingAccountId\": \"111000000000002\"\n  },\n  \"trades\": [\n    {\n      \"symbol\": \"BTC-USDC-PERP\",\n      \"side\": \"BUY\",\n      \"price\": \"98213.0000\",\n      \"quantity\": \"1.50000000\"\n    },\n    {\n      \"symbol\": \"XRP-USDC-PERP\",\n      \"side\": \"SELL\",\n      \"price\": \"2.6600\",\n      \"quantity\": \"50.000000\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "1cb9920b-27ae-455e-9662-2b1836a69dc2",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-trades"
+                  ],
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"commandType\": \"V1IdbCreateOtcTrade\",\n  \"idbRemarks\": \"otc trades between abc and xyz client\",\n  \"maker\": {\n    \"tradingAccountId\": \"111000000000001\",\n    \"remarks\": \"confirmed over the phone\"\n  },\n  \"taker\": {\n    \"tradingAccountId\": \"111000000000002\"\n  },\n  \"trades\": [\n    {\n      \"symbol\": \"BTC-USDC-PERP\",\n      \"side\": \"BUY\",\n      \"price\": \"98213.0000\",\n      \"quantity\": \"1.50000000\"\n    },\n    {\n      \"symbol\": \"XRP-USDC-PERP\",\n      \"side\": \"SELL\",\n      \"price\": \"2.6600\",\n      \"quantity\": \"50.000000\"\n    }\n  ]\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "a6fd0f1c-eefd-4ffa-bb7e-3efad50ee7de",
+          "name": "IDB Get OTC Trades",
+          "request": {
+            "name": "IDB Get OTC Trades",
+            "description": {
+              "content": "Get the brokered OTC trade list initiated by the IDB based on specified filters.\n\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n- supports filtering on `status`, `tradingAccountId`, `sharedMatchKey`, `createdAtDatetime`, `createdAtTimestamp`\n- [supports pagination](/rest/general/pagination)\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "idb",
+                "otc-trades"
+              ],
+              "hash": "list",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [
+                {
+                  "disabled": false,
+                  "key": "status",
+                  "value": "<string>",
+                  "description": "OTC trade status"
+                },
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "Allow filtering across multiple delegated trading accounts; if tradingAccountId is null or omitted, returns trades for all delegated accounts"
+                },
+                {
+                  "disabled": false,
+                  "key": "tradingAccountId",
+                  "value": "<string>",
+                  "description": "Allow filtering across multiple delegated trading accounts; if tradingAccountId is null or omitted, returns trades for all delegated accounts"
+                },
+                {
+                  "disabled": false,
+                  "key": "sharedMatchKey",
+                  "value": "<string>"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[ gte ]",
+                  "value": "<dateTime>",
+                  "description": "Start timestamp of window, ISO 8601 with millisecond as string"
+                },
+                {
+                  "disabled": false,
+                  "key": "createdAtDatetime[ lte ]",
+                  "value": "<dateTime>",
+                  "description": "End timestamp of window, ISO 8601 with millisecond as string"
+                }
+              ],
+              "variable": []
+            },
+            "header": [
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "GET",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            }
+          },
+          "response": [
+            {
+              "id": "30905f8a-b825-4ea2-9336-517bd8e9379b",
+              "name": "OK",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-trades"
+                  ],
+                  "hash": "list",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "MATCHED"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "sharedMatchKey",
+                      "value": "cfBtcXrpMatch001"
+                    },
+                    {
+                      "key": "createdAtDatetime[ gte ]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[ lte ]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "[\n  {\n    \"otcTradeId\": \"200000000000000098\",\n    \"institutionName\": \"Alpha Traders\",\n    \"tradingAccountId\": \"111000000000001\",\n    \"tradingAccountNickname\": \"Alpha Traders Primary\",\n    \"sharedMatchKey\": \"qt6mlga14z3k9e420y2qap5\",\n    \"status\": \"REJECTED\",\n    \"statusReason\": \"OTC trade has expired\",\n    \"statusReasonCode\": \"9028\",\n    \"createdAtDatetime\": \"2026-02-26T07:28:49.087Z\",\n    \"createdAtTimestamp\": \"1772090929087\",\n    \"expireDatetime\": \"2026-02-26T07:43:49.087Z\",\n    \"expireTimestamp\": \"1772091829087\",\n    \"remarks\": \"alpha first trade\",\n    \"idbRemarks\": \"otc trades between Alpha and Beta\",\n    \"trades\": [\n      {\n        \"symbol\": \"BTC-USDC-PERP\",\n        \"side\": \"SELL\",\n        \"price\": \"98213.0000\",\n        \"quantity\": \"1.50000000\",\n        \"isTaker\": true\n      }\n    ],\n    \"brokeredBy\": \"IDB_A\"\n  },\n  {\n    \"otcTradeId\": \"200000000000000099\",\n    \"institutionName\": \"Beta Traders\",\n    \"tradingAccountId\": \"111000000000002\",\n    \"tradingAccountNickname\": \"Beta Traders OTC\",\n    \"sharedMatchKey\": \"qt6mlga14z3k9e420y2qap5\",\n    \"status\": \"REJECTED\",\n    \"statusReason\": \"OTC trade has expired\",\n    \"statusReasonCode\": \"9028\",\n    \"createdAtDatetime\": \"2026-02-26T07:28:49.087Z\",\n    \"createdAtTimestamp\": \"1772090929087\",\n    \"expireDatetime\": \"2026-02-26T07:43:49.087Z\",\n    \"expireTimestamp\": \"1772091829087\",\n    \"idbRemarks\": \"otc trades between Alpha and Beta\",\n    \"trades\": [\n      {\n        \"symbol\": \"BTC-USDC-PERP\",\n        \"side\": \"BUY\",\n        \"price\": \"98213.0000\",\n        \"quantity\": \"1.50000000\",\n        \"isTaker\": false\n      }\n    ],\n    \"brokeredBy\": \"IDB_A\"\n  }\n]",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "edb97dad-f232-47c5-ad0c-9152e1dbcc84",
+              "name": "For example, sending a request with an invalid trading account",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-trades"
+                  ],
+                  "hash": "list",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "MATCHED"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "sharedMatchKey",
+                      "value": "cfBtcXrpMatch001"
+                    },
+                    {
+                      "key": "createdAtDatetime[ gte ]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[ lte ]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "9cd2fd45-4d11-4911-9439-1c08d997b92c",
+              "name": "Not Authenticated",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-trades"
+                  ],
+                  "hash": "list",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "MATCHED"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "sharedMatchKey",
+                      "value": "cfBtcXrpMatch001"
+                    },
+                    {
+                      "key": "createdAtDatetime[ gte ]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[ lte ]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c5913d71-8edf-4337-8bef-bb1b5a84f395",
+              "name": "Access Forbidden",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-trades"
+                  ],
+                  "hash": "list",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "MATCHED"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "sharedMatchKey",
+                      "value": "cfBtcXrpMatch001"
+                    },
+                    {
+                      "key": "createdAtDatetime[ gte ]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[ lte ]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "fbde6ea8-0d03-4b06-ae5a-4a2aec6dc923",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-trades"
+                  ],
+                  "hash": "list",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [
+                    {
+                      "key": "status",
+                      "value": "MATCHED"
+                    },
+                    {
+                      "key": "tradingAccountId",
+                      "value": "111000000000001"
+                    },
+                    {
+                      "key": "sharedMatchKey",
+                      "value": "cfBtcXrpMatch001"
+                    },
+                    {
+                      "key": "createdAtDatetime[ gte ]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    },
+                    {
+                      "key": "createdAtDatetime[ lte ]",
+                      "value": "2025-05-20T01:01:01.000Z"
+                    }
+                  ],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "GET",
+                "body": {}
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "624d7d73-ae38-437e-9c07-17a2d81c6ea8",
+          "name": "IDB Cancel OTC Trade",
+          "request": {
+            "name": "IDB Cancel OTC Trade",
+            "description": {
+              "content": "Cancel a pending OTC trade that was previously initiated by the IDB.\n\nSubmits a command to the trading engine. A successful response indicates that the command entry was acknowledged\nbut does not indicate that the command was executed.\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field\nordering and addition of null fields in the request body.\n\nCommand schemas and examples are provided below. Supported commands:\n- V1IdbCancelOtcTrade\n\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "idb",
+                "otc-command"
+              ],
+              "hash": "cancel",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                "key": "BX-SIGNATURE",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                "key": "BX-TIMESTAMP",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                "key": "BX-NONCE",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"commandType\": \"<string>\",\n  \"sharedMatchKey\": \"<string>\",\n  \"idbRemarks\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "69b1b881-cda0-4d45-bc37-4c8c7f5cb703",
+              "name": "Status OK. This means a command was successfully acknowledged.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-command"
+                  ],
+                  "hash": "cancel",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/IdbCancelOtcTradeCommand/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"$ref\": \"#/components/schemas/IdbCancelOtcTradeResponse/example\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "89df70e5-6500-4a01-9f19-4d0cb61b1b14",
+              "name": "Bad Request\n\nFor example, sending a request with the `BX-SIGNATURE` header missing will result in the following response:\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-command"
+                  ],
+                  "hash": "cancel",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/IdbCancelOtcTradeCommand/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "50c9892c-e3d1-4828-bb5e-6925db85ebf2",
+              "name": "Unauthorized. Either API details are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-command"
+                  ],
+                  "hash": "cancel",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/IdbCancelOtcTradeCommand/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "3095e4b9-eee2-41ea-8ae3-dd08f895273a",
+              "name": "Forbidden- You do not have access to the requested resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-command"
+                  ],
+                  "hash": "cancel",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/IdbCancelOtcTradeCommand/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c6a5914d-ffd1-4e23-be14-fe2abd748695",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-command"
+                  ],
+                  "hash": "cancel",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/IdbCancelOtcTradeCommand/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        },
+        {
+          "id": "9bf1cf33-5a6f-4047-b293-bada760a46cb",
+          "name": "IDB Update Remarks",
+          "request": {
+            "name": "IDB Update Remarks",
+            "description": {
+              "content": "Update the IDB remarks of a previously initiated OTC trade.\n\nSubmits a command to the trading engine. A successful response indicates that the command entry was acknowledged\nbut does not indicate that the command was executed.\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field\nordering and addition of null fields in the request body.\n\nCommand schemas and examples are provided below. Supported commands:\n- V1IdbUpdateRemarks\n\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n",
+              "type": "text/plain"
+            },
+            "url": {
+              "path": [
+                "v2",
+                "idb",
+                "otc-command"
+              ],
+              "hash": "update-remarks",
+              "host": [
+                "{{baseUrl}}"
+              ],
+              "query": [],
+              "variable": []
+            },
+            "header": [
+              {
+                "disabled": false,
+                "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                "key": "BX-SIGNATURE",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                "key": "BX-TIMESTAMP",
+                "value": "<string>"
+              },
+              {
+                "disabled": false,
+                "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                "key": "BX-NONCE",
+                "value": "<string>"
+              },
+              {
+                "key": "Content-Type",
+                "value": "application/json"
+              },
+              {
+                "key": "Accept",
+                "value": "application/json"
+              }
+            ],
+            "method": "POST",
+            "auth": {
+              "type": "bearer",
+              "bearer": [
+                {
+                  "key": "token",
+                  "value": "{{bearerToken}}"
+                }
+              ]
+            },
+            "body": {
+              "mode": "raw",
+              "raw": "{\n  \"commandType\": \"<string>\",\n  \"sharedMatchKey\": \"<string>\",\n  \"idbRemarks\": \"<string>\"\n}",
+              "options": {
+                "raw": {
+                  "language": "json"
+                }
+              }
+            }
+          },
+          "response": [
+            {
+              "id": "affac4d7-ff68-495a-a07a-9119c2494da0",
+              "name": "Status OK. This means a command was successfully acknowledged.",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-command"
+                  ],
+                  "hash": "update-remarks",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/IdbUpdateRemarksCommand/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "OK",
+              "code": 200,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"$ref\": \"#/components/schemas/IdbUpdateRemarksResponse/example\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "c3f5ae75-a248-4717-9d43-e49ceb646d05",
+              "name": "Bad Request\n\nFor example, sending a request with the `BX-SIGNATURE` header missing will result in the following response:\n",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-command"
+                  ],
+                  "hash": "update-remarks",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/IdbUpdateRemarksCommand/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Bad Request",
+              "code": 400,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "486169d9-9edd-4462-a457-f9d094f2eb07",
+              "name": "Unauthorized. Either API details are missing or invalid",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-command"
+                  ],
+                  "hash": "update-remarks",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/IdbUpdateRemarksCommand/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Unauthorized",
+              "code": 401,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "17c38b47-5f26-468c-9a7c-06e201067d65",
+              "name": "Forbidden- You do not have access to the requested resource",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-command"
+                  ],
+                  "hash": "update-remarks",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/IdbUpdateRemarksCommand/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Forbidden",
+              "code": 403,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            },
+            {
+              "id": "efcdc322-6c1c-46dd-af2d-272e54a6f3a9",
+              "name": "Internal Server Error",
+              "originalRequest": {
+                "url": {
+                  "path": [
+                    "v2",
+                    "idb",
+                    "otc-command"
+                  ],
+                  "hash": "update-remarks",
+                  "host": [
+                    "{{baseUrl}}"
+                  ],
+                  "query": [],
+                  "variable": []
+                },
+                "header": [
+                  {
+                    "description": {
+                      "content": "Added as a part of security scheme: bearer",
+                      "type": "text/plain"
+                    },
+                    "key": "Authorization",
+                    "value": "Bearer <token>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) signature obtained using the [signing format](/rest/authentication#signing-format)",
+                    "key": "BX-SIGNATURE",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) timestamp is the number of milliseconds since EPOCH",
+                    "key": "BX-TIMESTAMP",
+                    "value": "<string>"
+                  },
+                  {
+                    "disabled": false,
+                    "description": "(Required) nonce is a client side incremented unsigned 64 bit integer",
+                    "key": "BX-NONCE",
+                    "value": "<string>"
+                  },
+                  {
+                    "key": "Accept",
+                    "value": "application/json"
+                  }
+                ],
+                "method": "POST",
+                "body": {
+                  "mode": "raw",
+                  "raw": "{\n  \"$ref\": \"#/components/schemas/IdbUpdateRemarksCommand/example\"\n}",
+                  "options": {
+                    "raw": {
+                      "language": "json"
+                    }
+                  }
+                }
+              },
+              "status": "Internal Server Error",
+              "code": 500,
+              "header": [
+                {
+                  "key": "Content-Type",
+                  "value": "application/json"
+                }
+              ],
+              "body": "{\n  \"message\": \"string\",\n  \"errorCode\": 7163,\n  \"errorCodeName\": \"string\"\n}",
+              "cookie": [],
+              "_postman_previewlanguage": "json"
+            }
+          ],
+          "event": [],
+          "protocolProfileBehavior": {
+            "disableBodyPruning": true
+          }
+        }
+      ],
+      "event": []
+    }
+  ],
+  "event": [],
+  "variable": [
+    {
+      "type": "string",
+      "value": "https://api.exchange.bullish.com/trading-api",
+      "key": "baseUrl"
+    }
+  ],
+  "info": {
+    "_postman_id": "5b775849-14a4-46b8-abc3-2771376ff752",
+    "name": "Bullish Trading Idb API",
+    "schema": "https://schema.getpostman.com/json/collection/v2.1.0/collection.json",
+    "description": {
+      "content": "REST API specification for the Bullish Trading API.\n\nContact Support:\n Name: Bullish Help Center\n Email: support@bullish.com",
+      "type": "text/plain"
+    }
+  }
+}

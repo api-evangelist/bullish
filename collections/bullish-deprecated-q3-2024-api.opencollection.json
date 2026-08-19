@@ -1,0 +1,500 @@
+{
+  "opencollection": "1.0.0",
+  "info": {
+    "name": "Bullish Deprecated Features deprecated - q3 2024 API",
+    "version": "1.0.0"
+  },
+  "items": [
+    {
+      "info": {
+        "name": "deprecated - q3 2024",
+        "type": "folder"
+      },
+      "items": [
+        {
+          "info": {
+            "name": "Get Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/orders",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "handle",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric (i64) identifier generated on the client side expressed as a string value"
+              },
+              {
+                "name": "side",
+                "value": "",
+                "type": "query",
+                "description": "order side"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "order status"
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets the orders list based on specified filters.\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n- [supports pagination](/rest/general/pagination)\n- supports filtering on `symbol`, `handle`, `side`, `status`, `createdAtDatetime`, `createdAtTimestamp`\n\n**Ratelimited:** `True`\n"
+        },
+        {
+          "info": {
+            "name": "Create Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/orders",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "BX-TIMESTAMP",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE-WINDOW-ENABLED",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "test",
+                "value": "",
+                "type": "query",
+                "description": "to validate integration with the `POST /orders` API pass the query parameter `test=true` e.g. `/orders?test=true`. The request will be validated but not executed."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates an order, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header.\n\nRequires strict field ordering in the request body.\n\n[Command Example](/rest/authentication#construct-the-command-you-want-to-send)\n\n**Ratelimited:** `True`\n"
+        },
+        {
+          "info": {
+            "name": "Cancel Order",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/orders",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "BX-TIMESTAMP",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE-WINDOW-ENABLED",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "handle",
+                "value": "",
+                "type": "query",
+                "description": "Unique numeric (i64) identifier generated on the client side expressed as a string value"
+              },
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "query",
+                "description": "unique order ID"
+              },
+              {
+                "name": "test",
+                "value": "",
+                "type": "query",
+                "description": "to validate integration with the `DELETE /orders` API pass the query parameter `test=true` e.g. `/orders?test=true`. The request will be validated but not executed."
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancels an order, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header.\n\nRequires strict field ordering in the JSON request payload.\n\nPlease use either the `handle` or `orderId` field in the query parameters.\n\n[Command example](/rest/authentication#cancel-order-example)\n\n**Ratelimited:** `True`\n"
+        },
+        {
+          "info": {
+            "name": "Get Order by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/orders/:orderId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "orderId",
+                "value": "",
+                "type": "path",
+                "description": "order ID"
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets an order by ID, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n"
+        },
+        {
+          "info": {
+            "name": "Cancel All Open Limit Orders",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/command?commandType=V1CancelAllOrders",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancels all open limit orders\n\nRequires\n- strict field ordering in the JSON request payload.\n- [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n"
+        },
+        {
+          "info": {
+            "name": "Cancel All Open Limit Orders by Market",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/command?commandType=V1CancelAllOrdersByMarket",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancels all open orders by market\n\nRequires\n- strict field ordering in the JSON request payload.\n- [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n"
+        },
+        {
+          "info": {
+            "name": "Cancel All Open Limit Orders after Delay",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/command?commandType=V1DelayedCancelAllOrders",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancel All Open Limit Orders after Delay\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n- provides a “Dead Man's Switch” mechanism to protect customers from network malfunction. \n  The customer can send a request with a delay (in seconds), that will start a countdown timer \n  which cancels all open limit orders for a specific trading account when the timer expires.\n- can be disabled by another command type: V1UnsetDelayedCancelAllOrders\n\n"
+        },
+        {
+          "info": {
+            "name": "Cancel All Open Limit Orders after Delay Disable",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/command?commandType=V1UnsetDelayedCancelAllOrders",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Cancel All Open Limit Orders after Delay Disable\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n- Disable the delay set on a trading account that initiates cancelling all open limit orders\n  (i.e. disable the previous V1DelayedCancelAllOrders command)\n\n**Ratelimited:** `True`\n"
+        },
+        {
+          "info": {
+            "name": "Get AMM Instructions",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/amm-instructions",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "status",
+                "value": "",
+                "type": "query",
+                "description": "order status"
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets a list of AMM instructions based on applied filters.\n- requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n- [supports pagination](/rest/general/pagination)\n- supports filtering on `symbol` and `status`\n\n**Ratelimited:** `True`\n"
+        },
+        {
+          "info": {
+            "name": "Create AMM Instruction",
+            "type": "http"
+          },
+          "http": {
+            "method": "POST",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/amm-instructions",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "BX-TIMESTAMP",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "test",
+                "value": "",
+                "type": "query",
+                "description": "to validate integration with the `POST /amm-instructions` API pass the query parameter `test=true` e.g. `/amm-instructions?test=true`. The request will be validated but not executed."
+              }
+            ],
+            "body": {
+              "type": "json",
+              "data": "{}"
+            },
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Creates an AMM instruction, requires [bearer token](/rest/authentication#add-authenticated-request-header) \nin authorization header.\n\nRequires strict field ordering in the JSON request payload.\n\n[Command Example](/rest/api/create-amm-instruction)\n\n**Ratelimited:** `True`\n"
+        },
+        {
+          "info": {
+            "name": "Terminate AMM Instruction",
+            "type": "http"
+          },
+          "http": {
+            "method": "DELETE",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/amm-instructions",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              },
+              {
+                "name": "BX-SIGNATURE",
+                "value": ""
+              },
+              {
+                "name": "BX-TIMESTAMP",
+                "value": ""
+              },
+              {
+                "name": "BX-NONCE",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "symbol",
+                "value": "",
+                "type": "query"
+              },
+              {
+                "name": "liquidityId",
+                "value": "",
+                "type": "query",
+                "description": "unique AMM instruction ID"
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "id of the trading account"
+              },
+              {
+                "name": "test",
+                "value": "",
+                "type": "query",
+                "description": "to validate integration with the `DELETE /amm-instructions` API pass the query parameter `test=true` e.g. `/amm-instructions?test=true`. The request will be validated but not executed."
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Terminates a specific AMM instruction, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header.\n\nRequires strict field ordering in the JSON request payload.\n\n[Command Example](/rest/api/create-amm-instruction)\n\n**Ratelimited:** `True`\n"
+        },
+        {
+          "info": {
+            "name": "Get AMM Instruction by ID",
+            "type": "http"
+          },
+          "http": {
+            "method": "GET",
+            "url": "https://api.exchange.bullish.com/trading-api/v1/amm-instructions/:liquidityId",
+            "headers": [
+              {
+                "name": "Authorization",
+                "value": ""
+              }
+            ],
+            "params": [
+              {
+                "name": "liquidityId",
+                "value": "",
+                "type": "path",
+                "description": "unique AMM instruction ID"
+              },
+              {
+                "name": "tradingAccountId",
+                "value": "",
+                "type": "query",
+                "description": "Id of the trading account"
+              }
+            ],
+            "auth": {
+              "type": "bearer",
+              "token": "{{bearerToken}}"
+            }
+          },
+          "docs": "Gets a specific AMM instruction based on the `liquidityId`, \nrequires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n"
+        }
+      ]
+    }
+  ],
+  "bundled": true
+}
