@@ -29,6 +29,17 @@ tags:
 - Derivatives
 - Custody
 - Market Data
+- Financial-Services
+- Institutional
+- FIX
+tags_raw:
+- Digital Assets
+- Cryptocurrency
+- Exchange
+- Trading
+- Derivatives
+- Custody
+- Market Data
 - Financial Services
 - Institutional
 - FIX
@@ -233,6 +244,8 @@ apis:
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
+  - Asset Data
+  tags_raw:
   - asset-data
   properties:
   - type: OpenAPI
@@ -298,6 +311,8 @@ apis:
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
+  - Custody
+  tags_raw:
   - custody
   properties:
   - type: OpenAPI
@@ -338,6 +353,8 @@ apis:
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
+  - Derivatives
+  tags_raw:
   - derivatives
   properties:
   - type: OpenAPI
@@ -377,7 +394,8 @@ apis:
   description: The general API from Bullish — 2 operation(s) for general.
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
-  tags:
+  tags: []
+  tags_raw:
   - general
   properties:
   - type: OpenAPI
@@ -398,6 +416,8 @@ apis:
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
+  - History
+  tags_raw:
   - history
   properties:
   - type: OpenAPI
@@ -460,6 +480,8 @@ apis:
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
+  - Market Data
+  tags_raw:
   - market-data
   properties:
   - type: OpenAPI
@@ -521,6 +543,8 @@ apis:
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
+  - Order
+  tags_raw:
   - orders
   properties:
   - type: OpenAPI
@@ -547,6 +571,8 @@ apis:
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
+  - OTC
+  tags_raw:
   - otc
   properties:
   - type: OpenAPI
@@ -588,6 +614,8 @@ apis:
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
+  - Session Management
+  tags_raw:
   - session-management
   properties:
   - type: OpenAPI
@@ -608,6 +636,8 @@ apis:
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
+  - Trades
+  tags_raw:
   - trades
   properties:
   - type: OpenAPI
@@ -648,6 +678,8 @@ apis:
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
+  - Transfer
+  tags_raw:
   - transfer
   properties:
   - type: OpenAPI
