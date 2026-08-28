@@ -15,6 +15,18 @@ description: >-
   Gibraltar Financial Services Commission, BaFin (MiCA CASP and qualified crypto
   custodian), the Hong Kong SFC, FinCEN and NYDFS, and lists on the NYSE as BLSH.
 url: https://raw.githubusercontent.com/api-evangelist/bullish/refs/heads/main/apis.yml
+deliveryModel:
+  model: saas
+  open_source: false
+  commercial: true
+  callable_host: true
+  label: Hosted service · you call their endpoint
+  confidence: high
+  source:
+  - openapi
+  - pricing
+  generated: '2026-08-28'
+  method: derived
 image: https://kinlane-productions2.s3.amazonaws.com/apis-json/apis-json-logo.jpg
 x-type: company
 x-source: harvest:secondary-market
