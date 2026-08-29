@@ -1,0 +1,137 @@
+slug: bullish
+provider: Bullish
+generated_by: planning/capability-mapping/scripts/classify_capabilities.py
+model: claude-opus-5
+frame:
+- Banking & Capital Markets
+min_confidence: 0.7
+capability_model:
+  source: https://github.com/vincentmakes/turbo-ea-capabilities
+  license: CC-BY-4.0
+  attribution: Turbo EA Capabilities by Vincent Verdet — Turbo EA, https://github.com/vincentmakes/turbo-ea-capabilities,
+    CC BY 4.0
+  notice: NOTICE
+edge_count: 12
+edges:
+- tag: orders
+  spec_file: bullish-orders-api-openapi.yml
+  capability_id: BC-1370.30
+  capability_id_l1: BC-1370
+  capability_name: Trading Order Management
+  confidence: 0.95
+  evidence: POST /v2/orders  createOrderV2  Create Order; POST /v2/command#amend  submitAmendmentCommand  Amend
+    Order Command
+  reason: Order creation, retrieval, cancellation and amendment on a trading venue — trading order management.
+- tag: derivatives
+  spec_file: bullish-derivatives-api-openapi.yml
+  capability_id: BC-1370.20
+  capability_id_l1: BC-1370
+  capability_name: Trading Position Management
+  confidence: 0.83
+  evidence: GET /v1/derivatives-positions getDerivativesPositions "Get Derivatives Positions"; schemas
+    PositionGreeks, DerivativesPositionResponse
+  reason: Retrieval of open derivatives positions with greeks for a trading account — trading position
+    management in the front office.
+- tag: amm-instructions
+  spec_file: bullish-amm-instructions-api-openapi.yml
+  capability_id: BC-1370.10
+  capability_id_l1: BC-1370
+  capability_name: Market Making Management
+  confidence: 0.82
+  evidence: POST /v2/amm-instructions createAmmInstruction "Create AMM Instruction"; schemas CreateAMMInstructionCommandV3,
+    AMMInstructionStatus, TerminateAMMInstructionCommandV3
+  reason: AMM instructions are automated-market-maker liquidity provision instructions on the venue —
+    creating, querying and terminating market-making mandates. This is market making across the exchange's
+    markets.
+- tag: market-maker-protection
+  spec_file: bullish-market-maker-protection-api-openapi.yml
+  capability_id: BC-1370.10
+  capability_id_l1: BC-1370
+  capability_name: Market Making Management
+  confidence: 0.8
+  evidence: POST /v2/mmp-configuration  setMmpConfiguration  Setup Market Maker Protection (MMP)
+  reason: Market maker protection configuration is a market-making control (auto-cancel of quotes on excessive
+    fills), squarely market making management.
+- tag: command entry
+  spec_file: bullish-command-entry-api-openapi.yml
+  capability_id: BC-1370.30
+  capability_id_l1: BC-1370
+  capability_name: Trading Order Management
+  confidence: 0.78
+  evidence: POST /v2/command submitCommand "Create Command"; schemas AmendOrderCommandV1, CancelOrderCommandV3,
+    CancelAllOrdersByMarketCommand, OrderID
+  reason: Despite the generic tag, the command payload schemas are order amend/cancel commands (plus asset
+    transfer), i.e. order lifecycle instructions to the matching engine — trading order management.
+- tag: custody
+  spec_file: bullish-custody-api-openapi.yml
+  capability_id: BC-1380.40
+  capability_id_l1: BC-1380
+  capability_name: Custody Management
+  confidence: 0.78
+  evidence: GET /v1/wallets/deposit-instructions/crypto/{symbol} "Get Deposit Instructions for Crypto";
+    POST /v1/wallets/withdrawal "Create Withdrawal"; schemas CustodyLimits, CustodyTransactionID, CustodyFiatWithdrawalInstructions
+  reason: Wallet deposit/withdrawal instructions, withdrawal limits, custody transaction history and self-hosted
+    wallet verification for a qualified custodian — safekeeping and movement of client assets, i.e. custody
+    operations.
+- tag: deprecated - q3 2024
+  spec_file: bullish-deprecated-q3-2024-api-openapi.yml
+  capability_id: BC-1370.30
+  capability_id_l1: BC-1370
+  capability_name: Trading Order Management
+  confidence: 0.78
+  evidence: POST /v1/orders trade-create-order "Create Order"; DELETE /v1/orders "Cancel Order"; "Cancel
+    All Open Limit Orders by Market"
+  reason: Although tagged as deprecated, the operations are order capture, retrieval and cancellation
+    (plus legacy AMM instruction endpoints) on the exchange — trading order management. Operations outweigh
+    the lifecycle tag name.
+- tag: idb
+  spec_file: bullish-idb-api-openapi.yml
+  capability_id: BC-1370.50
+  capability_id_l1: BC-1370
+  capability_name: Sales & Trading Management
+  confidence: 0.75
+  evidence: POST /v2/idb/otc-trades  idb-otc-create-trade  IDB Create OTC Trade; IDB Get Delegated Trading
+    Accounts
+  reason: Inter-dealer broker OTC trade creation, listing, cancellation — voice/negotiated off-book trading
+    booked on behalf of delegated institutions. Best fits capital markets trading (sales & trading / OTC
+    dealing); could arguably be trade capture, but the operations are trade creation on a dealing desk.
+- tag: otc
+  spec_file: bullish-otc-api-openapi.yml
+  capability_id: BC-1370.50
+  capability_id_l1: BC-1370
+  capability_name: Sales & Trading Management
+  confidence: 0.75
+  evidence: POST /v2/otc-trades  createOtcTrade  Create OTC Trade; POST /v2/otc-command#approve  Approve
+    OTC Trade
+  reason: OTC trade creation and approval workflow — negotiated bilateral trading with counterparties,
+    best fitting sales & trading; approval/confirmation aspect gives some ambiguity with trade confirmation.
+- tag: market-data
+  spec_file: bullish-market-data-api-openapi.yml
+  capability_id: BC-1370
+  capability_id_l1: BC-1370
+  capability_name: Capital Markets Trading Management
+  confidence: 0.7
+  evidence: GET /v1/markets/{symbol}/orderbook/hybrid  getMarketOrderBook  Get Market Order Book; GET
+    /v1/markets/{symbol}/candle  Get Market Candle
+  reason: Order book, tick, candle and market trade data for an exchange venue — front-office market data
+    supporting trading. No specific L2 for market data; stays at L1.
+- tag: portfolio-margin-simulator
+  spec_file: bullish-portfolio-margin-simulator-api-openapi.yml
+  capability_id: BC-1380.50
+  capability_id_l1: BC-1380
+  capability_name: Collateral Management
+  confidence: 0.7
+  evidence: 'POST /v1/simulate-portfolio-margin  simulatePortfolioMargin  Simulate Portfolio Margin; schemas:
+    SimulationPosition, PriceVolOffsetParams'
+  reason: Simulates portfolio margin requirements for hypothetical orders/positions — margining, which
+    maps to collateral/margin management; alternative reading is market risk, hence moderate confidence.
+- tag: trades
+  spec_file: bullish-trades-api-openapi.yml
+  capability_id: BC-1380.10
+  capability_id_l1: BC-1380
+  capability_name: Trade Confirmation Management
+  confidence: 0.7
+  evidence: GET /v1/trades  getTrades; GET /v1/trades/client-order-id/{clientOrderId}  Get Trades by clientOrder
+    ID
+  reason: Retrieval of executed trade records (fills) linked to orders — trade capture/booking records.
+    Read-only, so it could also be seen as execution reporting under order management; moderate confidence.

@@ -707,6 +707,9 @@ apis:
   - type: ChangeLog
     url: https://docs.exchange.bullish.com/rest/changelog
 common:
+- type: CapabilityMap
+  url: capabilities/bullish-capability-edges.yml
+  name: Bullish Business Capability Map
 - type: MCPServer
   url: mcp/bullish-mcp.yml
 - type: AgenticAccess
