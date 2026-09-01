@@ -256,7 +256,7 @@ apis:
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
-  - asset-data
+  - Asset Data
   tags_raw:
   - asset-data
   properties:
@@ -323,7 +323,7 @@ apis:
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
-  - custody
+  - Custody
   tags_raw:
   - custody
   properties:
@@ -583,7 +583,7 @@ apis:
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
-  - otc
+  - OTC
   tags_raw:
   - otc
   properties:
@@ -626,7 +626,7 @@ apis:
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
-  - session-management
+  - Session Management
   tags_raw:
   - session-management
   properties:
@@ -648,7 +648,7 @@ apis:
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
-  - trades
+  - Trades
   tags_raw:
   - trades
   properties:
