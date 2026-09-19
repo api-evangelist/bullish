@@ -145,6 +145,10 @@ apis:
   baseURL: wss://api.exchange.bullish.com
   tags:
   - Market Data
+  - Auctions
+  - WebSocket
+  tags_raw:
+  - Market Data
   - Auction
   - WebSocket
   properties:
@@ -663,7 +667,7 @@ apis:
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
-  - Trades
+  - Trade
   tags_raw:
   - trades
   properties:
