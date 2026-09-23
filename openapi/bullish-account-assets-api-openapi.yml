@@ -32,12 +32,10 @@ paths:
       tags:
       - account-assets
       summary: Get All Account Assets
-      description: 'Gets the asset accounts, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header
+      description: 'Gets the asset accounts, requires bearer token in authorization header
 
 
-        **Ratelimited:** `True`
-
-        '
+        **Ratelimited:** `True`'
       operationId: getAssetAccounts
       parameters:
       - in: query
@@ -84,12 +82,10 @@ paths:
       tags:
       - account-assets
       summary: Get All Account Assets by Symbol
-      description: 'Gets the asset account by symbol, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header
+      description: 'Gets the asset account by symbol, requires bearer token in authorization header
 
 
-        **Ratelimited:** `True`
-
-        '
+        **Ratelimited:** `True`'
       operationId: getAssetAccountBySymbol
       responses:
         '200':
@@ -112,14 +108,32 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
-    AssetValue:
-      description: see [asset value](/rest/general/price-quantity-precision) format
-      type: string
-      example: '1.00000000'
     AssetSymbol:
       type: string
       description: asset symbol as denoted in the world
       example: BTC
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+    AssetID:
+      type: string
+      description: unique asset ID
+      example: '1'
+    TimeStampAsString:
+      type: string
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.00000000'
     AssetAccount:
       type: object
       required:
@@ -168,24 +182,6 @@ components:
           description: denotes the time the AMM instruction was updated by the exchange
           allOf:
           - $ref: '#/components/schemas/TimeStampAsString'
-    TimeStampAsString:
-      type: string
-      format: string
-      example: '1621490985000'
-      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
-    TradingAccountId:
-      description: unique trading account ID
-      type: string
-      example: '111000000000001'
-    AssetID:
-      type: string
-      description: unique asset ID
-      example: '1'
-    DateTime:
-      type: string
-      format: date-time
-      example: '2025-05-20T01:01:01.000Z'
-      description: ISO 8601 with millisecond as string
   securitySchemes:
     jwtTokenAuth:
       type: http

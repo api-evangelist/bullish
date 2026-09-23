@@ -23,16 +23,32 @@ servers:
 - url: https://simnext.access.bullish.com/trading-api
   description: API SANDBOX (Direct Connect)
 tags:
-- name: transfer
+- name: Transfer
   x-displayName: Transfer
   description: Authenticated API for initiating asset transfers between trading accounts.
 paths:
   /v2/command#transferAsset:
     post:
       tags:
-      - transfer
+      - Transfer
       summary: Transfer Asset Command
-      description: "Submits a command to the trading engine. A successful response indicates that the command entry was acknowledged \nbut does not indicate that the command was executed. \nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field \nordering and addition of null fields in the request body. Quantities and prices does not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\nRequires\n- [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`. Higher tiers of rate limits available by providing the `BX-RATELIMIT-TOKEN` request header.\n"
+      description: 'Submits a command to the trading engine. A successful response indicates that the command entry was acknowledged
+
+        but does not indicate that the command was executed.
+
+        This endpoint uses the signing format which does not require strict field
+
+        ordering and addition of null fields in the request body. Quantities and prices does not require strict precision.
+
+        E.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.
+
+
+        Requires
+
+        - bearer token in authorization header
+
+
+        **Ratelimited:** `True`. Higher tiers of rate limits available by providing the `BX-RATELIMIT-TOKEN` request header.'
       operationId: submitTransferAssetCommand
       parameters:
       - $ref: '#/components/parameters/BX-SIGNATURE'
@@ -81,9 +97,10 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
-    RequestID:
+    TradingAccountId:
+      description: unique trading account ID
       type: string
-      example: '197735387747975680'
+      example: '111000000000001'
     AssetSymbol:
       type: string
       description: asset symbol as denoted in the world
@@ -111,10 +128,25 @@ components:
         commandType: V2TransferAsset
         message: Command acknowledged - TransferAsset
         requestId: '633909659774222336'
-    TradingAccountId:
-      description: unique trading account ID
-      type: string
-      example: '111000000000001'
+    BadOrderEntryResponse:
+      type: object
+      required:
+      - message
+      - errorCode
+      - errorCodeName
+      properties:
+        message:
+          description: message
+          type: string
+          example: Missing signature header
+        errorCode:
+          description: unique error code
+          type: integer
+          example: 6029
+        errorCodeName:
+          description: unique error code name
+          type: string
+          example: MISSING_SIGNATURE_HEADER
     TransferAssetCommandV2:
       type: object
       required:
@@ -152,25 +184,9 @@ components:
         fromTradingAccountId:
           $ref: '#/components/schemas/TradingAccountId/example'
         toTradingAccountId: '111000000000002'
-    BadOrderEntryResponse:
-      type: object
-      required:
-      - message
-      - errorCode
-      - errorCodeName
-      properties:
-        message:
-          description: message
-          type: string
-          example: Missing signature header
-        errorCode:
-          description: unique error code
-          type: integer
-          example: 6029
-        errorCodeName:
-          description: unique error code name
-          type: string
-          example: MISSING_SIGNATURE_HEADER
+    RequestID:
+      type: string
+      example: '197735387747975680'
   parameters:
     BX-TIMESTAMP:
       in: header
@@ -191,13 +207,6 @@ components:
         - 'false'
         - 'true'
         default: 'false'
-    BX-NONCE:
-      in: header
-      name: BX-NONCE
-      description: nonce is a client side incremented unsigned 64 bit integer
-      required: true
-      schema:
-        type: string
     BX-SIGNATURE:
       in: header
       name: BX-SIGNATURE
@@ -205,13 +214,20 @@ components:
       required: true
       schema:
         type: string
+    BX-NONCE:
+      in: header
+      name: BX-NONCE
+      description: nonce is a client side incremented unsigned 64 bit integer
+      required: true
+      schema:
+        type: string
   examples:
-    TransferAssetCommandResponse:
-      value:
-        $ref: '#/components/schemas/TradingAccountTransferResponse/example'
     TransferAssetCommand:
       value:
         $ref: '#/components/schemas/TransferAssetCommandV2/example'
+    TransferAssetCommandResponse:
+      value:
+        $ref: '#/components/schemas/TradingAccountTransferResponse/example'
   securitySchemes:
     jwtTokenAuth:
       type: http

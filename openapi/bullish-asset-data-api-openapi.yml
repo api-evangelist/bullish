@@ -55,7 +55,6 @@ paths:
       tags:
       - asset-data
       summary: Get Asset by Symbol
-      description: Get Asset by Symbol
       operationId: getAssetBySymbol
       parameters:
       - in: path
@@ -126,10 +125,146 @@ paths:
       security: []
 components:
   schemas:
-    AssetValue:
-      description: see [asset value](/rest/general/price-quantity-precision) format
+    VolGridData:
+      type: object
+      properties:
+        timeToExpiryDays:
+          description: days-to-expiry bucket this row applies to. supported buckets — [0, 1, 7, 14, 30, 60, 90, 180]
+          type: integer
+          example: 0
+        atmMax:
+          description: max upward ATM IV shift applied in BPM stress. supported range — [0, 1]
+          type: string
+          example: '0.100754'
+        atmMin:
+          description: max downward ATM IV shift. supported range — [-1, 0]
+          type: string
+          example: '-0.078081'
+        skewMax:
+          description: max upward skew shift. supported range — [0, 1]
+          type: string
+          example: '0.083929'
+        skewMin:
+          description: max downward skew shift. supported range [-1, 0]
+          type: string
+          example: '-0.103593'
+    AssetSymbol:
       type: string
-      example: '1.00000000'
+      description: asset symbol as denoted in the world
+      example: BTC
+    AssetName:
+      type: string
+      description: asset name
+      example: Bitcoin
+    VolGridConfiguration:
+      type: object
+      properties:
+        assetId:
+          description: underlying asset ID
+          type: string
+          example: '1'
+        assetSymbol:
+          description: underlying asset symbol
+          type: string
+          example: BTC
+        effectiveFromDatetime:
+          description: ISO 8601 datetime of when this vol grid configuration became effective
+          type: string
+          format: date-time
+          example: '2026-05-29T08:00:00.000Z'
+        volGrid:
+          description: list of vol grid rows, one per days-to-expiry bucket
+          type: array
+          items:
+            $ref: '#/components/schemas/VolGridData'
+          example:
+          - timeToExpiryDays: 0
+            atmMax: '0.100754'
+            atmMin: '-0.078081'
+            skewMax: '0.083929'
+            skewMin: '-0.103593'
+          - timeToExpiryDays: 1
+            atmMax: '0.100754'
+            atmMin: '-0.078081'
+            skewMax: '0.083929'
+            skewMin: '-0.103593'
+          - timeToExpiryDays: 7
+            atmMax: '0.100754'
+            atmMin: '-0.078081'
+            skewMax: '0.063888'
+            skewMin: '-0.073318'
+          - timeToExpiryDays: 14
+            atmMax: '0.100754'
+            atmMin: '-0.078081'
+            skewMax: '0.043847'
+            skewMin: '-0.043043'
+          - timeToExpiryDays: 30
+            atmMax: '0.100754'
+            atmMin: '-0.078081'
+            skewMax: '0.034441'
+            skewMin: '-0.034124'
+          - timeToExpiryDays: 60
+            atmMax: '0.100754'
+            atmMin: '-0.078081'
+            skewMax: '0.024271'
+            skewMin: '-0.02397'
+          - timeToExpiryDays: 90
+            atmMax: '0.100754'
+            atmMin: '-0.078081'
+            skewMax: '0.024142'
+            skewMin: '-0.024381'
+          - timeToExpiryDays: 180
+            atmMax: '0.100754'
+            atmMin: '-0.078081'
+            skewMax: '0.017566'
+            skewMin: '-0.017433'
+    UnderlyingAsset:
+      type: object
+      properties:
+        symbol:
+          description: underlying asset symbol
+          type: string
+          example: BTC
+        assetId:
+          description: underlying asset ID
+          type: string
+          example: '1'
+        bpmMinReturnStart:
+          description: start of the 1/1000 biggest downward price movement of an underlying asset over 6 hours
+          type: string
+          example: '40.0000'
+        bpmMinReturnEnd:
+          description: end of the 1/1000 biggest downward price movement of an underlying asset over 6 hours
+          type: string
+          example: '20.0000'
+        bpmMaxReturnStart:
+          description: start of the 1/1000 biggest upward price movement of an underlying asset over 6 hours
+          type: string
+          example: '30.0000'
+        bpmMaxReturnEnd:
+          description: end of the 1/1000 biggest upward price movement of an underlying asset over 6 hours
+          type: string
+          example: '50.0000'
+        marketRiskFloorPctStart:
+          description: the percentage range of risk reduction allowed for a portfolio
+          type: string
+          example: '1.00'
+        marketRiskFloorPctEnd:
+          description: the percentage range of risk reduction allowed for a portfolio
+          type: string
+          example: '5.00'
+        bpmTransitionDateTimeStart:
+          description: the start datetime which the values linearly transition from `bpmMinReturnStart` to `bpmMinReturnEnd` for an underlying asset
+          type: string
+          example: '2024-08-02T12:00:00.000Z'
+        bpmTransitionDateTimeEnd:
+          description: the end datetime which the values linearly transition from `bpmMinReturnStart` to `bpmMinReturnEnd` for an underlying asset
+          type: string
+          example: '2024-08-02T18:00:00.000Z'
+    AssetID:
+      type: string
+      description: unique asset ID
+      example: '1'
     Asset:
       type: object
       required:
@@ -201,138 +336,10 @@ components:
           description: underlying asset for the asset.
           allOf:
           - $ref: '#/components/schemas/UnderlyingAsset'
-    VolGridConfiguration:
-      type: object
-      properties:
-        assetId:
-          description: underlying asset ID
-          type: string
-          example: '1'
-        assetSymbol:
-          description: underlying asset symbol
-          type: string
-          example: BTC
-        effectiveFromDatetime:
-          description: ISO 8601 datetime of when this vol grid configuration became effective
-          type: string
-          format: date-time
-          example: '2026-05-29T08:00:00.000Z'
-        volGrid:
-          description: list of vol grid rows, one per days-to-expiry bucket
-          type: array
-          items:
-            $ref: '#/components/schemas/VolGridData'
-          example:
-          - timeToExpiryDays: 0
-            atmMax: '0.100754'
-            atmMin: '-0.078081'
-            skewMax: '0.083929'
-            skewMin: '-0.103593'
-          - timeToExpiryDays: 1
-            atmMax: '0.100754'
-            atmMin: '-0.078081'
-            skewMax: '0.083929'
-            skewMin: '-0.103593'
-          - timeToExpiryDays: 7
-            atmMax: '0.100754'
-            atmMin: '-0.078081'
-            skewMax: '0.063888'
-            skewMin: '-0.073318'
-          - timeToExpiryDays: 14
-            atmMax: '0.100754'
-            atmMin: '-0.078081'
-            skewMax: '0.043847'
-            skewMin: '-0.043043'
-          - timeToExpiryDays: 30
-            atmMax: '0.100754'
-            atmMin: '-0.078081'
-            skewMax: '0.034441'
-            skewMin: '-0.034124'
-          - timeToExpiryDays: 60
-            atmMax: '0.100754'
-            atmMin: '-0.078081'
-            skewMax: '0.024271'
-            skewMin: '-0.02397'
-          - timeToExpiryDays: 90
-            atmMax: '0.100754'
-            atmMin: '-0.078081'
-            skewMax: '0.024142'
-            skewMin: '-0.024381'
-          - timeToExpiryDays: 180
-            atmMax: '0.100754'
-            atmMin: '-0.078081'
-            skewMax: '0.017566'
-            skewMin: '-0.017433'
-    AssetSymbol:
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
       type: string
-      description: asset symbol as denoted in the world
-      example: BTC
-    VolGridData:
-      type: object
-      properties:
-        timeToExpiryDays:
-          description: days-to-expiry bucket this row applies to. supported buckets — [0, 1, 7, 14, 30, 60, 90, 180]
-          type: integer
-          example: 0
-        atmMax:
-          description: max upward ATM IV shift applied in BPM stress. supported range — [0, 1]
-          type: string
-          example: '0.100754'
-        atmMin:
-          description: max downward ATM IV shift. supported range — [-1, 0]
-          type: string
-          example: '-0.078081'
-        skewMax:
-          description: max upward skew shift. supported range — [0, 1]
-          type: string
-          example: '0.083929'
-        skewMin:
-          description: max downward skew shift. supported range [-1, 0]
-          type: string
-          example: '-0.103593'
-    UnderlyingAsset:
-      type: object
-      properties:
-        symbol:
-          description: underlying asset symbol
-          type: string
-          example: BTC
-        assetId:
-          description: underlying asset ID
-          type: string
-          example: '1'
-        bpmMinReturnStart:
-          description: start of the 1/1000 biggest downward price movement of an underlying asset over 6 hours
-          type: string
-          example: '40.0000'
-        bpmMinReturnEnd:
-          description: end of the 1/1000 biggest downward price movement of an underlying asset over 6 hours
-          type: string
-          example: '20.0000'
-        bpmMaxReturnStart:
-          description: start of the 1/1000 biggest upward price movement of an underlying asset over 6 hours
-          type: string
-          example: '30.0000'
-        bpmMaxReturnEnd:
-          description: end of the 1/1000 biggest upward price movement of an underlying asset over 6 hours
-          type: string
-          example: '50.0000'
-        marketRiskFloorPctStart:
-          description: the percentage range of risk reduction allowed for a portfolio
-          type: string
-          example: '1.00'
-        marketRiskFloorPctEnd:
-          description: the percentage range of risk reduction allowed for a portfolio
-          type: string
-          example: '5.00'
-        bpmTransitionDateTimeStart:
-          description: the start datetime which the values linearly transition from `bpmMinReturnStart` to `bpmMinReturnEnd` for an underlying asset
-          type: string
-          example: '2024-08-02T12:00:00.000Z'
-        bpmTransitionDateTimeEnd:
-          description: the end datetime which the values linearly transition from `bpmMinReturnStart` to `bpmMinReturnEnd` for an underlying asset
-          type: string
-          example: '2024-08-02T18:00:00.000Z'
+      example: '1.00000000'
     CollateralBand:
       type: object
       properties:
@@ -344,14 +351,6 @@ components:
           description: upper limit in USD for this band
           type: string
           example: '1000000.0000'
-    AssetID:
-      type: string
-      description: unique asset ID
-      example: '1'
-    AssetName:
-      type: string
-      description: asset name
-      example: Bitcoin
   securitySchemes:
     jwtTokenAuth:
       type: http

@@ -23,7 +23,7 @@ servers:
 - url: https://simnext.access.bullish.com/trading-api
   description: API SANDBOX (Direct Connect)
 tags:
-- name: orders
+- name: Orders
   x-displayName: Orders
   description: Authenticated APIs for interacting with orders
 paths:
@@ -31,20 +31,18 @@ paths:
     get:
       x-position: 1
       tags:
-      - orders
+      - Orders
       summary: Get Orders
       description: 'Retrieve a list of orders placed by a trading account with specified filters.
 
         - Only the last 24 hours of data is available for querying
 
 
-        This endpoint requires [authentication](/rest/authentication#generate-a-jwt-token) and supports [pagination](/rest/general/pagination).
+        This endpoint requires authentication and supports pagination.
 
-        To filter by `createdAtDatetime` and `createdAtTimestamp`, additional parameters are required. For detailed instructions, see the [Filtering Support](/rest/general/filtering) section.
+        To filter by `createdAtDatetime` and `createdAtTimestamp`, additional parameters are required. For detailed instructions, see the Filtering Support section.
 
-        Additionally, this endpoint is subjected to rate limiting.
-
-        '
+        Additionally, this endpoint is subjected to rate limiting.'
       operationId: getOrdersV2
       parameters:
       - in: query
@@ -106,9 +104,19 @@ paths:
     post:
       x-position: 4
       tags:
-      - orders
+      - Orders
       summary: Create Order
-      description: "Creates an order, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header.\n\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field ordering \nand addition of null fields in the request body. Quantities and prices does not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\n**Ratelimited:** `True`. Higher tiers of rate limits available by providing the `BX-RATELIMIT-TOKEN` request header.\n"
+      description: 'Creates an order, requires bearer token in authorization header.
+
+
+        This endpoint uses the signing format which does not require strict field ordering
+
+        and addition of null fields in the request body. Quantities and prices does not require strict precision.
+
+        E.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.
+
+
+        **Ratelimited:** `True`. Higher tiers of rate limits available by providing the `BX-RATELIMIT-TOKEN` request header.'
       operationId: createOrderV2
       parameters:
       - $ref: '#/components/parameters/BX-SIGNATURE'
@@ -171,14 +179,12 @@ paths:
     get:
       x-position: 2
       tags:
-      - orders
+      - Orders
       summary: Get Order by ID
       description: 'Retrieve a specific order using its unique identifier.
 
 
-        This endpoint requires [authentication](/rest/authentication#generate-a-jwt-token) and is subjected to rate limiting.
-
-        '
+        This endpoint requires authentication and is subjected to rate limiting.'
       operationId: getOrderByIdV2
       parameters:
       - in: query
@@ -217,14 +223,12 @@ paths:
     get:
       x-position: 3
       tags:
-      - orders
+      - Orders
       summary: Get Order by clientOrder ID
       description: 'Retrieve a specific order using its unique identifier generated on the client side.
 
 
-        This endpoint requires [authentication](/rest/authentication#generate-a-jwt-token) and is subjected to rate limiting.
-
-        '
+        This endpoint requires authentication and is subjected to rate limiting.'
       operationId: trade-get-order-by-client-order-id-v2
       parameters:
       - in: query
@@ -256,9 +260,38 @@ paths:
     post:
       x-position: 5
       tags:
-      - orders
+      - Orders
       summary: Cancel Order Commands
-      description: "Submits a command to the trading engine. A successful response indicates that the command entry was acknowledged \nbut does not indicate that the command was executed. \nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field \nordering and addition of null fields in the request body. Quantities and prices does not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\nCommand schemas and examples are provided below. Supported commands:\n- V3CancelOrder\n- V1CancelAllOrders\n- V1CancelAllOrdersByMarket\n- V1DelayedCancelAllOrders\n- V1UnsetDelayedCancelAllOrders\n\nRequires\n- [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`. Higher tiers of rate limits available by providing the `BX-RATELIMIT-TOKEN` request header.\n"
+      description: 'Submits a command to the trading engine. A successful response indicates that the command entry was acknowledged
+
+        but does not indicate that the command was executed.
+
+        This endpoint uses the signing format which does not require strict field
+
+        ordering and addition of null fields in the request body. Quantities and prices does not require strict precision.
+
+        E.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.
+
+
+        Command schemas and examples are provided below. Supported commands:
+
+        - V3CancelOrder
+
+        - V1CancelAllOrders
+
+        - V1CancelAllOrdersByMarket
+
+        - V1DelayedCancelAllOrders
+
+        - V1UnsetDelayedCancelAllOrders
+
+
+        Requires
+
+        - bearer token in authorization header
+
+
+        **Ratelimited:** `True`. Higher tiers of rate limits available by providing the `BX-RATELIMIT-TOKEN` request header.'
       operationId: submitCancellationCommands
       parameters:
       - $ref: '#/components/parameters/BX-SIGNATURE'
@@ -351,9 +384,29 @@ paths:
     post:
       x-position: 6
       tags:
-      - orders
+      - Orders
       summary: Amend Order Command
-      description: "Ability to amend the `price`, `quantity` and `type` (i.e. change from Taker Only to Maker Only and vice versa) on GTC Limit orders. It can be applied only to open orders (`quantityFilled=0` and `status=OPEN`). For Auction Limit Orders (LOC), only `price` can be amended. Auction Market Orders (MOC) do not support amendment.\n\nSubmits a command to the trading engine to amend an order. A successful response indicates that the command entry was acknowledged \nbut does not indicate that the command was executed. \n\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field \nordering and addition of null fields in the request body. Quantities and prices does not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\nRequires\n- [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`. Higher tiers of rate limits available by providing the `BX-RATELIMIT-TOKEN` request header.\n"
+      description: 'Ability to amend the `price`, `quantity` and `type` (i.e. change from Taker Only to Maker Only and vice versa) on GTC Limit orders. It can be applied only to open orders (`quantityFilled=0` and `status=OPEN`). For Auction Limit Orders (LOC), only `price` can be amended. Auction Market Orders (MOC) do not support amendment.
+
+
+        Submits a command to the trading engine to amend an order. A successful response indicates that the command entry was acknowledged
+
+        but does not indicate that the command was executed.
+
+
+        This endpoint uses the signing format which does not require strict field
+
+        ordering and addition of null fields in the request body. Quantities and prices does not require strict precision.
+
+        E.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.
+
+
+        Requires
+
+        - bearer token in authorization header
+
+
+        **Ratelimited:** `True`. Higher tiers of rate limits available by providing the `BX-RATELIMIT-TOKEN` request header.'
       operationId: submitAmendmentCommand
       parameters:
       - $ref: '#/components/parameters/BX-SIGNATURE'
@@ -404,155 +457,27 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
-    RequestID:
-      type: string
-      example: '197735387747975680'
-    CancelAllOrdersByMarketCommand:
-      type: object
-      required:
-      - commandType
-      - symbol
-      - tradingAccountId
-      properties:
-        commandType:
-          description: The command type, it must be 'V1CancelAllOrdersByMarket'
-          type: string
-          enum:
-          - V1CancelAllOrdersByMarket
-        symbol:
-          description: market symbol. E.g. `BTCUSDC`
-          allOf:
-          - $ref: '#/components/schemas/MarketSymbol'
-        tradingAccountId:
-          description: unique trading account Id
-          allOf:
-          - $ref: '#/components/schemas/TradingAccountId'
-      example:
-        commandType: V1CancelAllOrdersByMarket
-        symbol: BTCUSDC
-        tradingAccountId: '111000000000001'
-    OrderTypeAsString:
-      type: string
-      description: order type can have the following string values `"LMT"`, `"MKT"`, `"STOP_LIMIT"`, `"POST_ONLY"`. `"MKT"` and `"STOP_LIMIT"` are not applicable for Options
-      example: LMT
-    CancelOrderCommandResponseV3:
-      type: object
-      required:
-      - commandType
-      - message
-      - requestId
-      properties:
-        commandType:
-          description: The command type
-          type: string
-          enum:
-          - V3CancelOrder
-        message:
-          description: message
-          type: string
-        requestId:
-          description: unique request ID
-          allOf:
-          - $ref: '#/components/schemas/RequestID'
-        orderId:
-          description: unique order ID
-          allOf:
-          - $ref: '#/components/schemas/OrderID'
-        clientOrderId:
-          description: unique numeric identifier generated on the client side expressed as a string value
-          type: string
-      example:
-        commandType: V3CancelOrder
-        message: Command acknowledged - CancelOrder
-        requestId: '633910976353665024'
-        orderId: '633910775316480001'
-    OrderStatusAsString:
-      type: string
-      description: order status can have the following string values `"OPEN"`, `"CLOSED"`, `"CANCELLED"`, `"REJECTED"`
-      example: OPEN
-    OrderHandle:
-      description: Unique numeric (i64) identifier generated on the client side expressed as a string value
-      type: string
-      example: '299834741023572480'
-    TimeStampAsString:
-      type: string
-      format: string
-      example: '1621490985000'
-      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
-    OrderID:
-      type: string
-      example: '297735387747975680'
-    CancelAllOrdersCommand:
-      type: object
-      required:
-      - commandType
-      - tradingAccountId
-      properties:
-        commandType:
-          description: The command type, it must be 'V1CancelAllOrders'
-          type: string
-          enum:
-          - V1CancelAllOrders
-        tradingAccountId:
-          description: Unique trading account Id
-          allOf:
-          - $ref: '#/components/schemas/TradingAccountId'
-      example:
-        commandType: V1CancelAllOrders
-        tradingAccountId: '111000000000001'
     OrderTimeInForceAsString:
       type: string
       description: time in force can have the following string values `"GTC"`, `"FOK"`, `"IOC"`, `"GTX"` (Good Till Crossing - for auction orders), see [details](/rest/general/order-type)
       example: GTX
-    BadOrderEntryResponse:
-      type: object
-      required:
-      - message
-      - errorCode
-      - errorCodeName
-      properties:
-        message:
-          description: message
-          type: string
-          example: Missing signature header
-        errorCode:
-          description: unique error code
-          type: integer
-          example: 6029
-        errorCodeName:
-          description: unique error code name
-          type: string
-          example: MISSING_SIGNATURE_HEADER
-    CancelOrderCommandV3:
+    UnsetDelayedCancelAllOrdersCommand:
       type: object
       required:
       - commandType
       - tradingAccountId
-      - symbol
       properties:
         commandType:
-          description: The command type, it must be 'V3CancelOrder'
+          description: The command type, it must be 'V1UnsetDelayedCancelAllOrders'
           type: string
           enum:
-          - V3CancelOrder
-        orderId:
-          description: Unique order ID, only orderId or clientOrderId can be used in the V3CancelOrder command
-          allOf:
-          - $ref: '#/components/schemas/OrderID'
-        clientOrderId:
-          description: Unique numeric (i64) identifier generated on the client side expressed as a string value, only orderId or clientOrderId can be used in the V3CancelOrder command
-          allOf:
-          - $ref: '#/components/schemas/OrderHandle'
-        symbol:
-          allOf:
-          - $ref: '#/components/schemas/MarketSymbol'
+          - V1UnsetDelayedCancelAllOrders
+          example: V1UnsetDelayedCancelAllOrders
         tradingAccountId:
           allOf:
           - $ref: '#/components/schemas/TradingAccountId'
       example:
-        commandType: V3CancelOrder
-        orderId: '297735387747975680'
-        symbol: BTCUSDC
+        commandType: V1UnsetDelayedCancelAllOrders
         tradingAccountId: '111000000000001'
     UnsetDelayedCancelAllOrdersResponse:
       type: object
@@ -577,76 +502,11 @@ components:
         commandType: V1UnsetDelayedCancelAllOrders
         message: Command acknowledged - UnsetDelayedCancelAllOrders
         requestId: '633910976353665024'
-    DateTime:
+    TimeStampAsString:
       type: string
-      format: date-time
-      example: '2025-05-20T01:01:01.000Z'
-      description: ISO 8601 with millisecond as string
-    AmendOrderCommandResponseV1:
-      type: object
-      required:
-      - commandType
-      - message
-      - requestId
-      - orderId
-      properties:
-        commandType:
-          description: The command type
-          type: string
-          enum:
-          - V1AmendOrder
-        message:
-          description: message
-          type: string
-        requestId:
-          description: unique request ID
-          allOf:
-          - $ref: '#/components/schemas/RequestID'
-        orderId:
-          description: unique order ID
-          allOf:
-          - $ref: '#/components/schemas/OrderID'
-        clientOrderId:
-          description: Will be updated as part of a successful order amendment
-          type: string
-      example:
-        commandType: V1AmendOrder
-        message: Command acknowledged - AmendOrder
-        requestId: '633910976353665024'
-        orderId: '633910775316480001'
-        clientOrderId: 1234567-1
-    AssetValue:
-      description: see [asset value](/rest/general/price-quantity-precision) format
-      type: string
-      example: '1.00000000'
-    UnsetDelayedCancelAllOrdersCommand:
-      type: object
-      required:
-      - commandType
-      - tradingAccountId
-      properties:
-        commandType:
-          description: The command type, it must be 'V1UnsetDelayedCancelAllOrders'
-          type: string
-          enum:
-          - V1UnsetDelayedCancelAllOrders
-          example: V1UnsetDelayedCancelAllOrders
-        tradingAccountId:
-          allOf:
-          - $ref: '#/components/schemas/TradingAccountId'
-      example:
-        commandType: V1UnsetDelayedCancelAllOrders
-        tradingAccountId: '111000000000001'
-    OrderSide:
-      type: string
-      example: BUY
-      enum:
-      - BUY
-      - SELL
-    TradingAccountId:
-      description: unique trading account ID
-      type: string
-      example: '111000000000001'
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
     AmendOrderCommandV1:
       type: object
       required:
@@ -692,132 +552,6 @@ components:
         clientOrderId: '633914459442118656'
         quantity: '1.00000000'
         tradingAccountId: '111000000000001'
-    DelayedCancelAllOrdersCommand:
-      type: object
-      required:
-      - commandType
-      - delayBySeconds
-      - tradingAccountId
-      properties:
-        commandType:
-          description: The command type, it must be 'V1DelayedCancelAllOrders'
-          type: string
-          enum:
-          - V1DelayedCancelAllOrders
-          example: V1DelayedCancelAllOrders
-        cancelId:
-          allOf:
-          - $ref: '#/components/schemas/CancelId'
-        delayBySeconds:
-          description: Delay of the cancel-all-order in seconds
-          allOf:
-          - $ref: '#/components/schemas/DelayBySeconds'
-        tradingAccountId:
-          allOf:
-          - $ref: '#/components/schemas/TradingAccountId'
-      example:
-        commandType: V1DelayedCancelAllOrders
-        delayBySeconds: '5'
-        tradingAccountId: '111000000000001'
-    CancelAllOrdersCommandResponse:
-      type: object
-      required:
-      - commandType
-      - message
-      - requestId
-      properties:
-        commandType:
-          description: The command type
-          type: string
-          enum:
-          - V1CancelAllOrders
-        message:
-          description: message
-          type: string
-        requestId:
-          description: unique request ID
-          allOf:
-          - $ref: '#/components/schemas/RequestID'
-      example:
-        commandType: V1CancelAllOrders
-        message: Command acknowledged - CancelAllOrders
-        requestId: '633910976353665024'
-    CancelAllOrdersByMarketResponse:
-      type: object
-      required:
-      - commandType
-      - message
-      - requestId
-      properties:
-        commandType:
-          description: The command type
-          type: string
-          enum:
-          - V1CancelAllOrdersByMarket
-        message:
-          description: message
-          type: string
-        requestId:
-          description: unique request ID
-          allOf:
-          - $ref: '#/components/schemas/RequestID'
-      example:
-        commandType: V1CancelAllOrdersByMarket
-        message: Command acknowledged - CancelAllOrdersByMarket
-        requestId: '633914459442118656'
-    CreateOrderCommandResponseV3:
-      type: object
-      required:
-      - message
-      - requestId
-      - orderId
-      properties:
-        message:
-          description: message
-          type: string
-        requestId:
-          description: unique request ID
-          allOf:
-          - $ref: '#/components/schemas/RequestID'
-        orderId:
-          description: unique order ID
-          allOf:
-          - $ref: '#/components/schemas/OrderID'
-        clientOrderId:
-          description: unique numeric identifier generated on the client side expressed as a string value
-          type: string
-      example:
-        message: Command acknowledged - CreateOrder
-        requestId: '633910976353665024'
-        orderId: '633910775316480001'
-        clientOrderId: '1234567'
-    DelayedCancelAllOrdersResponse:
-      type: object
-      required:
-      - commandType
-      - message
-      - requestId
-      properties:
-        commandType:
-          description: The command type
-          type: string
-          enum:
-          - V1DelayedCancelAllOrders
-        message:
-          description: message
-          type: string
-        requestId:
-          description: unique request ID
-          allOf:
-          - $ref: '#/components/schemas/RequestID'
-      example:
-        commandType: V1DelayedCancelAllOrders
-        message: Command acknowledged - DelayedCancelAllOrders
-        requestId: '633910976353665024'
-    OrderSideAsString:
-      type: string
-      description: order side can have the following string values `"BUY"`, `"SELL"`
-      example: BUY
     MarketSymbol:
       type: string
       description: market symbol. E.g. `BTCUSDC`
@@ -875,10 +609,132 @@ components:
         tradingAccountId:
           allOf:
           - $ref: '#/components/schemas/TradingAccountId'
-    CancelId:
-      description: Unique id for this cancel request which is an unsigned 64 bit integer expressed as string
+    AmendOrderCommandResponseV1:
+      type: object
+      required:
+      - commandType
+      - message
+      - requestId
+      - orderId
+      properties:
+        commandType:
+          description: The command type
+          type: string
+          enum:
+          - V1AmendOrder
+        message:
+          description: message
+          type: string
+        requestId:
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+        orderId:
+          description: unique order ID
+          allOf:
+          - $ref: '#/components/schemas/OrderID'
+        clientOrderId:
+          description: Will be updated as part of a successful order amendment
+          type: string
+      example:
+        commandType: V1AmendOrder
+        message: Command acknowledged - AmendOrder
+        requestId: '633910976353665024'
+        orderId: '633910775316480001'
+        clientOrderId: 1234567-1
+    OrderHandle:
+      description: Unique numeric (i64) identifier generated on the client side expressed as a string value
       type: string
-      example: '123456789'
+      example: '299834741023572480'
+    CancelOrderCommandResponseV3:
+      type: object
+      required:
+      - commandType
+      - message
+      - requestId
+      properties:
+        commandType:
+          description: The command type
+          type: string
+          enum:
+          - V3CancelOrder
+        message:
+          description: message
+          type: string
+        requestId:
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+        orderId:
+          description: unique order ID
+          allOf:
+          - $ref: '#/components/schemas/OrderID'
+        clientOrderId:
+          description: unique numeric identifier generated on the client side expressed as a string value
+          type: string
+      example:
+        commandType: V3CancelOrder
+        message: Command acknowledged - CancelOrder
+        requestId: '633910976353665024'
+        orderId: '633910775316480001'
+    OrderSide:
+      type: string
+      example: BUY
+      enum:
+      - BUY
+      - SELL
+    CancelAllOrdersCommand:
+      type: object
+      required:
+      - commandType
+      - tradingAccountId
+      properties:
+        commandType:
+          description: The command type, it must be 'V1CancelAllOrders'
+          type: string
+          enum:
+          - V1CancelAllOrders
+        tradingAccountId:
+          description: Unique trading account Id
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+      example:
+        commandType: V1CancelAllOrders
+        tradingAccountId: '111000000000001'
+    CancelOrderCommandV3:
+      type: object
+      required:
+      - commandType
+      - tradingAccountId
+      - symbol
+      properties:
+        commandType:
+          description: The command type, it must be 'V3CancelOrder'
+          type: string
+          enum:
+          - V3CancelOrder
+        orderId:
+          description: Unique order ID, only orderId or clientOrderId can be used in the V3CancelOrder command
+          allOf:
+          - $ref: '#/components/schemas/OrderID'
+        clientOrderId:
+          description: Unique numeric (i64) identifier generated on the client side expressed as a string value, only orderId or clientOrderId can be used in the V3CancelOrder command
+          allOf:
+          - $ref: '#/components/schemas/OrderHandle'
+        symbol:
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        tradingAccountId:
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+      example:
+        commandType: V3CancelOrder
+        orderId: '297735387747975680'
+        symbol: BTCUSDC
+        tradingAccountId: '111000000000001'
+    RequestID:
+      type: string
+      example: '197735387747975680'
     OrderStatus:
       type: string
       example: OPEN
@@ -887,6 +743,110 @@ components:
       - CLOSED
       - CANCELLED
       - REJECTED
+    CreateOrderCommandResponseV3:
+      type: object
+      required:
+      - message
+      - requestId
+      - orderId
+      properties:
+        message:
+          description: message
+          type: string
+        requestId:
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+        orderId:
+          description: unique order ID
+          allOf:
+          - $ref: '#/components/schemas/OrderID'
+        clientOrderId:
+          description: unique numeric identifier generated on the client side expressed as a string value
+          type: string
+      example:
+        message: Command acknowledged - CreateOrder
+        requestId: '633910976353665024'
+        orderId: '633910775316480001'
+        clientOrderId: '1234567'
+    CancelAllOrdersByMarketCommand:
+      type: object
+      required:
+      - commandType
+      - symbol
+      - tradingAccountId
+      properties:
+        commandType:
+          description: The command type, it must be 'V1CancelAllOrdersByMarket'
+          type: string
+          enum:
+          - V1CancelAllOrdersByMarket
+        symbol:
+          description: market symbol. E.g. `BTCUSDC`
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        tradingAccountId:
+          description: unique trading account Id
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+      example:
+        commandType: V1CancelAllOrdersByMarket
+        symbol: BTCUSDC
+        tradingAccountId: '111000000000001'
+    BadOrderEntryResponse:
+      type: object
+      required:
+      - message
+      - errorCode
+      - errorCodeName
+      properties:
+        message:
+          description: message
+          type: string
+          example: Missing signature header
+        errorCode:
+          description: unique error code
+          type: integer
+          example: 6029
+        errorCodeName:
+          description: unique error code name
+          type: string
+          example: MISSING_SIGNATURE_HEADER
+    DelayedCancelAllOrdersResponse:
+      type: object
+      required:
+      - commandType
+      - message
+      - requestId
+      properties:
+        commandType:
+          description: The command type
+          type: string
+          enum:
+          - V1DelayedCancelAllOrders
+        message:
+          description: message
+          type: string
+        requestId:
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+      example:
+        commandType: V1DelayedCancelAllOrders
+        message: Command acknowledged - DelayedCancelAllOrders
+        requestId: '633910976353665024'
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
+    CancelId:
+      description: Unique id for this cancel request which is an unsigned 64 bit integer expressed as string
+      type: string
+      example: '123456789'
+    OrderTypeAsString:
+      type: string
+      description: order type can have the following string values `"LMT"`, `"MKT"`, `"STOP_LIMIT"`, `"POST_ONLY"`. `"MKT"` and `"STOP_LIMIT"` are not applicable for Options
+      example: LMT
     DelayBySeconds:
       description: Delay the cancel-all-orders request by (seconds) as a timeout mechanism
       type: string
@@ -901,14 +861,9 @@ components:
       - '50'
       - '60'
       example: '5'
-    OrderTypeAsStringAmend:
+    OrderID:
       type: string
-      description: order type can have the following string values `"LIMIT"`, `"POST_ONLY"`
-      example: LIMIT
-    OrderTypeAsStringV2:
-      type: string
-      description: order type can have the following string values `"LIMIT"`, `"MARKET"`, `"STOP_LIMIT"`, `"POST_ONLY"`. `"MARKET"` and `"STOP_LIMIT"` are not applicable for Options
-      example: LIMIT
+      example: '297735387747975680'
     Order:
       type: object
       required:
@@ -1031,44 +986,118 @@ components:
           description: denotes the time the order was ACK'd by the exchange
           allOf:
           - $ref: '#/components/schemas/TimeStampAsString'
-  examples:
-    CreateLimitOrderCommand:
-      value:
-        commandType: V3CreateOrder
-        clientOrderId: '1234'
-        symbol:
-          $ref: '#/components/schemas/MarketSymbol/example'
-        type: LIMIT
-        side: BUY
-        price: '31000.1'
-        quantity: '1.1'
-        timeInForce: GTC
-        allowBorrow: true
+    OrderSideAsString:
+      type: string
+      description: order side can have the following string values `"BUY"`, `"SELL"`
+      example: BUY
+    OrderStatusAsString:
+      type: string
+      description: order status can have the following string values `"OPEN"`, `"CLOSED"`, `"CANCELLED"`, `"REJECTED"`
+      example: OPEN
+    CancelAllOrdersByMarketResponse:
+      type: object
+      required:
+      - commandType
+      - message
+      - requestId
+      properties:
+        commandType:
+          description: The command type
+          type: string
+          enum:
+          - V1CancelAllOrdersByMarket
+        message:
+          description: message
+          type: string
+        requestId:
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+      example:
+        commandType: V1CancelAllOrdersByMarket
+        message: Command acknowledged - CancelAllOrdersByMarket
+        requestId: '633914459442118656'
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+    OrderTypeAsStringV2:
+      type: string
+      description: order type can have the following string values `"LIMIT"`, `"MARKET"`, `"STOP_LIMIT"`, `"POST_ONLY"`. `"MARKET"` and `"STOP_LIMIT"` are not applicable for Options
+      example: LIMIT
+    DelayedCancelAllOrdersCommand:
+      type: object
+      required:
+      - commandType
+      - delayBySeconds
+      - tradingAccountId
+      properties:
+        commandType:
+          description: The command type, it must be 'V1DelayedCancelAllOrders'
+          type: string
+          enum:
+          - V1DelayedCancelAllOrders
+          example: V1DelayedCancelAllOrders
+        cancelId:
+          allOf:
+          - $ref: '#/components/schemas/CancelId'
+        delayBySeconds:
+          description: Delay of the cancel-all-order in seconds
+          allOf:
+          - $ref: '#/components/schemas/DelayBySeconds'
         tradingAccountId:
-          $ref: '#/components/schemas/TradingAccountId/example'
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+      example:
+        commandType: V1DelayedCancelAllOrders
+        delayBySeconds: '5'
+        tradingAccountId: '111000000000001'
+    CancelAllOrdersCommandResponse:
+      type: object
+      required:
+      - commandType
+      - message
+      - requestId
+      properties:
+        commandType:
+          description: The command type
+          type: string
+          enum:
+          - V1CancelAllOrders
+        message:
+          description: message
+          type: string
+        requestId:
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+      example:
+        commandType: V1CancelAllOrders
+        message: Command acknowledged - CancelAllOrders
+        requestId: '633910976353665024'
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.00000000'
+    OrderTypeAsStringAmend:
+      type: string
+      description: order type can have the following string values `"LIMIT"`, `"POST_ONLY"`
+      example: LIMIT
+  examples:
     DelayedCancelAllOrdersCommand:
       value:
         $ref: '#/components/schemas/DelayedCancelAllOrdersCommand/example'
-    AmendOrderCommandResponse:
-      value:
-        $ref: '#/components/schemas/AmendOrderCommandResponseV1/example'
-    CancelOrderCommand:
-      description: Only one of `orderId` or `clientOrderId` can be used in the cancel order command
-      value:
-        $ref: '#/components/schemas/CancelOrderCommandV3/example'
     CancelOrderCommandResponse:
       description: Only one of `orderId` or `clientOrderId` present
       value:
         $ref: '#/components/schemas/CancelOrderCommandResponseV3/example'
-    CancelAllOrdersByMarketCommand:
-      value:
-        $ref: '#/components/schemas/CancelAllOrdersByMarketCommand/example'
     CancelAllOrdersByMarketCommandResponse:
       value:
         $ref: '#/components/schemas/CancelAllOrdersByMarketResponse/example'
-    CancelAllOrdersCommand:
+    CancelAllOrdersCommandResponse:
       value:
-        $ref: '#/components/schemas/CancelAllOrdersCommand/example'
+        $ref: '#/components/schemas/CancelAllOrdersCommandResponse/example'
     CreateStopLimitOrderCommand:
       value:
         commandType: V3CreateOrder
@@ -1082,18 +1111,6 @@ components:
         timeInForce: GTC
         tradingAccountId:
           $ref: '#/components/schemas/TradingAccountId/example'
-    CancelAllOrdersCommandResponse:
-      value:
-        $ref: '#/components/schemas/CancelAllOrdersCommandResponse/example'
-    DelayedCancelAllOrdersCommandResponse:
-      value:
-        $ref: '#/components/schemas/DelayedCancelAllOrdersResponse/example'
-    UnsetDelayedCancelAllOrdersCommand:
-      value:
-        $ref: '#/components/schemas/UnsetDelayedCancelAllOrdersCommand/example'
-    AmendOrderCommand:
-      value:
-        $ref: '#/components/schemas/AmendOrderCommandV1/example'
     CreateMarketOrderCommand:
       value:
         commandType: V3CreateOrder
@@ -1107,9 +1124,13 @@ components:
         allowBorrow: true
         tradingAccountId:
           $ref: '#/components/schemas/TradingAccountId/example'
-    UnsetDelayedCancelAllOrdersCommandResponse:
+    CancelAllOrdersByMarketCommand:
       value:
-        $ref: '#/components/schemas/UnsetDelayedCancelAllOrdersResponse/example'
+        $ref: '#/components/schemas/CancelAllOrdersByMarketCommand/example'
+    CancelOrderCommand:
+      description: Only one of `orderId` or `clientOrderId` can be used in the cancel order command
+      value:
+        $ref: '#/components/schemas/CancelOrderCommandV3/example'
     CreatePostOnlyOrderCommand:
       value:
         commandType: V3CreateOrder
@@ -1124,12 +1145,65 @@ components:
         allowBorrow: true
         tradingAccountId:
           $ref: '#/components/schemas/TradingAccountId/example'
+    AmendOrderCommandResponse:
+      value:
+        $ref: '#/components/schemas/AmendOrderCommandResponseV1/example'
+    CreateLimitOrderCommand:
+      value:
+        commandType: V3CreateOrder
+        clientOrderId: '1234'
+        symbol:
+          $ref: '#/components/schemas/MarketSymbol/example'
+        type: LIMIT
+        side: BUY
+        price: '31000.1'
+        quantity: '1.1'
+        timeInForce: GTC
+        allowBorrow: true
+        tradingAccountId:
+          $ref: '#/components/schemas/TradingAccountId/example'
+    UnsetDelayedCancelAllOrdersCommandResponse:
+      value:
+        $ref: '#/components/schemas/UnsetDelayedCancelAllOrdersResponse/example'
+    UnsetDelayedCancelAllOrdersCommand:
+      value:
+        $ref: '#/components/schemas/UnsetDelayedCancelAllOrdersCommand/example'
+    CancelAllOrdersCommand:
+      value:
+        $ref: '#/components/schemas/CancelAllOrdersCommand/example'
+    DelayedCancelAllOrdersCommandResponse:
+      value:
+        $ref: '#/components/schemas/DelayedCancelAllOrdersResponse/example'
+    AmendOrderCommand:
+      value:
+        $ref: '#/components/schemas/AmendOrderCommandV1/example'
   parameters:
     BX-NONCE:
       in: header
       name: BX-NONCE
       description: nonce is a client side incremented unsigned 64 bit integer
       required: true
+      schema:
+        type: string
+    BX-TIMESTAMP:
+      in: header
+      name: BX-TIMESTAMP
+      description: timestamp is the number of milliseconds since EPOCH
+      required: true
+      schema:
+        type: string
+    BX-SIGNATURE:
+      in: header
+      name: BX-SIGNATURE
+      description: signature obtained using the [signing format](/rest/authentication#signing-format)
+      required: true
+      schema:
+        type: string
+    BX-REFERRER:
+      in: header
+      name: BX-REFERRER
+      description: A numeric referrer id if applicable
+      required: false
       schema:
         type: string
     BX-NONCE-WINDOW-ENABLED:
@@ -1144,27 +1218,6 @@ components:
         - 'false'
         - 'true'
         default: 'false'
-    BX-SIGNATURE:
-      in: header
-      name: BX-SIGNATURE
-      description: signature obtained using the [signing format](/rest/authentication#signing-format)
-      required: true
-      schema:
-        type: string
-    BX-TIMESTAMP:
-      in: header
-      name: BX-TIMESTAMP
-      description: timestamp is the number of milliseconds since EPOCH
-      required: true
-      schema:
-        type: string
-    BX-REFERRER:
-      in: header
-      name: BX-REFERRER
-      description: A numeric referrer id if applicable
-      required: false
-      schema:
-        type: string
   securitySchemes:
     jwtTokenAuth:
       type: http

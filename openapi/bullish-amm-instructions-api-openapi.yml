@@ -25,7 +25,12 @@ servers:
 tags:
 - name: amm-instructions
   x-displayName: AMM Instructions
-  description: "Authenticated APIs that allow users to Create, View and Terminate AMM instructions.\n\nPlease refer to the [AMM instruction Overview Doc](https://github.com/bullish-exchange/api-docs/wiki/Automated-Market-Making-%28AMM%29-Instructions) \nfor more details on how AMM instructions work.\n"
+  description: 'Authenticated APIs that allow users to Create, View and Terminate AMM instructions.
+
+
+    Please refer to the AMM instruction Overview Doc
+
+    for more details on how AMM instructions work.'
 paths:
   /v2/amm-instructions:
     get:
@@ -35,14 +40,12 @@ paths:
       summary: Get AMM Instructions
       description: 'Gets a list of AMM instructions based on applied filters.
 
-        - requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header
+        - requires bearer token in authorization header
 
-        - [supports pagination](/rest/general/pagination)
+        - supports pagination
 
 
-        **Ratelimited:** `True`
-
-        '
+        **Ratelimited:** `True`'
       operationId: getAmmInstructions
       parameters:
       - in: query
@@ -88,7 +91,19 @@ paths:
       tags:
       - amm-instructions
       summary: Create AMM Instruction
-      description: "Creates an AMM instruction, requires [bearer token](/rest/authentication#add-authenticated-request-header) \nin authorization header.\n\nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field ordering\nin the request body. Quantities and prices does not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\n**Ratelimited:** `True`\n"
+      description: 'Creates an AMM instruction, requires bearer token
+
+        in authorization header.
+
+
+        This endpoint uses the signing format which does not require strict field ordering
+
+        in the request body. Quantities and prices does not require strict precision.
+
+        E.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.
+
+
+        **Ratelimited:** `True`'
       operationId: createAmmInstruction
       parameters:
       - $ref: '#/components/parameters/BX-SIGNATURE'
@@ -154,7 +169,12 @@ paths:
       tags:
       - amm-instructions
       summary: Get AMM Instruction by ID
-      description: "Gets a specific AMM instruction based on the `instructionId`, \nrequires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`\n"
+      description: 'Gets a specific AMM instruction based on the `instructionId`,
+
+        requires bearer token in authorization header
+
+
+        **Ratelimited:** `True`'
       operationId: getAmmInstructionByIdV2
       responses:
         '200':
@@ -179,7 +199,23 @@ paths:
       tags:
       - amm-instructions
       summary: Terminate AMM Instruction Command
-      description: "Submits a command to the trading engine. A successful response indicates that the command entry was acknowledged \nbut does not indicate that the command was executed. \nThis endpoint uses the [signing format](/rest/authentication#signing-format) which does not require strict field \nordering and addition of null fields in the request body. Quantities and prices does not require strict precision. \nE.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.\n\nRequires\n- [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header\n\n**Ratelimited:** `True`. Higher tiers of rate limits available by providing the `BX-RATELIMIT-TOKEN` request header.\n"
+      description: 'Submits a command to the trading engine. A successful response indicates that the command entry was acknowledged
+
+        but does not indicate that the command was executed.
+
+        This endpoint uses the signing format which does not require strict field
+
+        ordering and addition of null fields in the request body. Quantities and prices does not require strict precision.
+
+        E.g. for asset precision of 4 - `100`, `100.0`, `100.00`, `100.000` and `100.0000` are all accepted.
+
+
+        Requires
+
+        - bearer token in authorization header
+
+
+        **Ratelimited:** `True`. Higher tiers of rate limits available by providing the `BX-RATELIMIT-TOKEN` request header.'
       operationId: submitTerminateAMMInstructionCommand
       parameters:
       - $ref: '#/components/parameters/BX-SIGNATURE'
@@ -228,68 +264,6 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
-    RequestID:
-      type: string
-      example: '197735387747975680'
-    OrderStatusAsString:
-      type: string
-      description: order status can have the following string values `"OPEN"`, `"CLOSED"`, `"CANCELLED"`, `"REJECTED"`
-      example: OPEN
-    TimeStampAsString:
-      type: string
-      format: string
-      example: '1621490985000'
-      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
-    TerminateAMMInstructionCommandV3:
-      type: object
-      required:
-      - commandType
-      - instructionId
-      - symbol
-      - tradingAccountId
-      properties:
-        commandType:
-          description: The command type, it must be 'V3TerminateAMMInstruction'
-          type: string
-          enum:
-          - V3TerminateAMMInstruction
-        instructionId:
-          description: unique AMM instruction ID
-          allOf:
-          - $ref: '#/components/schemas/AMMInstructionID'
-        symbol:
-          allOf:
-          - $ref: '#/components/schemas/MarketSymbol'
-        tradingAccountId:
-          allOf:
-          - $ref: '#/components/schemas/TradingAccountId'
-      example:
-        commandType: V3TerminateAMMInstruction
-        instructionId: '297735387747975680'
-        symbol: BTCUSDC
-        tradingAccountId: '111000000000001'
-    AMMInstructionID:
-      type: string
-      example: '297735387747975680'
-    BadOrderEntryResponse:
-      type: object
-      required:
-      - message
-      - errorCode
-      - errorCodeName
-      properties:
-        message:
-          description: message
-          type: string
-          example: Missing signature header
-        errorCode:
-          description: unique error code
-          type: integer
-          example: 6029
-        errorCodeName:
-          description: unique error code name
-          type: string
-          example: MISSING_SIGNATURE_HEADER
     TerminateAMMInstructionCommandResponseV3:
       type: object
       required:
@@ -319,6 +293,15 @@ components:
         message: Command acknowledged - TerminateAMMInstruction
         requestId: '633906221577404416'
         instructionId: '633906221577404424'
+    TimeStampAsString:
+      type: string
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
+    MarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTCUSDC`
+      example: BTCUSDC
     CreateAMMInstructionCommandV3:
       type: object
       required:
@@ -369,17 +352,84 @@ components:
           $ref: '#/components/schemas/FeeTierId/example'
         tradingAccountId:
           $ref: '#/components/schemas/TradingAccountId/example'
+    CreateAMMInstructionCommandResponseV3:
+      type: object
+      required:
+      - message
+      - requestId
+      - instructionId
+      properties:
+        message:
+          description: message
+          type: string
+        requestId:
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+        instructionId:
+          description: unique AMM instruction ID
+          allOf:
+          - $ref: '#/components/schemas/AMMInstructionID'
+      example:
+        message: Command acknowledged - CreateAMMInstruction
+        requestId: '633906221577404416'
+        instructionId: '633906221577404424'
+    TerminateAMMInstructionCommandV3:
+      type: object
+      required:
+      - commandType
+      - instructionId
+      - symbol
+      - tradingAccountId
+      properties:
+        commandType:
+          description: The command type, it must be 'V3TerminateAMMInstruction'
+          type: string
+          enum:
+          - V3TerminateAMMInstruction
+        instructionId:
+          description: unique AMM instruction ID
+          allOf:
+          - $ref: '#/components/schemas/AMMInstructionID'
+        symbol:
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        tradingAccountId:
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+      example:
+        commandType: V3TerminateAMMInstruction
+        instructionId: '297735387747975680'
+        symbol: BTCUSDC
+        tradingAccountId: '111000000000001'
+    RequestID:
+      type: string
+      example: '197735387747975680'
+    BadOrderEntryResponse:
+      type: object
+      required:
+      - message
+      - errorCode
+      - errorCodeName
+      properties:
+        message:
+          description: message
+          type: string
+          example: Missing signature header
+        errorCode:
+          description: unique error code
+          type: integer
+          example: 6029
+        errorCodeName:
+          description: unique error code name
+          type: string
+          example: MISSING_SIGNATURE_HEADER
     AMMInstructionStatus:
       type: string
       example: OPEN
       enum:
       - OPEN
       - CLOSED
-    DateTime:
-      type: string
-      format: date-time
-      example: '2025-05-20T01:01:01.000Z'
-      description: ISO 8601 with millisecond as string
     AMMInstruction:
       type: object
       required:
@@ -571,62 +621,62 @@ components:
           type: string
           description: amount of money earned in USD
           example: '0.00'
-    AssetValue:
-      description: see [asset value](/rest/general/price-quantity-precision) format
-      type: string
-      example: '1.00000000'
-    FeeTierId:
-      type: string
-      description: unique fee tier ID, see [Get Market By Symbol](/rest/api/get-market-by-symbol)
-      example: '1'
     TradingAccountId:
       description: unique trading account ID
       type: string
       example: '111000000000001'
-    CreateAMMInstructionCommandResponseV3:
-      type: object
-      required:
-      - message
-      - requestId
-      - instructionId
-      properties:
-        message:
-          description: message
-          type: string
-        requestId:
-          description: unique request ID
-          allOf:
-          - $ref: '#/components/schemas/RequestID'
-        instructionId:
-          description: unique AMM instruction ID
-          allOf:
-          - $ref: '#/components/schemas/AMMInstructionID'
-      example:
-        message: Command acknowledged - CreateAMMInstruction
-        requestId: '633906221577404416'
-        instructionId: '633906221577404424'
-    MarketSymbol:
+    FeeTierId:
       type: string
-      description: market symbol. E.g. `BTCUSDC`
-      example: BTCUSDC
+      description: unique fee tier ID, see [Get Market By Symbol](/rest/api/get-market-by-symbol)
+      example: '1'
+    AMMInstructionID:
+      type: string
+      example: '297735387747975680'
+    OrderStatusAsString:
+      type: string
+      description: order status can have the following string values `"OPEN"`, `"CLOSED"`, `"CANCELLED"`, `"REJECTED"`
+      example: OPEN
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.00000000'
   examples:
-    TerminateAMMInstructionCommandResponse:
-      value:
-        $ref: '#/components/schemas/TerminateAMMInstructionCommandResponseV3/example'
     CreateAMMInstructionCommand:
       value:
         $ref: '#/components/schemas/CreateAMMInstructionCommandV3/example'
-    CreateAMMInstructionCommandResponse:
-      value:
-        $ref: '#/components/schemas/CreateAMMInstructionCommandResponseV3/example'
     TerminateAMMInstructionCommand:
       value:
         $ref: '#/components/schemas/TerminateAMMInstructionCommandV3/example'
+    CreateAMMInstructionCommandResponse:
+      value:
+        $ref: '#/components/schemas/CreateAMMInstructionCommandResponseV3/example'
+    TerminateAMMInstructionCommandResponse:
+      value:
+        $ref: '#/components/schemas/TerminateAMMInstructionCommandResponseV3/example'
   parameters:
     BX-NONCE:
       in: header
       name: BX-NONCE
       description: nonce is a client side incremented unsigned 64 bit integer
+      required: true
+      schema:
+        type: string
+    BX-TIMESTAMP:
+      in: header
+      name: BX-TIMESTAMP
+      description: timestamp is the number of milliseconds since EPOCH
+      required: true
+      schema:
+        type: string
+    BX-SIGNATURE:
+      in: header
+      name: BX-SIGNATURE
+      description: signature obtained using the [signing format](/rest/authentication#signing-format)
       required: true
       schema:
         type: string
@@ -642,20 +692,6 @@ components:
         - 'false'
         - 'true'
         default: 'false'
-    BX-SIGNATURE:
-      in: header
-      name: BX-SIGNATURE
-      description: signature obtained using the [signing format](/rest/authentication#signing-format)
-      required: true
-      schema:
-        type: string
-    BX-TIMESTAMP:
-      in: header
-      name: BX-TIMESTAMP
-      description: timestamp is the number of milliseconds since EPOCH
-      required: true
-      schema:
-        type: string
   securitySchemes:
     jwtTokenAuth:
       type: http

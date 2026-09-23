@@ -23,13 +23,13 @@ servers:
 - url: https://simnext.access.bullish.com/trading-api
   description: API SANDBOX (Direct Connect)
 tags:
-- name: derivatives
+- name: Derivatives
   x-displayName: Derivatives
 paths:
   /v1/derivatives-positions:
     get:
       tags:
-      - derivatives
+      - Derivatives
       summary: Get Derivatives Positions
       description: Get derivatives positions
       operationId: getDerivativesPositions
@@ -79,22 +79,6 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
-    AssetValue:
-      description: see [asset value](/rest/general/price-quantity-precision) format
-      type: string
-      example: '1.00000000'
-    MarketTypeOrOptionTypeSortByAsString:
-      type: string
-      description: Sorting parameter that can have the following string values `"marketType"`, `"optionType"`
-      enum:
-      - marketType
-      - optionType
-      example: optionType
-    TimeStampAsString:
-      type: string
-      format: string
-      example: '1621490985000'
-      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
     OrderSide:
       type: string
       example: BUY
@@ -110,21 +94,35 @@ components:
       - DATED_FUTURE
       - OPTION
       example: SPOT
-    OptionTypeAsString:
+    PositionGreeks:
+      description: Position greeks for derivative instruments
+      type: object
+      properties:
+        delta:
+          description: The sensitivity of the portfolio's value to a change in the underlying price, expressed in the base asset (e.g., BTC, ETH)
+          type: string
+          example: '0.98000000'
+        gamma:
+          description: The rate of change in Delta per 1 USDC move in the underlying price, expressed in the base asset
+          type: string
+          example: '0.01000000'
+        theta:
+          description: The rate at which the portfolio's value changes as it approaches expiration, expressed in $/day
+          type: string
+          example: '-0.1700'
+        vega:
+          description: The change in portfolio value for a 1% (percentage point) absolute change in implied volatility, expressed in dollars ($)
+          type: string
+          example: '0.0500'
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
       type: string
-      description: option type can have the following string values `"CALL"`, `"PUT"`
-      enum:
-      - CALL
-      - PUT
-      example: CALL
-    TradingAccountId:
-      description: unique trading account ID
+      example: '1.00000000'
+    DateTime:
       type: string
-      example: '111000000000001'
-    MarketSymbol:
-      type: string
-      description: market symbol. E.g. `BTCUSDC`
-      example: BTCUSDC
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
     DerivativesPositionResponse:
       description: Derivatives Position of one market for the trading account
       type: object
@@ -191,35 +189,37 @@ components:
           description: Position greeks
           allOf:
           - $ref: '#/components/schemas/PositionGreeks'
-    PositionGreeks:
-      description: Position greeks for derivative instruments
-      type: object
-      properties:
-        delta:
-          description: The sensitivity of the portfolio's value to a change in the underlying price, expressed in the base asset (e.g., BTC, ETH)
-          type: string
-          example: '0.98000000'
-        gamma:
-          description: The rate of change in Delta per 1 USDC move in the underlying price, expressed in the base asset
-          type: string
-          example: '0.01000000'
-        theta:
-          description: The rate at which the portfolio's value changes as it approaches expiration, expressed in $/day
-          type: string
-          example: '-0.1700'
-        vega:
-          description: The change in portfolio value for a 1% (percentage point) absolute change in implied volatility, expressed in dollars ($)
-          type: string
-          example: '0.0500'
+    TimeStampAsString:
+      type: string
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
+    MarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTCUSDC`
+      example: BTCUSDC
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
+    OptionTypeAsString:
+      type: string
+      description: option type can have the following string values `"CALL"`, `"PUT"`
+      enum:
+      - CALL
+      - PUT
+      example: CALL
     UsdcValue:
       description: see [asset value](/rest/general/price-quantity-precision) format
       type: string
       example: '1.0000'
-    DateTime:
+    MarketTypeOrOptionTypeSortByAsString:
       type: string
-      format: date-time
-      example: '2025-05-20T01:01:01.000Z'
-      description: ISO 8601 with millisecond as string
+      description: Sorting parameter that can have the following string values `"marketType"`, `"optionType"`
+      enum:
+      - marketType
+      - optionType
+      example: optionType
   securitySchemes:
     jwtTokenAuth:
       type: http

@@ -23,29 +23,27 @@ servers:
 - url: https://simnext.access.bullish.com/trading-api
   description: API SANDBOX (Direct Connect)
 tags:
-- name: trades
+- name: Trades
   x-displayName: Trades
   description: Authenticated APIs for reading trade data
 paths:
   /v1/trades:
     get:
       tags:
-      - trades
+      - Trades
       summary: Get Trades
       description: 'Get a list of trades based on specified filters.
 
-        - requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header
+        - requires bearer token in authorization header
 
         - Only the last 24 hours of data is available for querying
 
-        - [supports pagination](/rest/general/pagination)
+        - supports pagination
 
-        - filtering on `createdAtDatetime`, `createdAtTimestamp` requires additional keywords, [see filtering support](/rest/general/filtering)
+        - filtering on `createdAtDatetime`, `createdAtTimestamp` requires additional keywords, see filtering support
 
 
-        **Ratelimited:** `True`
-
-        '
+        **Ratelimited:** `True`'
       operationId: getTrades
       parameters:
       - in: query
@@ -120,14 +118,12 @@ paths:
           $ref: '#/components/schemas/TradingAccountId'
         required: true
       tags:
-      - trades
+      - Trades
       summary: Get Trade by ID
-      description: 'Gets a trade by ID, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header
+      description: 'Gets a trade by ID, requires bearer token in authorization header
 
 
-        **Ratelimited:** `True`
-
-        '
+        **Ratelimited:** `True`'
       operationId: getTradeById
       responses:
         '200':
@@ -164,14 +160,12 @@ paths:
           $ref: '#/components/schemas/TradingAccountId'
         required: true
       tags:
-      - trades
+      - Trades
       summary: Get Trades by clientOrder ID
-      description: 'Gets trade(s) associated with the clientOrderID, requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header
+      description: 'Gets trade(s) associated with the clientOrderID, requires bearer token in authorization header
 
 
-        **Ratelimited:** `True`
-
-        '
+        **Ratelimited:** `True`'
       operationId: trade-get-trade-by-client-order-id
       responses:
         '200':
@@ -194,22 +188,58 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
-    AssetValue:
-      description: see [asset value](/rest/general/price-quantity-precision) format
-      type: string
-      example: '1.00000000'
+    Boolean:
+      type: boolean
+      format: true or false
+      example: true
     QuoteAssetSymbol:
       type: string
       description: asset symbol as denoted in the world
       example: USDC
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
     OtcTradeId:
       type: string
       description: unique numeric (i64) identifier generated on Bullish side expressed as a string value
       example: '200000000000000098'
-    OrderHandle:
-      description: Unique numeric (i64) identifier generated on the client side expressed as a string value
+    TimeStampAsString:
       type: string
-      example: '299834741023572480'
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
+    TradeID:
+      type: string
+      example: '100020000000000060'
+    MarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTCUSDC`
+      example: BTCUSDC
+    OtcMatchId:
+      type: string
+      description: unique numeric (i64) identifier generated on Bullish side expressed as a string value
+      example: '15'
+    OrderID:
+      type: string
+      example: '297735387747975680'
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
+    OrderSideAsString:
+      type: string
+      description: order side can have the following string values `"BUY"`, `"SELL"`
+      example: BUY
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.00000000'
+    ClientOtcTradeId:
+      type: string
+      description: unique numeric (i64) identifier generated on the client side expressed as a string value
+      example: '20050900225'
     Trade:
       type: object
       required:
@@ -305,46 +335,10 @@ components:
           description: denotes the time the trade was executed by the exchange
           allOf:
           - $ref: '#/components/schemas/TimeStampAsString'
-    TimeStampAsString:
+    OrderHandle:
+      description: Unique numeric (i64) identifier generated on the client side expressed as a string value
       type: string
-      format: string
-      example: '1621490985000'
-      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
-    OrderSideAsString:
-      type: string
-      description: order side can have the following string values `"BUY"`, `"SELL"`
-      example: BUY
-    TradeID:
-      type: string
-      example: '100020000000000060'
-    OrderID:
-      type: string
-      example: '297735387747975680'
-    OtcMatchId:
-      type: string
-      description: unique numeric (i64) identifier generated on Bullish side expressed as a string value
-      example: '15'
-    ClientOtcTradeId:
-      type: string
-      description: unique numeric (i64) identifier generated on the client side expressed as a string value
-      example: '20050900225'
-    TradingAccountId:
-      description: unique trading account ID
-      type: string
-      example: '111000000000001'
-    MarketSymbol:
-      type: string
-      description: market symbol. E.g. `BTCUSDC`
-      example: BTCUSDC
-    Boolean:
-      type: boolean
-      format: true or false
-      example: true
-    DateTime:
-      type: string
-      format: date-time
-      example: '2025-05-20T01:01:01.000Z'
-      description: ISO 8601 with millisecond as string
+      example: '299834741023572480'
   securitySchemes:
     jwtTokenAuth:
       type: http

@@ -31,7 +31,9 @@ paths:
       tags:
       - portfolio-margin-simulator
       summary: Simulate Portfolio Margin
-      description: "Use Portfolio margin simulator to determine your margin requirements and risk levels based on your current portfolio balances. \nYou can also append position details on top of your portfolio specifics to see simulated results.\n"
+      description: 'Use Portfolio margin simulator to determine your margin requirements and risk levels based on your current portfolio balances.
+
+        You can also append position details on top of your portfolio specifics to see simulated results.'
       operationId: simulatePortfolioMargin
       parameters:
       - in: query
@@ -97,9 +99,7 @@ paths:
 
         You can also append position details on top of your portfolio specifics to see simulated results.
 
-        This endpoint supports running multiple simulations at the same time.
-
-        '
+        This endpoint supports running multiple simulations at the same time.'
       operationId: bulkSimulatePortfolioMargin
       parameters:
       - in: query
@@ -164,61 +164,10 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
-    PortfolioSimulationRequest:
-      type: object
-      required:
-      - tradingAccountId
-      properties:
-        tradingAccountId:
-          allOf:
-          - $ref: '#/components/schemas/TradingAccountId'
-        positions:
-          type: array
-          description: portfolio position to be used in simulation
-          items:
-            allOf:
-            - $ref: '#/components/schemas/SimulationPosition'
-        orders:
-          type: array
-          description: pending orders to be used in simulation
-          items:
-            allOf:
-            - $ref: '#/components/schemas/SimulationOrder'
-        referencePrices:
-          type: array
-          description: reference price to be used in simulation
-          items:
-            allOf:
-            - $ref: '#/components/schemas/ReferencePrice'
-        priceVolOffsetParams:
-          description: optional parameters for price and volatility adjustments in simulation
-          allOf:
-          - $ref: '#/components/schemas/PriceVolOffsetParams'
-    PriceVolOffsetParams:
-      type: object
-      description: Parameters for adjusting prices and volatility in portfolio simulation
-      properties:
-        cryptoPriceMultipliers:
-          type: object
-          description: Symbol-specific price multipliers. When specified for a symbol, overrides the global multiplier
-          additionalProperties:
-            type: number
-            format: double
-          example:
-            BTC: 1.2
-            ETH: 0.9
-        globalCryptoPriceMultiplier:
-          type: number
-          format: double
-          description: Global price multiplier applied to all crypto assets (except stablecoins and symbols with explicit multipliers)
-          default: 1.0
-          example: 1.1
-        volOffset:
-          type: number
-          format: double
-          description: Offset to add to implied volatility for options pricing. Can be positive or negative
-          default: 0.0
-          example: 0.05
+    OrderTimeInForceAsString:
+      type: string
+      description: time in force can have the following string values `"GTC"`, `"FOK"`, `"IOC"`, `"GTX"` (Good Till Crossing - for auction orders), see [details](/rest/general/order-type)
+      example: GTX
     SimulationOrder:
       type: object
       required:
@@ -243,21 +192,6 @@ components:
       type: boolean
       format: true or false
       example: true
-    TradingAccountId:
-      description: unique trading account ID
-      type: string
-      example: '111000000000001'
-    ReferencePrice:
-      type: object
-      properties:
-        symbol:
-          description: asset or market symbol. E.g. `USDC` for asset and `BTCUSDC` for market
-          type: string
-          example: BTC
-        price:
-          description: reference price for asset or market
-          type: string
-          example: '12000.0'
     PortfolioSimulationResponse:
       description: Simulation result
       type: object
@@ -298,14 +232,69 @@ components:
           description: the worst possible loss on the portfolio based on scenario analysis
           type: string
           example: '20000.0000'
-    OrderTimeInForceAsString:
-      type: string
-      description: time in force can have the following string values `"GTC"`, `"FOK"`, `"IOC"`, `"GTX"` (Good Till Crossing - for auction orders), see [details](/rest/general/order-type)
-      example: GTX
     MarketSymbol:
       type: string
       description: market symbol. E.g. `BTCUSDC`
       example: BTCUSDC
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
+    PriceVolOffsetParams:
+      type: object
+      description: Parameters for adjusting prices and volatility in portfolio simulation
+      properties:
+        cryptoPriceMultipliers:
+          type: object
+          description: Symbol-specific price multipliers. When specified for a symbol, overrides the global multiplier
+          additionalProperties:
+            type: number
+            format: double
+          example:
+            BTC: 1.2
+            ETH: 0.9
+        globalCryptoPriceMultiplier:
+          type: number
+          format: double
+          description: Global price multiplier applied to all crypto assets (except stablecoins and symbols with explicit multipliers)
+          default: 1.0
+          example: 1.1
+        volOffset:
+          type: number
+          format: double
+          description: Offset to add to implied volatility for options pricing. Can be positive or negative
+          default: 0.0
+          example: 0.05
+    PortfolioSimulationRequest:
+      type: object
+      required:
+      - tradingAccountId
+      properties:
+        tradingAccountId:
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+        positions:
+          type: array
+          description: portfolio position to be used in simulation
+          items:
+            allOf:
+            - $ref: '#/components/schemas/SimulationPosition'
+        orders:
+          type: array
+          description: pending orders to be used in simulation
+          items:
+            allOf:
+            - $ref: '#/components/schemas/SimulationOrder'
+        referencePrices:
+          type: array
+          description: reference price to be used in simulation
+          items:
+            allOf:
+            - $ref: '#/components/schemas/ReferencePrice'
+        priceVolOffsetParams:
+          description: optional parameters for price and volatility adjustments in simulation
+          allOf:
+          - $ref: '#/components/schemas/PriceVolOffsetParams'
     SimulationPosition:
       type: object
       required:
@@ -320,6 +309,17 @@ components:
           description: size of the position
           type: string
           example: '1.0'
+    ReferencePrice:
+      type: object
+      properties:
+        symbol:
+          description: asset or market symbol. E.g. `USDC` for asset and `BTCUSDC` for market
+          type: string
+          example: BTC
+        price:
+          description: reference price for asset or market
+          type: string
+          example: '12000.0'
   securitySchemes:
     jwtTokenAuth:
       type: http

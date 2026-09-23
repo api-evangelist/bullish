@@ -53,9 +53,7 @@ paths:
       tags:
       - derivatives-public
       summary: Get Option Ladder by Base Symbol
-      description: 'Returns the available options contracts. This data helps traders quickly assess the available options and their respective prices, implied volatilities, and Greeks (such as delta, gamma, theta, and vega).
-
-        '
+      description: Returns the available options contracts. This data helps traders quickly assess the available options and their respective prices, implied volatilities, and Greeks (such as delta, gamma, theta, and vega).
       operationId: getOptionLadder
       responses:
         '200':
@@ -85,9 +83,7 @@ paths:
       tags:
       - derivatives-public
       summary: Get Option Ladder by Symbol
-      description: 'Returns the for a given `baseSymbol`, organized by strike prices and expiration dates. This data helps traders quickly assess the available options and their respective prices, implied volatilities, and Greeks (such as delta, gamma, theta, and vega).
-
-        '
+      description: Returns the for a given `baseSymbol`, organized by strike prices and expiration dates. This data helps traders quickly assess the available options and their respective prices, implied volatilities, and Greeks (such as delta, gamma, theta, and vega).
       operationId: getOptionLadderBySymbol
       responses:
         '200':
@@ -133,53 +129,14 @@ paths:
           description: Invalid symbol provided
 components:
   schemas:
-    QuoteAssetSymbol:
-      type: string
-      description: asset symbol as denoted in the world
-      example: USDC
-    AssetSymbol:
-      type: string
-      description: asset symbol as denoted in the world
-      example: BTC
-    OptionGreeks:
-      description: Pricing parameters for option instruments. Only returned for option markets and omitted for spot and perpetual markets.
-      type: object
-      properties:
-        delta:
-          description: Sensitivity of an option's price to a $1 change in the price of the underlying asset. Only present for option markets.
-          type: string
-          example: '0.98'
-        gamma:
-          description: Rate of change of Delta with respect to a $1 change in the underlying asset's price. Only present for option markets.
-          type: string
-          example: '0.98'
-        theta:
-          description: The rate at which an option's price decreases as it approaches its expiration date. Only present for option markets.
-          type: string
-          example: '-0.17'
-        vega:
-          description: Sensitivity of an option's price to a 1% change in the implied volatility of the underlying asset. Only present for option markets.
-          type: string
-          example: '0.05'
-    OptionType:
-      description: Type of Option market
-      example: CALL
-      type: string
-      enum:
-      - CALL
-      - PUT
-    OptionMarketSymbol:
-      type: string
-      description: market symbol. E.g. `BTC-USDC-20241004-70000-C` for OPTION markets.
-      example: BTC-USDC-20241004-70000-C
     DerivativeMarketSymbol:
       type: string
       description: market symbol. E.g. `BTC-USDC-20250919-90000-C` for OPTION markets and `BTC-USDC-20250919` for DATED FUTURE markets.
       example: BTC-USDC-20250919-90000-C
-    OptionExpiryDate:
+    AssetSymbol:
       type: string
-      example: '20250520'
-      description: Expiry date of the option market in YYYYMMDD format (e.g. 20250520)
+      description: asset symbol as denoted in the world
+      example: BTC
     OptionLadderResponse:
       description: Option Ladder Response
       type: object
@@ -255,6 +212,10 @@ components:
           description: Option greeks
           allOf:
           - $ref: '#/components/schemas/OptionGreeks'
+    QuoteAssetSymbol:
+      type: string
+      description: asset symbol as denoted in the world
+      example: USDC
     MarketExpiryPriceResponse:
       type: object
       required:
@@ -284,6 +245,35 @@ components:
           type: string
           description: Timestamp by which the market expires at
           example: '1672041600000'
+    OptionMarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTC-USDC-20241004-70000-C` for OPTION markets.
+      example: BTC-USDC-20241004-70000-C
+    OptionGreeks:
+      description: Pricing parameters for option instruments. Only returned for option markets and omitted for spot and perpetual markets.
+      type: object
+      properties:
+        delta:
+          description: Sensitivity of an option's price to a $1 change in the price of the underlying asset. Only present for option markets.
+          type: string
+          example: '0.98'
+        gamma:
+          description: Rate of change of Delta with respect to a $1 change in the underlying asset's price. Only present for option markets.
+          type: string
+          example: '0.98'
+        theta:
+          description: The rate at which an option's price decreases as it approaches its expiration date. Only present for option markets.
+          type: string
+          example: '-0.17'
+        vega:
+          description: Sensitivity of an option's price to a 1% change in the implied volatility of the underlying asset. Only present for option markets.
+          type: string
+          example: '0.05'
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
     OptionTypeOrExpiryDatetimeSortAsString:
       type: string
       description: Sorting parameter that can have the following string values `"optionType"`, `"expiryDatetime"`
@@ -291,11 +281,17 @@ components:
       - optionType
       - expiryDatetime
       example: optionType
-    DateTime:
+    OptionExpiryDate:
       type: string
-      format: date-time
-      example: '2025-05-20T01:01:01.000Z'
-      description: ISO 8601 with millisecond as string
+      example: '20250520'
+      description: Expiry date of the option market in YYYYMMDD format (e.g. 20250520)
+    OptionType:
+      description: Type of Option market
+      example: CALL
+      type: string
+      enum:
+      - CALL
+      - PUT
   securitySchemes:
     jwtTokenAuth:
       type: http

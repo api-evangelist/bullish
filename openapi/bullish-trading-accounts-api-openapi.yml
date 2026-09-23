@@ -31,12 +31,10 @@ paths:
       tags:
       - trading-accounts
       summary: Get All Trading Accounts Details
-      description: 'Gets details for all trading accounts accessible by the API key used in the request. It requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header. The trading account''s id will be used in all other REST API
+      description: 'Gets details for all trading accounts accessible by the API key used in the request. It requires bearer token in authorization header. The trading account''s id will be used in all other REST API
 
 
-        **Ratelimited:** `True`
-
-        '
+        **Ratelimited:** `True`'
       operationId: getTradingAccounts
       responses:
         '200':
@@ -64,12 +62,10 @@ paths:
       tags:
       - trading-accounts
       summary: Get Trading Account Details by ID
-      description: 'Gets details for specific trading account by `tradingAccountId` and API key used in the request. It requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header.
+      description: 'Gets details for specific trading account by `tradingAccountId` and API key used in the request. It requires bearer token in authorization header.
 
 
-        **Ratelimited:** `True`
-
-        '
+        **Ratelimited:** `True`'
       operationId: getTradingAccountById
       parameters:
       - in: path
@@ -101,6 +97,44 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
+    TradeFeeRate:
+      type: object
+      required:
+      - feeGroupId
+      - makerFee
+      - takerFee
+      - makerOtcFee
+      - takerOtcFee
+      - brokerFee
+      properties:
+        feeGroupId:
+          type: integer
+          description: Identifier for this particular fee tier
+          example: 1
+        makerFee:
+          type: string
+          description: Maker Fee in decimal value
+          example: '0.00005000'
+        takerFee:
+          type: string
+          description: Taker Fee in decimal value
+          example: '0.00005000'
+        makerOtcFee:
+          type: string
+          description: OTC Maker Fee in decimal value
+          example: '0.00005000'
+        takerOtcFee:
+          type: string
+          description: OTC Taker Fee in decimal value
+          example: '0.00005000'
+        brokerFee:
+          type: string
+          description: Fee charged for brokered OTC trade in decimal value
+          example: '0.00005000'
+        auctionFee:
+          type: string
+          description: Fee charged for auction trade in decimal value
+          example: '0.00005000'
     MarginProfile:
       properties:
         initialMarketRiskMultiplierPct:
@@ -264,44 +298,6 @@ components:
           description: Contains the market risk multipliers applied to a trading account to derive the five individual Margin Requirement values
           allOf:
           - $ref: '#/components/schemas/MarginProfile'
-    TradeFeeRate:
-      type: object
-      required:
-      - feeGroupId
-      - makerFee
-      - takerFee
-      - makerOtcFee
-      - takerOtcFee
-      - brokerFee
-      properties:
-        feeGroupId:
-          type: integer
-          description: Identifier for this particular fee tier
-          example: 1
-        makerFee:
-          type: string
-          description: Maker Fee in decimal value
-          example: '0.00005000'
-        takerFee:
-          type: string
-          description: Taker Fee in decimal value
-          example: '0.00005000'
-        makerOtcFee:
-          type: string
-          description: OTC Maker Fee in decimal value
-          example: '0.00005000'
-        takerOtcFee:
-          type: string
-          description: OTC Taker Fee in decimal value
-          example: '0.00005000'
-        brokerFee:
-          type: string
-          description: Fee charged for brokered OTC trade in decimal value
-          example: '0.00005000'
-        auctionFee:
-          type: string
-          description: Fee charged for auction trade in decimal value
-          example: '0.00005000'
   securitySchemes:
     jwtTokenAuth:
       type: http

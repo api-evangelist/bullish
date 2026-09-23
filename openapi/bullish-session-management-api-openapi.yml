@@ -23,16 +23,19 @@ servers:
 - url: https://simnext.access.bullish.com/trading-api
   description: API SANDBOX (Direct Connect)
 tags:
-- name: session-management
+- name: Session Management
   x-displayName: Session Management
 paths:
   /v1/users/logout:
     get:
       x-position: 3
       tags:
-      - session-management
+      - Session Management
       summary: Logout
-      description: "Logout of the session associated with the JWT. It requires [bearer token](/rest/authentication#add-authenticated-request-header) in authorization header. \n\n**Ratelimited:** `True`\n"
+      description: 'Logout of the session associated with the JWT. It requires bearer token in authorization header.
+
+
+        **Ratelimited:** `True`'
       operationId: logoutUser
       responses:
         '200':
@@ -51,9 +54,14 @@ paths:
     post:
       x-position: 1
       tags:
-      - session-management
+      - Session Management
       summary: Login
-      description: "Login and generate a new session associated with a JWT. Once you log in from an IP, the same IP must be used for \nthe duration of the session for any subsequent requests.\n\n**Ratelimited:** `True`\n"
+      description: 'Login and generate a new session associated with a JWT. Once you log in from an IP, the same IP must be used for
+
+        the duration of the session for any subsequent requests.
+
+
+        **Ratelimited:** `True`'
       operationId: loginUserV2
       responses:
         '200':
@@ -84,16 +92,14 @@ paths:
     get:
       x-position: 2
       tags:
-      - session-management
+      - Session Management
       summary: HMAC Login
       description: 'Login and generate a new session associated with a JWT using HMAC. Once you log in from an IP, the same IP must
 
         be used for the duration of the session for any subsequent requests.
 
 
-        **Ratelimited:** `True`
-
-        '
+        **Ratelimited:** `True`'
       operationId: loginUserHmac
       parameters:
       - $ref: '#/components/parameters/BX-SIGNATURE'
@@ -120,41 +126,14 @@ paths:
       security: []
 components:
   schemas:
-    LoginRequest:
-      type: object
-      required:
-      - timestamp
-      - nonce
-      - authorizer
-      - command
-      properties:
-        publicKey:
-          allOf:
-          - $ref: '#/components/schemas/PublicKey'
-        signature:
-          allOf:
-          - $ref: '#/components/schemas/Signature'
-        loginPayload:
-          allOf:
-          - $ref: '#/components/schemas/LoginPayload'
+    Signature:
+      type: string
+      example: SIG_R1_K35d5hSY5FbNoJwrCfmH6QvPG7m9XmhL2mgWYcSB7q2hKJ2mv39Luck9WBJroSB635ZAXhdg36TYG7QJX1fTidbsMvyE8N
     JWT:
       type: string
       format: string
       example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic2FuZGVlcCByYWtocmEifQ.wyVq6PlKaldWXtu-jz2hJCvkGl1lM2S7HUKCH8LnXp0
       description: JWT token
-    Authorizer:
-      type: string
-      format: string
-      example: 03E02367E8C900000500000000000000
-      description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
-    TimeStampInSeconds:
-      type: integer
-      format: int64
-      example: 1621490985
-      description: number of seconds since EPOCH as integer
-    PublicKey:
-      type: string
-      example: PUB_R1_6PTdfWbXvXWQduhcCiRooGHTVpriu15xMqfr7EDq6sWLDj7NjS
     LoginPayload:
       type: object
       required:
@@ -185,13 +164,40 @@ components:
           type:
           - string
           - 'null'
+    PublicKey:
+      type: string
+      example: PUB_R1_6PTdfWbXvXWQduhcCiRooGHTVpriu15xMqfr7EDq6sWLDj7NjS
+    Authorizer:
+      type: string
+      format: string
+      example: 03E02367E8C900000500000000000000
+      description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
+    LoginRequest:
+      type: object
+      required:
+      - timestamp
+      - nonce
+      - authorizer
+      - command
+      properties:
+        publicKey:
+          allOf:
+          - $ref: '#/components/schemas/PublicKey'
+        signature:
+          allOf:
+          - $ref: '#/components/schemas/Signature'
+        loginPayload:
+          allOf:
+          - $ref: '#/components/schemas/LoginPayload'
+    TimeStampInSeconds:
+      type: integer
+      format: int64
+      example: 1621490985
+      description: number of seconds since EPOCH as integer
     UserId:
       type: string
       example: '12345'
       description: Bullish user ID
-    Signature:
-      type: string
-      example: SIG_R1_K35d5hSY5FbNoJwrCfmH6QvPG7m9XmhL2mgWYcSB7q2hKJ2mv39Luck9WBJroSB635ZAXhdg36TYG7QJX1fTidbsMvyE8N
     LoginResponse:
       type: object
       required:
@@ -214,6 +220,13 @@ components:
       required: true
       schema:
         type: string
+    BX-SIGNATURE:
+      in: header
+      name: BX-SIGNATURE
+      description: signature obtained using the [signing format](/rest/authentication#signing-format)
+      required: true
+      schema:
+        type: string
     BX-NONCE:
       in: header
       name: BX-NONCE
@@ -225,13 +238,6 @@ components:
       in: header
       name: BX-PUBLIC-KEY
       description: public key being used to generate the JWT
-      required: true
-      schema:
-        type: string
-    BX-SIGNATURE:
-      in: header
-      name: BX-SIGNATURE
-      description: signature obtained using the [signing format](/rest/authentication#signing-format)
       required: true
       schema:
         type: string

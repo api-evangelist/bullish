@@ -73,9 +73,7 @@ paths:
       summary: Get Auction Net Order Imbalance Indicator
       description: 'Get NOII (Net Order Imbalance Indicator) snapshot. Available during Lockdown phase only.
 
-        Returns empty array in other phases.
-
-        '
+        Returns empty array in other phases.'
       operationId: getAuctionNoii
       responses:
         '200':
@@ -98,53 +96,6 @@ paths:
       security: []
 components:
   schemas:
-    AssetValue:
-      description: see [asset value](/rest/general/price-quantity-precision) format
-      type: string
-      example: '1.00000000'
-    AuctionNoii:
-      type: object
-      properties:
-        auctionId:
-          description: auction identifier
-          type: string
-          example: '397735387747975680'
-        symbol:
-          description: market symbol
-          allOf:
-          - $ref: '#/components/schemas/MarketSymbol'
-        timestamp:
-          description: data timestamp, ISO 8601 with millisecond as string
-          allOf:
-          - $ref: '#/components/schemas/DateTime'
-        farPrice:
-          description: indicative clearing price (auction orders only)
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        referencePrice:
-          description: Last Trade Price on Regular Continuous Orderbook; if Last Trade Price is not available, then Index Price
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        imbalanceDirection:
-          description: 'imbalance direction: BUY, SELL, or NONE'
-          type: string
-          enum:
-          - BUY
-          - SELL
-          - NONE
-          example: BUY
-        imbalanceQuantity:
-          description: unmatched quantity at farPrice
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        pairedQuantity:
-          description: predicted matched volume
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-    MarketSymbol:
-      type: string
-      description: market symbol. E.g. `BTCUSDC`
-      example: BTCUSDC
     Auction:
       type: object
       properties:
@@ -202,6 +153,53 @@ components:
       format: date-time
       example: '2025-05-20T01:01:01.000Z'
       description: ISO 8601 with millisecond as string
+    AuctionNoii:
+      type: object
+      properties:
+        auctionId:
+          description: auction identifier
+          type: string
+          example: '397735387747975680'
+        symbol:
+          description: market symbol
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        timestamp:
+          description: data timestamp, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        farPrice:
+          description: indicative clearing price (auction orders only)
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        referencePrice:
+          description: Last Trade Price on Regular Continuous Orderbook; if Last Trade Price is not available, then Index Price
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        imbalanceDirection:
+          description: 'imbalance direction: BUY, SELL, or NONE'
+          type: string
+          enum:
+          - BUY
+          - SELL
+          - NONE
+          example: BUY
+        imbalanceQuantity:
+          description: unmatched quantity at farPrice
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        pairedQuantity:
+          description: predicted matched volume
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+    MarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTCUSDC`
+      example: BTCUSDC
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.00000000'
   securitySchemes:
     jwtTokenAuth:
       type: http

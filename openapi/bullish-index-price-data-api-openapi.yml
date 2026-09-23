@@ -31,9 +31,7 @@ paths:
       tags:
       - index-price-data
       summary: Get Index Prices
-      description: 'Retrieves the index price of all supported assets
-
-        '
+      description: Retrieves the index price of all supported assets
       operationId: getIndexPrices
       responses:
         '200':
@@ -78,6 +76,11 @@ paths:
       security: []
 components:
   schemas:
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
     AssetSymbol:
       type: string
       description: asset symbol as denoted in the world
@@ -106,11 +109,6 @@ components:
           description: Timestamp when the index price is updated
           allOf:
           - $ref: '#/components/schemas/TimeStamp'
-    DateTime:
-      type: string
-      format: date-time
-      example: '2025-05-20T01:01:01.000Z'
-      description: ISO 8601 with millisecond as string
     TimeStamp:
       type: string
       format: int64
