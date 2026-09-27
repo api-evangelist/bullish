@@ -59,9 +59,10 @@ tags:
 - Derivatives
 - Custody
 - Market Data
-- Financial-Services
+- Financial Services
 - Institutional
 - FIX
+- Real-Time
 tags_raw:
 - Digital Assets
 - Cryptocurrency
@@ -73,6 +74,8 @@ tags_raw:
 - Financial Services
 - Institutional
 - FIX
+- Financial-Services
+- Real-Time
 maintainers:
 - FN: Kin Lane
   email: kin@apievangelist.com

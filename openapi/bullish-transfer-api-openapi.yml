@@ -97,56 +97,10 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
-    TradingAccountId:
-      description: unique trading account ID
-      type: string
-      example: '111000000000001'
     AssetSymbol:
       type: string
       description: asset symbol as denoted in the world
       example: BTC
-    TradingAccountTransferResponse:
-      type: object
-      required:
-      - commandType
-      - message
-      - requestId
-      properties:
-        commandType:
-          description: The command type
-          type: string
-          enum:
-          - V2TransferAsset
-        message:
-          description: message
-          type: string
-        requestId:
-          description: unique request ID
-          allOf:
-          - $ref: '#/components/schemas/RequestID'
-      example:
-        commandType: V2TransferAsset
-        message: Command acknowledged - TransferAsset
-        requestId: '633909659774222336'
-    BadOrderEntryResponse:
-      type: object
-      required:
-      - message
-      - errorCode
-      - errorCodeName
-      properties:
-        message:
-          description: message
-          type: string
-          example: Missing signature header
-        errorCode:
-          description: unique error code
-          type: integer
-          example: 6029
-        errorCodeName:
-          description: unique error code name
-          type: string
-          example: MISSING_SIGNATURE_HEADER
     TransferAssetCommandV2:
       type: object
       required:
@@ -184,10 +138,63 @@ components:
         fromTradingAccountId:
           $ref: '#/components/schemas/TradingAccountId/example'
         toTradingAccountId: '111000000000002'
+    TradingAccountTransferResponse:
+      type: object
+      required:
+      - commandType
+      - message
+      - requestId
+      properties:
+        commandType:
+          description: The command type
+          type: string
+          enum:
+          - V2TransferAsset
+        message:
+          description: message
+          type: string
+        requestId:
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+      example:
+        commandType: V2TransferAsset
+        message: Command acknowledged - TransferAsset
+        requestId: '633909659774222336'
     RequestID:
       type: string
       example: '197735387747975680'
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
+    BadOrderEntryResponse:
+      type: object
+      required:
+      - message
+      - errorCode
+      - errorCodeName
+      properties:
+        message:
+          description: message
+          type: string
+          example: Missing signature header
+        errorCode:
+          description: unique error code
+          type: integer
+          example: 6029
+        errorCodeName:
+          description: unique error code name
+          type: string
+          example: MISSING_SIGNATURE_HEADER
   parameters:
+    BX-SIGNATURE:
+      in: header
+      name: BX-SIGNATURE
+      description: signature obtained using the [signing format](/rest/authentication#signing-format)
+      required: true
+      schema:
+        type: string
     BX-TIMESTAMP:
       in: header
       name: BX-TIMESTAMP
@@ -207,13 +214,6 @@ components:
         - 'false'
         - 'true'
         default: 'false'
-    BX-SIGNATURE:
-      in: header
-      name: BX-SIGNATURE
-      description: signature obtained using the [signing format](/rest/authentication#signing-format)
-      required: true
-      schema:
-        type: string
     BX-NONCE:
       in: header
       name: BX-NONCE
@@ -222,12 +222,12 @@ components:
       schema:
         type: string
   examples:
-    TransferAssetCommand:
-      value:
-        $ref: '#/components/schemas/TransferAssetCommandV2/example'
     TransferAssetCommandResponse:
       value:
         $ref: '#/components/schemas/TradingAccountTransferResponse/example'
+    TransferAssetCommand:
+      value:
+        $ref: '#/components/schemas/TransferAssetCommandV2/example'
   securitySchemes:
     jwtTokenAuth:
       type: http

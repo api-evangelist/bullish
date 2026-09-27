@@ -134,10 +134,6 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
-    UnderlyingAssetSymbol:
-      type: string
-      description: the underlying asset symbol that is configured for MMP checks
-      example: BTC
     SetMMPCommandV1:
       type: object
       required:
@@ -181,29 +177,6 @@ components:
         frozenTimeInSeconds: '5'
         quantityLimit: '10'
         deltaLimit: '1'
-    ResetMMPCommandV1:
-      type: object
-      required:
-      - commandType
-      - tradingAccountId
-      - underlyingAssetSymbol
-      properties:
-        commandType:
-          description: the command type must be provided as 'V1ResetMMP'
-          type: string
-          enum:
-          - V1ResetMMP
-          example: V1ResetMMP
-        tradingAccountId:
-          allOf:
-          - $ref: '#/components/schemas/TradingAccountId'
-        underlyingAssetSymbol:
-          allOf:
-          - $ref: '#/components/schemas/UnderlyingAssetSymbol'
-      example:
-        commandType: V1ResetMMP
-        tradingAccountId: '123567443543'
-        underlyingAssetSymbol: BTC
     SetMMPCommandResponse:
       type: object
       required:
@@ -220,9 +193,6 @@ components:
       example:
         message: Command acknowledged - SetMMPConfig
         requestId: '633910976353665025'
-    RequestID:
-      type: string
-      example: '197735387747975680'
     ResetMMPCommandResponse:
       type: object
       required:
@@ -239,6 +209,9 @@ components:
       example:
         message: Command acknowledged - ResetMMPConfig
         requestId: '633910976353665026'
+    RequestID:
+      type: string
+      example: '197735387747975680'
     TradingAccountId:
       description: unique trading account ID
       type: string
@@ -297,31 +270,45 @@ components:
           type: boolean
           description: This boolean indicates if this configuration is in effect or not.
           example: true
-  examples:
-    SetMMPCommandResponse:
-      value:
-        $ref: '#/components/schemas/SetMMPCommandResponse/example'
     ResetMMPCommandV1:
-      value:
-        $ref: '#/components/schemas/ResetMMPCommandV1/example'
-    ResetMMPCommandResponse:
-      value:
-        $ref: '#/components/schemas/ResetMMPCommandResponse/example'
-    SetMMPCommandV1:
-      value:
-        $ref: '#/components/schemas/SetMMPCommandV1/example'
+      type: object
+      required:
+      - commandType
+      - tradingAccountId
+      - underlyingAssetSymbol
+      properties:
+        commandType:
+          description: the command type must be provided as 'V1ResetMMP'
+          type: string
+          enum:
+          - V1ResetMMP
+          example: V1ResetMMP
+        tradingAccountId:
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+        underlyingAssetSymbol:
+          allOf:
+          - $ref: '#/components/schemas/UnderlyingAssetSymbol'
+      example:
+        commandType: V1ResetMMP
+        tradingAccountId: '123567443543'
+        underlyingAssetSymbol: BTC
+    UnderlyingAssetSymbol:
+      type: string
+      description: the underlying asset symbol that is configured for MMP checks
+      example: BTC
   parameters:
-    BX-NONCE:
-      in: header
-      name: BX-NONCE
-      description: nonce is a client side incremented unsigned 64 bit integer
-      required: true
-      schema:
-        type: string
     BX-TIMESTAMP:
       in: header
       name: BX-TIMESTAMP
       description: timestamp is the number of milliseconds since EPOCH
+      required: true
+      schema:
+        type: string
+    BX-NONCE:
+      in: header
+      name: BX-NONCE
+      description: nonce is a client side incremented unsigned 64 bit integer
       required: true
       schema:
         type: string
@@ -332,6 +319,19 @@ components:
       required: true
       schema:
         type: string
+  examples:
+    SetMMPCommandResponse:
+      value:
+        $ref: '#/components/schemas/SetMMPCommandResponse/example'
+    ResetMMPCommandResponse:
+      value:
+        $ref: '#/components/schemas/ResetMMPCommandResponse/example'
+    ResetMMPCommandV1:
+      value:
+        $ref: '#/components/schemas/ResetMMPCommandV1/example'
+    SetMMPCommandV1:
+      value:
+        $ref: '#/components/schemas/SetMMPCommandV1/example'
   securitySchemes:
     jwtTokenAuth:
       type: http

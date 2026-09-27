@@ -129,6 +129,33 @@ components:
     Signature:
       type: string
       example: SIG_R1_K35d5hSY5FbNoJwrCfmH6QvPG7m9XmhL2mgWYcSB7q2hKJ2mv39Luck9WBJroSB635ZAXhdg36TYG7QJX1fTidbsMvyE8N
+    LoginRequest:
+      type: object
+      required:
+      - timestamp
+      - nonce
+      - authorizer
+      - command
+      properties:
+        publicKey:
+          allOf:
+          - $ref: '#/components/schemas/PublicKey'
+        signature:
+          allOf:
+          - $ref: '#/components/schemas/Signature'
+        loginPayload:
+          allOf:
+          - $ref: '#/components/schemas/LoginPayload'
+    TimeStampInSeconds:
+      type: integer
+      format: int64
+      example: 1621490985
+      description: number of seconds since EPOCH as integer
+    Authorizer:
+      type: string
+      format: string
+      example: 03E02367E8C900000500000000000000
+      description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
     JWT:
       type: string
       format: string
@@ -164,36 +191,6 @@ components:
           type:
           - string
           - 'null'
-    PublicKey:
-      type: string
-      example: PUB_R1_6PTdfWbXvXWQduhcCiRooGHTVpriu15xMqfr7EDq6sWLDj7NjS
-    Authorizer:
-      type: string
-      format: string
-      example: 03E02367E8C900000500000000000000
-      description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
-    LoginRequest:
-      type: object
-      required:
-      - timestamp
-      - nonce
-      - authorizer
-      - command
-      properties:
-        publicKey:
-          allOf:
-          - $ref: '#/components/schemas/PublicKey'
-        signature:
-          allOf:
-          - $ref: '#/components/schemas/Signature'
-        loginPayload:
-          allOf:
-          - $ref: '#/components/schemas/LoginPayload'
-    TimeStampInSeconds:
-      type: integer
-      format: int64
-      example: 1621490985
-      description: number of seconds since EPOCH as integer
     UserId:
       type: string
       example: '12345'
@@ -212,11 +209,14 @@ components:
           description: JWT token
           allOf:
           - $ref: '#/components/schemas/JWT'
+    PublicKey:
+      type: string
+      example: PUB_R1_6PTdfWbXvXWQduhcCiRooGHTVpriu15xMqfr7EDq6sWLDj7NjS
   parameters:
-    BX-TIMESTAMP:
+    BX-PUBLIC-KEY:
       in: header
-      name: BX-TIMESTAMP
-      description: timestamp is the number of milliseconds since EPOCH
+      name: BX-PUBLIC-KEY
+      description: public key being used to generate the JWT
       required: true
       schema:
         type: string
@@ -227,17 +227,17 @@ components:
       required: true
       schema:
         type: string
+    BX-TIMESTAMP:
+      in: header
+      name: BX-TIMESTAMP
+      description: timestamp is the number of milliseconds since EPOCH
+      required: true
+      schema:
+        type: string
     BX-NONCE:
       in: header
       name: BX-NONCE
       description: nonce is a client side incremented unsigned 64 bit integer
-      required: true
-      schema:
-        type: string
-    BX-PUBLIC-KEY:
-      in: header
-      name: BX-PUBLIC-KEY
-      description: public key being used to generate the JWT
       required: true
       schema:
         type: string

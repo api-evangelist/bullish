@@ -458,63 +458,56 @@ paths:
       security:
       - jwtTokenAuth: []
 components:
-  schemas:
+  examples:
     IdbCancelOtcTradeCommand:
+      value:
+        $ref: '#/components/schemas/IdbCancelOtcTradeCommand/example'
+    IdbUpdateRemarksCommand:
+      value:
+        $ref: '#/components/schemas/IdbUpdateRemarksCommand/example'
+    IdbUpdateRemarksResponse:
+      value:
+        $ref: '#/components/schemas/IdbUpdateRemarksResponse/example'
+    IdbCancelOtcTradeResponse:
+      value:
+        $ref: '#/components/schemas/IdbCancelOtcTradeResponse/example'
+  schemas:
+    BadOtcTradeEntryResponse:
       type: object
-      description: A command to cancel a dual-sided OTC trade using `sharedMatchKey`
-      required:
-      - commandType
-      - sharedMatchKey
-      properties:
-        commandType:
-          type: string
-          description: Specifies the command type and must be 'V1IdbCancelOtcTrade' to indicate the cancellation of a dual-sided OTC trade.
-        sharedMatchKey:
-          $ref: '#/components/schemas/SharedMatchKey'
-        idbRemarks:
-          $ref: '#/components/schemas/IdbRemarks'
-      example:
-        commandType: V1IdbCancelOtcTrade
-        sharedMatchKey: a40d0c302d0448ce8e144c8312dd6ef0
-        idbRemarks: Cancelled per client request via Bloomberg chat
-    Boolean:
-      type: boolean
-      format: true or false
-      example: true
-    TimeStampAsString:
-      type: string
-      format: string
-      example: '1621490985000'
-      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
-    IdbCreateOtcTradeResponse:
-      description: A response for an acknowledged dual-sided brokered OTC trade creation request
       required:
       - message
-      - sharedMatchKey
-      - maker
-      - taker
+      - errorCode
+      - errorCodeName
       properties:
         message:
+          description: message
           type: string
-          description: message indicating the status of the request
-          example: Command acknowledged - IdbCreateOtcTrade
-        sharedMatchKey:
+        errorCode:
+          description: unique error code
+          type: integer
+        errorCodeName:
+          description: unique error code name
           type: string
-          description: system-generated unique identifier for the dual-sided brokered OTC trade
-          example: a40d0c302d0448ce8e144c8312dd6ef0
-        maker:
-          $ref: '#/components/schemas/IdbRequestItem'
-        taker:
-          $ref: '#/components/schemas/IdbRequestItem'
-      example:
-        message: Command acknowledged - IdbCreateOtcTrade
-        sharedMatchKey: a40d0c302d0448ce8e144c8312dd6ef0
-        maker:
-          requestId: '100000000000000147'
-          otcTradeId: '200000000000000098'
-        taker:
-          requestId: '100000000000000148'
-          otcTradeId: '200000000000000099'
+    OtcTradeExternalStatus:
+      type: string
+      description: OTC trade status
+      enum:
+      - APPROVAL_PENDING
+      - COUNTERPARTY_PENDING
+      - COUNTERPARTY_PAIRED
+      - RISK_PENDING
+      - MATCHED
+      - CANCELLED
+      - REJECTED
+      x-enumDescriptions:
+        APPROVAL_PENDING: Pending authorization from the customer in an IDB flow
+        COUNTERPARTY_PENDING: Pending counterparty trade submission
+        COUNTERPARTY_PAIRED: Both sides of the trade have been paired and are pending system processing
+        RISK_PENDING: Trade is undergoing risk and margin checks
+        MATCHED: Trade is successfully executed
+        CANCELLED: The trade was manually retracted by the user, counterparty, or broker
+        REJECTED: The trade failed system validation or encountered a system error
+      example: MATCHED
     IdbCancelOtcTradeResponse:
       description: A response for an acknowledged OTC command to cancel a dual-sided OTC trade
       required:
@@ -563,16 +556,102 @@ components:
         commandType: V1IdbUpdateRemarks
         sharedMatchKey: a40d0c302d0448ce8e144c8312dd6ef0
         idbRemarks: resubmitted by xyz
-    BrokeredTradeSide:
+    IdbDelegatedAccountView:
       type: object
+      description: Details of delegated accounts from the broker perspective.
       required:
+      - institutionName
       - tradingAccountId
+      - tradingAccountNickname
+      - approvalMethod
       properties:
+        institutionName:
+          $ref: '#/components/schemas/DelegatedInstitutionName'
+        institutionRegistrationNumber:
+          $ref: '#/components/schemas/DelegatedInstitutionRegistrationNumber'
         tradingAccountId:
-          allOf:
-          - $ref: '#/components/schemas/TradingAccountId'
-        remarks:
-          $ref: '#/components/schemas/Remarks'
+          $ref: '#/components/schemas/TradingAccountId'
+        tradingAccountNickname:
+          $ref: '#/components/schemas/DelegatedTradingAccountNickname'
+        approvalMethod:
+          $ref: '#/components/schemas/DelegatedApprovalMethod'
+    Boolean:
+      type: boolean
+      format: true or false
+      example: true
+    IdbUpdateRemarksResponse:
+      description: A response for an acknowledged OTC command to update IDB remarks of a dual-sided OTC trade
+      required:
+      - message
+      - sharedMatchKey
+      - maker
+      - taker
+      properties:
+        message:
+          type: string
+          description: message indicating the status of the request
+          example: Command acknowledged - IdbUpdateRemarks
+        sharedMatchKey:
+          type: string
+          description: system-generated unique identifier for the dual-sided brokered OTC trade
+          example: a40d0c302d0448ce8e144c8312dd6ef0
+        maker:
+          $ref: '#/components/schemas/IdbRequestItem'
+        taker:
+          $ref: '#/components/schemas/IdbRequestItem'
+      example:
+        message: Command acknowledged - IdbUpdateRemarks
+        sharedMatchKey: a40d0c302d0448ce8e144c8312dd6ef0
+        maker:
+          requestId: '100000000000000147'
+          otcTradeId: '200000000000000098'
+        taker:
+          requestId: '100000000000000148'
+          otcTradeId: '200000000000000099'
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.00000000'
+    IdbRemarks:
+      type: string
+      description: text field for IDB's internal reference to a trade, max length is 255 characters
+      example: otc trades between abc and xyz client
+    IdbCancelOtcTradeCommand:
+      type: object
+      description: A command to cancel a dual-sided OTC trade using `sharedMatchKey`
+      required:
+      - commandType
+      - sharedMatchKey
+      properties:
+        commandType:
+          type: string
+          description: Specifies the command type and must be 'V1IdbCancelOtcTrade' to indicate the cancellation of a dual-sided OTC trade.
+        sharedMatchKey:
+          $ref: '#/components/schemas/SharedMatchKey'
+        idbRemarks:
+          $ref: '#/components/schemas/IdbRemarks'
+      example:
+        commandType: V1IdbCancelOtcTrade
+        sharedMatchKey: a40d0c302d0448ce8e144c8312dd6ef0
+        idbRemarks: Cancelled per client request via Bloomberg chat
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+    RequestID:
+      type: string
+      example: '197735387747975680'
+    DelegatedInstitutionRegistrationNumber:
+      description: 'registration number of the institution that owns the delegated trading account.
+
+        Nullable and omitted from the response when the institution has no registration number.
+
+        '
+      type:
+      - string
+      - 'null'
+      example: '87654321'
     IdbCreateOtcTradeCommand:
       type: object
       description: A single command with details for both the maker and taker legs of a brokered OTC trade
@@ -613,183 +692,17 @@ components:
           side: SELL
           price: '2.6600'
           quantity: '50.000000'
-    IdbUpdateRemarksResponse:
-      description: A response for an acknowledged OTC command to update IDB remarks of a dual-sided OTC trade
-      required:
-      - message
-      - sharedMatchKey
-      - maker
-      - taker
-      properties:
-        message:
-          type: string
-          description: message indicating the status of the request
-          example: Command acknowledged - IdbUpdateRemarks
-        sharedMatchKey:
-          type: string
-          description: system-generated unique identifier for the dual-sided brokered OTC trade
-          example: a40d0c302d0448ce8e144c8312dd6ef0
-        maker:
-          $ref: '#/components/schemas/IdbRequestItem'
-        taker:
-          $ref: '#/components/schemas/IdbRequestItem'
-      example:
-        message: Command acknowledged - IdbUpdateRemarks
-        sharedMatchKey: a40d0c302d0448ce8e144c8312dd6ef0
-        maker:
-          requestId: '100000000000000147'
-          otcTradeId: '200000000000000098'
-        taker:
-          requestId: '100000000000000148'
-          otcTradeId: '200000000000000099'
-    OtcMarketSymbol:
-      type: string
-      description: market symbol. E.g. `BTC-USDC-PERP` for PERPETUAL market `BTC-USDC-20250613` for DATEDFUTURE market and `BTC-USDC-20250613-100000-C` for OPTION market
-      example: BTC-USDC-PERP
-    DelegatedTradingAccountNickname:
-      description: nickname assigned for this account
-      type: string
-      example: Alpha Traders Primary
-    SharedMatchKey:
-      type: string
-      description: Unique shared key that is agreed between the two customers to represent their OTC trade to be matched on Bullish's OTC Clearing Facility. Must be a 12 to 64 characters alphanumeric value
-      example: cfBtcXrpMatch001
-    TradeInOtcRequest:
-      description: A trade of an OTC trade
-      required:
-      - symbol
-      - price
-      - quantity
-      - side
-      properties:
-        symbol:
-          $ref: '#/components/schemas/OtcMarketSymbol'
-        price:
-          description: price, see [asset value](/rest/general/price-quantity-precision) format
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        quantity:
-          description: quantity, see [ asset value ](/rest/general/price-quantity-precision) format
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        side:
-          $ref: '#/components/schemas/TradeSideAsString'
-    RequestID:
-      type: string
-      example: '197735387747975680'
-    IdbRemarks:
-      type: string
-      description: text field for IDB's internal reference to a trade, max length is 255 characters
-      example: otc trades between abc and xyz client
-    IdbDelegatedAccountView:
-      type: object
-      description: Details of delegated accounts from the broker perspective.
-      required:
-      - institutionName
-      - tradingAccountId
-      - tradingAccountNickname
-      - approvalMethod
-      properties:
-        institutionName:
-          $ref: '#/components/schemas/DelegatedInstitutionName'
-        institutionRegistrationNumber:
-          $ref: '#/components/schemas/DelegatedInstitutionRegistrationNumber'
-        tradingAccountId:
-          $ref: '#/components/schemas/TradingAccountId'
-        tradingAccountNickname:
-          $ref: '#/components/schemas/DelegatedTradingAccountNickname'
-        approvalMethod:
-          $ref: '#/components/schemas/DelegatedApprovalMethod'
-    IdbOtcTradeLegView:
-      description: a trade leg of a brokered OTC trade
-      required:
-      - symbol
-      - price
-      - quantity
-      - side
-      - isTaker
-      properties:
-        tradeId:
-          description: unique trade ID
-          allOf:
-          - $ref: '#/components/schemas/TradeID'
-        symbol:
-          $ref: '#/components/schemas/OtcMarketSymbol'
-        price:
-          description: price, see [asset value](/rest/general/price-quantity-precision) format
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        quantity:
-          description: quantity, see [asset value](/rest/general/price-quantity-precision) format
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        quoteAmount:
-          description: notional value of the trade in quote or settlement asset, see [asset value](/rest/general/price-quantity-precision) format
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        baseFee:
-          description: base fee, see [asset value](/rest/general/price-quantity-precision) format
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        quoteFee:
-          description: quote fee, see [asset value](/rest/general/price-quantity-precision) format
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        side:
-          $ref: '#/components/schemas/TradeSideAsString'
-        isTaker:
-          description: denotes whether the role of the counterparty is Taker or Maker. The corresponding leg of the opposite side of the trade should have the inverse role to be successfully matched on the OTC Clearing Facility
-          allOf:
-          - $ref: '#/components/schemas/Boolean'
-        createdAtDatetime:
-          description: denotes the time the trade was executed by the exchange, ISO 8601 with millisecond as string
-          allOf:
-          - $ref: '#/components/schemas/DateTime'
-        createdAtTimestamp:
-          description: denotes the time the trade was executed by the exchange
-          allOf:
-          - $ref: '#/components/schemas/TimeStampAsString'
-    IdbRequestItem:
-      type: object
-      properties:
-        requestId:
-          type: string
-          description: unique request ID
-          allOf:
-          - $ref: '#/components/schemas/RequestID'
-        otcTradeId:
-          $ref: '#/components/schemas/OtcTradeId'
-    BadOtcTradeEntryResponse:
-      type: object
-      required:
-      - message
-      - errorCode
-      - errorCodeName
-      properties:
-        message:
-          description: message
-          type: string
-        errorCode:
-          description: unique error code
-          type: integer
-        errorCodeName:
-          description: unique error code name
-          type: string
     TradeID:
       type: string
       example: '100020000000000060'
-    DelegatedInstitutionName:
-      description: legal name of the institution that owns the delegated trading account
+    TradeSideAsString:
       type: string
-      example: Alpha Traders
+      description: trade side can have the following string values `BUY`, `SELL`
+      example: BUY
     TradingAccountId:
       description: unique trading account ID
       type: string
       example: '111000000000001'
-    IdbShortCode:
-      type: string
-      description: broker short code
-      example: IDB_A
     DelegatedApprovalMethod:
       description: 'The default execution workflow for this IDB-Client pair:
 
@@ -803,36 +716,42 @@ components:
       - STRAIGHT_THROUGH
       - APPROVAL_REQUIRED
       example: APPROVAL_REQUIRED
-    DelegatedInstitutionRegistrationNumber:
-      description: 'registration number of the institution that owns the delegated trading account.
-
-        Nullable and omitted from the response when the institution has no registration number.
-
-        '
-      type:
-      - string
-      - 'null'
-      example: '87654321'
-    OtcTradeExternalStatus:
+    OtcMarketSymbol:
       type: string
-      description: OTC trade status
-      enum:
-      - APPROVAL_PENDING
-      - COUNTERPARTY_PENDING
-      - COUNTERPARTY_PAIRED
-      - RISK_PENDING
-      - MATCHED
-      - CANCELLED
-      - REJECTED
-      x-enumDescriptions:
-        APPROVAL_PENDING: Pending authorization from the customer in an IDB flow
-        COUNTERPARTY_PENDING: Pending counterparty trade submission
-        COUNTERPARTY_PAIRED: Both sides of the trade have been paired and are pending system processing
-        RISK_PENDING: Trade is undergoing risk and margin checks
-        MATCHED: Trade is successfully executed
-        CANCELLED: The trade was manually retracted by the user, counterparty, or broker
-        REJECTED: The trade failed system validation or encountered a system error
-      example: MATCHED
+      description: market symbol. E.g. `BTC-USDC-PERP` for PERPETUAL market `BTC-USDC-20250613` for DATEDFUTURE market and `BTC-USDC-20250613-100000-C` for OPTION market
+      example: BTC-USDC-PERP
+    IdbRequestItem:
+      type: object
+      properties:
+        requestId:
+          type: string
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+        otcTradeId:
+          $ref: '#/components/schemas/OtcTradeId'
+    Remarks:
+      type: string
+      description: text field for client's internal reference to a trade, max length is 255 characters
+      example: first otc trade with xyz client
+    BrokeredTradeSide:
+      type: object
+      required:
+      - tradingAccountId
+      properties:
+        tradingAccountId:
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+        remarks:
+          $ref: '#/components/schemas/Remarks'
+    SharedMatchKey:
+      type: string
+      description: Unique shared key that is agreed between the two customers to represent their OTC trade to be matched on Bullish's OTC Clearing Facility. Must be a 12 to 64 characters alphanumeric value
+      example: cfBtcXrpMatch001
+    DelegatedInstitutionName:
+      description: legal name of the institution that owns the delegated trading account
+      type: string
+      example: Alpha Traders
     IdbOtcTradeView:
       type: object
       required:
@@ -905,52 +824,133 @@ components:
             - $ref: '#/components/schemas/IdbOtcTradeLegView'
         brokeredBy:
           $ref: '#/components/schemas/IdbShortCode'
-    TradeSideAsString:
+    IdbOtcTradeLegView:
+      description: a trade leg of a brokered OTC trade
+      required:
+      - symbol
+      - price
+      - quantity
+      - side
+      - isTaker
+      properties:
+        tradeId:
+          description: unique trade ID
+          allOf:
+          - $ref: '#/components/schemas/TradeID'
+        symbol:
+          $ref: '#/components/schemas/OtcMarketSymbol'
+        price:
+          description: price, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quantity:
+          description: quantity, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quoteAmount:
+          description: notional value of the trade in quote or settlement asset, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        baseFee:
+          description: base fee, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quoteFee:
+          description: quote fee, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        side:
+          $ref: '#/components/schemas/TradeSideAsString'
+        isTaker:
+          description: denotes whether the role of the counterparty is Taker or Maker. The corresponding leg of the opposite side of the trade should have the inverse role to be successfully matched on the OTC Clearing Facility
+          allOf:
+          - $ref: '#/components/schemas/Boolean'
+        createdAtDatetime:
+          description: denotes the time the trade was executed by the exchange, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        createdAtTimestamp:
+          description: denotes the time the trade was executed by the exchange
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+    IdbShortCode:
       type: string
-      description: trade side can have the following string values `BUY`, `SELL`
-      example: BUY
-    DateTime:
+      description: broker short code
+      example: IDB_A
+    DelegatedTradingAccountNickname:
+      description: nickname assigned for this account
       type: string
-      format: date-time
-      example: '2025-05-20T01:01:01.000Z'
-      description: ISO 8601 with millisecond as string
-    Remarks:
-      type: string
-      description: text field for client's internal reference to a trade, max length is 255 characters
-      example: first otc trade with xyz client
+      example: Alpha Traders Primary
     OtcTradeId:
       type: string
       description: unique numeric (i64) identifier generated on Bullish side expressed as a string value
       example: '200000000000000098'
-    AssetValue:
-      description: see [asset value](/rest/general/price-quantity-precision) format
+    TradeInOtcRequest:
+      description: A trade of an OTC trade
+      required:
+      - symbol
+      - price
+      - quantity
+      - side
+      properties:
+        symbol:
+          $ref: '#/components/schemas/OtcMarketSymbol'
+        price:
+          description: price, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quantity:
+          description: quantity, see [ asset value ](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        side:
+          $ref: '#/components/schemas/TradeSideAsString'
+    IdbCreateOtcTradeResponse:
+      description: A response for an acknowledged dual-sided brokered OTC trade creation request
+      required:
+      - message
+      - sharedMatchKey
+      - maker
+      - taker
+      properties:
+        message:
+          type: string
+          description: message indicating the status of the request
+          example: Command acknowledged - IdbCreateOtcTrade
+        sharedMatchKey:
+          type: string
+          description: system-generated unique identifier for the dual-sided brokered OTC trade
+          example: a40d0c302d0448ce8e144c8312dd6ef0
+        maker:
+          $ref: '#/components/schemas/IdbRequestItem'
+        taker:
+          $ref: '#/components/schemas/IdbRequestItem'
+      example:
+        message: Command acknowledged - IdbCreateOtcTrade
+        sharedMatchKey: a40d0c302d0448ce8e144c8312dd6ef0
+        maker:
+          requestId: '100000000000000147'
+          otcTradeId: '200000000000000098'
+        taker:
+          requestId: '100000000000000148'
+          otcTradeId: '200000000000000099'
+    TimeStampAsString:
       type: string
-      example: '1.00000000'
-  examples:
-    IdbCancelOtcTradeCommand:
-      value:
-        $ref: '#/components/schemas/IdbCancelOtcTradeCommand/example'
-    IdbUpdateRemarksResponse:
-      value:
-        $ref: '#/components/schemas/IdbUpdateRemarksResponse/example'
-    IdbCancelOtcTradeResponse:
-      value:
-        $ref: '#/components/schemas/IdbCancelOtcTradeResponse/example'
-    IdbUpdateRemarksCommand:
-      value:
-        $ref: '#/components/schemas/IdbUpdateRemarksCommand/example'
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
   parameters:
-    BX-NONCE:
-      in: header
-      name: BX-NONCE
-      description: nonce is a client side incremented unsigned 64 bit integer
-      required: true
-      schema:
-        type: string
     BX-TIMESTAMP:
       in: header
       name: BX-TIMESTAMP
       description: timestamp is the number of milliseconds since EPOCH
+      required: true
+      schema:
+        type: string
+    BX-NONCE:
+      in: header
+      name: BX-NONCE
+      description: nonce is a client side incremented unsigned 64 bit integer
       required: true
       schema:
         type: string

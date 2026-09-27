@@ -97,70 +97,6 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
-    TradeFeeRate:
-      type: object
-      required:
-      - feeGroupId
-      - makerFee
-      - takerFee
-      - makerOtcFee
-      - takerOtcFee
-      - brokerFee
-      properties:
-        feeGroupId:
-          type: integer
-          description: Identifier for this particular fee tier
-          example: 1
-        makerFee:
-          type: string
-          description: Maker Fee in decimal value
-          example: '0.00005000'
-        takerFee:
-          type: string
-          description: Taker Fee in decimal value
-          example: '0.00005000'
-        makerOtcFee:
-          type: string
-          description: OTC Maker Fee in decimal value
-          example: '0.00005000'
-        takerOtcFee:
-          type: string
-          description: OTC Taker Fee in decimal value
-          example: '0.00005000'
-        brokerFee:
-          type: string
-          description: Fee charged for brokered OTC trade in decimal value
-          example: '0.00005000'
-        auctionFee:
-          type: string
-          description: Fee charged for auction trade in decimal value
-          example: '0.00005000'
-    MarginProfile:
-      properties:
-        initialMarketRiskMultiplierPct:
-          description: market risk multiplier used to calculate initial margin requirement of the account
-          type: string
-          example: '200.00'
-        warningMarketRiskMultiplierPct:
-          description: market risk multiplier used to calculate warning margin requirement of the account
-          type: string
-          example: '150.00'
-        liquidationMarketRiskMultiplierPct:
-          description: market risk multiplier used to calculate liquidation margin requirement of the account
-          type: string
-          example: '100.00'
-        fullLiquidationMarketRiskMultiplierPct:
-          description: market risk multiplier used to calculate full liquidation margin requirement of the account
-          type: string
-          example: '75.00'
-        defaultedMarketRiskMultiplierPct:
-          description: market risk multiplier used to calculate defaulted margin requirement of the account
-          type: string
-          example: '50.00'
-    TradingAccountId:
-      description: unique trading account ID
-      type: string
-      example: '111000000000001'
     TradingAccountResponse:
       type: object
       required:
@@ -298,6 +234,70 @@ components:
           description: Contains the market risk multipliers applied to a trading account to derive the five individual Margin Requirement values
           allOf:
           - $ref: '#/components/schemas/MarginProfile'
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
+    TradeFeeRate:
+      type: object
+      required:
+      - feeGroupId
+      - makerFee
+      - takerFee
+      - makerOtcFee
+      - takerOtcFee
+      - brokerFee
+      properties:
+        feeGroupId:
+          type: integer
+          description: Identifier for this particular fee tier
+          example: 1
+        makerFee:
+          type: string
+          description: Maker Fee in decimal value
+          example: '0.00005000'
+        takerFee:
+          type: string
+          description: Taker Fee in decimal value
+          example: '0.00005000'
+        makerOtcFee:
+          type: string
+          description: OTC Maker Fee in decimal value
+          example: '0.00005000'
+        takerOtcFee:
+          type: string
+          description: OTC Taker Fee in decimal value
+          example: '0.00005000'
+        brokerFee:
+          type: string
+          description: Fee charged for brokered OTC trade in decimal value
+          example: '0.00005000'
+        auctionFee:
+          type: string
+          description: Fee charged for auction trade in decimal value
+          example: '0.00005000'
+    MarginProfile:
+      properties:
+        initialMarketRiskMultiplierPct:
+          description: market risk multiplier used to calculate initial margin requirement of the account
+          type: string
+          example: '200.00'
+        warningMarketRiskMultiplierPct:
+          description: market risk multiplier used to calculate warning margin requirement of the account
+          type: string
+          example: '150.00'
+        liquidationMarketRiskMultiplierPct:
+          description: market risk multiplier used to calculate liquidation margin requirement of the account
+          type: string
+          example: '100.00'
+        fullLiquidationMarketRiskMultiplierPct:
+          description: market risk multiplier used to calculate full liquidation margin requirement of the account
+          type: string
+          example: '75.00'
+        defaultedMarketRiskMultiplierPct:
+          description: market risk multiplier used to calculate defaulted margin requirement of the account
+          type: string
+          example: '50.00'
   securitySchemes:
     jwtTokenAuth:
       type: http

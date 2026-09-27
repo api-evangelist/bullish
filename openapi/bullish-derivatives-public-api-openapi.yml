@@ -129,14 +129,40 @@ paths:
           description: Invalid symbol provided
 components:
   schemas:
-    DerivativeMarketSymbol:
+    DateTime:
       type: string
-      description: market symbol. E.g. `BTC-USDC-20250919-90000-C` for OPTION markets and `BTC-USDC-20250919` for DATED FUTURE markets.
-      example: BTC-USDC-20250919-90000-C
-    AssetSymbol:
-      type: string
-      description: asset symbol as denoted in the world
-      example: BTC
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+    MarketExpiryPriceResponse:
+      type: object
+      required:
+      - symbol
+      - expiryPrice
+      - expiryNotional
+      - expiryDatetime
+      - expiryTimestamp
+      properties:
+        symbol:
+          type: string
+          description: Market Symbol
+          example: BTC-USDC-20250912-95000-C
+        expiryPrice:
+          type: string
+          description: Price used upon Expiry for an Options/Dated Futures contract
+          example: '115123.2512'
+        expiryNotional:
+          type: string
+          description: Difference between strike price and expiry price for an Options contract expressed in notional per unit contract
+          example: '20123.3033'
+        expiryDatetime:
+          type: string
+          description: Datetime by which the market expires at
+          example: '2018-11-18T00:00:00.000Z'
+        expiryTimestamp:
+          type: string
+          description: Timestamp by which the market expires at
+          example: '1672041600000'
     OptionLadderResponse:
       description: Option Ladder Response
       type: object
@@ -212,43 +238,20 @@ components:
           description: Option greeks
           allOf:
           - $ref: '#/components/schemas/OptionGreeks'
-    QuoteAssetSymbol:
+    OptionTypeOrExpiryDatetimeSortAsString:
       type: string
-      description: asset symbol as denoted in the world
-      example: USDC
-    MarketExpiryPriceResponse:
-      type: object
-      required:
-      - symbol
-      - expiryPrice
-      - expiryNotional
+      description: Sorting parameter that can have the following string values `"optionType"`, `"expiryDatetime"`
+      enum:
+      - optionType
       - expiryDatetime
-      - expiryTimestamp
-      properties:
-        symbol:
-          type: string
-          description: Market Symbol
-          example: BTC-USDC-20250912-95000-C
-        expiryPrice:
-          type: string
-          description: Price used upon Expiry for an Options/Dated Futures contract
-          example: '115123.2512'
-        expiryNotional:
-          type: string
-          description: Difference between strike price and expiry price for an Options contract expressed in notional per unit contract
-          example: '20123.3033'
-        expiryDatetime:
-          type: string
-          description: Datetime by which the market expires at
-          example: '2018-11-18T00:00:00.000Z'
-        expiryTimestamp:
-          type: string
-          description: Timestamp by which the market expires at
-          example: '1672041600000'
-    OptionMarketSymbol:
+      example: optionType
+    OptionType:
+      description: Type of Option market
+      example: CALL
       type: string
-      description: market symbol. E.g. `BTC-USDC-20241004-70000-C` for OPTION markets.
-      example: BTC-USDC-20241004-70000-C
+      enum:
+      - CALL
+      - PUT
     OptionGreeks:
       description: Pricing parameters for option instruments. Only returned for option markets and omitted for spot and perpetual markets.
       type: object
@@ -269,29 +272,26 @@ components:
           description: Sensitivity of an option's price to a 1% change in the implied volatility of the underlying asset. Only present for option markets.
           type: string
           example: '0.05'
-    DateTime:
+    OptionMarketSymbol:
       type: string
-      format: date-time
-      example: '2025-05-20T01:01:01.000Z'
-      description: ISO 8601 with millisecond as string
-    OptionTypeOrExpiryDatetimeSortAsString:
+      description: market symbol. E.g. `BTC-USDC-20241004-70000-C` for OPTION markets.
+      example: BTC-USDC-20241004-70000-C
+    AssetSymbol:
       type: string
-      description: Sorting parameter that can have the following string values `"optionType"`, `"expiryDatetime"`
-      enum:
-      - optionType
-      - expiryDatetime
-      example: optionType
+      description: asset symbol as denoted in the world
+      example: BTC
+    QuoteAssetSymbol:
+      type: string
+      description: asset symbol as denoted in the world
+      example: USDC
+    DerivativeMarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTC-USDC-20250919-90000-C` for OPTION markets and `BTC-USDC-20250919` for DATED FUTURE markets.
+      example: BTC-USDC-20250919-90000-C
     OptionExpiryDate:
       type: string
       example: '20250520'
       description: Expiry date of the option market in YYYYMMDD format (e.g. 20250520)
-    OptionType:
-      description: Type of Option market
-      example: CALL
-      type: string
-      enum:
-      - CALL
-      - PUT
   securitySchemes:
     jwtTokenAuth:
       type: http

@@ -450,119 +450,14 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
-    CustodyDestinationID:
+    CustodyDestinationVaspName:
       type: string
-      example: 1560ec0b406c0d909bb9f5f827dd6aa14a1f638884f33a2a3134878102e78038
-      description: destination id provided by bullish that uniquely identifies a whitelisted address or account
-    CustodyDestinationUserWalletType:
+      example: Bullish
+      description: The name of the hosting VASP of the wallet. This is only applicable for `HOSTED` wallets.
+    CustodyDirection:
       type: string
-      enum:
-      - HOSTED
-      - SELF_HOSTED
-      - UNKNOWN
-      description: The host type of the wallet. `HOSTED` wallet uses a custodial wallet service, `SELF_HOSTED` wallet is a non-custodial wallet.
-    CustodySelfHostedRequestedDepositAmount:
-      type: string
-      example: '12.3456'
-      description: User-requested amount for the deposit.
-    CustodyQuantity:
-      type: string
-      description: total quantity of symbol to withdraw including fee in units of symbol, not in smaller denominations (e.g. BTC not Satoshi, ETH not Wei) - quantity received will have fee subtracted.
-      example: '100000.00'
-    CustodyTransactionHistoryID:
-      type: string
-      example: DB:9e6304a08c9cc2a33e6bc6429a088eae2a6b940c8e312aede3a3780257b9b979
-      description: unique identifier for tracking a deposit or withdrawal
-    CustodyBankDetails:
-      type: object
-      properties:
-        name:
-          allOf:
-          - $ref: '#/components/schemas/CustodyBankName'
-        physicalAddress:
-          allOf:
-          - $ref: '#/components/schemas/CustodyPhysicalBankAddress'
-        routingCode:
-          allOf:
-          - $ref: '#/components/schemas/CustodyBankRoutingCode'
-    CustodyLockExpiryDateTime:
-      type: string
-      format: date-time
-      example: '2026-06-24T12:00:00Z'
-      description: ISO 8601 Zulu timestamp of when the withdrawal lock period expires. Applies only when `locked` is true.
-    Authorizer:
-      type: string
-      format: string
-      example: 03E02367E8C900000500000000000000
-      description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
-    CustodyBankAccountNumber:
-      type: string
-      description: bank account number
-      example: '9873481227'
-    CustodyDepositMemo:
-      type: string
-      example: '925891241'
-      description: memo or destination tag used during deposit to help identify account to credit funds to
-    NetworkID:
-      type: string
-      example: ETH
-      description: the network of the native coin or token, e.g. BTC, ETH, SOL
-    CustodyApiEcdsaWithdrawalRequest:
-      type: object
-      required:
-      - timestamp
-      - nonce
-      - authorizer
-      - command
-      properties:
-        timestamp:
-          allOf:
-          - $ref: '#/components/schemas/TimeStampAsString'
-        nonce:
-          type: string
-          description: a UUID withdrawal nonce to protect against replay attacks
-          example: '1628376611'
-        authorizer:
-          description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
-          allOf:
-          - $ref: '#/components/schemas/Authorizer'
-        command:
-          description: withdrawal command
-          allOf:
-          - $ref: '#/components/schemas/CustodyApiEcdsaWithdrawalCommand'
-    TimeStampAsString:
-      type: string
-      format: string
-      example: '1621490985000'
-      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
-    CustodyBankRoutingCode:
-      type: string
-      description: routing code of bank
-      example: '322286803'
-    CustodyWithdrawalMemo:
-      type: string
-      example: MZAXEMRXA
-      description: memo or destination tag that will be used as a reference on transaction
-    CustodyWithdrawalLabel:
-      type: string
-      example: Our cold wallet
-      description: descriptive label of destination provided by user
-    CustodyDestinationLocked:
-      type: boolean
-      example: true
-      description: Whether this destination is currently in a withdrawal lock period. Addresses are locked upon whitelisting for a 24-hour security period.
-    CustodyDestinationSigned:
-      type: boolean
-      example: true
-      description: Whether this destination has been signed by the user. Some operations such as withdrawal requires the destination to be signed.
-    CustodyMinimumDepositAmount:
-      type: string
-      example: '0.01'
-      description: the minimum deposit amount required for this symbol and network. Deposits under this amount will not be credited to your account
-    Custody24HWithdrawalLimit:
-      type: string
-      example: '1000000.00'
-      description: limit on amount of coin or token that can be withdrawn over a 24 hour period, in units of the symbol itself, not in smaller denominations (e.g. BTC not Satoshi, ETH not Wei)
+      example: DEPOSIT
+      description: direction of transaction from API user's perspective, 'DEPOSIT' or 'WITHDRAWAL'
     CustodySelfHostedInitiateResponse:
       type: object
       properties:
@@ -602,112 +497,14 @@ components:
         verificationAmount: '0.0012'
         totalDepositAmount: '12.3468'
         verificationExpiryTime: '2025-05-20T01:01:01.000Z'
-    CustodyBankIntermediateDetails:
-      type: object
-      properties:
-        name:
-          example: Middle Bank
-          allOf:
-          - $ref: '#/components/schemas/CustodyBankName'
-        physicalAddress:
-          example: 523 Exchange Square, Canary Wharf, E14 2WA
-          allOf:
-          - $ref: '#/components/schemas/CustodyPhysicalBankAddress'
-        routingCode:
-          example: '321176234'
-          allOf:
-          - $ref: '#/components/schemas/CustodyBankRoutingCode'
-    InstrumentId:
+    CustodySelfHostedTotalDepositAmount:
       type: string
-      description: custody identifier for instrument
-      example: BTC
-    CustodySelfHostedDepositMemo:
+      example: '12.3468'
+      description: The actual amount that the user should deposit for wallet verification. It is the sum of `requestedDepositAmount` and `verificationAmount`.
+    CustodyTransactionHistoryID:
       type: string
-      example: MZAXEMRXA
-      description: The memo or destination tag of the Bullish trading account that the user should deposit to during a self hosted deposit attempt.
-    CustodyApiEcdsaWithdrawalCommand:
-      type: object
-      required:
-      - commandType
-      - destinationId
-      - symbol
-      - network
-      - quantity
-      properties:
-        commandType:
-          description: the command type, it must be 'V1Withdrawal'
-          type: string
-          example: V1Withdrawal
-        destinationId:
-          allOf:
-          - $ref: '#/components/schemas/CustodyDestinationID'
-        symbol:
-          allOf:
-          - $ref: '#/components/schemas/CustodySymbol'
-        network:
-          allOf:
-          - $ref: '#/components/schemas/NetworkID'
-        quantity:
-          example: '100000.000001'
-          allOf:
-          - $ref: '#/components/schemas/CustodyQuantity'
-    CustodyGetSelfHostedVerificationResponse:
-      type: object
-      required:
-      - destinationId
-      - network
-      - symbol
-      - address
-      - verificationStatus
-      - requestedDepositAmount
-      - verificationAmount
-      - totalDepositAmount
-      - verificationExpiryTime
-      properties:
-        destinationId:
-          allOf:
-          - $ref: '#/components/schemas/CustodyDestinationID'
-        network:
-          allOf:
-          - $ref: '#/components/schemas/NetworkID'
-        symbol:
-          allOf:
-          - $ref: '#/components/schemas/CustodySymbol'
-        address:
-          allOf:
-          - $ref: '#/components/schemas/CustodyNetworkAddress'
-        memo:
-          allOf:
-          - $ref: '#/components/schemas/CustodyWithdrawalMemo'
-        verificationStatus:
-          allOf:
-          - $ref: '#/components/schemas/CustodySelfHostedVerificationStatus'
-        requestedDepositAmount:
-          allOf:
-          - $ref: '#/components/schemas/CustodySelfHostedRequestedDepositAmount'
-        verificationAmount:
-          allOf:
-          - $ref: '#/components/schemas/CustodySelfHostedVerificationAmount'
-        totalDepositAmount:
-          allOf:
-          - $ref: '#/components/schemas/CustodySelfHostedTotalDepositAmount'
-        verificationExpiryTime:
-          allOf:
-          - $ref: '#/components/schemas/DateTime'
-      example:
-        destinationId: 1560ec0b406c0d909bb9f5f827dd6aa14a1f638884f33a2a3134878102e78038
-        network: ETH
-        symbol: USDC
-        address: '0xb0a64d976972d87b0783eeb1ff88306cd1891f02'
-        verificationStatus: VERIFIED
-        requestedDepositAmount: '12.3456'
-        verificationAmount: '0.0012'
-        totalDepositAmount: '12.3468'
-        verificationExpiryTime: '2025-05-20T01:01:01.000Z'
-    CustodyFiatSymbol:
-      type: string
-      example: USD
-      description: symbol representing fiat currency, e.g. USD, EUR
+      example: DB:9e6304a08c9cc2a33e6bc6429a088eae2a6b940c8e312aede3a3780257b9b979
+      description: unique identifier for tracking a deposit or withdrawal
     CustodyWithdrawalFee:
       type: string
       example: '3.00'
@@ -726,128 +523,55 @@ components:
         custodyTransactionId:
           allOf:
           - $ref: '#/components/schemas/CustodyTransactionID'
-    CustodySelfHostedTotalDepositAmount:
+    CustodyQuantity:
       type: string
-      example: '12.3468'
-      description: The actual amount that the user should deposit for wallet verification. It is the sum of `requestedDepositAmount` and `verificationAmount`.
-    CustodyHistory:
+      description: total quantity of symbol to withdraw including fee in units of symbol, not in smaller denominations (e.g. BTC not Satoshi, ETH not Wei) - quantity received will have fee subtracted.
+      example: '100000.00'
+    CustodyTransactionID:
+      type: string
+      example: DB:9e6304a08c9cc2a33e6bc6429a088eae2a6b940c8e312aede3a3780257b9b979
+      description: unique identifier for tracking a withdrawal during signing and in history
+    CustodyMinimumDepositAmount:
+      type: string
+      example: '0.01'
+      description: the minimum deposit amount required for this symbol and network. Deposits under this amount will not be credited to your account
+    CustodyFiatWithdrawalInstructions:
       type: object
       properties:
-        custodyTransactionId:
+        destinationId:
           allOf:
-          - $ref: '#/components/schemas/CustodyTransactionHistoryID'
-        direction:
+          - $ref: '#/components/schemas/CustodyDestinationID'
+        accountNumber:
           allOf:
-          - $ref: '#/components/schemas/CustodyDirection'
-        quantity:
-          allOf:
-          - $ref: '#/components/schemas/CustodyQuantity'
-        symbol:
-          allOf:
-          - $ref: '#/components/schemas/CustodySymbol'
+          - $ref: '#/components/schemas/CustodyBankAccountNumber'
         network:
           allOf:
-          - $ref: '#/components/schemas/NetworkID'
+          - $ref: '#/components/schemas/CustodyBankNetworkID'
+        symbol:
+          allOf:
+          - $ref: '#/components/schemas/CustodyFiatSymbol'
+        name:
+          allOf:
+          - $ref: '#/components/schemas/CustodyBankName'
+        physicalAddress:
+          allOf:
+          - $ref: '#/components/schemas/CustodyPhysicalBankAddress'
         fee:
           allOf:
           - $ref: '#/components/schemas/CustodyWithdrawalFee'
         memo:
           allOf:
-          - $ref: '#/components/schemas/CustodyDepositMemo'
-        createdAtDateTime:
+          - $ref: '#/components/schemas/CustodyWithdrawalMemo'
+        bank:
           allOf:
-          - $ref: '#/components/schemas/CustodyCreatedAtDateTime'
-        status:
+          - $ref: '#/components/schemas/CustodyBankDetails'
+        intermediaryBank:
           allOf:
-          - $ref: '#/components/schemas/CustodyTransactionStatus'
-        transactionDetails:
-          allOf:
-          - $ref: '#/components/schemas/CustodyTransactionDetails'
-    CustodySelfHostedVerificationAmount:
+          - $ref: '#/components/schemas/CustodyBankIntermediateDetails'
+    CustodyTransactionStatus:
       type: string
-      example: '0.0012'
-      description: Bullish specified additional small deposit amount to add to the `requestedDepositAmount` for wallet verification.
-    CustodyCreatedAtDateTime:
-      type: string
-      example: '2022-09-16T07:56:15.000Z'
-      description: time of initial transaction
-    CustodyLimits:
-      type: object
-      properties:
-        symbol:
-          allOf:
-          - $ref: '#/components/schemas/CustodySymbol'
-        available:
-          allOf:
-          - $ref: '#/components/schemas/CustodyAvailableWithdrawalLimit'
-        twentyFourHour:
-          allOf:
-          - $ref: '#/components/schemas/Custody24HWithdrawalLimit'
-    CustodySelfHostedVerificationStatus:
-      type: string
-      enum:
-      - VERIFIED
-      - PENDING_VERIFICATION
-      - VERIFICATION_EXPIRED
-      description: 'The status for the self-hosted wallet verification attempt.
-
-        - `VERIFIED` - Self-hosted wallet has been verified
-
-        - `PENDING_VERIFICATION` - pending verification via satoshi test
-
-        - `VERIFICATION_EXPIRED` - the verification has expired
-
-        '
-    CustodyCryptoDepositInstructions:
-      type: object
-      required:
-      - network
-      - symbol
-      - address
-      properties:
-        network:
-          allOf:
-          - $ref: '#/components/schemas/NetworkID'
-        symbol:
-          allOf:
-          - $ref: '#/components/schemas/CustodySymbol'
-        memo:
-          allOf:
-          - $ref: '#/components/schemas/CustodyDepositMemo'
-        address:
-          allOf:
-          - $ref: '#/components/schemas/CustodyNetworkAddress'
-        minimumDepositAmount:
-          allOf:
-          - $ref: '#/components/schemas/CustodyMinimumDepositAmount'
-      example:
-        network: ETH
-        symbol: USDC
-        address: '0xb0a64d976972d87b0783eeb1ff88306cd1891f02'
-        minimumDepositAmount: '0.01'
-    CustodySelfHostedDepositAddress:
-      type: string
-      example: '0xb0a64d976972d87b0783eeb1ff88306cd1891f02'
-      description: The address of the Bullish trading account that the user should deposit to during a self hosted deposit attempt.
-    CustodyTransactionDetails:
-      type: object
-      properties:
-        address:
-          type: string
-          description: crypto network address
-          example: '0xb0a64d976972d87b0783eeb1ff88306cd1891f02'
-        blockchainTxId:
-          type: string
-          description: transaction id on chain
-          example: '0xec557f2c7278d2dae2d98a27b9bd43f386789a4209090cbbd11595f1bed4a4c2'
-        swiftUetr:
-          type: string
-          description: unique end-to-end-transaction reference for swift transactions
-          example: b55aa5cd-baa2-4122-8c17-ae9b856ae36a
-    CustodySymbol:
-      type: string
-      example: USDC
-      description: symbol representing coin or token, e.g. USDC, BTC, ETH, SHIB
+      example: COMPLETE
+      description: one of 'PENDING', 'COMPLETE', 'CANCELLED', 'FAILED'
     CustodySelfHostedInitiateRequest:
       type: object
       required:
@@ -881,14 +605,55 @@ components:
         address: '0xb0a64d976972d87b0783eeb1ff88306cd1891f02'
         label: Our cold wallet
         requestedDepositAmount: '12.3456'
+    CustodyLimits:
+      type: object
+      properties:
+        symbol:
+          allOf:
+          - $ref: '#/components/schemas/CustodySymbol'
+        available:
+          allOf:
+          - $ref: '#/components/schemas/CustodyAvailableWithdrawalLimit'
+        twentyFourHour:
+          allOf:
+          - $ref: '#/components/schemas/Custody24HWithdrawalLimit'
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
     CustodyBankNetworkID:
       type: string
       description: the fiat network, e.g. SWIFT, ABA or SEPA
       example: SWIFT
+    CustodyLockExpiryDateTime:
+      type: string
+      format: date-time
+      example: '2026-06-24T12:00:00Z'
+      description: ISO 8601 Zulu timestamp of when the withdrawal lock period expires. Applies only when `locked` is true.
+    CustodyPhysicalBankAddress:
+      type: string
+      description: physical location of bank
+      example: 4250 Executive Square Suite 300 La Jolla, CA 92037
+    NetworkID:
+      type: string
+      example: ETH
+      description: the network of the native coin or token, e.g. BTC, ETH, SOL
     CustodyNetworkAddress:
       type: string
       example: '0xb0a64d976972d87b0783eeb1ff88306cd1891f02'
       description: an address on the given network
+    CustodyDestinationUserWalletType:
+      type: string
+      enum:
+      - HOSTED
+      - SELF_HOSTED
+      - UNKNOWN
+      description: The host type of the wallet. `HOSTED` wallet uses a custodial wallet service, `SELF_HOSTED` wallet is a non-custodial wallet.
+    CustodyBankAccountNumber:
+      type: string
+      description: bank account number
+      example: '9873481227'
     CustodyCryptoWithdrawalInstructions:
       type: object
       required:
@@ -950,64 +715,203 @@ components:
         signed: true
         locked: true
         lockExpiryDateTime: '2026-06-24T12:00:00Z'
-    CustodyDestinationVaspName:
+    CustodySymbol:
       type: string
-      example: Bullish
-      description: The name of the hosting VASP of the wallet. This is only applicable for `HOSTED` wallets.
+      example: USDC
+      description: symbol representing coin or token, e.g. USDC, BTC, ETH, SHIB
+    CustodyWithdrawalLabel:
+      type: string
+      example: Our cold wallet
+      description: descriptive label of destination provided by user
+    CustodyAvailableWithdrawalLimit:
+      type: string
+      example: '20000.0'
+      description: remaining limit on amount of coin or token that could be withdrawn now, in units of the symbol itself, not in smaller denominations (e.g. BTC not Satoshi, ETH not Wei)
+    CustodySelfHostedRequestedDepositAmount:
+      type: string
+      example: '12.3456'
+      description: User-requested amount for the deposit.
+    CustodyDestinationID:
+      type: string
+      example: 1560ec0b406c0d909bb9f5f827dd6aa14a1f638884f33a2a3134878102e78038
+      description: destination id provided by bullish that uniquely identifies a whitelisted address or account
+    CustodyHistory:
+      type: object
+      properties:
+        custodyTransactionId:
+          allOf:
+          - $ref: '#/components/schemas/CustodyTransactionHistoryID'
+        direction:
+          allOf:
+          - $ref: '#/components/schemas/CustodyDirection'
+        quantity:
+          allOf:
+          - $ref: '#/components/schemas/CustodyQuantity'
+        symbol:
+          allOf:
+          - $ref: '#/components/schemas/CustodySymbol'
+        network:
+          allOf:
+          - $ref: '#/components/schemas/NetworkID'
+        fee:
+          allOf:
+          - $ref: '#/components/schemas/CustodyWithdrawalFee'
+        memo:
+          allOf:
+          - $ref: '#/components/schemas/CustodyDepositMemo'
+        createdAtDateTime:
+          allOf:
+          - $ref: '#/components/schemas/CustodyCreatedAtDateTime'
+        status:
+          allOf:
+          - $ref: '#/components/schemas/CustodyTransactionStatus'
+        transactionDetails:
+          allOf:
+          - $ref: '#/components/schemas/CustodyTransactionDetails'
+    CustodyWithdrawalMemo:
+      type: string
+      example: MZAXEMRXA
+      description: memo or destination tag that will be used as a reference on transaction
+    CustodyApiEcdsaWithdrawalRequest:
+      type: object
+      required:
+      - timestamp
+      - nonce
+      - authorizer
+      - command
+      properties:
+        timestamp:
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        nonce:
+          type: string
+          description: a UUID withdrawal nonce to protect against replay attacks
+          example: '1628376611'
+        authorizer:
+          description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
+          allOf:
+          - $ref: '#/components/schemas/Authorizer'
+        command:
+          description: withdrawal command
+          allOf:
+          - $ref: '#/components/schemas/CustodyApiEcdsaWithdrawalCommand'
+    CustodyDestinationSigned:
+      type: boolean
+      example: true
+      description: Whether this destination has been signed by the user. Some operations such as withdrawal requires the destination to be signed.
+    Authorizer:
+      type: string
+      format: string
+      example: 03E02367E8C900000500000000000000
+      description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
+    CustodyFiatSymbol:
+      type: string
+      example: USD
+      description: symbol representing fiat currency, e.g. USD, EUR
+    CustodySelfHostedVerificationAmount:
+      type: string
+      example: '0.0012'
+      description: Bullish specified additional small deposit amount to add to the `requestedDepositAmount` for wallet verification.
+    CustodyBankRoutingCode:
+      type: string
+      description: routing code of bank
+      example: '322286803'
     CustodyBankName:
       type: string
       example: Silvergate Bank
       description: name of bank
-    CustodyFiatWithdrawalInstructions:
+    InstrumentId:
+      type: string
+      description: custody identifier for instrument
+      example: BTC
+    CustodySelfHostedVerificationStatus:
+      type: string
+      enum:
+      - VERIFIED
+      - PENDING_VERIFICATION
+      - VERIFICATION_EXPIRED
+      description: 'The status for the self-hosted wallet verification attempt.
+
+        - `VERIFIED` - Self-hosted wallet has been verified
+
+        - `PENDING_VERIFICATION` - pending verification via satoshi test
+
+        - `VERIFICATION_EXPIRED` - the verification has expired
+
+        '
+    CustodyCryptoDepositInstructions:
       type: object
+      required:
+      - network
+      - symbol
+      - address
       properties:
+        network:
+          allOf:
+          - $ref: '#/components/schemas/NetworkID'
+        symbol:
+          allOf:
+          - $ref: '#/components/schemas/CustodySymbol'
+        memo:
+          allOf:
+          - $ref: '#/components/schemas/CustodyDepositMemo'
+        address:
+          allOf:
+          - $ref: '#/components/schemas/CustodyNetworkAddress'
+        minimumDepositAmount:
+          allOf:
+          - $ref: '#/components/schemas/CustodyMinimumDepositAmount'
+      example:
+        network: ETH
+        symbol: USDC
+        address: '0xb0a64d976972d87b0783eeb1ff88306cd1891f02'
+        minimumDepositAmount: '0.01'
+    CustodyCreatedAtDateTime:
+      type: string
+      example: '2022-09-16T07:56:15.000Z'
+      description: time of initial transaction
+    CustodyApiEcdsaWithdrawalCommand:
+      type: object
+      required:
+      - commandType
+      - destinationId
+      - symbol
+      - network
+      - quantity
+      properties:
+        commandType:
+          description: the command type, it must be 'V1Withdrawal'
+          type: string
+          example: V1Withdrawal
         destinationId:
           allOf:
           - $ref: '#/components/schemas/CustodyDestinationID'
-        accountNumber:
-          allOf:
-          - $ref: '#/components/schemas/CustodyBankAccountNumber'
-        network:
-          allOf:
-          - $ref: '#/components/schemas/CustodyBankNetworkID'
         symbol:
           allOf:
-          - $ref: '#/components/schemas/CustodyFiatSymbol'
+          - $ref: '#/components/schemas/CustodySymbol'
+        network:
+          allOf:
+          - $ref: '#/components/schemas/NetworkID'
+        quantity:
+          example: '100000.000001'
+          allOf:
+          - $ref: '#/components/schemas/CustodyQuantity'
+    CustodyBankDetails:
+      type: object
+      properties:
         name:
           allOf:
           - $ref: '#/components/schemas/CustodyBankName'
         physicalAddress:
           allOf:
           - $ref: '#/components/schemas/CustodyPhysicalBankAddress'
-        fee:
+        routingCode:
           allOf:
-          - $ref: '#/components/schemas/CustodyWithdrawalFee'
-        memo:
-          allOf:
-          - $ref: '#/components/schemas/CustodyWithdrawalMemo'
-        bank:
-          allOf:
-          - $ref: '#/components/schemas/CustodyBankDetails'
-        intermediaryBank:
-          allOf:
-          - $ref: '#/components/schemas/CustodyBankIntermediateDetails'
-    DateTime:
+          - $ref: '#/components/schemas/CustodyBankRoutingCode'
+    CustodyDepositMemo:
       type: string
-      format: date-time
-      example: '2025-05-20T01:01:01.000Z'
-      description: ISO 8601 with millisecond as string
-    CustodyDirection:
-      type: string
-      example: DEPOSIT
-      description: direction of transaction from API user's perspective, 'DEPOSIT' or 'WITHDRAWAL'
-    CustodyAvailableWithdrawalLimit:
-      type: string
-      example: '20000.0'
-      description: remaining limit on amount of coin or token that could be withdrawn now, in units of the symbol itself, not in smaller denominations (e.g. BTC not Satoshi, ETH not Wei)
-    CustodyPhysicalBankAddress:
-      type: string
-      description: physical location of bank
-      example: 4250 Executive Square Suite 300 La Jolla, CA 92037
+      example: '925891241'
+      description: memo or destination tag used during deposit to help identify account to credit funds to
     CustodyFiatDepositInstructions:
       type: object
       properties:
@@ -1039,14 +943,110 @@ components:
         bank:
           allOf:
           - $ref: '#/components/schemas/CustodyBankDetails'
-    CustodyTransactionID:
+    CustodyGetSelfHostedVerificationResponse:
+      type: object
+      required:
+      - destinationId
+      - network
+      - symbol
+      - address
+      - verificationStatus
+      - requestedDepositAmount
+      - verificationAmount
+      - totalDepositAmount
+      - verificationExpiryTime
+      properties:
+        destinationId:
+          allOf:
+          - $ref: '#/components/schemas/CustodyDestinationID'
+        network:
+          allOf:
+          - $ref: '#/components/schemas/NetworkID'
+        symbol:
+          allOf:
+          - $ref: '#/components/schemas/CustodySymbol'
+        address:
+          allOf:
+          - $ref: '#/components/schemas/CustodyNetworkAddress'
+        memo:
+          allOf:
+          - $ref: '#/components/schemas/CustodyWithdrawalMemo'
+        verificationStatus:
+          allOf:
+          - $ref: '#/components/schemas/CustodySelfHostedVerificationStatus'
+        requestedDepositAmount:
+          allOf:
+          - $ref: '#/components/schemas/CustodySelfHostedRequestedDepositAmount'
+        verificationAmount:
+          allOf:
+          - $ref: '#/components/schemas/CustodySelfHostedVerificationAmount'
+        totalDepositAmount:
+          allOf:
+          - $ref: '#/components/schemas/CustodySelfHostedTotalDepositAmount'
+        verificationExpiryTime:
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+      example:
+        destinationId: 1560ec0b406c0d909bb9f5f827dd6aa14a1f638884f33a2a3134878102e78038
+        network: ETH
+        symbol: USDC
+        address: '0xb0a64d976972d87b0783eeb1ff88306cd1891f02'
+        verificationStatus: VERIFIED
+        requestedDepositAmount: '12.3456'
+        verificationAmount: '0.0012'
+        totalDepositAmount: '12.3468'
+        verificationExpiryTime: '2025-05-20T01:01:01.000Z'
+    CustodySelfHostedDepositAddress:
       type: string
-      example: DB:9e6304a08c9cc2a33e6bc6429a088eae2a6b940c8e312aede3a3780257b9b979
-      description: unique identifier for tracking a withdrawal during signing and in history
-    CustodyTransactionStatus:
+      example: '0xb0a64d976972d87b0783eeb1ff88306cd1891f02'
+      description: The address of the Bullish trading account that the user should deposit to during a self hosted deposit attempt.
+    CustodyTransactionDetails:
+      type: object
+      properties:
+        address:
+          type: string
+          description: crypto network address
+          example: '0xb0a64d976972d87b0783eeb1ff88306cd1891f02'
+        blockchainTxId:
+          type: string
+          description: transaction id on chain
+          example: '0xec557f2c7278d2dae2d98a27b9bd43f386789a4209090cbbd11595f1bed4a4c2'
+        swiftUetr:
+          type: string
+          description: unique end-to-end-transaction reference for swift transactions
+          example: b55aa5cd-baa2-4122-8c17-ae9b856ae36a
+    Custody24HWithdrawalLimit:
       type: string
-      example: COMPLETE
-      description: one of 'PENDING', 'COMPLETE', 'CANCELLED', 'FAILED'
+      example: '1000000.00'
+      description: limit on amount of coin or token that can be withdrawn over a 24 hour period, in units of the symbol itself, not in smaller denominations (e.g. BTC not Satoshi, ETH not Wei)
+    CustodySelfHostedDepositMemo:
+      type: string
+      example: MZAXEMRXA
+      description: The memo or destination tag of the Bullish trading account that the user should deposit to during a self hosted deposit attempt.
+    CustodyBankIntermediateDetails:
+      type: object
+      properties:
+        name:
+          example: Middle Bank
+          allOf:
+          - $ref: '#/components/schemas/CustodyBankName'
+        physicalAddress:
+          example: 523 Exchange Square, Canary Wharf, E14 2WA
+          allOf:
+          - $ref: '#/components/schemas/CustodyPhysicalBankAddress'
+        routingCode:
+          example: '321176234'
+          allOf:
+          - $ref: '#/components/schemas/CustodyBankRoutingCode'
+    TimeStampAsString:
+      type: string
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
+    CustodyDestinationLocked:
+      type: boolean
+      example: true
+      description: Whether this destination is currently in a withdrawal lock period. Addresses are locked upon whitelisting for a 24-hour security period.
   parameters:
     BX-SIGNATURE:
       in: header

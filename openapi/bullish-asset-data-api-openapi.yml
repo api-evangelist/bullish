@@ -125,6 +125,10 @@ paths:
       security: []
 components:
   schemas:
+    AssetName:
+      type: string
+      description: asset name
+      example: Bitcoin
     VolGridData:
       type: object
       properties:
@@ -148,14 +152,53 @@ components:
           description: max downward skew shift. supported range [-1, 0]
           type: string
           example: '-0.103593'
-    AssetSymbol:
+    UnderlyingAsset:
+      type: object
+      properties:
+        symbol:
+          description: underlying asset symbol
+          type: string
+          example: BTC
+        assetId:
+          description: underlying asset ID
+          type: string
+          example: '1'
+        bpmMinReturnStart:
+          description: start of the 1/1000 biggest downward price movement of an underlying asset over 6 hours
+          type: string
+          example: '40.0000'
+        bpmMinReturnEnd:
+          description: end of the 1/1000 biggest downward price movement of an underlying asset over 6 hours
+          type: string
+          example: '20.0000'
+        bpmMaxReturnStart:
+          description: start of the 1/1000 biggest upward price movement of an underlying asset over 6 hours
+          type: string
+          example: '30.0000'
+        bpmMaxReturnEnd:
+          description: end of the 1/1000 biggest upward price movement of an underlying asset over 6 hours
+          type: string
+          example: '50.0000'
+        marketRiskFloorPctStart:
+          description: the percentage range of risk reduction allowed for a portfolio
+          type: string
+          example: '1.00'
+        marketRiskFloorPctEnd:
+          description: the percentage range of risk reduction allowed for a portfolio
+          type: string
+          example: '5.00'
+        bpmTransitionDateTimeStart:
+          description: the start datetime which the values linearly transition from `bpmMinReturnStart` to `bpmMinReturnEnd` for an underlying asset
+          type: string
+          example: '2024-08-02T12:00:00.000Z'
+        bpmTransitionDateTimeEnd:
+          description: the end datetime which the values linearly transition from `bpmMinReturnStart` to `bpmMinReturnEnd` for an underlying asset
+          type: string
+          example: '2024-08-02T18:00:00.000Z'
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
       type: string
-      description: asset symbol as denoted in the world
-      example: BTC
-    AssetName:
-      type: string
-      description: asset name
-      example: Bitcoin
+      example: '1.00000000'
     VolGridConfiguration:
       type: object
       properties:
@@ -218,49 +261,21 @@ components:
             atmMin: '-0.078081'
             skewMax: '0.017566'
             skewMin: '-0.017433'
-    UnderlyingAsset:
+    CollateralBand:
       type: object
       properties:
-        symbol:
-          description: underlying asset symbol
+        collateralPercentage:
+          description: collateral percentage applied to the asset for this band - a value of 90.00 indicates 90% of the asset is eligible to be used as collateral
           type: string
-          example: BTC
-        assetId:
-          description: underlying asset ID
+          example: '95.00'
+        bandLimitUSD:
+          description: upper limit in USD for this band
           type: string
-          example: '1'
-        bpmMinReturnStart:
-          description: start of the 1/1000 biggest downward price movement of an underlying asset over 6 hours
-          type: string
-          example: '40.0000'
-        bpmMinReturnEnd:
-          description: end of the 1/1000 biggest downward price movement of an underlying asset over 6 hours
-          type: string
-          example: '20.0000'
-        bpmMaxReturnStart:
-          description: start of the 1/1000 biggest upward price movement of an underlying asset over 6 hours
-          type: string
-          example: '30.0000'
-        bpmMaxReturnEnd:
-          description: end of the 1/1000 biggest upward price movement of an underlying asset over 6 hours
-          type: string
-          example: '50.0000'
-        marketRiskFloorPctStart:
-          description: the percentage range of risk reduction allowed for a portfolio
-          type: string
-          example: '1.00'
-        marketRiskFloorPctEnd:
-          description: the percentage range of risk reduction allowed for a portfolio
-          type: string
-          example: '5.00'
-        bpmTransitionDateTimeStart:
-          description: the start datetime which the values linearly transition from `bpmMinReturnStart` to `bpmMinReturnEnd` for an underlying asset
-          type: string
-          example: '2024-08-02T12:00:00.000Z'
-        bpmTransitionDateTimeEnd:
-          description: the end datetime which the values linearly transition from `bpmMinReturnStart` to `bpmMinReturnEnd` for an underlying asset
-          type: string
-          example: '2024-08-02T18:00:00.000Z'
+          example: '1000000.0000'
+    AssetSymbol:
+      type: string
+      description: asset symbol as denoted in the world
+      example: BTC
     AssetID:
       type: string
       description: unique asset ID
@@ -336,21 +351,6 @@ components:
           description: underlying asset for the asset.
           allOf:
           - $ref: '#/components/schemas/UnderlyingAsset'
-    AssetValue:
-      description: see [asset value](/rest/general/price-quantity-precision) format
-      type: string
-      example: '1.00000000'
-    CollateralBand:
-      type: object
-      properties:
-        collateralPercentage:
-          description: collateral percentage applied to the asset for this band - a value of 90.00 indicates 90% of the asset is eligible to be used as collateral
-          type: string
-          example: '95.00'
-        bandLimitUSD:
-          description: upper limit in USD for this band
-          type: string
-          example: '1000000.0000'
   securitySchemes:
     jwtTokenAuth:
       type: http
