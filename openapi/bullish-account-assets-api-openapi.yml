@@ -108,11 +108,23 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
+    AssetSymbol:
+      type: string
+      description: asset symbol as denoted in the world
+      example: BTC
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
     DateTime:
       type: string
       format: date-time
       example: '2025-05-20T01:01:01.000Z'
       description: ISO 8601 with millisecond as string
+    AssetID:
+      type: string
+      description: unique asset ID
+      example: '1'
     AssetAccount:
       type: object
       required:
@@ -161,18 +173,6 @@ components:
           description: denotes the time the AMM instruction was updated by the exchange
           allOf:
           - $ref: '#/components/schemas/TimeStampAsString'
-    TradingAccountId:
-      description: unique trading account ID
-      type: string
-      example: '111000000000001'
-    AssetSymbol:
-      type: string
-      description: asset symbol as denoted in the world
-      example: BTC
-    AssetID:
-      type: string
-      description: unique asset ID
-      example: '1'
     AssetValue:
       description: see [asset value](/rest/general/price-quantity-precision) format
       type: string

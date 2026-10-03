@@ -718,6 +718,235 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
+    Authorizer:
+      type: string
+      format: string
+      example: 03E02367E8C900000500000000000000
+      description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
+    OrderStatus:
+      type: string
+      example: OPEN
+      enum:
+      - OPEN
+      - CLOSED
+      - CANCELLED
+      - REJECTED
+    OrderSide:
+      type: string
+      example: BUY
+      enum:
+      - BUY
+      - SELL
+    CancelAllOrdersByMarketRequest:
+      type: object
+      required:
+      - timestamp
+      - nonce
+      - authorizer
+      - command
+      properties:
+        timestamp:
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        nonce:
+          allOf:
+          - $ref: '#/components/schemas/NonceAsString'
+        authorizer:
+          description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
+          allOf:
+          - $ref: '#/components/schemas/Authorizer'
+        command:
+          description: the command to be executed which is sent in the request payload
+          allOf:
+          - $ref: '#/components/schemas/CancelAllOrdersByMarketCommand'
+    CancelAllOrdersRequest:
+      type: object
+      required:
+      - timestamp
+      - nonce
+      - authorizer
+      - command
+      properties:
+        timestamp:
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        nonce:
+          allOf:
+          - $ref: '#/components/schemas/NonceAsString'
+        authorizer:
+          description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
+          allOf:
+          - $ref: '#/components/schemas/Authorizer'
+        command:
+          description: the command to be executed which is sent in the request payload
+          allOf:
+          - $ref: '#/components/schemas/CancelAllOrdersCommand'
+    BadOrderEntryResponse:
+      type: object
+      required:
+      - message
+      - errorCode
+      - errorCodeName
+      properties:
+        message:
+          description: message
+          type: string
+          example: Missing signature header
+        errorCode:
+          description: unique error code
+          type: integer
+          example: 6029
+        errorCodeName:
+          description: unique error code name
+          type: string
+          example: MISSING_SIGNATURE_HEADER
+    FeeTierId:
+      type: string
+      description: unique fee tier ID, see [Get Market By Symbol](/rest/api/get-market-by-symbol)
+      example: '1'
+    OrderTypeAsString:
+      type: string
+      description: order type can have the following string values `"LMT"`, `"MKT"`, `"STOP_LIMIT"`, `"POST_ONLY"`
+      example: LMT
+    Order:
+      type: object
+      required:
+      - orderId
+      - handle
+      - clientOrderId
+      - symbol
+      - price
+      - stopPrice
+      - averageFillPrice
+      - margin
+      - allowBorrow
+      - quantity
+      - quantityFilled
+      - quoteAmount
+      - baseFee
+      - quoteFee
+      - borrowedQuantity
+      - borrowedBaseQuantity
+      - borrowedQuoteQuantity
+      - isLiquidation
+      - side
+      - type
+      - timeInForce
+      - status
+      - statusReason
+      - statusReasonCode
+      - createdAtTimestamp
+      - createdAtDatetime
+      properties:
+        handle:
+          deprecated: true
+          allOf:
+          - $ref: '#/components/schemas/OrderHandle'
+        clientOrderId:
+          allOf:
+          - $ref: '#/components/schemas/OrderHandle'
+        orderId:
+          description: unique order ID
+          allOf:
+          - $ref: '#/components/schemas/OrderID'
+        symbol:
+          description: market symbol
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        price:
+          description: price, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        averageFillPrice:
+          description: average fill price, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        stopPrice:
+          description: stop price, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        margin:
+          description: indicates if the order was allowed to borrow (does not indicate that borrowing occurred)
+          type: boolean
+          deprecated: true
+          example: false
+        allowBorrow:
+          description: indicates if the order was allowed to borrow (does not indicate that borrowing occurred)
+          type: boolean
+          example: false
+        quantity:
+          description: quantity, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quantityFilled:
+          description: quantity filled, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quoteAmount:
+          description: quote quantity deducted from asset account, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        baseFee:
+          description: base fee, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quoteFee:
+          description: quote fee, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        borrowedQuantity:
+          deprecated: true
+          description: quantity borrowed, see [asset value](/rest/general/price-quantity-precision) format - BUY order borrows quote, SELL order borrows base
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        borrowedBaseQuantity:
+          description: quantity borrowed, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        borrowedQuoteQuantity:
+          description: quantity borrowed, see [asset value](/rest/general/price-quantity-precision) format
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        isLiquidation:
+          description: indicates if the order was executed as a liquidation order
+          type: boolean
+          example: false
+        side:
+          description: order side
+          allOf:
+          - $ref: '#/components/schemas/OrderSideAsString'
+          example: BUY
+        type:
+          description: order type
+          allOf:
+          - $ref: '#/components/schemas/OrderTypeAsString'
+          example: LMT
+        timeInForce:
+          description: time in force
+          allOf:
+          - $ref: '#/components/schemas/OrderTimeInForceAsString'
+          example: GTC
+        status:
+          description: order status
+          allOf:
+          - $ref: '#/components/schemas/OrderStatusAsString'
+          example: OPEN
+        statusReason:
+          description: status reason, describes why the order is in a specific state
+          type: string
+          example: User cancelled
+        statusReasonCode:
+          description: status reason code, see [details](/rest/general/error-rejection-codes)
+          type: string
+          example: '1002'
+        createdAtDatetime:
+          description: denotes the time the order was ACK'd by the exchange, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        createdAtTimestamp:
+          description: denotes the time the order was ACK'd by the exchange
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
     CancelAllOrdersByMarketResponse:
       type: object
       required:
@@ -734,37 +963,136 @@ components:
       example:
         message: Command acknowledged - CancelAllOrdersByMarket
         requestId: '633914459442118656'
-    OrderTypeAsString:
+    OrderTimeInForceAsString:
       type: string
-      description: order type can have the following string values `"LMT"`, `"MKT"`, `"STOP_LIMIT"`, `"POST_ONLY"`
-      example: LMT
-    UnsetDelayedCancelAllOrdersCommand:
+      description: time in force can have the following string values `"GTC"`, `"FOK"`, `"IOC"`, see [details](/rest/general/order-type)
+    CreateOrderResponse:
+      type: object
+      required:
+      - message
+      - requestId
+      - orderId
+      - test
+      properties:
+        message:
+          description: message
+          type: string
+          example: Command acknowledged - CreateOrder
+        requestId:
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+        orderId:
+          description: unique order ID
+          allOf:
+          - $ref: '#/components/schemas/OrderID'
+    CancelId:
+      description: Unique id for this cancel request which is an unsigned 64 bit integer expressed as string
+      type: string
+      example: '123456789'
+    MarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTCUSDC` for SPOT and `BTC-USDC-PERP` for PERPETUAL market
+      example: BTCUSDC
+    DelayedCancelAllOrdersCommand:
       type: object
       required:
       - commandType
+      - delayBySeconds
       - tradingAccountId
       properties:
         commandType:
-          description: The command type, it must be 'V1UnsetDelayedCancelAllOrders'
+          description: The command type, it must be 'V1DelayedCancelAllOrders'
           type: string
-          example: V1UnsetDelayedCancelAllOrders
+          example: V1DelayedCancelAllOrders
+        cancelId:
+          allOf:
+          - $ref: '#/components/schemas/CancelId'
+        delayBySeconds:
+          description: Delay of the cancel-all-order in seconds
+          allOf:
+          - $ref: '#/components/schemas/DelayBySeconds'
         tradingAccountId:
           allOf:
           - $ref: '#/components/schemas/TradingAccountId'
       example:
-        commandType: V1UnsetDelayedCancelAllOrders
+        commandType: V1DelayedCancelAllOrders
+        delayBySeconds: '5'
         tradingAccountId: '111000000000001'
-    NonceAsString:
+    CancelAllOrdersByMarketCommand:
+      type: object
+      required:
+      - commandType
+      - symbol
+      - tradingAccountId
+      properties:
+        commandType:
+          description: The command type, it must be 'V1CancelAllOrdersByMarket'
+          type: string
+        symbol:
+          description: market symbol
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        tradingAccountId:
+          description: unique trading account Id
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+      example:
+        commandType: V1CancelAllOrdersByMarket
+        symbol: BTCUSDC
+        tradingAccountId: '111000000000001'
+    OrderStatusAsString:
       type: string
-      format: string
-      example: '123456789'
-      description: the nonce is a client side incremented unsigned 64 bit integer expressed as string
-    Boolean:
-      type: boolean
-      format: true or false
+      description: order status can have the following string values `"OPEN"`, `"CLOSED"`, `"CANCELLED"`, `"REJECTED"`
+      example: OPEN
+    OrderHandle:
+      description: Unique numeric (i64) identifier generated on the client side expressed as a string value
+      type: string
+      example: '187'
     OrderID:
       type: string
       example: '297735387747975680'
+    DelayBySeconds:
+      description: Delay the cancel-all-orders request by (seconds) as a timeout mechanism
+      type: string
+      enum:
+      - '5'
+      - '10'
+      - '15'
+      - '20'
+      - '25'
+      - '30'
+      - '40'
+      - '50'
+      - '60'
+      example: '5'
+    TimeStampAsString:
+      type: string
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
+    CreateAMMInstructionRequest:
+      type: object
+      required:
+      - timestamp
+      - nonce
+      - authorizer
+      - command
+      properties:
+        timestamp:
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        nonce:
+          allOf:
+          - $ref: '#/components/schemas/NonceAsString'
+        authorizer:
+          description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
+          allOf:
+          - $ref: '#/components/schemas/Authorizer'
+        command:
+          description: the command to be executed which is sent in the request payload
+          allOf:
+          - $ref: '#/components/schemas/CreateAMMInstructionCommand'
     CreateAMMInstructionCommand:
       type: object
       required:
@@ -806,22 +1134,6 @@ components:
         tradingAccountId:
           allOf:
           - $ref: '#/components/schemas/TradingAccountId'
-    CancelAllOrdersResponse:
-      type: object
-      required:
-      - message
-      - requestId
-      properties:
-        message:
-          description: message
-          type: string
-        requestId:
-          description: unique request ID
-          allOf:
-          - $ref: '#/components/schemas/RequestID'
-      example:
-        message: Command acknowledged - CancelAllOrders
-        requestId: '633900538459062272'
     DelayedCancelAllOrdersRequest:
       type: object
       required:
@@ -844,32 +1156,32 @@ components:
           description: the command to be executed which is sent in the request payload
           allOf:
           - $ref: '#/components/schemas/DelayedCancelAllOrdersCommand'
-    AssetValue:
-      description: see [asset value](/rest/general/price-quantity-precision) format
+    OrderSideAsString:
       type: string
-      example: '1.00000000'
-    CancelAllOrdersByMarketCommand:
+      description: order side can have the following string values `"BUY"`, `"SELL"`
+      example: BUY
+    AMMInstructionStatus:
+      type: string
+      example: OPEN
+      enum:
+      - OPEN
+      - CLOSED
+    CancelAllOrdersResponse:
       type: object
       required:
-      - commandType
-      - symbol
-      - tradingAccountId
+      - message
+      - requestId
       properties:
-        commandType:
-          description: The command type, it must be 'V1CancelAllOrdersByMarket'
+        message:
+          description: message
           type: string
-        symbol:
-          description: market symbol
+        requestId:
+          description: unique request ID
           allOf:
-          - $ref: '#/components/schemas/MarketSymbol'
-        tradingAccountId:
-          description: unique trading account Id
-          allOf:
-          - $ref: '#/components/schemas/TradingAccountId'
+          - $ref: '#/components/schemas/RequestID'
       example:
-        commandType: V1CancelAllOrdersByMarket
-        symbol: BTCUSDC
-        tradingAccountId: '111000000000001'
+        message: Command acknowledged - CancelAllOrders
+        requestId: '633900538459062272'
     UnsetDelayedCancelAllOrdersResponse:
       type: object
       required:
@@ -886,30 +1198,28 @@ components:
       example:
         message: Command acknowledged - UnsetDelayedCancelAllOrders
         requestId: '633914459442118656'
-    DelayedCancelAllOrdersResponse:
+    UnsetDelayedCancelAllOrdersRequest:
       type: object
       required:
-      - message
-      - requestId
+      - timestamp
+      - nonce
+      - authorizer
+      - command
       properties:
-        message:
-          description: message
-          type: string
-        requestId:
-          description: unique request ID
+        timestamp:
           allOf:
-          - $ref: '#/components/schemas/RequestID'
-      example:
-        message: Command acknowledged - DelayedCancelAllOrders
-        requestId: '633914459442118656'
-    DateTime:
-      type: string
-      format: date-time
-      example: '2021-05-20T01:01:01.000Z'
-      description: ISO 8601 with millisecond as string
-    RequestID:
-      type: string
-      example: '197735387747975680'
+          - $ref: '#/components/schemas/TimeStampAsString'
+        nonce:
+          allOf:
+          - $ref: '#/components/schemas/NonceAsString'
+        authorizer:
+          description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
+          allOf:
+          - $ref: '#/components/schemas/Authorizer'
+        command:
+          description: the command to be executed which is sent in the request payload
+          allOf:
+          - $ref: '#/components/schemas/UnsetDelayedCancelAllOrdersCommand'
     AMMInstruction:
       type: object
       required:
@@ -1102,73 +1412,76 @@ components:
           type: string
           description: amount of money earned in USD
           example: '0.00'
-    CancelAllOrdersByMarketRequest:
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.00000000'
+    DateTime:
+      type: string
+      format: date-time
+      example: '2021-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+    AMMInstructionID:
+      type: string
+      example: '297735387747975680'
+    UnsetDelayedCancelAllOrdersCommand:
       type: object
       required:
-      - timestamp
-      - nonce
-      - authorizer
-      - command
+      - commandType
+      - tradingAccountId
       properties:
-        timestamp:
+        commandType:
+          description: The command type, it must be 'V1UnsetDelayedCancelAllOrders'
+          type: string
+          example: V1UnsetDelayedCancelAllOrders
+        tradingAccountId:
           allOf:
-          - $ref: '#/components/schemas/TimeStampAsString'
-        nonce:
+          - $ref: '#/components/schemas/TradingAccountId'
+      example:
+        commandType: V1UnsetDelayedCancelAllOrders
+        tradingAccountId: '111000000000001'
+    CancelAllOrdersCommand:
+      type: object
+      required:
+      - commandType
+      - tradingAccountId
+      properties:
+        commandType:
+          description: The command type, it must be 'V1CancelAllOrders'
+          type: string
+        tradingAccountId:
+          description: unique trading account Id
           allOf:
-          - $ref: '#/components/schemas/NonceAsString'
-        authorizer:
-          description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
-          allOf:
-          - $ref: '#/components/schemas/Authorizer'
-        command:
-          description: the command to be executed which is sent in the request payload
-          allOf:
-          - $ref: '#/components/schemas/CancelAllOrdersByMarketCommand'
-    TradingAccountId:
-      description: unique trading account ID
-      type: string
-      example: '111000000000001'
-    BadOrderEntryResponse:
+          - $ref: '#/components/schemas/TradingAccountId'
+      example:
+        commandType: V1CancelAllOrders
+        tradingAccountId: '111000000000001'
+    CreateAMMInstructionResponse:
       type: object
       required:
       - message
-      - errorCode
-      - errorCodeName
+      - requestId
+      - liquidityId
+      - test
       properties:
         message:
           description: message
           type: string
-          example: Missing signature header
-        errorCode:
-          description: unique error code
-          type: integer
-          example: 6029
-        errorCodeName:
-          description: unique error code name
-          type: string
-          example: MISSING_SIGNATURE_HEADER
-    CreateAMMInstructionRequest:
-      type: object
-      required:
-      - timestamp
-      - nonce
-      - authorizer
-      - command
-      properties:
-        timestamp:
+          example: Command acknowledged - AddLiquidity
+        requestId:
+          description: unique request ID
           allOf:
-          - $ref: '#/components/schemas/TimeStampAsString'
-        nonce:
+          - $ref: '#/components/schemas/RequestID'
+        liquidityId:
+          description: unique AMM instruction ID
           allOf:
-          - $ref: '#/components/schemas/NonceAsString'
-        authorizer:
-          description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
-          allOf:
-          - $ref: '#/components/schemas/Authorizer'
-        command:
-          description: the command to be executed which is sent in the request payload
-          allOf:
-          - $ref: '#/components/schemas/CreateAMMInstructionCommand'
+          - $ref: '#/components/schemas/AMMInstructionID'
+    RequestID:
+      type: string
+      example: '197735387747975680'
+    Boolean:
+      type: boolean
+      format: true or false
     CreateOrderRequest:
       type: object
       required:
@@ -1191,281 +1504,11 @@ components:
           description: the command to be executed which is sent in the request payload
           allOf:
           - $ref: '#/components/schemas/CreateOrderCommand'
-    Authorizer:
+    NonceAsString:
       type: string
       format: string
-      example: 03E02367E8C900000500000000000000
-      description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
-    OrderTimeInForceAsString:
-      type: string
-      description: time in force can have the following string values `"GTC"`, `"FOK"`, `"IOC"`, see [details](/rest/general/order-type)
-    MarketSymbol:
-      type: string
-      description: market symbol. E.g. `BTCUSDC` for SPOT and `BTC-USDC-PERP` for PERPETUAL market
-      example: BTCUSDC
-    CreateAMMInstructionResponse:
-      type: object
-      required:
-      - message
-      - requestId
-      - liquidityId
-      - test
-      properties:
-        message:
-          description: message
-          type: string
-          example: Command acknowledged - AddLiquidity
-        requestId:
-          description: unique request ID
-          allOf:
-          - $ref: '#/components/schemas/RequestID'
-        liquidityId:
-          description: unique AMM instruction ID
-          allOf:
-          - $ref: '#/components/schemas/AMMInstructionID'
-    OrderSideAsString:
-      type: string
-      description: order side can have the following string values `"BUY"`, `"SELL"`
-      example: BUY
-    OrderHandle:
-      description: Unique numeric (i64) identifier generated on the client side expressed as a string value
-      type: string
-      example: '187'
-    Order:
-      type: object
-      required:
-      - orderId
-      - handle
-      - clientOrderId
-      - symbol
-      - price
-      - stopPrice
-      - averageFillPrice
-      - margin
-      - allowBorrow
-      - quantity
-      - quantityFilled
-      - quoteAmount
-      - baseFee
-      - quoteFee
-      - borrowedQuantity
-      - borrowedBaseQuantity
-      - borrowedQuoteQuantity
-      - isLiquidation
-      - side
-      - type
-      - timeInForce
-      - status
-      - statusReason
-      - statusReasonCode
-      - createdAtTimestamp
-      - createdAtDatetime
-      properties:
-        handle:
-          deprecated: true
-          allOf:
-          - $ref: '#/components/schemas/OrderHandle'
-        clientOrderId:
-          allOf:
-          - $ref: '#/components/schemas/OrderHandle'
-        orderId:
-          description: unique order ID
-          allOf:
-          - $ref: '#/components/schemas/OrderID'
-        symbol:
-          description: market symbol
-          allOf:
-          - $ref: '#/components/schemas/MarketSymbol'
-        price:
-          description: price, see [asset value](/rest/general/price-quantity-precision) format
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        averageFillPrice:
-          description: average fill price, see [asset value](/rest/general/price-quantity-precision) format
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        stopPrice:
-          description: stop price, see [asset value](/rest/general/price-quantity-precision) format
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        margin:
-          description: indicates if the order was allowed to borrow (does not indicate that borrowing occurred)
-          type: boolean
-          deprecated: true
-          example: false
-        allowBorrow:
-          description: indicates if the order was allowed to borrow (does not indicate that borrowing occurred)
-          type: boolean
-          example: false
-        quantity:
-          description: quantity, see [asset value](/rest/general/price-quantity-precision) format
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        quantityFilled:
-          description: quantity filled, see [asset value](/rest/general/price-quantity-precision) format
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        quoteAmount:
-          description: quote quantity deducted from asset account, see [asset value](/rest/general/price-quantity-precision) format
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        baseFee:
-          description: base fee, see [asset value](/rest/general/price-quantity-precision) format
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        quoteFee:
-          description: quote fee, see [asset value](/rest/general/price-quantity-precision) format
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        borrowedQuantity:
-          deprecated: true
-          description: quantity borrowed, see [asset value](/rest/general/price-quantity-precision) format - BUY order borrows quote, SELL order borrows base
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        borrowedBaseQuantity:
-          description: quantity borrowed, see [asset value](/rest/general/price-quantity-precision) format
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        borrowedQuoteQuantity:
-          description: quantity borrowed, see [asset value](/rest/general/price-quantity-precision) format
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        isLiquidation:
-          description: indicates if the order was executed as a liquidation order
-          type: boolean
-          example: false
-        side:
-          description: order side
-          allOf:
-          - $ref: '#/components/schemas/OrderSideAsString'
-          example: BUY
-        type:
-          description: order type
-          allOf:
-          - $ref: '#/components/schemas/OrderTypeAsString'
-          example: LMT
-        timeInForce:
-          description: time in force
-          allOf:
-          - $ref: '#/components/schemas/OrderTimeInForceAsString'
-          example: GTC
-        status:
-          description: order status
-          allOf:
-          - $ref: '#/components/schemas/OrderStatusAsString'
-          example: OPEN
-        statusReason:
-          description: status reason, describes why the order is in a specific state
-          type: string
-          example: User cancelled
-        statusReasonCode:
-          description: status reason code, see [details](/rest/general/error-rejection-codes)
-          type: string
-          example: '1002'
-        createdAtDatetime:
-          description: denotes the time the order was ACK'd by the exchange, ISO 8601 with millisecond as string
-          allOf:
-          - $ref: '#/components/schemas/DateTime'
-        createdAtTimestamp:
-          description: denotes the time the order was ACK'd by the exchange
-          allOf:
-          - $ref: '#/components/schemas/TimeStampAsString'
-    CancelId:
-      description: Unique id for this cancel request which is an unsigned 64 bit integer expressed as string
-      type: string
       example: '123456789'
-    AMMInstructionID:
-      type: string
-      example: '297735387747975680'
-    CreateOrderResponse:
-      type: object
-      required:
-      - message
-      - requestId
-      - orderId
-      - test
-      properties:
-        message:
-          description: message
-          type: string
-          example: Command acknowledged - CreateOrder
-        requestId:
-          description: unique request ID
-          allOf:
-          - $ref: '#/components/schemas/RequestID'
-        orderId:
-          description: unique order ID
-          allOf:
-          - $ref: '#/components/schemas/OrderID'
-    DelayBySeconds:
-      description: Delay the cancel-all-orders request by (seconds) as a timeout mechanism
-      type: string
-      enum:
-      - '5'
-      - '10'
-      - '15'
-      - '20'
-      - '25'
-      - '30'
-      - '40'
-      - '50'
-      - '60'
-      example: '5'
-    CancelAllOrdersRequest:
-      type: object
-      required:
-      - timestamp
-      - nonce
-      - authorizer
-      - command
-      properties:
-        timestamp:
-          allOf:
-          - $ref: '#/components/schemas/TimeStampAsString'
-        nonce:
-          allOf:
-          - $ref: '#/components/schemas/NonceAsString'
-        authorizer:
-          description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
-          allOf:
-          - $ref: '#/components/schemas/Authorizer'
-        command:
-          description: the command to be executed which is sent in the request payload
-          allOf:
-          - $ref: '#/components/schemas/CancelAllOrdersCommand'
-    DelayedCancelAllOrdersCommand:
-      type: object
-      required:
-      - commandType
-      - delayBySeconds
-      - tradingAccountId
-      properties:
-        commandType:
-          description: The command type, it must be 'V1DelayedCancelAllOrders'
-          type: string
-          example: V1DelayedCancelAllOrders
-        cancelId:
-          allOf:
-          - $ref: '#/components/schemas/CancelId'
-        delayBySeconds:
-          description: Delay of the cancel-all-order in seconds
-          allOf:
-          - $ref: '#/components/schemas/DelayBySeconds'
-        tradingAccountId:
-          allOf:
-          - $ref: '#/components/schemas/TradingAccountId'
-      example:
-        commandType: V1DelayedCancelAllOrders
-        delayBySeconds: '5'
-        tradingAccountId: '111000000000001'
-    OrderStatus:
-      type: string
-      example: OPEN
-      enum:
-      - OPEN
-      - CLOSED
-      - CANCELLED
-      - REJECTED
+      description: the nonce is a client side incremented unsigned 64 bit integer expressed as string
     CreateOrderCommand:
       type: object
       required:
@@ -1522,74 +1565,52 @@ components:
         tradingAccountId:
           allOf:
           - $ref: '#/components/schemas/TradingAccountId'
-    OrderSide:
+    TradingAccountId:
+      description: unique trading account ID
       type: string
-      example: BUY
-      enum:
-      - BUY
-      - SELL
-    FeeTierId:
-      type: string
-      description: unique fee tier ID, see [Get Market By Symbol](/rest/api/get-market-by-symbol)
-      example: '1'
-    AMMInstructionStatus:
-      type: string
-      example: OPEN
-      enum:
-      - OPEN
-      - CLOSED
-    UnsetDelayedCancelAllOrdersRequest:
+      example: '111000000000001'
+    DelayedCancelAllOrdersResponse:
       type: object
       required:
-      - timestamp
-      - nonce
-      - authorizer
-      - command
+      - message
+      - requestId
       properties:
-        timestamp:
-          allOf:
-          - $ref: '#/components/schemas/TimeStampAsString'
-        nonce:
-          allOf:
-          - $ref: '#/components/schemas/NonceAsString'
-        authorizer:
-          description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
-          allOf:
-          - $ref: '#/components/schemas/Authorizer'
-        command:
-          description: the command to be executed which is sent in the request payload
-          allOf:
-          - $ref: '#/components/schemas/UnsetDelayedCancelAllOrdersCommand'
-    CancelAllOrdersCommand:
-      type: object
-      required:
-      - commandType
-      - tradingAccountId
-      properties:
-        commandType:
-          description: The command type, it must be 'V1CancelAllOrders'
+        message:
+          description: message
           type: string
-        tradingAccountId:
-          description: unique trading account Id
+        requestId:
+          description: unique request ID
           allOf:
-          - $ref: '#/components/schemas/TradingAccountId'
+          - $ref: '#/components/schemas/RequestID'
       example:
-        commandType: V1CancelAllOrders
-        tradingAccountId: '111000000000001'
-    TimeStampAsString:
-      type: string
-      format: string
-      example: '1621490985000'
-      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
-    OrderStatusAsString:
-      type: string
-      description: order status can have the following string values `"OPEN"`, `"CLOSED"`, `"CANCELLED"`, `"REJECTED"`
-      example: OPEN
+        message: Command acknowledged - DelayedCancelAllOrders
+        requestId: '633914459442118656'
   parameters:
     BX-TIMESTAMP:
       in: header
       name: BX-TIMESTAMP
       description: timestamp is the number of milliseconds since EPOCH
+      required: true
+      schema:
+        type: string
+    Authorization:
+      in: header
+      name: Authorization
+      description: authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)
+      required: true
+      schema:
+        type: string
+    BX-SIGNATURE:
+      in: header
+      name: BX-SIGNATURE
+      description: signature obtained using the [signing format](#overview--how-to-ensure-the-order-of-create-order-or-cancel-order-requests)
+      required: true
+      schema:
+        type: string
+    BX-NONCE:
+      in: header
+      name: BX-NONCE
+      description: nonce is a client side incremented unsigned 64 bit integer
       required: true
       schema:
         type: string
@@ -1604,27 +1625,6 @@ components:
         - 'false'
         - 'true'
         default: 'false'
-    BX-NONCE:
-      in: header
-      name: BX-NONCE
-      description: nonce is a client side incremented unsigned 64 bit integer
-      required: true
-      schema:
-        type: string
-    BX-SIGNATURE:
-      in: header
-      name: BX-SIGNATURE
-      description: signature obtained using the [signing format](#overview--how-to-ensure-the-order-of-create-order-or-cancel-order-requests)
-      required: true
-      schema:
-        type: string
-    Authorization:
-      in: header
-      name: Authorization
-      description: authorization header, its value must be 'Bearer ' + [token](/rest/authentication#generate-a-jwt-token)
-      required: true
-      schema:
-        type: string
   securitySchemes:
     jwtTokenAuth:
       type: http

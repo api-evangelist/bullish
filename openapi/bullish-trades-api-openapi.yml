@@ -188,15 +188,29 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
-    DateTime:
+    QuoteAssetSymbol:
       type: string
-      format: date-time
-      example: '2025-05-20T01:01:01.000Z'
-      description: ISO 8601 with millisecond as string
-    MarketSymbol:
+      description: asset symbol as denoted in the world
+      example: USDC
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
       type: string
-      description: market symbol. E.g. `BTCUSDC`
-      example: BTCUSDC
+      example: '1.00000000'
+    OtcTradeId:
+      type: string
+      description: unique numeric (i64) identifier generated on Bullish side expressed as a string value
+      example: '200000000000000098'
+    OrderSideAsString:
+      type: string
+      description: order side can have the following string values `"BUY"`, `"SELL"`
+      example: BUY
+    OtcMatchId:
+      type: string
+      description: unique numeric (i64) identifier generated on Bullish side expressed as a string value
+      example: '15'
+    TradeID:
+      type: string
+      example: '100020000000000060'
     Trade:
       type: object
       required:
@@ -292,48 +306,34 @@ components:
           description: denotes the time the trade was executed by the exchange
           allOf:
           - $ref: '#/components/schemas/TimeStampAsString'
-    TradeID:
-      type: string
-      example: '100020000000000060'
-    ClientOtcTradeId:
-      type: string
-      description: unique numeric (i64) identifier generated on the client side expressed as a string value
-      example: '20050900225'
     Boolean:
       type: boolean
       format: true or false
       example: true
-    OrderSideAsString:
-      type: string
-      description: order side can have the following string values `"BUY"`, `"SELL"`
-      example: BUY
-    OrderID:
-      type: string
-      example: '297735387747975680'
-    TradingAccountId:
-      description: unique trading account ID
-      type: string
-      example: '111000000000001'
-    OtcMatchId:
-      type: string
-      description: unique numeric (i64) identifier generated on Bullish side expressed as a string value
-      example: '15'
     OrderHandle:
       description: Unique numeric (i64) identifier generated on the client side expressed as a string value
       type: string
       example: '299834741023572480'
-    OtcTradeId:
+    TradingAccountId:
+      description: unique trading account ID
       type: string
-      description: unique numeric (i64) identifier generated on Bullish side expressed as a string value
-      example: '200000000000000098'
-    QuoteAssetSymbol:
+      example: '111000000000001'
+    OrderID:
       type: string
-      description: asset symbol as denoted in the world
-      example: USDC
-    AssetValue:
-      description: see [asset value](/rest/general/price-quantity-precision) format
+      example: '297735387747975680'
+    ClientOtcTradeId:
       type: string
-      example: '1.00000000'
+      description: unique numeric (i64) identifier generated on the client side expressed as a string value
+      example: '20050900225'
+    MarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTCUSDC`
+      example: BTCUSDC
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
     TimeStampAsString:
       type: string
       format: string

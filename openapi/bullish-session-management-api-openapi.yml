@@ -126,9 +126,11 @@ paths:
       security: []
 components:
   schemas:
-    Signature:
+    Authorizer:
       type: string
-      example: SIG_R1_K35d5hSY5FbNoJwrCfmH6QvPG7m9XmhL2mgWYcSB7q2hKJ2mv39Luck9WBJroSB635ZAXhdg36TYG7QJX1fTidbsMvyE8N
+      format: string
+      example: 03E02367E8C900000500000000000000
+      description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
     LoginRequest:
       type: object
       required:
@@ -146,21 +148,35 @@ components:
         loginPayload:
           allOf:
           - $ref: '#/components/schemas/LoginPayload'
+    UserId:
+      type: string
+      example: '12345'
+      description: Bullish user ID
     TimeStampInSeconds:
       type: integer
       format: int64
       example: 1621490985
       description: number of seconds since EPOCH as integer
-    Authorizer:
+    Signature:
       type: string
-      format: string
-      example: 03E02367E8C900000500000000000000
-      description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
-    JWT:
+      example: SIG_R1_K35d5hSY5FbNoJwrCfmH6QvPG7m9XmhL2mgWYcSB7q2hKJ2mv39Luck9WBJroSB635ZAXhdg36TYG7QJX1fTidbsMvyE8N
+    LoginResponse:
+      type: object
+      required:
+      - authorizer
+      - token
+      properties:
+        authorizer:
+          description: Authorizer
+          allOf:
+          - $ref: '#/components/schemas/Authorizer'
+        token:
+          description: JWT token
+          allOf:
+          - $ref: '#/components/schemas/JWT'
+    PublicKey:
       type: string
-      format: string
-      example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic2FuZGVlcCByYWtocmEifQ.wyVq6PlKaldWXtu-jz2hJCvkGl1lM2S7HUKCH8LnXp0
-      description: JWT token
+      example: PUB_R1_6PTdfWbXvXWQduhcCiRooGHTVpriu15xMqfr7EDq6sWLDj7NjS
     LoginPayload:
       type: object
       required:
@@ -191,35 +207,12 @@ components:
           type:
           - string
           - 'null'
-    UserId:
+    JWT:
       type: string
-      example: '12345'
-      description: Bullish user ID
-    LoginResponse:
-      type: object
-      required:
-      - authorizer
-      - token
-      properties:
-        authorizer:
-          description: Authorizer
-          allOf:
-          - $ref: '#/components/schemas/Authorizer'
-        token:
-          description: JWT token
-          allOf:
-          - $ref: '#/components/schemas/JWT'
-    PublicKey:
-      type: string
-      example: PUB_R1_6PTdfWbXvXWQduhcCiRooGHTVpriu15xMqfr7EDq6sWLDj7NjS
+      format: string
+      example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic2FuZGVlcCByYWtocmEifQ.wyVq6PlKaldWXtu-jz2hJCvkGl1lM2S7HUKCH8LnXp0
+      description: JWT token
   parameters:
-    BX-PUBLIC-KEY:
-      in: header
-      name: BX-PUBLIC-KEY
-      description: public key being used to generate the JWT
-      required: true
-      schema:
-        type: string
     BX-SIGNATURE:
       in: header
       name: BX-SIGNATURE
@@ -227,10 +220,10 @@ components:
       required: true
       schema:
         type: string
-    BX-TIMESTAMP:
+    BX-PUBLIC-KEY:
       in: header
-      name: BX-TIMESTAMP
-      description: timestamp is the number of milliseconds since EPOCH
+      name: BX-PUBLIC-KEY
+      description: public key being used to generate the JWT
       required: true
       schema:
         type: string
@@ -238,6 +231,13 @@ components:
       in: header
       name: BX-NONCE
       description: nonce is a client side incremented unsigned 64 bit integer
+      required: true
+      schema:
+        type: string
+    BX-TIMESTAMP:
+      in: header
+      name: BX-TIMESTAMP
+      description: timestamp is the number of milliseconds since EPOCH
       required: true
       schema:
         type: string

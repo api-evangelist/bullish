@@ -177,22 +177,6 @@ components:
         frozenTimeInSeconds: '5'
         quantityLimit: '10'
         deltaLimit: '1'
-    SetMMPCommandResponse:
-      type: object
-      required:
-      - message
-      - requestId
-      properties:
-        message:
-          description: message
-          type: string
-        requestId:
-          description: unique request ID
-          allOf:
-          - $ref: '#/components/schemas/RequestID'
-      example:
-        message: Command acknowledged - SetMMPConfig
-        requestId: '633910976353665025'
     ResetMMPCommandResponse:
       type: object
       required:
@@ -209,33 +193,49 @@ components:
       example:
         message: Command acknowledged - ResetMMPConfig
         requestId: '633910976353665026'
-    RequestID:
-      type: string
-      example: '197735387747975680'
-    TradingAccountId:
-      description: unique trading account ID
-      type: string
-      example: '111000000000001'
-    GetMmpConfigurationResponse:
+    ResetMMPCommandV1:
       type: object
       required:
+      - commandType
       - tradingAccountId
-      - message
-      - mmpConfigurations
+      - underlyingAssetSymbol
       properties:
+        commandType:
+          description: the command type must be provided as 'V1ResetMMP'
+          type: string
+          enum:
+          - V1ResetMMP
+          example: V1ResetMMP
         tradingAccountId:
           allOf:
           - $ref: '#/components/schemas/TradingAccountId'
+        underlyingAssetSymbol:
+          allOf:
+          - $ref: '#/components/schemas/UnderlyingAssetSymbol'
+      example:
+        commandType: V1ResetMMP
+        tradingAccountId: '123567443543'
+        underlyingAssetSymbol: BTC
+    SetMMPCommandResponse:
+      type: object
+      required:
+      - message
+      - requestId
+      properties:
         message:
-          description: If there are no market maker protection configurations setup for this trading account or for the provided optional symbol under the same trading account, this field will be returned as "No mmp config setup".
+          description: message
           type: string
-          example: No mmp config setup
-        mmpConfigurations:
-          description: A list of market maker protection configurations that the user has setup for each underlying asset symbol under the trading account provided. Supports filtering of symbol.
-          type: array
-          minItems: 0
-          items:
-            $ref: '#/components/schemas/MmpConfiguration'
+        requestId:
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+      example:
+        message: Command acknowledged - SetMMPConfig
+        requestId: '633910976353665025'
+    UnderlyingAssetSymbol:
+      type: string
+      description: the underlying asset symbol that is configured for MMP checks
+      example: BTC
     MmpConfiguration:
       type: object
       required:
@@ -270,45 +270,51 @@ components:
           type: boolean
           description: This boolean indicates if this configuration is in effect or not.
           example: true
-    ResetMMPCommandV1:
+    GetMmpConfigurationResponse:
       type: object
       required:
-      - commandType
       - tradingAccountId
-      - underlyingAssetSymbol
+      - message
+      - mmpConfigurations
       properties:
-        commandType:
-          description: the command type must be provided as 'V1ResetMMP'
-          type: string
-          enum:
-          - V1ResetMMP
-          example: V1ResetMMP
         tradingAccountId:
           allOf:
           - $ref: '#/components/schemas/TradingAccountId'
-        underlyingAssetSymbol:
-          allOf:
-          - $ref: '#/components/schemas/UnderlyingAssetSymbol'
-      example:
-        commandType: V1ResetMMP
-        tradingAccountId: '123567443543'
-        underlyingAssetSymbol: BTC
-    UnderlyingAssetSymbol:
+        message:
+          description: If there are no market maker protection configurations setup for this trading account or for the provided optional symbol under the same trading account, this field will be returned as "No mmp config setup".
+          type: string
+          example: No mmp config setup
+        mmpConfigurations:
+          description: A list of market maker protection configurations that the user has setup for each underlying asset symbol under the trading account provided. Supports filtering of symbol.
+          type: array
+          minItems: 0
+          items:
+            $ref: '#/components/schemas/MmpConfiguration'
+    RequestID:
       type: string
-      description: the underlying asset symbol that is configured for MMP checks
-      example: BTC
+      example: '197735387747975680'
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
+  examples:
+    SetMMPCommandV1:
+      value:
+        $ref: '#/components/schemas/SetMMPCommandV1/example'
+    ResetMMPCommandResponse:
+      value:
+        $ref: '#/components/schemas/ResetMMPCommandResponse/example'
+    SetMMPCommandResponse:
+      value:
+        $ref: '#/components/schemas/SetMMPCommandResponse/example'
+    ResetMMPCommandV1:
+      value:
+        $ref: '#/components/schemas/ResetMMPCommandV1/example'
   parameters:
     BX-TIMESTAMP:
       in: header
       name: BX-TIMESTAMP
       description: timestamp is the number of milliseconds since EPOCH
-      required: true
-      schema:
-        type: string
-    BX-NONCE:
-      in: header
-      name: BX-NONCE
-      description: nonce is a client side incremented unsigned 64 bit integer
       required: true
       schema:
         type: string
@@ -319,19 +325,13 @@ components:
       required: true
       schema:
         type: string
-  examples:
-    SetMMPCommandResponse:
-      value:
-        $ref: '#/components/schemas/SetMMPCommandResponse/example'
-    ResetMMPCommandResponse:
-      value:
-        $ref: '#/components/schemas/ResetMMPCommandResponse/example'
-    ResetMMPCommandV1:
-      value:
-        $ref: '#/components/schemas/ResetMMPCommandV1/example'
-    SetMMPCommandV1:
-      value:
-        $ref: '#/components/schemas/SetMMPCommandV1/example'
+    BX-NONCE:
+      in: header
+      name: BX-NONCE
+      description: nonce is a client side incremented unsigned 64 bit integer
+      required: true
+      schema:
+        type: string
   securitySchemes:
     jwtTokenAuth:
       type: http

@@ -76,11 +76,6 @@ paths:
       security: []
 components:
   schemas:
-    TimeStamp:
-      type: string
-      format: int64
-      example: '1621490985000'
-      description: number of milliseconds since EPOCH as string
     IndexPrice:
       type: object
       required:
@@ -105,15 +100,20 @@ components:
           description: Timestamp when the index price is updated
           allOf:
           - $ref: '#/components/schemas/TimeStamp'
+    TimeStamp:
+      type: string
+      format: int64
+      example: '1621490985000'
+      description: number of milliseconds since EPOCH as string
+    AssetSymbol:
+      type: string
+      description: asset symbol as denoted in the world
+      example: BTC
     DateTime:
       type: string
       format: date-time
       example: '2025-05-20T01:01:01.000Z'
       description: ISO 8601 with millisecond as string
-    AssetSymbol:
-      type: string
-      description: asset symbol as denoted in the world
-      example: BTC
   securitySchemes:
     jwtTokenAuth:
       type: http
