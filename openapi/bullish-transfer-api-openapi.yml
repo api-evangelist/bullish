@@ -96,18 +96,33 @@ paths:
       security:
       - jwtTokenAuth: []
 components:
-  examples:
-    TransferAssetCommand:
-      value:
-        $ref: '#/components/schemas/TransferAssetCommandV2/example'
-    TransferAssetCommandResponse:
-      value:
-        $ref: '#/components/schemas/TradingAccountTransferResponse/example'
   schemas:
     AssetSymbol:
       type: string
       description: asset symbol as denoted in the world
       example: BTC
+    BadOrderEntryResponse:
+      type: object
+      required:
+      - message
+      - errorCode
+      - errorCodeName
+      properties:
+        message:
+          description: message
+          type: string
+          example: Missing signature header
+        errorCode:
+          description: unique error code
+          type: integer
+          example: 6029
+        errorCodeName:
+          description: unique error code name
+          type: string
+          example: MISSING_SIGNATURE_HEADER
+    RequestID:
+      type: string
+      example: '197735387747975680'
     TradingAccountTransferResponse:
       type: object
       required:
@@ -131,28 +146,6 @@ components:
         commandType: V2TransferAsset
         message: Command acknowledged - TransferAsset
         requestId: '633909659774222336'
-    BadOrderEntryResponse:
-      type: object
-      required:
-      - message
-      - errorCode
-      - errorCodeName
-      properties:
-        message:
-          description: message
-          type: string
-          example: Missing signature header
-        errorCode:
-          description: unique error code
-          type: integer
-          example: 6029
-        errorCodeName:
-          description: unique error code name
-          type: string
-          example: MISSING_SIGNATURE_HEADER
-    RequestID:
-      type: string
-      example: '197735387747975680'
     TransferAssetCommandV2:
       type: object
       required:
@@ -195,20 +188,6 @@ components:
       type: string
       example: '111000000000001'
   parameters:
-    BX-SIGNATURE:
-      in: header
-      name: BX-SIGNATURE
-      description: signature obtained using the [signing format](/rest/authentication#signing-format)
-      required: true
-      schema:
-        type: string
-    BX-NONCE:
-      in: header
-      name: BX-NONCE
-      description: nonce is a client side incremented unsigned 64 bit integer
-      required: true
-      schema:
-        type: string
     BX-NONCE-WINDOW-ENABLED:
       in: header
       name: BX-NONCE-WINDOW-ENABLED
@@ -228,6 +207,27 @@ components:
       required: true
       schema:
         type: string
+    BX-SIGNATURE:
+      in: header
+      name: BX-SIGNATURE
+      description: signature obtained using the [signing format](/rest/authentication#signing-format)
+      required: true
+      schema:
+        type: string
+    BX-NONCE:
+      in: header
+      name: BX-NONCE
+      description: nonce is a client side incremented unsigned 64 bit integer
+      required: true
+      schema:
+        type: string
+  examples:
+    TransferAssetCommandResponse:
+      value:
+        $ref: '#/components/schemas/TradingAccountTransferResponse/example'
+    TransferAssetCommand:
+      value:
+        $ref: '#/components/schemas/TransferAssetCommandV2/example'
   securitySchemes:
     jwtTokenAuth:
       type: http

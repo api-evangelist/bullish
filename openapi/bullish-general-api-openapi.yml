@@ -86,6 +86,11 @@ components:
           description: ISO 8601 with millisecond as string
           allOf:
           - $ref: '#/components/schemas/DateTime'
+    TimeStampAsString:
+      type: string
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
     Nonce:
       type: object
       required:
@@ -105,11 +110,6 @@ components:
       format: date-time
       example: '2025-05-20T01:01:01.000Z'
       description: ISO 8601 with millisecond as string
-    TimeStampAsString:
-      type: string
-      format: string
-      example: '1621490985000'
-      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
   securitySchemes:
     jwtTokenAuth:
       type: http

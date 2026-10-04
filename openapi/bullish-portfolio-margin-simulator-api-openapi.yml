@@ -164,40 +164,6 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
-    SimulationOrder:
-      type: object
-      required:
-      - symbol
-      - quantity
-      properties:
-        symbol:
-          allOf:
-          - $ref: '#/components/schemas/MarketSymbol'
-        quantity:
-          description: quantity placed for order
-          type: string
-          example: '1.0'
-        limitPrice:
-          description: limit price for order
-          type: string
-          example: '10000.0'
-        timeInForce:
-          allOf:
-          - $ref: '#/components/schemas/OrderTimeInForceAsString'
-    SimulationPosition:
-      type: object
-      required:
-      - symbol
-      - quantity
-      properties:
-        symbol:
-          description: asset or market symbol. E.g. `USDC` for asset and `BTCUSDC` for market
-          type: string
-          example: BTC-USDC-PERP
-        quantity:
-          description: size of the position
-          type: string
-          example: '1.0'
     PriceVolOffsetParams:
       type: object
       description: Parameters for adjusting prices and volatility in portfolio simulation
@@ -223,55 +189,10 @@ components:
           description: Offset to add to implied volatility for options pricing. Can be positive or negative
           default: 0.0
           example: 0.05
-    ReferencePrice:
-      type: object
-      properties:
-        symbol:
-          description: asset or market symbol. E.g. `USDC` for asset and `BTCUSDC` for market
-          type: string
-          example: BTC
-        price:
-          description: reference price for asset or market
-          type: string
-          example: '12000.0'
-    OrderTimeInForceAsString:
+    MarketSymbol:
       type: string
-      description: time in force can have the following string values `"GTC"`, `"FOK"`, `"IOC"`, `"GTX"` (Good Till Crossing - for auction orders), see [details](/rest/general/order-type)
-      example: GTX
-    PortfolioSimulationRequest:
-      type: object
-      required:
-      - tradingAccountId
-      properties:
-        tradingAccountId:
-          allOf:
-          - $ref: '#/components/schemas/TradingAccountId'
-        positions:
-          type: array
-          description: portfolio position to be used in simulation
-          items:
-            allOf:
-            - $ref: '#/components/schemas/SimulationPosition'
-        orders:
-          type: array
-          description: pending orders to be used in simulation
-          items:
-            allOf:
-            - $ref: '#/components/schemas/SimulationOrder'
-        referencePrices:
-          type: array
-          description: reference price to be used in simulation
-          items:
-            allOf:
-            - $ref: '#/components/schemas/ReferencePrice'
-        priceVolOffsetParams:
-          description: optional parameters for price and volatility adjustments in simulation
-          allOf:
-          - $ref: '#/components/schemas/PriceVolOffsetParams'
-    Boolean:
-      type: boolean
-      format: true or false
-      example: true
+      description: market symbol. E.g. `BTCUSDC`
+      example: BTCUSDC
     PortfolioSimulationResponse:
       description: Simulation result
       type: object
@@ -312,14 +233,93 @@ components:
           description: the worst possible loss on the portfolio based on scenario analysis
           type: string
           example: '20000.0000'
+    ReferencePrice:
+      type: object
+      properties:
+        symbol:
+          description: asset or market symbol. E.g. `USDC` for asset and `BTCUSDC` for market
+          type: string
+          example: BTC
+        price:
+          description: reference price for asset or market
+          type: string
+          example: '12000.0'
+    SimulationOrder:
+      type: object
+      required:
+      - symbol
+      - quantity
+      properties:
+        symbol:
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        quantity:
+          description: quantity placed for order
+          type: string
+          example: '1.0'
+        limitPrice:
+          description: limit price for order
+          type: string
+          example: '10000.0'
+        timeInForce:
+          allOf:
+          - $ref: '#/components/schemas/OrderTimeInForceAsString'
     TradingAccountId:
       description: unique trading account ID
       type: string
       example: '111000000000001'
-    MarketSymbol:
+    Boolean:
+      type: boolean
+      format: true or false
+      example: true
+    OrderTimeInForceAsString:
       type: string
-      description: market symbol. E.g. `BTCUSDC`
-      example: BTCUSDC
+      description: time in force can have the following string values `"GTC"`, `"FOK"`, `"IOC"`, `"GTX"` (Good Till Crossing - for auction orders), see [details](/rest/general/order-type)
+      example: GTX
+    SimulationPosition:
+      type: object
+      required:
+      - symbol
+      - quantity
+      properties:
+        symbol:
+          description: asset or market symbol. E.g. `USDC` for asset and `BTCUSDC` for market
+          type: string
+          example: BTC-USDC-PERP
+        quantity:
+          description: size of the position
+          type: string
+          example: '1.0'
+    PortfolioSimulationRequest:
+      type: object
+      required:
+      - tradingAccountId
+      properties:
+        tradingAccountId:
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+        positions:
+          type: array
+          description: portfolio position to be used in simulation
+          items:
+            allOf:
+            - $ref: '#/components/schemas/SimulationPosition'
+        orders:
+          type: array
+          description: pending orders to be used in simulation
+          items:
+            allOf:
+            - $ref: '#/components/schemas/SimulationOrder'
+        referencePrices:
+          type: array
+          description: reference price to be used in simulation
+          items:
+            allOf:
+            - $ref: '#/components/schemas/ReferencePrice'
+        priceVolOffsetParams:
+          description: optional parameters for price and volatility adjustments in simulation
+          allOf:
+          - $ref: '#/components/schemas/PriceVolOffsetParams'
   securitySchemes:
     jwtTokenAuth:
       type: http

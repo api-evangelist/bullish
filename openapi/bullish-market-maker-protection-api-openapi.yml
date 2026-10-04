@@ -134,49 +134,6 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
-    SetMMPCommandV1:
-      type: object
-      required:
-      - commandType
-      - tradingAccountId
-      - underlyingAssetSymbol
-      - windowTimeInSeconds
-      - frozenTimeInSeconds
-      properties:
-        commandType:
-          description: the command type must be provided as 'V1SetMMP'
-          type: string
-          enum:
-          - V1SetMMP
-          example: V1SetMMP
-        tradingAccountId:
-          allOf:
-          - $ref: '#/components/schemas/TradingAccountId'
-        underlyingAssetSymbol:
-          allOf:
-          - $ref: '#/components/schemas/UnderlyingAssetSymbol'
-        windowTimeInSeconds:
-          type: string
-          description: time window during which the MMP checks are conducted. It helps in determining how frequently the system evaluates the market maker's activity against predefined thresholds. Value needs to be `> 0`. Maximum value is 600 seconds (10 minutes).
-        frozenTimeInSeconds:
-          type: string
-          description: the duration for which a market maker's trading activity is temporarily halted after a protective measure is triggered. Value needs to be `>= 0`. Maximum value is 3600 seconds (60 minutes).
-        quantityLimit:
-          type: string
-          description: cap on the total number of contracts that a market maker can trade within `windowTimeInSeconds`. This is direction(side) agnostic. Needs to be `> 0` if set.
-          example: '100'
-        deltaLimit:
-          type: string
-          description: net delta exposure that a market maker can accumulate within `windowTimeInSeconds`
-          example: '10'
-      example:
-        commandType: V1SetMMP
-        tradingAccountId: '123567443543'
-        underlyingAssetSymbol: BTC
-        windowTimeInSeconds: '10'
-        frozenTimeInSeconds: '5'
-        quantityLimit: '10'
-        deltaLimit: '1'
     ResetMMPCommandResponse:
       type: object
       required:
@@ -232,10 +189,52 @@ components:
       example:
         message: Command acknowledged - SetMMPConfig
         requestId: '633910976353665025'
-    UnderlyingAssetSymbol:
+    RequestID:
       type: string
-      description: the underlying asset symbol that is configured for MMP checks
-      example: BTC
+      example: '197735387747975680'
+    SetMMPCommandV1:
+      type: object
+      required:
+      - commandType
+      - tradingAccountId
+      - underlyingAssetSymbol
+      - windowTimeInSeconds
+      - frozenTimeInSeconds
+      properties:
+        commandType:
+          description: the command type must be provided as 'V1SetMMP'
+          type: string
+          enum:
+          - V1SetMMP
+          example: V1SetMMP
+        tradingAccountId:
+          allOf:
+          - $ref: '#/components/schemas/TradingAccountId'
+        underlyingAssetSymbol:
+          allOf:
+          - $ref: '#/components/schemas/UnderlyingAssetSymbol'
+        windowTimeInSeconds:
+          type: string
+          description: time window during which the MMP checks are conducted. It helps in determining how frequently the system evaluates the market maker's activity against predefined thresholds. Value needs to be `> 0`. Maximum value is 600 seconds (10 minutes).
+        frozenTimeInSeconds:
+          type: string
+          description: the duration for which a market maker's trading activity is temporarily halted after a protective measure is triggered. Value needs to be `>= 0`. Maximum value is 3600 seconds (60 minutes).
+        quantityLimit:
+          type: string
+          description: cap on the total number of contracts that a market maker can trade within `windowTimeInSeconds`. This is direction(side) agnostic. Needs to be `> 0` if set.
+          example: '100'
+        deltaLimit:
+          type: string
+          description: net delta exposure that a market maker can accumulate within `windowTimeInSeconds`
+          example: '10'
+      example:
+        commandType: V1SetMMP
+        tradingAccountId: '123567443543'
+        underlyingAssetSymbol: BTC
+        windowTimeInSeconds: '10'
+        frozenTimeInSeconds: '5'
+        quantityLimit: '10'
+        deltaLimit: '1'
     MmpConfiguration:
       type: object
       required:
@@ -270,6 +269,14 @@ components:
           type: boolean
           description: This boolean indicates if this configuration is in effect or not.
           example: true
+    UnderlyingAssetSymbol:
+      type: string
+      description: the underlying asset symbol that is configured for MMP checks
+      example: BTC
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
     GetMmpConfigurationResponse:
       type: object
       required:
@@ -290,13 +297,6 @@ components:
           minItems: 0
           items:
             $ref: '#/components/schemas/MmpConfiguration'
-    RequestID:
-      type: string
-      example: '197735387747975680'
-    TradingAccountId:
-      description: unique trading account ID
-      type: string
-      example: '111000000000001'
   examples:
     SetMMPCommandV1:
       value:
@@ -304,20 +304,13 @@ components:
     ResetMMPCommandResponse:
       value:
         $ref: '#/components/schemas/ResetMMPCommandResponse/example'
-    SetMMPCommandResponse:
-      value:
-        $ref: '#/components/schemas/SetMMPCommandResponse/example'
     ResetMMPCommandV1:
       value:
         $ref: '#/components/schemas/ResetMMPCommandV1/example'
+    SetMMPCommandResponse:
+      value:
+        $ref: '#/components/schemas/SetMMPCommandResponse/example'
   parameters:
-    BX-TIMESTAMP:
-      in: header
-      name: BX-TIMESTAMP
-      description: timestamp is the number of milliseconds since EPOCH
-      required: true
-      schema:
-        type: string
     BX-SIGNATURE:
       in: header
       name: BX-SIGNATURE
@@ -329,6 +322,13 @@ components:
       in: header
       name: BX-NONCE
       description: nonce is a client side incremented unsigned 64 bit integer
+      required: true
+      schema:
+        type: string
+    BX-TIMESTAMP:
+      in: header
+      name: BX-TIMESTAMP
+      description: timestamp is the number of milliseconds since EPOCH
       required: true
       schema:
         type: string

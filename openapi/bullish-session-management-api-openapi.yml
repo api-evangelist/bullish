@@ -126,57 +126,10 @@ paths:
       security: []
 components:
   schemas:
-    Authorizer:
-      type: string
-      format: string
-      example: 03E02367E8C900000500000000000000
-      description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
-    LoginRequest:
-      type: object
-      required:
-      - timestamp
-      - nonce
-      - authorizer
-      - command
-      properties:
-        publicKey:
-          allOf:
-          - $ref: '#/components/schemas/PublicKey'
-        signature:
-          allOf:
-          - $ref: '#/components/schemas/Signature'
-        loginPayload:
-          allOf:
-          - $ref: '#/components/schemas/LoginPayload'
     UserId:
       type: string
       example: '12345'
       description: Bullish user ID
-    TimeStampInSeconds:
-      type: integer
-      format: int64
-      example: 1621490985
-      description: number of seconds since EPOCH as integer
-    Signature:
-      type: string
-      example: SIG_R1_K35d5hSY5FbNoJwrCfmH6QvPG7m9XmhL2mgWYcSB7q2hKJ2mv39Luck9WBJroSB635ZAXhdg36TYG7QJX1fTidbsMvyE8N
-    LoginResponse:
-      type: object
-      required:
-      - authorizer
-      - token
-      properties:
-        authorizer:
-          description: Authorizer
-          allOf:
-          - $ref: '#/components/schemas/Authorizer'
-        token:
-          description: JWT token
-          allOf:
-          - $ref: '#/components/schemas/JWT'
-    PublicKey:
-      type: string
-      example: PUB_R1_6PTdfWbXvXWQduhcCiRooGHTVpriu15xMqfr7EDq6sWLDj7NjS
     LoginPayload:
       type: object
       required:
@@ -207,16 +160,63 @@ components:
           type:
           - string
           - 'null'
+    LoginRequest:
+      type: object
+      required:
+      - timestamp
+      - nonce
+      - authorizer
+      - command
+      properties:
+        publicKey:
+          allOf:
+          - $ref: '#/components/schemas/PublicKey'
+        signature:
+          allOf:
+          - $ref: '#/components/schemas/Signature'
+        loginPayload:
+          allOf:
+          - $ref: '#/components/schemas/LoginPayload'
+    Authorizer:
+      type: string
+      format: string
+      example: 03E02367E8C900000500000000000000
+      description: JWT authorizer you obtain along with the [JWT token](/rest/authentication#generate-a-jwt-token)
+    TimeStampInSeconds:
+      type: integer
+      format: int64
+      example: 1621490985
+      description: number of seconds since EPOCH as integer
+    LoginResponse:
+      type: object
+      required:
+      - authorizer
+      - token
+      properties:
+        authorizer:
+          description: Authorizer
+          allOf:
+          - $ref: '#/components/schemas/Authorizer'
+        token:
+          description: JWT token
+          allOf:
+          - $ref: '#/components/schemas/JWT'
+    PublicKey:
+      type: string
+      example: PUB_R1_6PTdfWbXvXWQduhcCiRooGHTVpriu15xMqfr7EDq6sWLDj7NjS
+    Signature:
+      type: string
+      example: SIG_R1_K35d5hSY5FbNoJwrCfmH6QvPG7m9XmhL2mgWYcSB7q2hKJ2mv39Luck9WBJroSB635ZAXhdg36TYG7QJX1fTidbsMvyE8N
     JWT:
       type: string
       format: string
       example: eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJuYW1lIjoic2FuZGVlcCByYWtocmEifQ.wyVq6PlKaldWXtu-jz2hJCvkGl1lM2S7HUKCH8LnXp0
       description: JWT token
   parameters:
-    BX-SIGNATURE:
+    BX-TIMESTAMP:
       in: header
-      name: BX-SIGNATURE
-      description: signature obtained using the [signing format](/rest/authentication#signing-format)
+      name: BX-TIMESTAMP
+      description: timestamp is the number of milliseconds since EPOCH
       required: true
       schema:
         type: string
@@ -227,17 +227,17 @@ components:
       required: true
       schema:
         type: string
+    BX-SIGNATURE:
+      in: header
+      name: BX-SIGNATURE
+      description: signature obtained using the [signing format](/rest/authentication#signing-format)
+      required: true
+      schema:
+        type: string
     BX-NONCE:
       in: header
       name: BX-NONCE
       description: nonce is a client side incremented unsigned 64 bit integer
-      required: true
-      schema:
-        type: string
-    BX-TIMESTAMP:
-      in: header
-      name: BX-TIMESTAMP
-      description: timestamp is the number of milliseconds since EPOCH
       required: true
       schema:
         type: string

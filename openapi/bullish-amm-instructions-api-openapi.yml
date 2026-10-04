@@ -264,10 +264,6 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
-    MarketSymbol:
-      type: string
-      description: market symbol. E.g. `BTCUSDC`
-      example: BTCUSDC
     BadOrderEntryResponse:
       type: object
       required:
@@ -287,10 +283,21 @@ components:
           description: unique error code name
           type: string
           example: MISSING_SIGNATURE_HEADER
-    FeeTierId:
+    TimeStampAsString:
       type: string
-      description: unique fee tier ID, see [Get Market By Symbol](/rest/api/get-market-by-symbol)
-      example: '1'
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
+    MarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTCUSDC`
+      example: BTCUSDC
+    AMMInstructionStatus:
+      type: string
+      example: OPEN
+      enum:
+      - OPEN
+      - CLOSED
     TerminateAMMInstructionCommandV3:
       type: object
       required:
@@ -319,10 +326,34 @@ components:
         instructionId: '297735387747975680'
         symbol: BTCUSDC
         tradingAccountId: '111000000000001'
-    TradingAccountId:
-      description: unique trading account ID
+    CreateAMMInstructionCommandResponseV3:
+      type: object
+      required:
+      - message
+      - requestId
+      - instructionId
+      properties:
+        message:
+          description: message
+          type: string
+        requestId:
+          description: unique request ID
+          allOf:
+          - $ref: '#/components/schemas/RequestID'
+        instructionId:
+          description: unique AMM instruction ID
+          allOf:
+          - $ref: '#/components/schemas/AMMInstructionID'
+      example:
+        message: Command acknowledged - CreateAMMInstruction
+        requestId: '633906221577404416'
+        instructionId: '633906221577404424'
+    AMMInstructionID:
       type: string
-      example: '111000000000001'
+      example: '297735387747975680'
+    RequestID:
+      type: string
+      example: '197735387747975680'
     CreateAMMInstructionCommandV3:
       type: object
       required:
@@ -373,6 +404,27 @@ components:
           $ref: '#/components/schemas/FeeTierId/example'
         tradingAccountId:
           $ref: '#/components/schemas/TradingAccountId/example'
+    OrderStatusAsString:
+      type: string
+      description: order status can have the following string values `"OPEN"`, `"CLOSED"`, `"CANCELLED"`, `"REJECTED"`
+      example: OPEN
+    FeeTierId:
+      type: string
+      description: unique fee tier ID, see [Get Market By Symbol](/rest/api/get-market-by-symbol)
+      example: '1'
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+    TradingAccountId:
+      description: unique trading account ID
+      type: string
+      example: '111000000000001'
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.00000000'
     TerminateAMMInstructionCommandResponseV3:
       type: object
       required:
@@ -402,43 +454,6 @@ components:
         message: Command acknowledged - TerminateAMMInstruction
         requestId: '633906221577404416'
         instructionId: '633906221577404424'
-    CreateAMMInstructionCommandResponseV3:
-      type: object
-      required:
-      - message
-      - requestId
-      - instructionId
-      properties:
-        message:
-          description: message
-          type: string
-        requestId:
-          description: unique request ID
-          allOf:
-          - $ref: '#/components/schemas/RequestID'
-        instructionId:
-          description: unique AMM instruction ID
-          allOf:
-          - $ref: '#/components/schemas/AMMInstructionID'
-      example:
-        message: Command acknowledged - CreateAMMInstruction
-        requestId: '633906221577404416'
-        instructionId: '633906221577404424'
-    OrderStatusAsString:
-      type: string
-      description: order status can have the following string values `"OPEN"`, `"CLOSED"`, `"CANCELLED"`, `"REJECTED"`
-      example: OPEN
-    TimeStampAsString:
-      type: string
-      format: string
-      example: '1621490985000'
-      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
-    AMMInstructionStatus:
-      type: string
-      example: OPEN
-      enum:
-      - OPEN
-      - CLOSED
     AMMInstruction:
       type: object
       required:
@@ -630,22 +645,10 @@ components:
           type: string
           description: amount of money earned in USD
           example: '0.00'
-    DateTime:
-      type: string
-      format: date-time
-      example: '2025-05-20T01:01:01.000Z'
-      description: ISO 8601 with millisecond as string
-    AssetValue:
-      description: see [asset value](/rest/general/price-quantity-precision) format
-      type: string
-      example: '1.00000000'
-    AMMInstructionID:
-      type: string
-      example: '297735387747975680'
-    RequestID:
-      type: string
-      example: '197735387747975680'
   examples:
+    TerminateAMMInstructionCommandResponse:
+      value:
+        $ref: '#/components/schemas/TerminateAMMInstructionCommandResponseV3/example'
     CreateAMMInstructionCommandResponse:
       value:
         $ref: '#/components/schemas/CreateAMMInstructionCommandResponseV3/example'
@@ -655,17 +658,19 @@ components:
     CreateAMMInstructionCommand:
       value:
         $ref: '#/components/schemas/CreateAMMInstructionCommandV3/example'
-    TerminateAMMInstructionCommandResponse:
-      value:
-        $ref: '#/components/schemas/TerminateAMMInstructionCommandResponseV3/example'
   parameters:
-    BX-TIMESTAMP:
+    BX-NONCE-WINDOW-ENABLED:
       in: header
-      name: BX-TIMESTAMP
-      description: timestamp is the number of milliseconds since EPOCH
-      required: true
+      name: BX-NONCE-WINDOW-ENABLED
+      description: 'string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)
+
+        '
       schema:
         type: string
+        enum:
+        - 'false'
+        - 'true'
+        default: 'false'
     BX-SIGNATURE:
       in: header
       name: BX-SIGNATURE
@@ -680,18 +685,13 @@ components:
       required: true
       schema:
         type: string
-    BX-NONCE-WINDOW-ENABLED:
+    BX-TIMESTAMP:
       in: header
-      name: BX-NONCE-WINDOW-ENABLED
-      description: 'string representation of a boolean value, [enables out-of-order order requests to be processed](/rest/order-processing-create-cancel-request-mechanism)
-
-        '
+      name: BX-TIMESTAMP
+      description: timestamp is the number of milliseconds since EPOCH
+      required: true
       schema:
         type: string
-        enum:
-        - 'false'
-        - 'true'
-        default: 'false'
   securitySchemes:
     jwtTokenAuth:
       type: http

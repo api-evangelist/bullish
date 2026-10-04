@@ -227,6 +227,160 @@ paths:
       security: []
 components:
   schemas:
+    OptionType:
+      description: Type of Option market
+      example: CALL
+      type: string
+      enum:
+      - CALL
+      - PUT
+    FundingRateHistoryResponse:
+      description: Hourly Funding Rate History of one market
+      type: array
+      items:
+        type: object
+        properties:
+          fundingRate:
+            description: funding rate for this hour
+            type: string
+            example: '0.1'
+          updatedAtDatetime:
+            description: date time of the last funding rate update for the hour
+            type: string
+            example: '2024-09-16T12:59:59.000Z'
+    OtcTradeId:
+      type: string
+      description: unique numeric (i64) identifier generated on Bullish side expressed as a string value
+      example: '200000000000000098'
+    TimeStampAsString:
+      type: string
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
+    OptionMarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTC-USDC-20241004-70000-C` for OPTION markets.
+      example: BTC-USDC-20241004-70000-C
+    MarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTCUSDC`
+      example: BTCUSDC
+    PerpMarketSymbol:
+      type: string
+      description: market symbol. E.g. `BTC-USDC-PERP` for PERPETUAL market
+      example: BTC-USDC-PERP
+    DateTime:
+      type: string
+      format: date-time
+      example: '2025-05-20T01:01:01.000Z'
+      description: ISO 8601 with millisecond as string
+    AuctionResult:
+      type: object
+      properties:
+        auctionId:
+          description: auction identifier
+          type: string
+          example: '397735387747975680'
+        symbol:
+          description: market symbol
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        crossTime:
+          description: actual cross time, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        clearingPrice:
+          description: final clearing price
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        referencePrice:
+          description: Last Trade Price on Regular Continuous Orderbook; if Last Trade Price is not available, then Index Price
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        pairedQuantity:
+          description: total matched volume
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        imbalanceDirection:
+          description: 'final imbalance direction: BUY, SELL, or NONE'
+          type: string
+          enum:
+          - BUY
+          - SELL
+          - NONE
+          example: NONE
+        imbalanceQuantity:
+          description: final imbalance quantity
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        createdAtDatetime:
+          description: denotes the time the auction cross was executed, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+    TradeID:
+      type: string
+      example: '100020000000000060'
+    Boolean:
+      type: boolean
+      format: true or false
+      example: true
+    OrderSideAsString:
+      type: string
+      description: order side can have the following string values `"BUY"`, `"SELL"`
+      example: BUY
+    AssetValue:
+      description: see [asset value](/rest/general/price-quantity-precision) format
+      type: string
+      example: '1.00000000'
+    ObfuscatedTradeWithId:
+      type: object
+      required:
+      - tradeId
+      - symbol
+      - price
+      - quantity
+      - side
+      - isTaker
+      - createdAtTimestamp
+      - createdAtDatetime
+      properties:
+        tradeId:
+          description: unique trade ID
+          allOf:
+          - $ref: '#/components/schemas/TradeID'
+        symbol:
+          description: market symbol
+          allOf:
+          - $ref: '#/components/schemas/MarketSymbol'
+        price:
+          description: price
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        quantity:
+          description: quantity
+          allOf:
+          - $ref: '#/components/schemas/AssetValue'
+        side:
+          description: order side
+          allOf:
+          - $ref: '#/components/schemas/OrderSideAsString'
+          example: BUY
+        isTaker:
+          description: denotes whether this is a taker's trade
+          allOf:
+          - $ref: '#/components/schemas/Boolean'
+        createdAtDatetime:
+          description: denotes the time the trade was executed by the exchange, ISO 8601 with millisecond as string
+          allOf:
+          - $ref: '#/components/schemas/DateTime'
+        createdAtTimestamp:
+          description: denotes the time the trade was executed by the exchange
+          allOf:
+          - $ref: '#/components/schemas/TimeStampAsString'
+        auctionId:
+          description: unique Bullish auction identifier. Present only for auction trades
+          type: string
+          example: '397735387747975680'
     OptionTrade:
       type: object
       required:
@@ -282,160 +436,6 @@ components:
           description: unique Bullish OTC trade ID
           allOf:
           - $ref: '#/components/schemas/OtcTradeId'
-    OtcTradeId:
-      type: string
-      description: unique numeric (i64) identifier generated on Bullish side expressed as a string value
-      example: '200000000000000098'
-    OptionType:
-      description: Type of Option market
-      example: CALL
-      type: string
-      enum:
-      - CALL
-      - PUT
-    OrderSideAsString:
-      type: string
-      description: order side can have the following string values `"BUY"`, `"SELL"`
-      example: BUY
-    PerpMarketSymbol:
-      type: string
-      description: market symbol. E.g. `BTC-USDC-PERP` for PERPETUAL market
-      example: BTC-USDC-PERP
-    DateTime:
-      type: string
-      format: date-time
-      example: '2025-05-20T01:01:01.000Z'
-      description: ISO 8601 with millisecond as string
-    TradeID:
-      type: string
-      example: '100020000000000060'
-    ObfuscatedTradeWithId:
-      type: object
-      required:
-      - tradeId
-      - symbol
-      - price
-      - quantity
-      - side
-      - isTaker
-      - createdAtTimestamp
-      - createdAtDatetime
-      properties:
-        tradeId:
-          description: unique trade ID
-          allOf:
-          - $ref: '#/components/schemas/TradeID'
-        symbol:
-          description: market symbol
-          allOf:
-          - $ref: '#/components/schemas/MarketSymbol'
-        price:
-          description: price
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        quantity:
-          description: quantity
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        side:
-          description: order side
-          allOf:
-          - $ref: '#/components/schemas/OrderSideAsString'
-          example: BUY
-        isTaker:
-          description: denotes whether this is a taker's trade
-          allOf:
-          - $ref: '#/components/schemas/Boolean'
-        createdAtDatetime:
-          description: denotes the time the trade was executed by the exchange, ISO 8601 with millisecond as string
-          allOf:
-          - $ref: '#/components/schemas/DateTime'
-        createdAtTimestamp:
-          description: denotes the time the trade was executed by the exchange
-          allOf:
-          - $ref: '#/components/schemas/TimeStampAsString'
-        auctionId:
-          description: unique Bullish auction identifier. Present only for auction trades
-          type: string
-          example: '397735387747975680'
-    AuctionResult:
-      type: object
-      properties:
-        auctionId:
-          description: auction identifier
-          type: string
-          example: '397735387747975680'
-        symbol:
-          description: market symbol
-          allOf:
-          - $ref: '#/components/schemas/MarketSymbol'
-        crossTime:
-          description: actual cross time, ISO 8601 with millisecond as string
-          allOf:
-          - $ref: '#/components/schemas/DateTime'
-        clearingPrice:
-          description: final clearing price
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        referencePrice:
-          description: Last Trade Price on Regular Continuous Orderbook; if Last Trade Price is not available, then Index Price
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        pairedQuantity:
-          description: total matched volume
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        imbalanceDirection:
-          description: 'final imbalance direction: BUY, SELL, or NONE'
-          type: string
-          enum:
-          - BUY
-          - SELL
-          - NONE
-          example: NONE
-        imbalanceQuantity:
-          description: final imbalance quantity
-          allOf:
-          - $ref: '#/components/schemas/AssetValue'
-        createdAtDatetime:
-          description: denotes the time the auction cross was executed, ISO 8601 with millisecond as string
-          allOf:
-          - $ref: '#/components/schemas/DateTime'
-    FundingRateHistoryResponse:
-      description: Hourly Funding Rate History of one market
-      type: array
-      items:
-        type: object
-        properties:
-          fundingRate:
-            description: funding rate for this hour
-            type: string
-            example: '0.1'
-          updatedAtDatetime:
-            description: date time of the last funding rate update for the hour
-            type: string
-            example: '2024-09-16T12:59:59.000Z'
-    Boolean:
-      type: boolean
-      format: true or false
-      example: true
-    MarketSymbol:
-      type: string
-      description: market symbol. E.g. `BTCUSDC`
-      example: BTCUSDC
-    OptionMarketSymbol:
-      type: string
-      description: market symbol. E.g. `BTC-USDC-20241004-70000-C` for OPTION markets.
-      example: BTC-USDC-20241004-70000-C
-    AssetValue:
-      description: see [asset value](/rest/general/price-quantity-precision) format
-      type: string
-      example: '1.00000000'
-    TimeStampAsString:
-      type: string
-      format: string
-      example: '1621490985000'
-      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
   securitySchemes:
     jwtTokenAuth:
       type: http
