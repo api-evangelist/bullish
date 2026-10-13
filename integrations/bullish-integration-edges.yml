@@ -24,7 +24,7 @@ edges:
   evidence: https://api.coingecko.com/api/v3/exchanges/bullish_com
   matched_by: domain:bullish.com
   coingecko_id: bullish_com
-  trust_score: 8
+  trust_score: 9
   detected_by: sweep-crypto.py
   first_seen: '2026-10-13'
 - partner_name: MiCA (EU)
