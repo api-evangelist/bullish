@@ -73,3 +73,43 @@
     detected: '2026-10-14'
   status: not-a-workflow
   arazzo: null
+- slug: bullish-iso-10383-mic
+  label: ISO 10383 (MIC)
+  partner_name: ISO 10383 (MIC)
+  category: registered trading venues and market segments
+  type: register
+  channel: standard-directory
+  evidence: https://www.iso20022.org/sites/default/files/ISO10383_MIC/ISO10383_MIC.csv
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: ISO 10383 Market Identifier Codes (ISO 20022 registration authority)
+    spec_file: null
+    standard: ISO 10383
+    role: venue operator
+    matched_domain: bullish.com
+    matched_by: domain:bullish.com
+    categories:
+    - CASP
+    operating_mics:
+    - BUGI
+    - BUGM
+    mics:
+    - mic: BUGM
+      operating_mic: BUGM
+      segment: OPRT
+      market: BULLISH MARKETS
+      category: CASP
+      legal_name: BULLISH (GI) MARKETS LIMITED
+      country: GI
+    - mic: BUGI
+      operating_mic: BUGI
+      segment: OPRT
+      market: BULLISH
+      category: CASP
+      legal_name: BULLISH (GI) LIMITED
+      country: GI
+    detected_by: sweep-capital-markets.py
+    detected: '2026-10-15'
+  status: not-a-workflow
+  arazzo: null
