@@ -113,3 +113,35 @@
     detected: '2026-10-15'
   status: not-a-workflow
   arazzo: null
+- slug: bullish-fincen-msb-registration
+  label: FinCEN (MSB registration)
+  partner_name: FinCEN (MSB registration)
+  category: Money services business
+  type: contract
+  channel: regulator-register
+  evidence: https://msb.fincen.gov/
+  source: edge
+  relationship: standard-participant
+  contract_reference:
+    register: FinCEN MSB Registrant Search (msb.fincen.gov, full list export)
+    spec_file: null
+    standard: FinCEN MSB registration (US Bank Secrecy Act)
+    role: fincen-msb-registrant
+    registered_name: Bullish (GI) Limited
+    dba_name: null
+    register_id: Bullish (GI) Limited
+    matched_domain: bullish.com
+    matched_by: domain
+    identity: wikidata Q137367597 'Bullish' P856 https://www.bullish.com/
+    identity_source: wikidata P856 (labelled provenance step; Kin 2026-10-15 decision 1)
+    msb_activities:
+    - 409 money transmitter
+    - 499 other
+    states_of_activity: 12
+    received_date: 09/25/2024
+    signal_note: 'participation only: an MSB registration is not a licence or a certification; activities and states
+      are context, never counted'
+    detected_by: sweep-regtech-aml.py
+    detected: '2026-10-15'
+  status: not-a-workflow
+  arazzo: null
