@@ -108,24 +108,11 @@ paths:
       - jwtTokenAuth: []
 components:
   schemas:
-    AssetID:
-      type: string
-      description: unique asset ID
-      example: '1'
-    TimeStampAsString:
-      type: string
-      format: string
-      example: '1621490985000'
-      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
     DateTime:
       type: string
       format: date-time
       example: '2025-05-20T01:01:01.000Z'
       description: ISO 8601 with millisecond as string
-    AssetSymbol:
-      type: string
-      description: asset symbol as denoted in the world
-      example: BTC
     TradingAccountId:
       description: unique trading account ID
       type: string
@@ -134,6 +121,11 @@ components:
       description: see [asset value](/rest/general/price-quantity-precision) format
       type: string
       example: '1.00000000'
+    TimeStampAsString:
+      type: string
+      format: string
+      example: '1621490985000'
+      description: unsigned 64 bit integer value which is the number of milliseconds since EPOCH expressed as string
     AssetAccount:
       type: object
       required:
@@ -182,6 +174,14 @@ components:
           description: denotes the time the AMM instruction was updated by the exchange
           allOf:
           - $ref: '#/components/schemas/TimeStampAsString'
+    AssetID:
+      type: string
+      description: unique asset ID
+      example: '1'
+    AssetSymbol:
+      type: string
+      description: asset symbol as denoted in the world
+      example: BTC
   securitySchemes:
     jwtTokenAuth:
       type: http

@@ -238,6 +238,28 @@ components:
       description: unique trading account ID
       type: string
       example: '111000000000001'
+    MarginProfile:
+      properties:
+        initialMarketRiskMultiplierPct:
+          description: market risk multiplier used to calculate initial margin requirement of the account
+          type: string
+          example: '200.00'
+        warningMarketRiskMultiplierPct:
+          description: market risk multiplier used to calculate warning margin requirement of the account
+          type: string
+          example: '150.00'
+        liquidationMarketRiskMultiplierPct:
+          description: market risk multiplier used to calculate liquidation margin requirement of the account
+          type: string
+          example: '100.00'
+        fullLiquidationMarketRiskMultiplierPct:
+          description: market risk multiplier used to calculate full liquidation margin requirement of the account
+          type: string
+          example: '75.00'
+        defaultedMarketRiskMultiplierPct:
+          description: market risk multiplier used to calculate defaulted margin requirement of the account
+          type: string
+          example: '50.00'
     TradeFeeRate:
       type: object
       required:
@@ -276,28 +298,6 @@ components:
           type: string
           description: Fee charged for auction trade in decimal value
           example: '0.00005000'
-    MarginProfile:
-      properties:
-        initialMarketRiskMultiplierPct:
-          description: market risk multiplier used to calculate initial margin requirement of the account
-          type: string
-          example: '200.00'
-        warningMarketRiskMultiplierPct:
-          description: market risk multiplier used to calculate warning margin requirement of the account
-          type: string
-          example: '150.00'
-        liquidationMarketRiskMultiplierPct:
-          description: market risk multiplier used to calculate liquidation margin requirement of the account
-          type: string
-          example: '100.00'
-        fullLiquidationMarketRiskMultiplierPct:
-          description: market risk multiplier used to calculate full liquidation margin requirement of the account
-          type: string
-          example: '75.00'
-        defaultedMarketRiskMultiplierPct:
-          description: market risk multiplier used to calculate defaulted margin requirement of the account
-          type: string
-          example: '50.00'
   securitySchemes:
     jwtTokenAuth:
       type: http
