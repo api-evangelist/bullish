@@ -560,6 +560,8 @@ apis:
   humanURL: https://docs.exchange.bullish.com/rest/introduction
   baseURL: https://api.exchange.bullish.com/trading-api
   tags:
+  - MarketMakerProtection
+  tags_raw:
   - market-maker-protection
   properties:
   - type: OpenAPI
